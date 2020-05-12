@@ -5,22 +5,22 @@ import {
   Image,
   Text,
   KeyboardAvoidingView,
-  TouchableOpacity,
 } from 'react-native';
 import logo from '../../../../assets/logo.png';
-import LoginButton from '../common/button';
-import RegisterButton from '../common/subButton';
+import RegisterButton from '../common/button';
+import LoginButton from '../common/subButton';
 
 import Form from '../common/form-text-input';
 import constants from '../../../config/constants';
 import colors from '../../../config/color';
-const Login = (props) => {
+const Register = (props) => {
   const handleLoginPress = () => {
     console.log({email});
   };
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const onChangeEmail = (txtEmail) => {
     setEmail(txtEmail);
@@ -29,14 +29,16 @@ const Login = (props) => {
   const onChangePassword = (pass) => {
     setPassword(pass);
   };
-
+  const onChangeConfirmPassword = (confirmPass) => {
+    setConfirmPassword(confirmPass);
+  };
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={constants.IOS ? 'padding' : 'height'}>
       <View style={styles.logoContainer}>
         <Image source={logo} style={styles.logo} />
-        <Text style={styles.logoText}>ONLINE COURSES</Text>
+        <Text style={styles.logoText}>Register Now!</Text>
       </View>
       <View style={styles.form}>
         <Form
@@ -56,11 +58,16 @@ const Login = (props) => {
           returnKeyType={'done'}
           icon="lock"
         />
-        <TouchableOpacity>
-          <Text style={styles.txtForgotPass}>Forgot password?</Text>
-        </TouchableOpacity>
-        <LoginButton title="Log In" onPress={handleLoginPress} />
-        <RegisterButton title="Register" />
+        <Form
+          placeholder="Confirm Password"
+          secureTextEntry={true}
+          value={confirmPassword}
+          onChangeText={onChangeConfirmPassword}
+          returnKeyType={'done'}
+          icon="lock"
+        />
+        <RegisterButton title="Register" onPress={handleLoginPress} />
+        <LoginButton title="Log In" />
       </View>
     </KeyboardAvoidingView>
   );
@@ -98,12 +105,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingVertical: 50,
+    paddingVertical: 30,
     paddingHorizontal: 30,
   },
-  txtForgotPass: {
-    color: colors.MAINCOLOR,
-    marginTop: 10,
-  },
 });
-export default Login;
+export default Register;
