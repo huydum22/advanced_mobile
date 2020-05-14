@@ -6,11 +6,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const FormTextInput = (props) => {
   return (
     <View style={styles.container}>
-      <FontAwesome name={props.icon} color={colors.MAINCOLOR} size={20} />
+      <FontAwesome name={props.icon} color={colors.mainColor} size={20} />
       <TextInput
-        selectionColor={colors.MAINCOLOR}
+        selectionColor={colors.mainColor}
         style={[styles.input, props.style]}
-        placeholderTextColor={colors.SILVER}
+        placeholderTextColor={colors.placeHolderColor}
         {...props}
       />
     </View>
@@ -21,12 +21,12 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     width: '100%',
-    borderColor: colors.SILVER,
+    borderColor: colors.placeHolderColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 10,
     marginLeft: 20,
     paddingBottom: 10,
-    color: colors.MAINCOLOR,
+    color: colors.mainColor,
   },
   container: {
     flexDirection: 'row',

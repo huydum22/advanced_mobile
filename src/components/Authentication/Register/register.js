@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: colors.MAINCOLOR,
+    backgroundColor: colors.mainColor,
   },
   logoContainer: {
     flex: 4,

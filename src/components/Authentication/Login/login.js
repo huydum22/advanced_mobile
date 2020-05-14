@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: colors.MAINCOLOR,
+    backgroundColor: colors.mainColor,
   },
   logoContainer: {
     flex: 4,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   txtForgotPass: {
-    color: colors.MAINCOLOR,
+    color: colors.mainColor,
     marginTop: 10,
   },
 });

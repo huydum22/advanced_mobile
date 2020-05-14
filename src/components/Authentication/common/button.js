@@ -6,7 +6,7 @@ const Button = (props) => {
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
       <LinearGradient
-        colors={[colors.MAINCOLOR, colors.SECONDCOLOR]}
+        colors={[colors.mainColor, colors.subColor]}
         style={styles.container}>
         <Text style={styles.text}> {props.title}</Text>
       </LinearGradient>

@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     borderWidth: 2,
-    borderColor: colors.MAINCOLOR,
+    borderColor: colors.mainColor,
   },
   text: {
-    color: colors.MAINCOLOR,
+    color: colors.mainColor,
     alignItems: 'center',
     fontSize: 14,
     fontWeight: 'bold',
