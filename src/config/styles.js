@@ -13,8 +13,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundItem,
     shadowColor: colors.titleItemColor,
     shadowOffset: {width: 5, height: 5},
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.4,
     borderRadius: 5,
+    borderWidth: 0.25,
+    borderColor: colors.blackWithOpacity,
+    // border
   },
 });
 export default styles;

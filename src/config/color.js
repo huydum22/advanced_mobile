@@ -8,6 +8,8 @@ const colors = {
   backgroundColor: '#ecf0f1',
   backgroundItem: 'white',
   subTextColor: 'gray',
+  alphaBackgroundImageColor: 'rgba(0,0,0,0.5)',
+  blackWithOpacity: 'rgba(0,0,0,0.25)',
 };
 
 export default colors;

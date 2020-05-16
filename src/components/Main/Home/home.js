@@ -28,17 +28,16 @@ const home = (props) => {
         icon="bookmark"
         message="Use bookmarks to quickly save courses for later"
       />
-      <View style={{height: 20}} />
+      <View style={styles.footer} />
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: colors.backgroundColor,
-    // backgroundColor: 'white'
   },
+  footer: {height: 20},
 });
 
 export default home;
