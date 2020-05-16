@@ -75,11 +75,9 @@ const PopularSkill = (props) => {
       <View style={styles.titleContainer}>
         <Text style={mainStyle.titleInList}>Popular skills</Text>
       </View>
-      <ScrollView
-        horizontal={true}
-        style={styles.scrollView}
-        showsHorizontalScrollIndicator={false}>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {renderList(data)}
+        <View style={styles.footer} />
       </ScrollView>
     </View>
   );
@@ -93,13 +91,13 @@ const styles = StyleSheet.create({
   skillContainer: {
     backgroundColor: colors.backgroundButtonColor,
     borderRadius: 15,
-    marginRight: 5,
+    marginLeft: 10,
     height: 30,
     justifyContent: 'center',
     paddingHorizontal: 10,
   },
-  scrollView: {
-    marginLeft: 15,
+  footer: {
+    width: 15,
   },
 });
 

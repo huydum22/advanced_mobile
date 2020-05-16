@@ -51,18 +51,21 @@ const RelateSkill = (props) => {
     return (Math.floor(Math.random() * 100) * i) % 3;
   };
 
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      horizontal={true}
+      style={styles.container}
+      showsHorizontalScrollIndicator={false}>
       <FlatList
         nestedScrollEnabled={true}
         contentContainerStyle={styles.contentContainer}
         numColumns={data.length / 2}
-        showsHorizontalScrollIndicator={false}
         alwaysBounceVertical={false}
         data={data}
         keyExtractor={(item) => item.id}
         renderItem={({item}) => (
-          <Item name={item.name} image={randomID(item.id)} />
+          <Item name={item.name} image={randomID(item.id)}  />
         )}
       />
     </ScrollView>
@@ -70,7 +73,6 @@ const RelateSkill = (props) => {
 };
 const styles = StyleSheet.create({
   container: {
-    marginLeft: 15,
     marginTop: 15,
   },
   contentContainer: {

@@ -22,6 +22,7 @@ const Item = (props) => {
       return skill03;
     }
   };
+
   return (
     <ImageBackground
       style={styles.container}

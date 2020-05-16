@@ -14,11 +14,9 @@ const TopAuthor = (props) => {
       <View style={styles.titleContainer}>
         <Text style={mainStyle.titleInList}>Top Authors</Text>
       </View>
-      <ScrollView
-        horizontal={true}
-        style={styles.scrollView}
-        showsHorizontalScrollIndicator={false}>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {renderListData(data)}
+        <View style={styles.footer} />
       </ScrollView>
     </View>
   );
@@ -33,8 +31,8 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     justifyContent: 'center',
   },
-  scrollView: {
-    marginLeft: 15,
+  footer: {
+    width: 15,
   },
 });
 

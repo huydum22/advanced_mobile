@@ -2,28 +2,27 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
 import colors from '../../../../config/color';
 import mainStyle from '../../../../config/styles';
-import image from '../../../../../assets/sourceItem.jpg';
 import {Rating} from 'react-native-ratings';
 const Item = (props) => {
   return (
     <TouchableOpacity style={mainStyle.item} activeOpacity={0.6}>
-      <Image source={image} style={styles.image} />
+      <Image source={props.image} style={styles.image} />
       <View style={styles.title}>
-        <Text style={styles.nameTitle}>{props.item.name}</Text>
-        <Text style={styles.descriptionTitle}>Jason Olson</Text>
+        <Text style={styles.nameTitle}>{props.name}</Text>
+        <Text style={styles.descriptionTitle}>{props.author}</Text>
         <View style={styles.levelContainer}>
-          <Text style={styles.descriptionSubTitle}>Beginner</Text>
-          <Text style={styles.descriptionSubTitle}>Jan 2018</Text>
-          <Text style={styles.descriptionSubTitle}>1h</Text>
+          <Text style={styles.descriptionSubTitle}>{props.level}</Text>
+          <Text style={styles.descriptionSubTitle}>{props.timeToStart}</Text>
+          <Text style={styles.descriptionSubTitle}>{props.totalHour}</Text>
         </View>
         <View style={styles.ratingContainer}>
           <Rating
             readonly={true}
             imageSize={14}
-            startingValue={2.5}
+            startingValue={props.rate}
             ratingCount={5}
           />
-          <Text style={styles.ratingText}>(820)</Text>
+          <Text style={styles.ratingText}>({props.totalRate})</Text>
         </View>
       </View>
     </TouchableOpacity>

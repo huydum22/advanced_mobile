@@ -18,7 +18,7 @@ import backgroundImage02 from '../../../../assets/backgroundImage02.jpg';
 
 const brown = (props) => {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <ImageBackground style={styles.imageBackground} source={backgroundImage}>
         <TouchableOpacity style={styles.blurBackground}>
           <Text style={styles.text}>
