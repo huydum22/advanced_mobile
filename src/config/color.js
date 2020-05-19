@@ -10,6 +10,7 @@ const colors = {
   subTextColor: 'gray',
   alphaBackgroundImageColor: 'rgba(0,0,0,0.5)',
   blackWithOpacity: 'rgba(0,0,0,0.25)',
+  logoutText: 'red',
 };
 
 export default colors;

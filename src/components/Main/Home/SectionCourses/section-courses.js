@@ -2,7 +2,6 @@ import React from 'react';
 import {View, StyleSheet, Text, ScrollView, FlatList} from 'react-native';
 import Item from '../SectionCoursesItem/section-courses-item';
 import SeeAllBtn from '../../../common/see-all-button';
-import colors from '../../../../config/color';
 import mainStyle from '../../../../config/styles';
 import data from '../../../../ExampleData/course';
 const SectionCourses = (props) => {

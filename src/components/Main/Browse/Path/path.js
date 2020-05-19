@@ -3,7 +3,7 @@ import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import Item from '../PathItem/path-item';
 import SeeAllBtn from '../../../common/see-all-button';
 import mainStyle from '../../../../config/styles';
-import data from '../../../../ExampleData/course';
+import data from '../../../../ExampleData/path';
 const Path = (props) => {
   const renderListData = (list) => {
     return list.map((item) => (
