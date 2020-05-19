@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    color: colors.titleColor,
+    color: colors.whiteColor,
     padding: 10,
     fontWeight: 'bold',
   },

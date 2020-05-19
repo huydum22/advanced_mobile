@@ -51,7 +51,6 @@ const RelateSkill = (props) => {
     return (Math.floor(Math.random() * 100) * i) % 3;
   };
 
-
   return (
     <ScrollView
       horizontal={true}
@@ -65,7 +64,7 @@ const RelateSkill = (props) => {
         data={data}
         keyExtractor={(item) => item.id}
         renderItem={({item}) => (
-          <Item name={item.name} image={randomID(item.id)}  />
+          <Item name={item.name} image={randomID(item.id)} />
         )}
       />
     </ScrollView>

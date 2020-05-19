@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
-import Login from './src/components/AccountManagement/Profile/profile';
+import Login from './src/components/CourseDetail/course-detail';
 import colors from './src/config/color';
 export default function App() {
   return (

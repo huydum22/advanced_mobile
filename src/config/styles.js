@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import colors from './color';
 const styles = StyleSheet.create({
   titleInList: {
-    color: colors.titleItemColor,
+    color: colors.blackTitleColor,
     fontWeight: '600',
     fontSize: 18,
   },
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 180,
     backgroundColor: colors.backgroundItem,
-    shadowColor: colors.titleItemColor,
+    shadowColor: colors.blackTitleColor,
     shadowOffset: {width: 5, height: 5},
     shadowOpacity: 0.4,
     borderRadius: 5,

@@ -6,13 +6,21 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const isLogout = (icon) => {
   if (icon) {
     return (
-      <FontAwesome name="angle-right" size={26} color={colors.titleItemColor} />
+      <FontAwesome
+        name="angle-right"
+        size={26}
+        color={colors.blackTitleColor}
+      />
     );
   }
 };
+const onPress = () => {};
 const Item = ({icon, name}) => {
   return (
-    <TouchableHighlight style={styles.container}>
+    <TouchableHighlight
+      style={styles.container}
+      underlayColor={colors.backgroundItem}
+      onPress={onPress}>
       <View style={styles.itemContainer}>
         <MaterialCommunityIcons name={icon} size={26} color="#1e1e1e" />
         <Text
@@ -30,11 +38,11 @@ const Item = ({icon, name}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: colors.titleColor,
+    backgroundColor: colors.whiteColor,
     alignItems: 'center',
   },
   itemContainer: {
-    backgroundColor: colors.titleColor,
+    backgroundColor: colors.whiteColor,
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -42,7 +50,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     flex: 1,
-    color: colors.titleItemColor,
+    color: colors.blackTitleColor,
   },
   logoutText: {
     flex: 1,

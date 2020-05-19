@@ -21,7 +21,7 @@ const Profile = (props) => {
           <FontAwesome
             name="angle-right"
             size={26}
-            color={colors.titleItemColor}
+            color={colors.blackTitleColor}
           />
         </View>
         <View style={styles.divider} />
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   userContainer: {
-    backgroundColor: colors.titleColor,
+    backgroundColor: colors.whiteColor,
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingVertical: 22,

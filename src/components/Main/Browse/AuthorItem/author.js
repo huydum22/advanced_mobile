@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    color: colors.titleItemColor,
+    color: colors.blackTitleColor,
   },
 });
 export default Author;
