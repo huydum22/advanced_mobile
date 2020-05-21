@@ -2,13 +2,13 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../../../../styles/color';
-import mainStyle from '../../../../styles/styles';
+import {Styles} from '../../../../styles';
 import size from '../../../../styles/size';
 const Empty = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={mainStyle.titleInList}>{props.title} </Text>
+        <Text style={Styles.titleInList}>{props.title} </Text>
       </View>
       <View style={styles.contentContainer}>
         <Feather name={props.icon} size={50} />

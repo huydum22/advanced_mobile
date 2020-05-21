@@ -1,14 +1,7 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
-import Login from './scenes/Register';
+import Navigator from './Navigation';
+// import Home from './components/Main/Home/home';
 export default function App() {
-  return (
-    // <SafeAreaView
-    //   style={[styles.container, {marginTop: StatusBar.currentHeight}]}>
-    <Login />
-    // </SafeAreaView>
-  );
+  return <Navigator />;
+  // return <Navigator />;
 }
-const styles = StyleSheet.create({
-  container: {},
-});

@@ -7,10 +7,16 @@ import {
 } from '../../components/Authentication';
 import logo from '../../assets/image/logo_.png';
 
-import {Colors, Constants, Styles, BoxModel} from '../../styles';
+// import prettyFormat from 'pretty-format';
+import {Colors, Styles, BoxModel, Platform} from '../../styles';
 const Register = (props) => {
-  const handleLoginPress = () => {};
-
+  const {navigation} = props;
+  const handleLoginPress = () => {
+    return navigation.goBack();
+  };
+  const handleRegisterPress = () => {
+    return navigation.popToTop();
+  };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -28,7 +34,7 @@ const Register = (props) => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Constants.IOS ? 'padding' : 'height'}>
+      behavior={Platform.Ios ? 'padding' : 'height'}>
       <View style={styles.logoContainer}>
         <Image source={logo} style={Styles.logoView} />
       </View>
@@ -58,8 +64,8 @@ const Register = (props) => {
           returnKeyType={'done'}
           icon="lock"
         />
-        <PrimaryButton title="Register" onPress={handleLoginPress} />
-        <SubPrimaryButton title="Log In" />
+        <PrimaryButton title="Register" onPress={handleRegisterPress} />
+        <SubPrimaryButton title="Log In" onPress={handleLoginPress} />
       </View>
     </KeyboardAvoidingView>
   );

@@ -13,10 +13,18 @@ import {
   SubPrimaryButton,
   FormInput,
 } from '../../components/Authentication';
-import {Colors, Constants, BoxModel, Styles, Typography} from '../../styles';
-const Login = (props) => {
-  const handleLoginPress = () => {};
+import {Colors, BoxModel, Styles, Typography, Platform} from '../../styles';
+import {RegisterScreen} from '../../config/ScreenName';
+// format debug consol
+import prettyFormat from 'pretty-format';
 
+const Login = (props) => {
+  console.log(prettyFormat(props));
+  const {navigation} = props;
+  const handleLoginPress = () => {};
+  const handleRegisterPress = () => {
+    return navigation.navigate(RegisterScreen);
+  };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -31,7 +39,7 @@ const Login = (props) => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Constants.IOS ? 'padding' : 'height'}>
+      behavior={Platform.Ios ? 'padding' : 'height'}>
       <View style={styles.logoContainer}>
         <Image source={logo} style={Styles.logoView} />
       </View>
@@ -57,7 +65,7 @@ const Login = (props) => {
           <Text style={styles.txtForgotPass}>Forgot password?</Text>
         </TouchableOpacity>
         <PrimaryButton title="Log In" onPress={handleLoginPress} />
-        <SubPrimaryButton title="Register" />
+        <SubPrimaryButton title="Register" onPress={handleRegisterPress} />
       </View>
     </KeyboardAvoidingView>
   );

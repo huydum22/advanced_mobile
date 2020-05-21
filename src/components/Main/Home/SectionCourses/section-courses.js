@@ -2,13 +2,13 @@ import React from 'react';
 import {View, StyleSheet, Text, ScrollView, FlatList} from 'react-native';
 import Item from '../SectionCoursesItem/section-courses-item';
 import SeeAllBtn from '../../../common/see-all-button';
-import mainStyle from '../../../../styles/styles';
+import {Styles} from '../../../../styles';
 import data from '../../../../ExampleData/course';
 const SectionCourses = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={mainStyle.titleInList}>{props.title} </Text>
+        <Text style={Styles.titleInList}>{props.title} </Text>
         <SeeAllBtn />
       </View>
       <FlatList
