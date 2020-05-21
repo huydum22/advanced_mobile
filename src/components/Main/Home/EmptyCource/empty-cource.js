@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import colors from '../../../../config/color';
-import mainStyle from '../../../../config/styles';
-import size from '../../../../config/size';
+import colors from '../../../../styles/color';
+import mainStyle from '../../../../styles/styles';
+import size from '../../../../styles/size';
 const Empty = (props) => {
   return (
     <View style={styles.container}>

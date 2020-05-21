@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, ScrollView, View} from 'react-native';
 import SectionCourses from './SectionCourses/section-courses';
 import EmptyCourses from './EmptyCource/empty-cource';
-import colors from '../../../config/color';
+import colors from '../../../styles/color';
 const home = (props) => {
   return (
     <ScrollView

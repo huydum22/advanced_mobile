@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import colors from '../../../../config/color';
-import image from '../../../../../assets/person.jpg';
+import colors from '../../../../styles/color';
+import image from '../../../../assets/image/person.jpg';
 const Author = (props) => {
   //   const renderList = (listData) => {
   //     return listData.map((item) => (

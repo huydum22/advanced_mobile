@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, ScrollView} from 'react-native';
-import mainStyle from '../../../../config/styles';
+import mainStyle from '../../../../styles/styles';
 import data from '../../../../ExampleData/author';
 import Item from '../AuthorItem/author';
 const TopAuthor = (props) => {

@@ -11,8 +11,8 @@ import PopularSkill from './PopularSkill/popular-skill';
 import RelateSkill from './RelateSkill/relate-skill';
 import Path from './Path/path';
 import TopAuthor from './TopAuthors/top-authors';
-import colors from '../../../config/color';
-import size from '../../../config/size';
+import colors from '../../../styles/color';
+import size from '../../../styles/size';
 import backgroundImage from '../../../../assets/backgroundImage.jpg';
 import backgroundImage02 from '../../../../assets/backgroundImage02.jpg';
 

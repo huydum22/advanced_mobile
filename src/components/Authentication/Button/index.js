@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import colors from '../../../config/color';
+import {Colors, Size, Typography, Styles, BoxModel} from '../../../styles';
 import LinearGradient from 'react-native-linear-gradient';
 const Button = (props) => {
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
       <LinearGradient
-        colors={[colors.mainColor, colors.subColor]}
+        colors={[Colors.primaryColor, Colors.subPrimaryColor]}
         style={styles.container}>
         <Text style={styles.text}> {props.title}</Text>
       </LinearGradient>
@@ -16,18 +16,17 @@ const Button = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-    borderRadius: 10,
+    ...Styles.center,
+    ...Styles.width100,
+    ...BoxModel.marginVertical,
+    ...BoxModel.smallBorderRadius,
+    height: Size.scaleSize(40),
   },
   text: {
-    color: 'white',
-    alignItems: 'center',
-    fontSize: 14,
-    fontWeight: 'bold',
+    ...Styles.crossCenter,
+    ...Typography.fontBold,
+    color: Colors.whiteColor,
+    fontSize: Typography.fontSize16,
   },
 });
 export default Button;

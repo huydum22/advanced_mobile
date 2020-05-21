@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import colors from '../../../../../config/color';
+import colors from '../../../../../styles/color';
 import skill01 from '../../../../../../assets/skill01.jpg';
 import skill02 from '../../../../../../assets/skill02.jpg';
 import skill03 from '../../../../../../assets/skill03.jpg';

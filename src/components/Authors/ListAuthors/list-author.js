@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
-import colors from '../../../config/color';
+import colors from '../../../styles/color';
 import data from '../../../ExampleData/author';
 import Item from '../AuthorItem/author-item';
 const Authors = (props) => {

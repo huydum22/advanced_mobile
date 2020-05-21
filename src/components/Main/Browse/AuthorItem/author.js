@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
-import colors from '../../../../config/color';
+import colors from '../../../../styles/color';
 const Author = (props) => {
   return (
     <View style={styles.container}>

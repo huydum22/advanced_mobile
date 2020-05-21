@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import data from '../../../ExampleData/path';
-import colors from '../../../config/color';
+import colors from '../../../styles/color';
 import Item from '../PathItem/path-item';
 const Paths = (props) => {
   const flatListSeparator = () => {

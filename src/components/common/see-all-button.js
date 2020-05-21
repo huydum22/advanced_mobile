@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet, Text} from 'react-native';
-import colors from '../../config/color';
+import colors from '../../styles/color';
 const SeeAllButton = (props) => {
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>

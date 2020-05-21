@@ -7,17 +7,15 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from 'react-native';
-import logo from '../../../../assets/logo.png';
-import LoginButton from '../common/button';
-import RegisterButton from '../common/subButton';
-
-import Form from '../common/form-text-input';
-import constants from '../../../config/constants';
-import colors from '../../../config/color';
+import logo from '../../assets/image/logo_.png';
+import {
+  PrimaryButton,
+  SubPrimaryButton,
+  FormInput,
+} from '../../components/Authentication';
+import {Colors, Constants, BoxModel, Styles, Typography} from '../../styles';
 const Login = (props) => {
-  const handleLoginPress = () => {
-    console.log({email});
-  };
+  const handleLoginPress = () => {};
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,13 +31,12 @@ const Login = (props) => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={constants.IOS ? 'padding' : 'height'}>
+      behavior={Constants.IOS ? 'padding' : 'height'}>
       <View style={styles.logoContainer}>
-        <Image source={logo} style={styles.logo} />
-        <Text style={styles.logoText}>ONLINE COURSES</Text>
+        <Image source={logo} style={Styles.logoView} />
       </View>
       <View style={styles.form}>
-        <Form
+        <FormInput
           placeholder="Email"
           value={email}
           onChangeText={onChangeEmail}
@@ -48,7 +45,7 @@ const Login = (props) => {
           returnKeyType={'next'}
           icon="user"
         />
-        <Form
+        <FormInput
           placeholder="Password"
           secureTextEntry={true}
           value={password}
@@ -59,8 +56,8 @@ const Login = (props) => {
         <TouchableOpacity>
           <Text style={styles.txtForgotPass}>Forgot password?</Text>
         </TouchableOpacity>
-        <LoginButton title="Log In" onPress={handleLoginPress} />
-        <RegisterButton title="Register" />
+        <PrimaryButton title="Log In" onPress={handleLoginPress} />
+        <SubPrimaryButton title="Register" />
       </View>
     </KeyboardAvoidingView>
   );
@@ -68,42 +65,26 @@ const Login = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    ...Styles.center,
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: colors.mainColor,
+    backgroundColor: Colors.primaryColor,
   },
   logoContainer: {
+    ...Styles.center,
     flex: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    resizeMode: 'contain',
   },
-  logoText: {
-    color: 'white',
-    fontSize: 30,
-    opacity: 1,
-    marginTop: 10,
-    fontWeight: 'bold',
-  },
-  logo: {
-    width: 120,
-    height: 120,
-  },
-
   form: {
+    ...BoxModel.mediumBorderTopLeft,
+    ...Styles.width100,
+    ...BoxModel.mediumPadding,
+    ...Styles.mainStart,
     flex: 5,
-    justifyContent: 'flex-start',
-    width: '100%',
-    backgroundColor: 'white',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingVertical: 50,
-    paddingHorizontal: 30,
+    backgroundColor: Colors.whiteColor,
   },
   txtForgotPass: {
-    color: colors.mainColor,
-    marginTop: 10,
+    ...BoxModel.smallMarginVertical,
+    ...Typography.fontRegular,
+    color: Colors.primaryColor,
   },
 });
 export default Login;

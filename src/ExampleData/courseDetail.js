@@ -1,7 +1,7 @@
 const randomRate = () => {
   return Math.floor(Math.random() * 5);
 };
-import image01 from '../../assets/skill01.jpg';
+import image01 from '../assets/image/skill01.jpg';
 
 const data = {
   id: '1',

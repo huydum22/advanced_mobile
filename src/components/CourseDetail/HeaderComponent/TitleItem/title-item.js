@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import colors from '../../../../config/color';
+import colors from '../../../../styles/color';
 const Title = (props) => {
   return (
     <View style={styles.container}>

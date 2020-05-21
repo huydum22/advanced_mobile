@@ -6,8 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import mainStyle from '../../../../config/styles';
-import colors from '../../../../config/color';
+import mainStyle from '../../../../styles/styles';
+import colors from '../../../../styles/color';
 import data from '../../../../ExampleData/skill';
 const PopularSkill = (props) => {
   const renderList = (listData) => {

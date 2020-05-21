@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import colors from '../../../../config/color';
+import colors from '../../../../styles/color';
 import Feather from 'react-native-vector-icons/Feather';
 
 const Feature = (props) => {

@@ -1,22 +1,15 @@
 import React, {useState} from 'react';
+import {View, StyleSheet, Image, KeyboardAvoidingView} from 'react-native';
 import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  KeyboardAvoidingView,
-} from 'react-native';
-import logo from '../../../../assets/logo.png';
-import RegisterButton from '../common/button';
-import LoginButton from '../common/subButton';
+  PrimaryButton,
+  SubPrimaryButton,
+  FormInput,
+} from '../../components/Authentication';
+import logo from '../../assets/image/logo_.png';
 
-import Form from '../common/form-text-input';
-import constants from '../../../config/constants';
-import colors from '../../../config/color';
+import {Colors, Constants, Styles, BoxModel} from '../../styles';
 const Register = (props) => {
-  const handleLoginPress = () => {
-    console.log({email});
-  };
+  const handleLoginPress = () => {};
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,13 +28,12 @@ const Register = (props) => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={constants.IOS ? 'padding' : 'height'}>
+      behavior={Constants.IOS ? 'padding' : 'height'}>
       <View style={styles.logoContainer}>
-        <Image source={logo} style={styles.logo} />
-        <Text style={styles.logoText}>Register Now!</Text>
+        <Image source={logo} style={Styles.logoView} />
       </View>
       <View style={styles.form}>
-        <Form
+        <FormInput
           placeholder="Email"
           value={email}
           onChangeText={onChangeEmail}
@@ -50,7 +42,7 @@ const Register = (props) => {
           returnKeyType={'next'}
           icon="user"
         />
-        <Form
+        <FormInput
           placeholder="Password"
           secureTextEntry={true}
           value={password}
@@ -58,7 +50,7 @@ const Register = (props) => {
           returnKeyType={'done'}
           icon="lock"
         />
-        <Form
+        <FormInput
           placeholder="Confirm Password"
           secureTextEntry={true}
           value={confirmPassword}
@@ -66,8 +58,8 @@ const Register = (props) => {
           returnKeyType={'done'}
           icon="lock"
         />
-        <RegisterButton title="Register" onPress={handleLoginPress} />
-        <LoginButton title="Log In" />
+        <PrimaryButton title="Register" onPress={handleLoginPress} />
+        <SubPrimaryButton title="Log In" />
       </View>
     </KeyboardAvoidingView>
   );
@@ -75,38 +67,21 @@ const Register = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    ...Styles.center,
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: colors.mainColor,
+    backgroundColor: Colors.primaryColor,
   },
   logoContainer: {
     flex: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    resizeMode: 'contain',
+    ...Styles.center,
   },
-  logoText: {
-    color: 'white',
-    fontSize: 30,
-    opacity: 1,
-    marginTop: 10,
-    fontWeight: 'bold',
-  },
-  logo: {
-    width: 120,
-    height: 120,
-  },
-
   form: {
+    ...BoxModel.mediumBorderTopLeft,
+    ...Styles.width100,
+    ...BoxModel.mediumPadding,
+    ...Styles.mainStart,
     flex: 5,
-    justifyContent: 'flex-start',
-    width: '100%',
-    backgroundColor: 'white',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingVertical: 30,
-    paddingHorizontal: 30,
+    backgroundColor: Colors.whiteColor,
   },
 });
 export default Register;

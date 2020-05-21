@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Image, Text, View, TouchableHighlight} from 'react-native';
-import colors from '../../../config/color';
+import colors from '../../../styles/color';
 
 const Item = (props) => {
   const onPress01 = () => {};

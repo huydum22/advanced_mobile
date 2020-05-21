@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import data from '../../ExampleData/courseDetail';
 import contentData from '../../ExampleData/contents';
-import colors from '../../config/color';
-import size from '../../config/size';
+import colors from '../../styles/color';
+import size from '../../styles/size';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';

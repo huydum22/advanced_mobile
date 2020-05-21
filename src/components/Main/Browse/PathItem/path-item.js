@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
-import colors from '../../../../config/color';
-import mainStyle from '../../../../config/styles';
+import colors from '../../../../styles/color';
+import mainStyle from '../../../../styles/styles';
 import image from '../../../../../assets/path.jpg';
 const Item = (props) => {
   console.log(props.name);

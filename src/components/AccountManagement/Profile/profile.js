@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import data from '../../../ExampleData/profile';
-import colors from '../../../config/color';
-import size from '../../../config/size';
+import colors from '../../../styles/color';
+import size from '../../../styles/size';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Item from '../ProfileItem/profile-item';

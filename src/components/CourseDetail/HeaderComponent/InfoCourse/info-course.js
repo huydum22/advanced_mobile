@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import colors from '../../../../config/color';
+import colors from '../../../../styles/color';
 import {Rating} from 'react-native-ratings';
 
 const InfoCourse = (props) => {

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableHighlight} from 'react-native';
-import colors from '../../../../config/color';
+import colors from '../../../../styles/color';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const Description = (props) => {
   const [isExpand, setExpand] = useState(true);

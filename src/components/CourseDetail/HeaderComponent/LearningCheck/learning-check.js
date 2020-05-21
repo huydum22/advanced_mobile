@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableHighlight} from 'react-native';
-import colors from '../../../../config/color';
+import colors from '../../../../styles/color';
 import Feather from 'react-native-vector-icons/Feather';
 const LearningCheck = (props) => {
   const onPress = () => {

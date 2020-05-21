@@ -9,8 +9,8 @@ import ItemCourse from '../../Courses/CoursesItem/course-item';
 import ItemPath from '../../Paths/PathItem/path-item';
 import ItemAuthor from '../../Authors/AuthorItem/author-item';
 
-import mainStyle from '../../../config/styles';
-import colors from '../../../config/color';
+import mainStyle from '../../../styles/styles';
+import colors from '../../../styles/color';
 import SeeAllBtn from '../../common/see-all-button';
 
 const Search = (props) => {

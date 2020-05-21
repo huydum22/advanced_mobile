@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
-import colors from '../../../config/color';
+import colors from '../../../styles/color';
 import data from '../../../ExampleData/course';
 import Item from '../CoursesItem/course-item';
 
