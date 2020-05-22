@@ -9,6 +9,9 @@ export const fontWeightRegular = '400';
 export const fontWeightBold = '700';
 
 // FONT SIZE
+export const fontSize30 = scaleFont(30);
+export const fontSize20 = scaleFont(20);
+export const fontSize18 = scaleFont(18);
 export const fontSize16 = scaleFont(16);
 export const fontSize14 = scaleFont(14);
 export const fontSize12 = scaleFont(12);
@@ -29,4 +32,7 @@ export const fontRegular = {
 export const fontBold = {
   fontFamily: fontFamilyBold,
   fontWeight: fontWeightBold,
+};
+export const textCenter = {
+  textAlign: 'center',
 };

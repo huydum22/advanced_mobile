@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigator from './Navigation';
-// import Home from './components/Main/Home/home';
+// import Home from './scenes/Browse';
 export default function App() {
+  // return <Home />;
   return <Navigator />;
-  // return <Navigator />;
 }

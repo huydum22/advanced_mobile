@@ -1,4 +1,4 @@
-import {tiny, small, normal, medium} from './spacing';
+import {tiny, small, normal, medium} from './distance';
 export const bottomMargin = {
   marginBottom: normal,
 };

@@ -10,15 +10,17 @@ export const alphaBackgroundImageColor = 'rgba(0,0,0,0.5)';
 export const blackWithOpacity = 'rgba(0,0,0,0.25)';
 export const blackTextWithOpacity = 'rgba(0,0,0,0.8)';
 export const logoutText = 'red';
-export const backgroundGroupButton = '#DBE1E5';
 export const greenCheckColor = '#54B96F';
-
 export const primaryColor = '#3a539b';
 export const subPrimaryColor = '#2a5298';
 
 export const secondaryColor = '#767676';
 export const whiteColor = '#FFFFFF';
 export const blackColor = '#000000';
+export const blackWith08OpacityColor = 'rgba(0,0,0,0.8)';
+export const blackWith05OpacityColor = 'rgba(0,0,0,0.5)';
+
+export const backgroundSeeAllButton = '#DEE2E9';
 
 // ACTIONS
 export const successColor = '#3adb76';

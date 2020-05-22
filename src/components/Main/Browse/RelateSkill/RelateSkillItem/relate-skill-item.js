@@ -5,10 +5,16 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import colors from '../../../../../styles/color';
-import skill01 from '../../../../../../assets/skill01.jpg';
-import skill02 from '../../../../../../assets/skill02.jpg';
-import skill03 from '../../../../../../assets/skill03.jpg';
+import {
+  Colors,
+  Styles,
+  Size,
+  BoxModel,
+  Typography,
+} from '../../../../../styles';
+import skill01 from '../../../../../assets/image/skill01.jpg';
+import skill02 from '../../../../../assets/image/skill02.jpg';
+import skill03 from '../../../../../assets/image/skill03.jpg';
 
 const Item = (props) => {
   const imageBackground = (id) => {
@@ -27,33 +33,26 @@ const Item = (props) => {
     <ImageBackground
       style={styles.container}
       source={imageBackground(props.image)}>
-      <TouchableOpacity style={styles.blurContainer}>
-        <Text style={styles.text}>{props.name}</Text>
+      <TouchableOpacity style={[styles.blurContainer, styles.container]}>
+        <Text style={[Styles.textInBanner, styles.text]}>{props.name}</Text>
       </TouchableOpacity>
     </ImageBackground>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    width: 150,
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 5,
+    ...Styles.center,
+    ...BoxModel.tinyMargin,
+    width: Size.scaleSize(150),
+    height: Size.bannerHeight,
   },
   blurContainer: {
-    width: 150,
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.alphaBackgroundImageColor,
-    margin: 5,
+    backgroundColor: Colors.alphaBackgroundImageColor,
   },
   text: {
-    textAlign: 'center',
-    color: colors.whiteColor,
-    padding: 10,
-    fontWeight: 'bold',
+    ...BoxModel.smallPadding,
+    ...Typography.fontBold,
+    color: Colors.whiteColor,
   },
 });
 export default Item;

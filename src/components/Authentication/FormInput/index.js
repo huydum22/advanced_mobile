@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     ...BoxModel.smallMarginHorizontal,
     ...Typography.fontRegular,
     height: Size.scaleSize(40),
+    fontSize: Typography.fontSize16,
     borderColor: Colors.grayMediumColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
     color: Colors.primaryColor,

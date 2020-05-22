@@ -6,8 +6,13 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import mainStyle from '../../../../styles/styles';
-import colors from '../../../../styles/color';
+import {
+  Colors,
+  Styles,
+  Typography,
+  Distance,
+  BoxModel,
+} from '../../../../styles';
 import data from '../../../../ExampleData/skill';
 const PopularSkill = (props) => {
   const renderList = (listData) => {
@@ -20,7 +25,9 @@ const PopularSkill = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={mainStyle.titleInList}>Popular skills</Text>
+        <Text style={[Styles.titleRow, Typography.fontBold]}>
+          Popular skills
+        </Text>
       </View>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {renderList(data)}
@@ -32,19 +39,21 @@ const PopularSkill = (props) => {
 const styles = StyleSheet.create({
   container: {flex: 1},
   titleContainer: {
-    height: 25,
-    marginLeft: 15,
+    ...Styles.rowCross,
+    ...BoxModel.tinyMarginVertical,
+    ...BoxModel.marginHorizontal,
+    height: Distance.medium,
   },
   skillContainer: {
-    backgroundColor: colors.backgroundButtonColor,
-    borderRadius: 15,
-    marginLeft: 10,
-    height: 30,
-    justifyContent: 'center',
-    paddingHorizontal: 10,
+    ...BoxModel.smallBorderRadius,
+    ...Styles.mainCenter,
+    ...BoxModel.smallPaddingHorizontal,
+    backgroundColor: Colors.backgroundSeeAllButton,
+    marginLeft: Distance.spacing_10,
+    height: Distance.spacing_30,
   },
   footer: {
-    width: 15,
+    width: Distance.spacing_14,
   },
 });
 

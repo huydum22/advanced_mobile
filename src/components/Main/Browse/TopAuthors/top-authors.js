@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, ScrollView} from 'react-native';
-import mainStyle from '../../../../styles/styles';
+import {Styles, Typography, BoxModel, Distance} from '../../../../styles';
 import data from '../../../../ExampleData/author';
 import Item from '../AuthorItem/author';
 const TopAuthor = (props) => {
@@ -12,7 +12,7 @@ const TopAuthor = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={mainStyle.titleInList}>Top Authors</Text>
+        <Text style={[Styles.titleRow, Typography.fontBold]}>Top Authors</Text>
       </View>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {renderListData(data)}
@@ -27,12 +27,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   titleContainer: {
-    height: 40,
-    marginLeft: 15,
-    justifyContent: 'center',
+    ...BoxModel.smallMargin,
+    ...Styles.rowBetween,
+    height: Distance.medium,
   },
   footer: {
-    width: 15,
+    width: Distance.spacing_14,
   },
 });
 

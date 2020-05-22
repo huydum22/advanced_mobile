@@ -1,19 +1,21 @@
 import React from 'react';
-import {View, StyleSheet, Text, ScrollView, FlatList} from 'react-native';
-import Item from '../SectionCoursesItem/section-courses-item';
+import {View, StyleSheet, Text, FlatList} from 'react-native';
+import Item from '../SectionCoursesItem';
 import SeeAllBtn from '../../../common/see-all-button';
-import {Styles} from '../../../../styles';
+import {Styles, Distance, Typography, BoxModel} from '../../../../styles';
 import data from '../../../../ExampleData/course';
 const SectionCourses = (props) => {
   return (
-    <View style={styles.container}>
+    <View style={[Styles.fillColumn, styles.container]}>
       <View style={styles.titleContainer}>
-        <Text style={Styles.titleInList}>{props.title} </Text>
+        <Text style={[Styles.titleRow, Typography.fontBold]}>
+          {props.title}{' '}
+        </Text>
         <SeeAllBtn />
       </View>
       <FlatList
         horizontal={true}
-        // showsHorizontalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         data={data}
         renderItem={({item}) => (
           <Item
@@ -33,13 +35,11 @@ const SectionCourses = (props) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {},
   titleContainer: {
-    height: 40,
-    flexDirection: 'row',
-    marginLeft: 10,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    ...BoxModel.marginHorizontal,
+    ...Styles.rowBetween,
+    height: Distance.medium,
   },
 });
 export default SectionCourses;

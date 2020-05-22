@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import Item from '../PathItem/path-item';
 import SeeAllBtn from '../../../common/see-all-button';
-import mainStyle from '../../../../styles/styles';
+import {Styles, BoxModel, Distance, Typography} from '../../../../styles';
 import data from '../../../../ExampleData/path';
 const Path = (props) => {
   const renderListData = (list) => {
@@ -17,7 +17,9 @@ const Path = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={mainStyle.titleInList}>{props.title} </Text>
+        <Text style={[Styles.titleRow, Typography.fontBold]}>
+          {props.title}{' '}
+        </Text>
         <SeeAllBtn />
       </View>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -29,11 +31,9 @@ const Path = (props) => {
 const styles = StyleSheet.create({
   container: {flex: 1},
   titleContainer: {
-    height: 40,
-    flexDirection: 'row',
-    marginLeft: 15,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    ...BoxModel.smallMargin,
+    ...Styles.rowBetween,
+    height: Distance.medium,
   },
 });
 export default Path;

@@ -5,7 +5,7 @@ import {
   Styles,
   Typography,
   Size,
-  Spacing,
+  Distance,
   BoxModel,
 } from '../../../styles';
 // import LinearGradient from 'react-native-linear-gradient';
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     ...BoxModel.smallBorderRadius,
     height: Size.scaleSize(40),
     backgroundColor: Colors.whiteColor,
-    borderWidth: Spacing.superSmall,
+    borderWidth: Distance.superSmall,
     borderColor: Colors.primaryColor,
   },
   text: {

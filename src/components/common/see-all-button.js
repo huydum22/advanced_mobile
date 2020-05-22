@@ -1,30 +1,35 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet, Text} from 'react-native';
-import colors from '../../styles/color';
+import {
+  Colors,
+  Styles,
+  Typography,
+  Size,
+  BoxModel,
+  Distance,
+} from '../../styles';
 const SeeAllButton = (props) => {
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
-      <Text style={styles.text}>See all ></Text>
+      <Text style={[styles.text, Typography.fontRegular]}>See all ></Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 20,
-    width: 80,
-    marginRight: 5,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: colors.backgroundButtonColor,
-    backgroundColor: colors.backgroundButtonColor,
+    ...Styles.center,
+    height: Size.scaleSize(20),
+    width: Size.scaleSize(80),
+    ...BoxModel.smallBorderRadius,
+    marginRight: Distance.normal,
+    borderWidth: Distance.superSmall,
+    borderColor: Colors.backgroundSeeAllButton,
+    backgroundColor: Colors.backgroundSeeAllButton,
   },
   text: {
-    color: colors.blackTitleColor,
-    fontSize: 13,
-    fontWeight: '300',
+    color: Colors.blackWith08OpacityColor,
+    fontSize: Typography.fontSize14,
   },
 });
 export default SeeAllButton;
