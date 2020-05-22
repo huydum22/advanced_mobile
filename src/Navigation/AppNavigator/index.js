@@ -5,6 +5,7 @@ import {
   BrowseScreenName,
   DownloadScreenName,
   ProfileScreenName,
+  CourseDetailScreenName,
 } from '../../config/ScreenName';
 
 import {Colors, Typography} from '../../styles';
@@ -56,6 +57,7 @@ const configLabel = {
 };
 const AppNavigator = () => (
   <Tab.Navigator
+    initialRouteName={HomeScreenName}
     tabBarOptions={{
       labelStyle: configLabel,
       activeTintColor: Colors.primaryColor,

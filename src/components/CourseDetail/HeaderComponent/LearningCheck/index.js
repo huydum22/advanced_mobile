@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableHighlight} from 'react-native';
-import colors from '../../../../styles/color';
+import {Colors} from '../../../../styles';
 import Feather from 'react-native-vector-icons/Feather';
 const LearningCheck = (props) => {
   const onPress = () => {
     // console.log('test');
   };
   return (
-    <TouchableHighlight underlayColor={colors.whiteColor} onPress={onPress}>
+    <TouchableHighlight underlayColor={Colors.whiteColor} onPress={onPress}>
       <View style={styles.container}>
         <Feather name="target" size={20} />
         <View style={styles.textContainer}>
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     height: 40,
-    backgroundColor: colors.backgroundGroupButton,
+    backgroundColor: Colors.backgroundSeeAllButton,
     marginHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center',

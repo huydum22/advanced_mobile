@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text, TouchableHighlight} from 'react-native';
-import colors from '../../../../styles/color';
+import {Colors} from '../../../../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const Description = (props) => {
   const [isExpand, setExpand] = useState(true);
@@ -31,7 +31,7 @@ const Description = (props) => {
         <TouchableHighlight
           style={styles.buttonContainer}
           onPress={onPress}
-          underlayColor={colors.backgroundGroupButton}>
+          underlayColor={Colors.backgroundSeeAllButton}>
           {renderIcon()}
         </TouchableHighlight>
       </View>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: colors.backgroundGroupButton,
+    backgroundColor: Colors.backgroundSeeAllButton,
     width: 20,
     borderRadius: 5,
     alignItems: 'center',
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     height: 80,
   },
   text: {
-    color: colors.blackTextWithOpacity,
+    color: Colors.blackWith05OpacityColor,
   },
 });
 export default Description;

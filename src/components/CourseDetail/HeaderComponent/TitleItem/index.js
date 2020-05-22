@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import colors from '../../../../styles/color';
+import {Colors} from '../../../../styles';
 const Title = (props) => {
   return (
     <View style={styles.container}>
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   textContainer: {
-    color: colors.blackTitleColor,
+    color: Colors.blackColor,
     fontSize: 21,
     fontWeight: '700',
   },

@@ -19,8 +19,8 @@ import {
   ListPopularSkillHorizontal,
   ListRelateSkillHorizontal,
 } from '../../components/ListSkillHorizontal';
-
 const brown = (props) => {
+  const {navigation, route} = props;
   return (
     <SafeAreaView>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>

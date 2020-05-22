@@ -12,9 +12,7 @@ import {Rating} from 'react-native-ratings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Item = (props) => {
-  const onPress01 = () => {
-    console.log('test');
-  };
+  const onPress01 = () => {};
   return (
     <View style={styles.container}>
       <TouchableHighlight

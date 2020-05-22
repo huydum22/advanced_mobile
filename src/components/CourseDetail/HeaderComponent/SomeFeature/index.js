@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import colors from '../../../../styles/color';
+import {Colors} from '../../../../styles';
 import Feather from 'react-native-vector-icons/Feather';
 
 const Feature = (props) => {
@@ -29,7 +29,7 @@ const Feature = (props) => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.whiteColor,
+    backgroundColor: Colors.whiteColor,
     flexDirection: 'row',
     height: 100,
   },
@@ -43,13 +43,13 @@ const styles = StyleSheet.create({
   buttonContainer: {
     height: 50,
     width: 50,
-    backgroundColor: colors.backgroundGroupButton,
+    backgroundColor: Colors.backgroundSeeAllButton,
     justifyContent: 'center',
     borderRadius: 25,
     alignItems: 'center',
   },
   textContainer: {
-    color: colors.blackTitleColor,
+    color: Colors.blackColor,
     marginTop: 10,
   },
 });

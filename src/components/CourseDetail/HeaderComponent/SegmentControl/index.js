@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
-import colors from '../../../../styles/color';
+import {Colors} from '../../../../styles';
 const SegmentControl = (props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const handleIndexChange = (index) => {
@@ -38,21 +38,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: colors.whiteColor,
+    borderColor: Colors.whiteColor,
     borderWidth: 1,
-    backgroundColor: colors.whiteColor,
+    backgroundColor: Colors.whiteColor,
   },
   activeTabStyle: {
-    backgroundColor: colors.whiteColor,
-    borderBottomColor: colors.mainColor,
+    backgroundColor: Colors.whiteColor,
+    borderBottomColor: Colors.primaryColor,
     borderBottomWidth: 2,
   },
   tabTextStyle: {
-    color: colors.blackWithOpacity,
+    color: Colors.blackWith05OpacityColor,
     fontWeight: 'bold',
   },
   activeTabTextStyle: {
-    color: colors.blackTitleColor,
+    color: Colors.blackColor,
   },
 });
 

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import colors from '../../../../styles/color';
+import {Colors} from '../../../../styles';
 import image from '../../../../assets/image/person.jpg';
 const Author = (props) => {
   //   const renderList = (listData) => {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   skillContainer: {
     flexDirection: 'row',
-    backgroundColor: colors.backgroundGroupButton,
+    backgroundColor: Colors.backgroundSeeAllButton,
     borderRadius: 15,
     marginLeft: 20,
     height: 30,

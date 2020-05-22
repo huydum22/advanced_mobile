@@ -3,18 +3,17 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
+  ImageBackground,
   SectionList,
   TouchableHighlight,
 } from 'react-native';
-import data from '../../ExampleData/courseDetail';
-import contentData from '../../ExampleData/contents';
-import colors from '../../styles/color';
-import size from '../../styles/size';
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import data from '../../../ExampleData/courseDetail';
+import contentData from '../../../ExampleData/contents';
+import {Size, Colors} from '../../../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Header from './HeaderComponent/header-component';
+import Header from '../HeaderComponent';
 const flatListSeparator = () => {
   return <View style={styles.separator} />;
 };
@@ -26,7 +25,7 @@ const renderHeader = (title, index) => {
     <TouchableHighlight
       style={styles.headerTouchable}
       onPress={onPressHeader}
-      underlayColor={colors.backgroundGroupButton}>
+      underlayColor={Colors.backgroundSeeAllButton}>
       <View style={styles.headerContainer}>
         <Text style={styles.textHeader}>
           {index}
@@ -43,12 +42,13 @@ const completeSessionCourse = (isCheck) => {
       <MaterialCommunityIcons
         name="marker-check"
         size={15}
-        color={colors.greenCheckColor}
+        color={Colors.successColor}
         style={styles.checkContainer}
       />
     );
   }
 };
+
 const renderListItem = (item) => {
   return (
     <View style={styles.textContainer}>
@@ -58,11 +58,24 @@ const renderListItem = (item) => {
   );
 };
 const CourseDetail = (props) => {
+  const {navigation} = props;
+  const dismiss = () => {
+    navigation.goBack();
+  };
   return (
     <View style={styles.container}>
-      <View style={styles.videoContainer}>
-        <Image source={data.image} />
-      </View>
+      <ImageBackground style={styles.videoContainer} source={data.image}>
+        <View style={styles.blurContainer}>
+          <TouchableHighlight onPress={dismiss}>
+            <MaterialIcons
+              name="cancel"
+              size={30}
+              color={Colors.whiteWith07OpacityColor}
+              style={styles.cancelButton}
+            />
+          </TouchableHighlight>
+        </View>
+      </ImageBackground>
       <View style={styles.mainContainer}>
         <SectionList
           ItemSeparatorComponent={flatListSeparator}
@@ -85,32 +98,36 @@ const CourseDetail = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.backgroundColor,
-    height: size.HEIGHT,
+    backgroundColor: Colors.backgroundColor,
+    height: Size.HEIGHT,
   },
   videoContainer: {
     flex: 1,
-    backgroundColor: colors.mainColor,
+    backgroundColor: Colors.backgroundColor,
+  },
+  blurContainer: {
+    flex: 1,
+    backgroundColor: Colors.blackWith05OpacityColor,
   },
   mainContainer: {
     flex: 2,
     flexDirection: 'column',
-    backgroundColor: colors.whiteColor,
+    backgroundColor: Colors.whiteColor,
     justifyContent: 'flex-start',
   },
   divide: {
-    backgroundColor: colors.backgroundGroupButton,
+    backgroundColor: Colors.backgroundGroupButton,
     height: 1,
     marginHorizontal: 20,
   },
   footer: {height: 40},
   separator: {
     height: 1,
-    backgroundColor: colors.backgroundGroupButton,
+    backgroundColor: Colors.backgroundSeeAllButton,
   },
   headerTouchable: {
     height: 50,
-    backgroundColor: colors.backgroundGroupButton,
+    backgroundColor: Colors.backgroundSeeAllButton,
   },
   headerContainer: {
     height: 50,
@@ -118,10 +135,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginHorizontal: 20,
-    backgroundColor: colors.backgroundGroupButton,
+    backgroundColor: Colors.backgroundSeeAllButton,
   },
   textHeader: {
-    color: colors.blackTitleColor,
+    color: Colors.blackColor,
     fontSize: 14,
     fontWeight: 'bold',
   },
@@ -136,13 +153,20 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flexDirection: 'row',
-    backgroundColor: colors.whiteColor,
+    backgroundColor: Colors.whiteColor,
     height: 35,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   checkContainer: {
     marginRight: 20,
+  },
+  image: {
+    resizeMode: 'cover',
+  },
+  cancelButton: {
+    top: 15,
+    left: 15,
   },
 });
 export default CourseDetail;

@@ -4,16 +4,30 @@ import {ListCourseHorizontal} from '../../components/ListCourseHorizontal';
 import EmptyComponent from '../../components/EmptyComponent';
 import {Colors, Distance} from '../../styles';
 const home = (props) => {
+  const {navigation, route} = props;
+
   return (
     <SafeAreaView>
       <ScrollView
         style={styles.container}
         showsVerticalScrollIndicator={false}
         alwaysBounceVertical={true}>
-        <ListCourseHorizontal title="Software development" />
-        <ListCourseHorizontal title="IT operations" />
-        <ListCourseHorizontal title="Data Professional" />
-        <ListCourseHorizontal title="Security Professional" />
+        <ListCourseHorizontal
+          title="Software development"
+          navigation={props.navigation}
+        />
+        <ListCourseHorizontal
+          title="IT operations"
+          navigation={props.navigation}
+        />
+        <ListCourseHorizontal
+          title="Data Professional"
+          navigation={props.navigation}
+        />
+        <ListCourseHorizontal
+          title="Security Professional"
+          navigation={props.navigation}
+        />
         <EmptyComponent
           title="My paths"
           icon="book-open"

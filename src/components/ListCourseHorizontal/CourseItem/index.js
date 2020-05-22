@@ -4,7 +4,10 @@ import {Colors, Styles, BoxModel, Size, Typography} from '../../../styles';
 import {Rating} from 'react-native-ratings';
 const Item = (props) => {
   return (
-    <TouchableOpacity style={Styles.horizontalCourse} activeOpacity={0.6}>
+    <TouchableOpacity
+      style={Styles.horizontalCourse}
+      activeOpacity={0.6}
+      onPress={props.onPress}>
       <Image source={props.image} style={Styles.imageInHorizontalCourse} />
       <View style={Styles.containerInHorizontalCourse}>
         <View style={Styles.breakContentText}>

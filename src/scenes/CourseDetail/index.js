@@ -1,14 +1,14 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
-import {Profile} from '../../components/AccountManagement';
-const Account = (props) => {
+import {CourseDetail} from '../../components/CourseDetail';
+const Course = (props) => {
   const {navigation, route} = props;
 
   return (
     <SafeAreaView>
-      <Profile />
+      <CourseDetail navigation={navigation} />
     </SafeAreaView>
   );
 };
 
-export default Account;
+export default Course;
