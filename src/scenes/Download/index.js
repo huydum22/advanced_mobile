@@ -1,8 +1,12 @@
 import React from 'react';
-import {View} from 'react-native';
-
+import {View, SafeAreaView, Text} from 'react-native';
+import {ListCourseVertical} from '../../components/ListCourseVertical';
 const ListCourse = (props) => {
-  return <View></View>;
+  return (
+    <SafeAreaView>
+      <ListCourseVertical />
+    </SafeAreaView>
+  );
 };
 
 export default ListCourse;

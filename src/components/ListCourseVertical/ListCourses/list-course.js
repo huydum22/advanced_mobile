@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
 import colors from '../../../styles/color';
 import data from '../../../ExampleData/course';
-import Item from '../CoursesItem/course-item';
+import Item from '../CourseItem';
 
 const ListCourse = (props) => {
   const flatListSeparator = () => {

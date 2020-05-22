@@ -1,17 +1,17 @@
 import React from 'react';
 import {StyleSheet, View, SectionList, Text, list} from 'react-native';
 
-import courseData from '../../../ExampleData/course';
-import pathData from '../../../ExampleData/path';
-import authorData from '../../../ExampleData/author';
+import courseData from '../../ExampleData/course';
+import pathData from '../../ExampleData/path';
+import authorData from '../../ExampleData/author';
 
 import ItemCourse from '../../Courses/CoursesItem/course-item';
-import ItemPath from '../../Paths/PathItem/path-item';
-import ItemAuthor from '../../Authors/AuthorItem/author-item';
+import ItemPath from '../Paths/PathItem/path-item';
+import ItemAuthor from '../Authors/AuthorItem/author-item';
 
-import mainStyle from '../../../styles/styles';
-import colors from '../../../styles/color';
-import SeeAllBtn from '../../common/see-all-button';
+import mainStyle from '../../styles/styles';
+import colors from '../../styles/color';
+import SeeAllBtn from '../common/see-all-button';
 
 const Search = (props) => {
   const flatListSeparator = () => {

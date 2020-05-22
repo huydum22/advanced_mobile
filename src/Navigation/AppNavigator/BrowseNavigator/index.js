@@ -6,7 +6,7 @@ import {BrowseScreenName} from '../../../config/ScreenName';
 
 import Browse from '../../../scenes/Browse';
 const BrowseStack = createStackNavigator();
-const configBrowseStack = {
+const configBrowseNavigator = {
   title: 'Browse',
   headerStyle: {
     backgroundColor: Colors.primaryColor,
@@ -23,7 +23,7 @@ const BrowseNavigatorStack = () => {
       <BrowseStack.Screen
         name={BrowseScreenName}
         component={Browse}
-        options={configBrowseStack}
+        options={configBrowseNavigator}
       />
     </BrowseStack.Navigator>
   );

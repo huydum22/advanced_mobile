@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import Title from './TitleItem/title-item';
-import Author from './AuthorItem/author-item';
-import InfoCourse from './InfoCourse/info-course';
-import Feature from './SomeFeature/feature';
-import Description from './Description/description';
-import Relate from './Relate/relate';
-import LearningCheck from './LearningCheck/learning-check';
-import SegmentControl from './SegmentControl/segment-control';
+import Title from './TitleItem';
+import Author from './AuthorItem';
+import InfoCourse from './InfoCourse';
+import Feature from './SomeFeature';
+import Description from './Description';
+import Relate from './Relate';
+import LearningCheck from './LearningCheck';
+import SegmentControl from './SegmentControl';
 const Header = (props) => {
   return (
     <View>

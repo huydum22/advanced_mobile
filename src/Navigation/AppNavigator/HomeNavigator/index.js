@@ -5,7 +5,7 @@ import {HomeScreenName} from '../../../config/ScreenName';
 import {Colors, Typography} from '../../../styles';
 
 const HomeStack = createStackNavigator();
-const configHomeStack = {
+const configHomeNavigator = {
   title: 'Home',
   headerStyle: {
     backgroundColor: Colors.primaryColor,
@@ -22,7 +22,7 @@ const HomeNavigatorStack = () => {
       <HomeStack.Screen
         name={HomeScreenName}
         component={Home}
-        options={configHomeStack}
+        options={configHomeNavigator}
       />
     </HomeStack.Navigator>
   );

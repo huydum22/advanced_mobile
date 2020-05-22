@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
-import colors from '../../../styles/color';
+import {Colors} from '../../../styles';
 import {Rating} from 'react-native-ratings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -20,7 +20,7 @@ const Item = (props) => {
       <TouchableHighlight
         style={styles.main}
         onPress={onPress01}
-        underlayColor={colors.backgroundItem}>
+        underlayColor={Colors.whiteColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
             <Image source={props.image} style={styles.image} />
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: colors.backgroundItem,
+    backgroundColor: Colors.backgroundItem,
   },
   main: {
     flex: 9,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   author: {
     flex: 1,
     fontWeight: '500',
-    color: colors.subTextColor,
+    color: Colors.subTextColor,
     fontSize: 12,
   },
   levelContainer: {

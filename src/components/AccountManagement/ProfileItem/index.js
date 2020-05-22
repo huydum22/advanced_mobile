@@ -1,16 +1,12 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
-import colors from '../../../styles/color';
+import {Colors} from '../../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const isLogout = (icon) => {
   if (icon) {
     return (
-      <FontAwesome
-        name="angle-right"
-        size={26}
-        color={colors.blackTitleColor}
-      />
+      <FontAwesome name="angle-right" size={26} color={Colors.blackColor} />
     );
   }
 };
@@ -19,7 +15,7 @@ const Item = ({icon, name}) => {
   return (
     <TouchableHighlight
       style={styles.container}
-      underlayColor={colors.backgroundItem}
+      underlayColor={Colors.whiteColor}
       onPress={onPress}>
       <View style={styles.itemContainer}>
         <MaterialCommunityIcons name={icon} size={26} color="#1e1e1e" />
@@ -38,11 +34,11 @@ const Item = ({icon, name}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: colors.whiteColor,
+    backgroundColor: Colors.whiteColor,
     alignItems: 'center',
   },
   itemContainer: {
-    backgroundColor: colors.whiteColor,
+    backgroundColor: Colors.whiteColor,
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -50,11 +46,11 @@ const styles = StyleSheet.create({
   },
   itemText: {
     flex: 1,
-    color: colors.blackTitleColor,
+    color: Colors.blackColor,
   },
   logoutText: {
     flex: 1,
-    color: colors.logoutText,
+    color: Colors.redColor,
     textAlign: 'center',
     fontWeight: '600',
     fontSize: 17,

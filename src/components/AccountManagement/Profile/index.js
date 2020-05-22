@@ -1,11 +1,12 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import data from '../../../ExampleData/profile';
-import colors from '../../../styles/color';
-import size from '../../../styles/size';
+// import colors from '../../../styles/color';
+// import size from '../../../styles/size';
+import {Colors, Size} from '../../../styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Item from '../ProfileItem/profile-item';
+import Item from '../ProfileItem';
 const Profile = (props) => {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -18,11 +19,7 @@ const Profile = (props) => {
             <Text style={styles.nameText}>{data.name}</Text>
             <Text style={styles.emailText}>{data.email}</Text>
           </View>
-          <FontAwesome
-            name="angle-right"
-            size={26}
-            color={colors.blackTitleColor}
-          />
+          <FontAwesome name="angle-right" size={26} color={Colors.blackColor} />
         </View>
         <View style={styles.divider} />
         <Item icon="theme-light-dark" name="Theme" />
@@ -45,14 +42,14 @@ const Profile = (props) => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.backgroundColor,
-    height: size.HEIGHT,
+    backgroundColor: Colors.backgroundColor,
+    height: Size.HEIGHT,
   },
   mainContainer: {
     flex: 1,
   },
   userContainer: {
-    backgroundColor: colors.whiteColor,
+    backgroundColor: Colors.whiteColor,
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingVertical: 22,
@@ -64,14 +61,14 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.mainColor,
+    backgroundColor: Colors.primaryColor,
   },
   textContainer: {
     flex: 1,
     marginLeft: 20,
   },
   nameText: {
-    color: colors.mainColor,
+    color: Colors.primaryColor,
     fontSize: 18,
     fontWeight: '500',
   },
@@ -83,7 +80,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     height: 50,
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: Colors.backgroundColor,
   },
 });
 export default Profile;

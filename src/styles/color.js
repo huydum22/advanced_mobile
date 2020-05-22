@@ -3,7 +3,6 @@ export const subColor = '#2563CF';
 export const placeHolderColor = '#BEBEBE';
 export const blackTitleColor = '#000000';
 export const backgroundButtonColor = '#DDDDDD';
-export const backgroundColor = '#ecf0f1';
 export const backgroundItem = 'white';
 export const subTextColor = 'gray';
 export const alphaBackgroundImageColor = 'rgba(0,0,0,0.5)';
@@ -17,8 +16,11 @@ export const subPrimaryColor = '#2a5298';
 export const secondaryColor = '#767676';
 export const whiteColor = '#FFFFFF';
 export const blackColor = '#000000';
+export const redColor = 'red';
+
 export const blackWith08OpacityColor = 'rgba(0,0,0,0.8)';
 export const blackWith05OpacityColor = 'rgba(0,0,0,0.5)';
+export const backgroundColor = 'rgba(0,0,0,0)';
 
 export const backgroundSeeAllButton = '#DEE2E9';
 
