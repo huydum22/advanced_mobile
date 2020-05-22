@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
-import {Colors, Styles, BoxModel, Size, Typography} from '../../../../styles';
+import {Colors, Styles, BoxModel, Size, Typography} from '../../../styles';
 import {Rating} from 'react-native-ratings';
 const Item = (props) => {
   return (

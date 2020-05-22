@@ -8,7 +8,7 @@ import {
   BoxModel,
   Distance,
   Typography,
-} from '../../../../styles';
+} from '../../styles';
 const Empty = (props) => {
   const onPressEmptyCourse = () => {};
   return (

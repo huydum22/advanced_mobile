@@ -8,15 +8,17 @@ import {
   View,
   SafeAreaView,
 } from 'react-native';
-import {
-  PopularSkill,
-  RelateSkill,
-  Path,
-  TopAuthor,
-} from '../../components/Main/Browse';
+
 import {Size, Colors, Styles, Typography, BoxModel} from '../../styles';
 import backgroundImage from '../../assets/image/backgroundImage.jpg';
 import backgroundImage02 from '../../assets/image/backgroundImage02.jpg';
+
+import {ListPathHorizontal} from '../../components/ListPathHorizontal';
+import {ListAuthorHorizontal} from '../../components/ListAuthorHorizontal';
+import {
+  ListPopularSkillHorizontal,
+  ListRelateSkillHorizontal,
+} from '../../components/ListSkillHorizontal';
 
 const brown = (props) => {
   return (
@@ -40,10 +42,10 @@ const brown = (props) => {
             </View>
           </TouchableOpacity>
         </ImageBackground>
-        <PopularSkill />
-        <RelateSkill />
-        <Path title="Path" />
-        <TopAuthor />
+        <ListPopularSkillHorizontal />
+        <ListRelateSkillHorizontal />
+        <ListPathHorizontal title="Path" />
+        <ListAuthorHorizontal />
       </ScrollView>
     </SafeAreaView>
   );

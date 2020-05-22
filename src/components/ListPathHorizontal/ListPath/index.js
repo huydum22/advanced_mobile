@@ -1,39 +1,39 @@
 import React from 'react';
 import {View, StyleSheet, Text, ScrollView} from 'react-native';
-import {Styles, Typography, BoxModel, Distance} from '../../../../styles';
-import data from '../../../../ExampleData/author';
-import Item from '../AuthorItem/author';
-const TopAuthor = (props) => {
+import Item from '../PathItem';
+import SeeAllBtn from '../../common/see-all-button';
+import {Styles, BoxModel, Distance, Typography} from '../../../styles';
+import data from '../../../ExampleData/path';
+const Path = (props) => {
   const renderListData = (list) => {
     return list.map((item) => (
-      <Item name={item.name} image={item.image} key={item.id} />
+      <Item
+        name={item.name}
+        numberOfCourse={item.numberOfCourse}
+        key={item.id}
+      />
     ));
   };
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={[Styles.titleRow, Typography.fontBold]}>Top Authors</Text>
+        <Text style={[Styles.titleRow, Typography.fontBold]}>
+          {props.title}{' '}
+        </Text>
+        <SeeAllBtn />
       </View>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {renderListData(data)}
-        <View style={styles.footer} />
       </ScrollView>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: {flex: 1},
   titleContainer: {
     ...BoxModel.smallMargin,
     ...Styles.rowBetween,
     height: Distance.medium,
   },
-  footer: {
-    width: Distance.spacing_14,
-  },
 });
-
-export default TopAuthor;
+export default Path;

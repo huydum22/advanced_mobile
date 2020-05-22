@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
-import {Colors, Styles, Typography} from '../../../../styles';
-import {fontWeightBold, fontRegular} from '../../../../styles/typography';
+import {Colors, Styles, Typography} from '../../../styles';
 const Author = (props) => {
   return (
     <View style={Styles.horizontalAuthor}>
@@ -14,7 +13,7 @@ const Author = (props) => {
 };
 const styles = StyleSheet.create({
   text: {
-    ...fontRegular,
+    ...Typography.fontRegular,
     textAlign: 'center',
     color: Colors.blackColor,
     fontSize: Typography.fontSize14,

@@ -1,26 +1,11 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import {
-  Colors,
-  Styles,
-  Typography,
-  Distance,
-  BoxModel,
-} from '../../../../styles';
-import data from '../../../../ExampleData/skill';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import {Styles, Typography, Distance, BoxModel} from '../../../styles';
+import Item from '../PopularSkillItem';
+import data from '../../../ExampleData/skill';
 const PopularSkill = (props) => {
   const renderList = (listData) => {
-    return listData.map((item) => (
-      <TouchableOpacity key={item.id} style={styles.skillContainer}>
-        <Text>{item.name}</Text>
-      </TouchableOpacity>
-    ));
+    return listData.map((item) => <Item key={item.id} name={item.name} />);
   };
   return (
     <View style={styles.container}>
@@ -43,14 +28,6 @@ const styles = StyleSheet.create({
     ...BoxModel.tinyMarginVertical,
     ...BoxModel.marginHorizontal,
     height: Distance.medium,
-  },
-  skillContainer: {
-    ...BoxModel.smallBorderRadius,
-    ...Styles.mainCenter,
-    ...BoxModel.smallPaddingHorizontal,
-    backgroundColor: Colors.backgroundSeeAllButton,
-    marginLeft: Distance.spacing_10,
-    height: Distance.spacing_30,
   },
   footer: {
     width: Distance.spacing_14,

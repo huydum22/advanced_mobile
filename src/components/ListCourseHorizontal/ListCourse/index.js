@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, StyleSheet, Text, FlatList} from 'react-native';
-import Item from '../SectionCoursesItem';
-import SeeAllBtn from '../../../common/see-all-button';
-import {Styles, Distance, Typography, BoxModel} from '../../../../styles';
-import data from '../../../../ExampleData/course';
+import Item from '../CourseItem';
+import SeeAllBtn from '../../common/see-all-button';
+import {Styles, Distance, Typography, BoxModel} from '../../../styles';
+import data from '../../../ExampleData/course';
 const SectionCourses = (props) => {
   return (
     <View style={[Styles.fillColumn, styles.container]}>

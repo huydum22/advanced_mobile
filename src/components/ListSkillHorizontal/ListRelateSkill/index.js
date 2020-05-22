@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, FlatList, ScrollView, YellowBox} from 'react-native';
-import Item from './RelateSkillItem/relate-skill-item';
-import data from '../../../../ExampleData/relate-skill';
-import {Distance} from '../../../../styles';
+import Item from '../RelateSkillItem';
+import data from '../../../ExampleData/relate-skill';
+import {Distance} from '../../../styles';
 YellowBox.ignoreWarnings([
   'VirtualizedLists should never be nested', // TODO: Remove when fixed
 ]);

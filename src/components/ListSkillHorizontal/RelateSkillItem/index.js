@@ -5,16 +5,10 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import {
-  Colors,
-  Styles,
-  Size,
-  BoxModel,
-  Typography,
-} from '../../../../../styles';
-import skill01 from '../../../../../assets/image/skill01.jpg';
-import skill02 from '../../../../../assets/image/skill02.jpg';
-import skill03 from '../../../../../assets/image/skill03.jpg';
+import {Colors, Styles, Size, BoxModel, Typography} from '../../../styles';
+import skill01 from '../../../assets/image/skill01.jpg';
+import skill02 from '../../../assets/image/skill02.jpg';
+import skill03 from '../../../assets/image/skill03.jpg';
 
 const Item = (props) => {
   const imageBackground = (id) => {

@@ -1,12 +1,13 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createStackNavigator} from '@react-navigation/stack';
-import {HomeScreen, BrowseScreen} from '../../config/ScreenName';
-import Home from '../../scenes/Home';
-import Browse from '../../scenes/Browse';
+import {HomeScreenName, BrowseScreenName} from '../../config/ScreenName';
+
 import {Colors, Typography} from '../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import home from '../../scenes/Home';
+
+import HomeStack from './HomeNavigator';
+import BrowseStack from './BrowseNavigator';
+
 const Tab = createBottomTabNavigator();
 
 const browseIcon = ({color}) => (
@@ -19,12 +20,12 @@ const browseIcon = ({color}) => (
 const homeIcon = ({color}) => (
   <MaterialCommunityIcons name="home" size={30} color={color} />
 );
-const configHome = {
+const configHomeTab = {
   tabBarLabel: 'Home',
   tabBarIcon: homeIcon,
 };
 
-const configBrowse = {
+const configBrowseTab = {
   tabBarLabel: 'Browse',
   tabBarIcon: browseIcon,
 };
@@ -32,55 +33,6 @@ const configLabel = {
   ...Typography.fontRegular,
   fontSize: Typography.fontSize14,
 };
-const configHomeStack = {
-  title: 'Home',
-  headerStyle: {
-    backgroundColor: Colors.primaryColor,
-  },
-  headerTintColor: Colors.whiteColor,
-  headerTitleStyle: {
-    ...Typography.fontBold,
-    fontSize: Typography.fontSize20,
-  },
-};
-const configBrowseStack = {
-  title: 'Browse',
-  headerStyle: {
-    backgroundColor: Colors.primaryColor,
-  },
-  headerTintColor: Colors.whiteColor,
-  headerTitleStyle: {
-    ...Typography.fontBold,
-    fontSize: Typography.fontSize20,
-  },
-};
-
-const HomeStack = createStackNavigator();
-
-function HomeStackScreen() {
-  return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen
-        name={HomeScreen}
-        component={Home}
-        options={configHomeStack}
-      />
-    </HomeStack.Navigator>
-  );
-}
-const BrowseStack = createStackNavigator();
-
-function BrowseStackScreen() {
-  return (
-    <BrowseStack.Navigator>
-      <BrowseStack.Screen
-        name={BrowseScreen}
-        component={Browse}
-        options={configBrowseStack}
-      />
-    </BrowseStack.Navigator>
-  );
-}
 const AppNavigator = () => (
   <Tab.Navigator
     tabBarOptions={{
@@ -89,14 +41,14 @@ const AppNavigator = () => (
       inactiveTintColor: Colors.grayMediumColor,
     }}>
     <Tab.Screen
-      name={HomeScreen}
-      component={HomeStackScreen}
-      options={configHome}
+      name={HomeScreenName}
+      component={HomeStack}
+      options={configHomeTab}
     />
     <Tab.Screen
-      name={BrowseScreen}
-      component={BrowseStackScreen}
-      options={configBrowse}
+      name={BrowseScreenName}
+      component={BrowseStack}
+      options={configBrowseTab}
     />
   </Tab.Navigator>
 );
