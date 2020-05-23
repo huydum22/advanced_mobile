@@ -3,10 +3,15 @@ import {StyleSheet, FlatList, ScrollView, YellowBox} from 'react-native';
 import Item from '../RelateSkillItem';
 import data from '../../../ExampleData/relate-skill';
 import {Distance} from '../../../styles';
+import {RelateSkillScreenName} from '../../../config/ScreenName';
 YellowBox.ignoreWarnings([
   'VirtualizedLists should never be nested', // TODO: Remove when fixed
 ]);
 const RelateSkill = (props) => {
+  const {navigation, route} = props;
+  const onPress = () => {
+    navigation.push(RelateSkillScreenName);
+  };
   const randomID = (i) => {
     return (Math.floor(Math.random() * 100) * i) % 3;
   };
@@ -24,7 +29,7 @@ const RelateSkill = (props) => {
         data={data}
         keyExtractor={(item) => item.id}
         renderItem={({item}) => (
-          <Item name={item.name} image={randomID(item.id)} />
+          <Item name={item.name} image={randomID(item.id)} onPress={onPress} />
         )}
       />
     </ScrollView>

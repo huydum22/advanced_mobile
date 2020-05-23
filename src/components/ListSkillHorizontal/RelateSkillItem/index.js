@@ -11,6 +11,7 @@ import skill02 from '../../../assets/image/skill02.jpg';
 import skill03 from '../../../assets/image/skill03.jpg';
 
 const Item = (props) => {
+  const {onPress} = props;
   const imageBackground = (id) => {
     if (id === 0) {
       return skill01;
@@ -27,7 +28,9 @@ const Item = (props) => {
     <ImageBackground
       style={styles.container}
       source={imageBackground(props.image)}>
-      <TouchableOpacity style={[styles.blurContainer, styles.container]}>
+      <TouchableOpacity
+        style={[styles.blurContainer, styles.container]}
+        onPress={onPress}>
         <Text style={[Styles.textInBanner, styles.text]}>{props.name}</Text>
       </TouchableOpacity>
     </ImageBackground>
