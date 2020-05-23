@@ -12,10 +12,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import data from '../../../ExampleData/courseDetail';
 import contentData from '../../../ExampleData/contents';
-import {Size, Colors} from '../../../styles';
+import {Size, Colors, Typography, Styles} from '../../../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from '../HeaderComponent';
+import p from 'pretty-format';
+import {fontRegular} from '../../../styles/typography';
 const flatListSeparator = () => {
   return <View style={styles.separator} />;
 };
@@ -42,7 +44,7 @@ const completeSessionCourse = (isCheck) => {
   if (isCheck) {
     return (
       <MaterialCommunityIcons
-        name="marker-check"
+        name="check-circle"
         size={15}
         color={Colors.successColor}
         style={styles.checkContainer}
@@ -60,7 +62,8 @@ const renderListItem = (item) => {
   );
 };
 const CourseDetail = (props) => {
-  const {navigation} = props;
+  console.log(p(props));
+  const {navigation, route} = props;
   const dismiss = () => {
     navigation.goBack();
   };
@@ -122,7 +125,20 @@ const CourseDetail = (props) => {
           }
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={() => {
-            return <Header data={data} />;
+            return (
+              <Header
+                navigation={navigation}
+                route={route}
+                name={data.name}
+                author={data.author}
+                level={data.level}
+                timeToStart={data.timeToStart}
+                totalHour={data.totalHour}
+                totalRate={data.totalRate}
+                rate={data.rate}
+                description={data.description}
+              />
+            );
           }}
         />
         <View style={styles.footer} />
@@ -141,9 +157,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.backgroundColor,
   },
   blurContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    ...Styles.fillRowBetween,
     backgroundColor: Colors.blackWith05OpacityColor,
   },
   mainContainer: {
@@ -168,16 +182,14 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     height: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    ...Styles.rowBetween,
     marginHorizontal: 20,
     backgroundColor: Colors.backgroundSeeAllButton,
   },
   textHeader: {
     color: Colors.blackColor,
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: Typography.fontSize14,
+    ...Typography.fontBold,
   },
   maxHeightText: {
     height: null,
@@ -187,13 +199,12 @@ const styles = StyleSheet.create({
   },
   textContent: {
     marginHorizontal: 20,
+    ...fontRegular.fontRegular,
   },
   textContainer: {
-    flexDirection: 'row',
     backgroundColor: Colors.whiteColor,
     height: 35,
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    ...Styles.rowBetween,
   },
   checkContainer: {
     marginRight: 20,

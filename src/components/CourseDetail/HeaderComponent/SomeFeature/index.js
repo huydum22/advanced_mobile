@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import {Colors} from '../../../../styles';
+import {Colors, Typography} from '../../../../styles';
 import Feather from 'react-native-vector-icons/Feather';
 
 const Feature = (props) => {
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   textContainer: {
     color: Colors.blackColor,
     marginTop: 10,
+    ...Typography.fontRegular,
   },
 });
 export default Feature;

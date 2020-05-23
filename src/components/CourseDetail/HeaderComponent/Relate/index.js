@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableHighlight} from 'react-native';
-import {Colors} from '../../../../styles';
+import {Colors, Typography} from '../../../../styles';
 import Feather from 'react-native-vector-icons/Feather';
 const Relate = (props) => {
   const onPress = () => {
@@ -11,7 +11,7 @@ const Relate = (props) => {
       <View style={styles.container}>
         <Feather name="layers" size={20} />
         <View style={styles.textContainer}>
-          <Text>{'Related paths & courses'}</Text>
+          <Text style={styles.text}>{'Related paths & courses'}</Text>
         </View>
       </View>
     </TouchableHighlight>
@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: 10,
+  },
+  text: {
+    ...Typography.fontRegular,
   },
 });
 export default Relate;

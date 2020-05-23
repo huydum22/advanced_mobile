@@ -60,7 +60,6 @@ const SearchNavigatorStack = () => {
     },
   };
   const configNavigator = {
-    title: 'Path',
     headerStyle: {
       backgroundColor: Colors.primaryColor,
     },
@@ -73,7 +72,8 @@ const SearchNavigatorStack = () => {
   return (
     <SearchStack.Navigator
       initialRouteName={SearchScreenName}
-      headerMode="screen">
+      headerMode="screen"
+      screenOptions={configNavigator}>
       <SearchStack.Screen
         name={SearchScreenName}
         component={Search}
@@ -82,12 +82,12 @@ const SearchNavigatorStack = () => {
       <SearchStack.Screen
         name={PathDetailScreenName}
         component={PathDetail}
-        options={configNavigator}
+        options={{title: 'Path'}}
       />
       <SearchStack.Screen
         name={AuthorDetailScreenName}
         component={AuthorDetail}
-        options={configNavigator}
+        options={{title: 'Author'}}
       />
     </SearchStack.Navigator>
   );

@@ -13,7 +13,6 @@ import ListOfCourse from '../../../scenes/ListOfCourse';
 import SearchView from '../../../scenes/Search';
 const HomeStack = createStackNavigator();
 const configHomeNavigator = {
-  title: 'Home',
   headerStyle: {
     backgroundColor: Colors.primaryColor,
   },
@@ -26,7 +25,11 @@ const configHomeNavigator = {
 const HomeNavigatorStack = () => {
   return (
     <HomeStack.Navigator screenOptions={configHomeNavigator}>
-      <HomeStack.Screen name={HomeScreenName} component={Home} />
+      <HomeStack.Screen
+        name={HomeScreenName}
+        component={Home}
+        options={{title: 'Home'}}
+      />
       <HomeStack.Screen
         name={ShowListCourseScreenName}
         component={ListOfCourse}
@@ -35,7 +38,6 @@ const HomeNavigatorStack = () => {
         }}
         options={({route}) => ({title: route.params.title})}
       />
-      <HomeStack.Screen name={SearchScreenName} component={SearchView} />
     </HomeStack.Navigator>
   );
 };

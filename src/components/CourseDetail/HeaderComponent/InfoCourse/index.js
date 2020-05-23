@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {Colors} from '../../../../styles';
+import {Colors, Typography} from '../../../../styles';
 import {Rating} from 'react-native-ratings';
 
 const InfoCourse = (props) => {
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     color: Colors.grayDarkColor,
     marginLeft: 5,
     fontSize: 13,
+    ...Typography.fontRegular,
   },
   divider: {
     color: Colors.grayDarkColor,

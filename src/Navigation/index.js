@@ -4,13 +4,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {
-  CourseDetailScreenName,
+  CourseDetailScreenNavigator,
   AppTab,
   AuthenticateTab,
 } from '../config/ScreenName';
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
-
+import CourseDetailNavigator from './AppNavigator/CourseDetailNavigator';
 import CourseDetail from '../scenes/CourseDetail';
 
 const RootStack = createStackNavigator();
@@ -23,8 +23,8 @@ const RootScreen = () => (
     <RootStack.Screen name={AppTab} component={AppNavigator} />
     <RootStack.Screen name={AuthenticateTab} component={AuthNavigator} />
     <RootStack.Screen
-      name={CourseDetailScreenName}
-      component={CourseDetail}
+      name={CourseDetailScreenNavigator}
+      component={CourseDetailNavigator}
       options={{animationEnabled: true}}
     />
   </RootStack.Navigator>

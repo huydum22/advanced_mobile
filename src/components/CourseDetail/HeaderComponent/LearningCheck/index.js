@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableHighlight} from 'react-native';
-import {Colors} from '../../../../styles';
+import {Colors, Typography} from '../../../../styles';
 import Feather from 'react-native-vector-icons/Feather';
 const LearningCheck = (props) => {
   const onPress = () => {
@@ -11,7 +11,7 @@ const LearningCheck = (props) => {
       <View style={styles.container}>
         <Feather name="target" size={20} />
         <View style={styles.textContainer}>
-          <Text>Take a learning check</Text>
+          <Text style={styles.text}>Take a learning check</Text>
         </View>
       </View>
     </TouchableHighlight>
@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: 10,
+  },
+  text: {
+    ...Typography.fontRegular,
   },
 });
 export default LearningCheck;

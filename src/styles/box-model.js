@@ -1,4 +1,4 @@
-import {tiny, small, normal, medium} from './distance';
+import {tiny, small, normal, medium, large} from './distance';
 export const bottomMargin = {
   marginBottom: normal,
 };
@@ -64,6 +64,9 @@ export const paddingHorizontal = {
 };
 export const mediumPaddingHorizontal = {
   paddingHorizontal: medium,
+};
+export const largePaddingHorizontal = {
+  paddingHorizontal: large,
 };
 export const tinyPaddingVertical = {
   paddingVertical: tiny,

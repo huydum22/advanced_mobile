@@ -3,9 +3,11 @@ import {StyleSheet, View, Text, Image, TouchableHighlight} from 'react-native';
 import {Colors, Styles, Typography} from '../../../styles';
 import {AuthorDetailScreenName} from '../../../config/ScreenName';
 const Author = (props) => {
-  const {navigation, route} = props;
+  const {navigation, route, name, image} = props;
   const onPress = () => {
-    navigation.push(AuthorDetailScreenName);
+    navigation.push(AuthorDetailScreenName, {
+      name: name,
+    });
   };
   return (
     <TouchableHighlight
@@ -13,9 +15,9 @@ const Author = (props) => {
       onPress={onPress}
       underlayColor={Colors.backgroundColor}>
       <View style={Styles.horizontalAuthor}>
-        <Image source={props.image} style={Styles.imageInHorizontalAuthor} />
+        <Image source={image} style={Styles.imageInHorizontalAuthor} />
         <View style={Styles.containerInHorizontalAuthor}>
-          <Text style={styles.text}>{props.name}</Text>
+          <Text style={styles.text}>{name}</Text>
         </View>
       </View>
     </TouchableHighlight>

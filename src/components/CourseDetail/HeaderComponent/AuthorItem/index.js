@@ -7,21 +7,15 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Colors} from '../../../../styles';
+import {Colors, Typography} from '../../../../styles';
 import image from '../../../../assets/image/person.jpg';
 const Author = (props) => {
-  //   const renderList = (listData) => {
-  //     return listData.map((item) => (
-  //       <TouchableOpacity key={item.id} style={styles.skillContainer}>
-  //         <Text>{item.name}</Text>
-  //       </TouchableOpacity>
-  //     ));
-  //   };
+  const {onPress} = props;
   return (
     <View style={styles.container}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {/* {renderList(props.author)} */}
-        <TouchableOpacity style={styles.skillContainer}>
+        <TouchableOpacity style={styles.skillContainer} onPress={onPress}>
           <Image style={styles.image} source={image} />
           <Text style={styles.text}>{props.name}</Text>
         </TouchableOpacity>
@@ -50,6 +44,7 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 10,
+    ...Typography.fontRegular,
   },
 });
 

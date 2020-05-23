@@ -6,7 +6,7 @@ const Course = (props) => {
 
   return (
     <SafeAreaView>
-      <CourseDetail navigation={navigation} />
+      <CourseDetail navigation={navigation} route={route} />
     </SafeAreaView>
   );
 };

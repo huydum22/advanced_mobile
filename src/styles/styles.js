@@ -117,6 +117,12 @@ export const fillRow = {
   flex: 1,
   flexDirection: 'row',
 };
+export const fillRowBetween = {
+  flex: 1,
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+
+};
 
 export const fillRowStart = {
   flex: 1,

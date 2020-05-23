@@ -15,3 +15,5 @@ export const tiny = scaleSize(5);
 export const small = scaleSize(10);
 export const normal = scaleSize(15);
 export const medium = scaleSize(30);
+export const large = scaleSize(40);
+

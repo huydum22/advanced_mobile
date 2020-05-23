@@ -3,9 +3,11 @@ import {StyleSheet, Image, Text, View, TouchableHighlight} from 'react-native';
 import {Colors} from '../../../styles';
 import {AuthorDetailScreenName} from '../../../config/ScreenName';
 const Item = (props) => {
-  const {navigation, route} = props;
+  const {navigation, route, image, name, numberOfCourse} = props;
   const onPress01 = () => {
-    navigation.push(AuthorDetailScreenName);
+    navigation.push(AuthorDetailScreenName, {
+      name: name,
+    });
   };
   return (
     <View style={styles.container}>
@@ -15,11 +17,11 @@ const Item = (props) => {
         underlayColor={Colors.whiteColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
-            <Image source={props.image} style={styles.image} />
+            <Image source={image} style={styles.image} />
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.textTitle}>{props.name}</Text>
-            <Text style={styles.textSubTitle}>{props.numberOfCourse}</Text>
+            <Text style={styles.textTitle}>{name}</Text>
+            <Text style={styles.textSubTitle}>{numberOfCourse}</Text>
           </View>
         </View>
       </TouchableHighlight>

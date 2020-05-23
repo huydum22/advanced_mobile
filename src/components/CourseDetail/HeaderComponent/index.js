@@ -8,21 +8,39 @@ import Description from './Description';
 import Relate from './Relate';
 import LearningCheck from './LearningCheck';
 import SegmentControl from './SegmentControl';
+import {AuthorDetailScreenName} from '../../../config/ScreenName';
 const Header = (props) => {
+  const {
+    name,
+    author,
+    level,
+    timeToStart,
+    totalHour,
+    totalRate,
+    rate,
+    description,
+    navigation,
+    route,
+  } = props;
+  const onPressAuthor = () => {
+    navigation.push(AuthorDetailScreenName, {
+      name: name,
+    });
+  };
   return (
     <View>
-      <Title name={props.data.name} />
-      <Author name={props.data.author} />
+      <Title name={name} />
+      <Author name={author} onPress={onPressAuthor} />
       <InfoCourse
-        level={props.data.level}
-        timeToStart={props.data.timeToStart}
-        totalHour={props.data.totalHour}
-        totalRate={props.data.totalRate}
-        rate={props.data.rate}
+        level={level}
+        timeToStart={timeToStart}
+        totalHour={totalHour}
+        totalRate={totalRate}
+        rate={rate}
       />
       <Feature />
       <View style={styles.divide} />
-      <Description description={props.data.description} />
+      <Description description={description} />
       <Relate />
       <LearningCheck />
       <SegmentControl />
