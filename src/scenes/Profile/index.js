@@ -6,7 +6,7 @@ const Account = (props) => {
 
   return (
     <SafeAreaView>
-      <Profile />
+      <Profile navigation={navigation} route={route} />
     </SafeAreaView>
   );
 };

@@ -1,13 +1,23 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import data from '../../../ExampleData/profile';
-// import colors from '../../../styles/color';
-// import size from '../../../styles/size';
 import {Colors, Size} from '../../../styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {
+  SubscriptionScreenName,
+  LocationScreenName,
+} from '../../../config/ScreenName';
 import Item from '../ProfileItem';
 const Profile = (props) => {
+  const {navigation, route} = props;
+  const onPressSubscription = () => {
+    navigation.navigate(SubscriptionScreenName);
+  };
+  const onPressLocation = () => {
+    navigation.navigate(LocationScreenName);
+  };
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.mainContainer}>
@@ -24,6 +34,16 @@ const Profile = (props) => {
         <View style={styles.divider} />
         <Item icon="theme-light-dark" name="Theme" />
         <Item icon="comment-account-outline" name="Communication Preferences" />
+        <Item
+          icon="hand-pointing-up"
+          name="Subscription"
+          onPress={onPressSubscription}
+        />
+        <Item
+          icon="google-maps"
+          name="Your location"
+          onPress={onPressLocation}
+        />
         <View style={styles.divider} />
         <Item icon="cloud-download" name="Download options" />
         <Item icon="view-stream" name="Streaming options" />

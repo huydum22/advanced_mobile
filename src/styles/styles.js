@@ -106,6 +106,9 @@ export const crossCenter = {
 export const width100 = {
   width: '100%',
 };
+export const height100 = {
+  height: '100%',
+};
 export const mainStart = {
   justifyContent: 'flex-start',
 };
@@ -113,6 +116,12 @@ export const mainStart = {
 export const fillRow = {
   flex: 1,
   flexDirection: 'row',
+};
+
+export const fillRowStart = {
+  flex: 1,
+  flexDirection: 'row',
+  justifyContent: 'center',
 };
 
 export const fillColumn = {
@@ -131,6 +140,9 @@ export const textInBanner = {
   textAlign: 'center',
   textTransform: 'uppercase',
   flexWrap: 'wrap',
+};
+export const textCenter = {
+  textAlign: 'center',
 };
 export const mainCenter = {
   justifyContent: 'center',

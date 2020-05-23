@@ -6,8 +6,10 @@ import {
   ImageBackground,
   SectionList,
   TouchableHighlight,
+  Share,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Feather from 'react-native-vector-icons/Feather';
 import data from '../../../ExampleData/courseDetail';
 import contentData from '../../../ExampleData/contents';
 import {Size, Colors} from '../../../styles';
@@ -62,16 +64,49 @@ const CourseDetail = (props) => {
   const dismiss = () => {
     navigation.goBack();
   };
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        title: 'Share image',
+        message: 'This image so beautiful ',
+        url: 'https://reactjs.org/logo-og.png',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground style={styles.videoContainer} source={data.image}>
         <View style={styles.blurContainer}>
-          <TouchableHighlight onPress={dismiss}>
+          <TouchableHighlight
+            onPress={dismiss}
+            underlayColor={Colors.backgroundColor}>
             <MaterialIcons
               name="cancel"
               size={30}
               color={Colors.whiteWith07OpacityColor}
               style={styles.cancelButton}
+            />
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={onShare}
+            underlayColor={Colors.backgroundColor}>
+            <Feather
+              name="share"
+              size={25}
+              color={Colors.whiteWith07OpacityColor}
+              style={styles.shareButton}
             />
           </TouchableHighlight>
         </View>
@@ -107,6 +142,8 @@ const styles = StyleSheet.create({
   },
   blurContainer: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     backgroundColor: Colors.blackWith05OpacityColor,
   },
   mainContainer: {
@@ -167,6 +204,10 @@ const styles = StyleSheet.create({
   cancelButton: {
     top: 15,
     left: 15,
+  },
+  shareButton: {
+    top: 15,
+    right: 15,
   },
 });
 export default CourseDetail;

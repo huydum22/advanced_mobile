@@ -10,8 +10,7 @@ const isLogout = (icon) => {
     );
   }
 };
-const onPress = () => {};
-const Item = ({icon, name}) => {
+const Item = ({icon, name, onPress}) => {
   return (
     <TouchableHighlight
       style={styles.container}

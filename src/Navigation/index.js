@@ -3,7 +3,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import {CourseDetailScreenName, HomeScreenName} from '../config/ScreenName';
+import {
+  CourseDetailScreenName,
+  HomeScreenName,
+  LoginScreenName,
+} from '../config/ScreenName';
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
 
@@ -12,8 +16,12 @@ import CourseDetail from '../scenes/CourseDetail';
 const RootStack = createStackNavigator();
 
 const RootScreen = () => (
-  <RootStack.Navigator headerMode="none" mode="modal">
+  <RootStack.Navigator
+    headerMode="none"
+    mode="modal"
+    initialRouteName={LoginScreenName}>
     <RootStack.Screen name={HomeScreenName} component={AppNavigator} />
+    <RootStack.Screen name={LoginScreenName} component={AuthNavigator} />
     <RootStack.Screen
       name={CourseDetailScreenName}
       component={CourseDetail}

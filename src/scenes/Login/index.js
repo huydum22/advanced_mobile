@@ -14,16 +14,18 @@ import {
   FormInput,
 } from '../../components/Authentication';
 import {Colors, BoxModel, Styles, Typography, Platform} from '../../styles';
-import {RegisterScreen} from '../../config/ScreenName';
+import {RegisterScreenName, HomeScreenName} from '../../config/ScreenName';
 // format debug consol
-// import prettyFormat from 'pretty-format';
+import prettyFormat from 'pretty-format';
 
 const Login = (props) => {
-  // console.log(prettyFormat(props));
+  console.log(prettyFormat(props));
   const {navigation} = props;
-  const handleLoginPress = () => {};
+  const handleLoginPress = () => {
+    navigation.replace(HomeScreenName);
+  };
   const handleRegisterPress = () => {
-    return navigation.navigate(RegisterScreen);
+    return navigation.navigate(RegisterScreenName);
   };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
