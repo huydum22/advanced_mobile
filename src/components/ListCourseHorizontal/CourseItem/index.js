@@ -2,12 +2,17 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
 import {Colors, Styles, BoxModel, Size, Typography} from '../../../styles';
 import {Rating} from 'react-native-ratings';
+import {CourseDetailScreenName} from '../../../config/ScreenName';
 const Item = (props) => {
+  const {navigation} = props;
+  const openCourseDetail = () => {
+    navigation.navigate(CourseDetailScreenName);
+  };
   return (
     <TouchableOpacity
       style={Styles.horizontalCourse}
       activeOpacity={0.6}
-      onPress={props.onPress}>
+      onPress={openCourseDetail}>
       <Image source={props.image} style={Styles.imageInHorizontalCourse} />
       <View style={Styles.containerInHorizontalCourse}>
         <View style={Styles.breakContentText}>

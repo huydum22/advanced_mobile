@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     height: Size.scaleSize(20),
     width: Size.scaleSize(80),
     ...BoxModel.smallBorderRadius,
-    marginRight: Distance.normal,
     borderWidth: Distance.superSmall,
     borderColor: Colors.backgroundSeeAllButton,
     backgroundColor: Colors.backgroundSeeAllButton,

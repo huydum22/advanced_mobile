@@ -5,7 +5,7 @@ import {
   BrowseScreenName,
   DownloadScreenName,
   ProfileScreenName,
-  CourseDetailScreenName,
+  SearchScreenName,
 } from '../../config/ScreenName';
 
 import {Colors, Typography} from '../../styles';
@@ -15,9 +15,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import HomeNavigator from './HomeNavigator';
 import BrowseNavigator from './BrowseNavigator';
 import DownloadNavigator from './DownloadNavigator';
+import SearchNavigator from './SearchNavigator';
 import ProfileNavigator from './ProfileNavigator';
 const Tab = createBottomTabNavigator();
 
+const searchIcon = ({color}) => (
+  <FontAwesome name="search" size={25} color={color} />
+);
 const browseIcon = ({color}) => (
   <MaterialCommunityIcons
     name="folder-search-outline"
@@ -46,6 +50,10 @@ const configBrowseTab = {
 const configDownloadTab = {
   tabBarLabel: 'Downloads',
   tabBarIcon: downloadIcon,
+};
+const configSearchTab = {
+  tabBarLabel: 'Search',
+  tabBarIcon: searchIcon,
 };
 const configProfileTab = {
   tabBarLabel: 'profile',
@@ -77,6 +85,11 @@ const AppNavigator = () => (
       name={BrowseScreenName}
       component={BrowseNavigator}
       options={configBrowseTab}
+    />
+    <Tab.Screen
+      name={SearchScreenName}
+      component={SearchNavigator}
+      options={configSearchTab}
     />
     <Tab.Screen
       name={ProfileScreenName}

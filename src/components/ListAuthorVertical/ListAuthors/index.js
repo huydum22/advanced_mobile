@@ -1,10 +1,9 @@
 import React from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
-import colors from '../../../styles/color';
-import data from '../../../ExampleData/course';
-import Item from '../CourseItem';
-
-const ListCourse = (props) => {
+import {View, StyleSheet, FlatList} from 'react-native';
+import {Colors} from '../../../styles';
+import data from '../../../ExampleData/author';
+import Item from '../AuthorItem';
+const Authors = (props) => {
   const flatListSeparator = () => {
     return <View style={styles.separator} />;
   };
@@ -18,13 +17,8 @@ const ListCourse = (props) => {
         renderItem={({item}) => (
           <Item
             name={item.name}
-            author={item.author}
-            level={item.level}
-            timeToStart={item.timeToStart}
-            totalHour={item.totalHour}
-            totalRate={item.totalRate}
-            rate={item.rate}
             image={item.image}
+            numberOfCourse={item.numberOfCourse}
           />
         )}
         keyExtractor={(item) => item.id}
@@ -32,13 +26,14 @@ const ListCourse = (props) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: Colors.backgroundColor,
   },
   separator: {
     height: 1,
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: Colors.backgroundColor,
   },
 });
-export default ListCourse;
+export default Authors;

@@ -4,22 +4,20 @@ import Item from '../CourseItem';
 import SeeAllBtn from '../../common/see-all-button';
 import {Styles, Distance, Typography, BoxModel} from '../../../styles';
 import data from '../../../ExampleData/course';
-import {CourseDetailScreenName} from '../../../config/ScreenName';
+import {ShowListCourseScreenName} from '../../../config/ScreenName';
 const SectionCourses = (props) => {
-  const {navigation} = props;
-  const openCourseDetail = () => {
-    navigation.navigate(CourseDetailScreenName, {
-      itemId: 86,
-      otherParam: 'anything you want here',
+  const {navigation, route, title} = props;
+
+  const showListCourse = () => {
+    navigation.push(ShowListCourseScreenName, {
+      title: title,
     });
   };
   return (
     <View style={[Styles.fillColumn, styles.container]}>
       <View style={styles.titleContainer}>
-        <Text style={[Styles.titleRow, Typography.fontBold]}>
-          {props.title}{' '}
-        </Text>
-        <SeeAllBtn />
+        <Text style={[Styles.titleRow, Typography.fontBold]}>{title} </Text>
+        <SeeAllBtn onPress={showListCourse} />
       </View>
       <FlatList
         horizontal={true}
@@ -27,7 +25,8 @@ const SectionCourses = (props) => {
         data={data}
         renderItem={({item}) => (
           <Item
-            onPress={openCourseDetail}
+            navigation={navigation}
+            route={route}
             name={item.name}
             author={item.author}
             level={item.level}

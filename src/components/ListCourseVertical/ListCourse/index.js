@@ -5,6 +5,7 @@ import data from '../../../ExampleData/course';
 import Item from '../CourseItem';
 
 const ListCourse = (props) => {
+  const {navigation, route} = props;
   const flatListSeparator = () => {
     return <View style={styles.separator} />;
   };
@@ -17,6 +18,8 @@ const ListCourse = (props) => {
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
           <Item
+            navigation={navigation}
+            route={route}
             name={item.name}
             author={item.author}
             level={item.level}

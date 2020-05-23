@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
-import colors from '../../../styles/color';
-import data from '../../../ExampleData/author';
-import Item from '../AuthorItem/author-item';
-const Authors = (props) => {
+import data from '../../../ExampleData/path';
+import {Colors} from '../../../styles';
+import Item from '../PathItem';
+const Paths = (props) => {
   const flatListSeparator = () => {
     return <View style={styles.separator} />;
   };
@@ -19,6 +19,7 @@ const Authors = (props) => {
             name={item.name}
             image={item.image}
             numberOfCourse={item.numberOfCourse}
+            totalHour={item.totalHour}
           />
         )}
         keyExtractor={(item) => item.id}
@@ -26,14 +27,13 @@ const Authors = (props) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: Colors.backgroundColor,
   },
   separator: {
     height: 1,
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: Colors.backgroundColor,
   },
 });
-export default Authors;
+export default Paths;

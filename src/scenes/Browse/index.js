@@ -1,15 +1,7 @@
 import React from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  View,
-  SafeAreaView,
-} from 'react-native';
+import {ScrollView, SafeAreaView} from 'react-native';
 
-import {Size, Colors, Styles, Typography, BoxModel} from '../../styles';
+import {Styles} from '../../styles';
 import backgroundImage from '../../assets/image/backgroundImage.jpg';
 import backgroundImage02 from '../../assets/image/backgroundImage02.jpg';
 
@@ -19,29 +11,35 @@ import {
   ListPopularSkillHorizontal,
   ListRelateSkillHorizontal,
 } from '../../components/ListSkillHorizontal';
+import Banner from '../../components/Banner';
+import {ShowListCourseScreenName} from '../../config/ScreenName';
 const brown = (props) => {
   const {navigation, route} = props;
+  const onPressBanner01 = () => {
+    navigation.push(ShowListCourseScreenName, {
+      title: 'New',
+    });
+  };
+  const onPressBanner02 = () => {
+    navigation.push(ShowListCourseScreenName, {
+      title: 'Recommend',
+    });
+  };
   return (
     <SafeAreaView>
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <ImageBackground
-          style={styles.imageBackground}
-          source={backgroundImage}>
-          <TouchableOpacity style={styles.blurBackground}>
-            <View style={Styles.breakContentText}>
-              <Text style={styles.text}>new release</Text>
-            </View>
-          </TouchableOpacity>
-        </ImageBackground>
-        <ImageBackground
-          style={styles.imageBackground}
-          source={backgroundImage02}>
-          <TouchableOpacity style={styles.blurBackground}>
-            <View style={Styles.breakContentText}>
-              <Text style={styles.text}>recommended for you</Text>
-            </View>
-          </TouchableOpacity>
-        </ImageBackground>
+      <ScrollView
+        style={Styles.backgroundReset}
+        showsVerticalScrollIndicator={false}>
+        <Banner
+          backgroundImage={backgroundImage}
+          name="new releases"
+          onPress={onPressBanner01}
+        />
+        <Banner
+          backgroundImage={backgroundImage02}
+          name="recommended for you"
+          onPress={onPressBanner02}
+        />
         <ListPopularSkillHorizontal />
         <ListRelateSkillHorizontal />
         <ListPathHorizontal title="Path" />
@@ -50,25 +48,4 @@ const brown = (props) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {backgroundColor: Colors.backgroundColor},
-  imageBackground: {
-    ...Styles.center,
-    ...BoxModel.margin,
-    height: Size.bannerHeight,
-  },
-  blurBackground: {
-    ...Styles.center,
-    backgroundColor: Colors.blackWith05OpacityColor,
-    height: Size.bannerHeight,
-    width: Size.WIDTH - 40,
-  },
-  text: {
-    ...Typography.fontBold,
-    ...Styles.textInBanner,
-    color: Colors.whiteColor,
-    fontSize: Typography.fontSize30,
-  },
-});
 export default brown;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Image, Text, View, TouchableHighlight} from 'react-native';
-import colors from '../../../styles/color';
+import {Colors} from '../../../styles';
 
 const Item = (props) => {
   const onPress01 = () => {};
@@ -9,7 +9,7 @@ const Item = (props) => {
       <TouchableHighlight
         style={styles.main}
         onPress={onPress01}
-        underlayColor={colors.backgroundItem}>
+        underlayColor={Colors.whiteColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
             <Image source={props.image} style={styles.image} />
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: colors.whiteColor,
+    backgroundColor: Colors.whiteColor,
   },
   main: {
     flex: 1,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   textSubTitle: {
     fontWeight: '500',
-    color: colors.subTextColor,
+    color: Colors.grayDarkColor,
     fontSize: 12,
   },
 });

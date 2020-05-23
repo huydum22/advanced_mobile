@@ -1,6 +1,8 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+
 import {CourseDetailScreenName, HomeScreenName} from '../config/ScreenName';
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
@@ -21,9 +23,11 @@ const RootScreen = () => (
 );
 const Navigation = () => {
   return (
-    <NavigationContainer>
-      <RootScreen />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <RootScreen />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 export default Navigation;

@@ -10,9 +10,12 @@ import {
 import {Colors} from '../../../styles';
 import {Rating} from 'react-native-ratings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import {CourseDetailScreenName} from '../../../config/ScreenName';
 const Item = (props) => {
-  const onPress01 = () => {};
+  const {navigation, route} = props;
+  const onPress01 = () => {
+    navigation.navigate(CourseDetailScreenName);
+  };
   return (
     <View style={styles.container}>
       <TouchableHighlight

@@ -2,9 +2,13 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Colors, Typography} from '../../../styles';
 
-import {BrowseScreenName} from '../../../config/ScreenName';
+import {
+  BrowseScreenName,
+  ShowListCourseScreenName,
+} from '../../../config/ScreenName';
 
 import Browse from '../../../scenes/Browse';
+import ListOfCourse from '../../../scenes/ListOfCourse';
 const BrowseStack = createStackNavigator();
 const configBrowseNavigator = {
   title: 'Browse',
@@ -19,11 +23,15 @@ const configBrowseNavigator = {
 };
 const BrowseNavigatorStack = () => {
   return (
-    <BrowseStack.Navigator>
+    <BrowseStack.Navigator screenOptions={configBrowseNavigator}>
+      <BrowseStack.Screen name={BrowseScreenName} component={Browse} />
       <BrowseStack.Screen
-        name={BrowseScreenName}
-        component={Browse}
-        options={configBrowseNavigator}
+        name={ShowListCourseScreenName}
+        component={ListOfCourse}
+        initialParams={{
+          title: 'Course',
+        }}
+        options={({route}) => ({title: route.params.title})}
       />
     </BrowseStack.Navigator>
   );

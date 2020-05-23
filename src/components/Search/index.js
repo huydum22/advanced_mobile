@@ -1,33 +1,41 @@
 import React from 'react';
-import {StyleSheet, View, SectionList, Text, list} from 'react-native';
+import {StyleSheet, View, SectionList, Text, StatusBar} from 'react-native';
 
 import courseData from '../../ExampleData/course';
 import pathData from '../../ExampleData/path';
 import authorData from '../../ExampleData/author';
 
-import ItemCourse from '../../Courses/CoursesItem/course-item';
-import ItemPath from '../Paths/PathItem/path-item';
-import ItemAuthor from '../Authors/AuthorItem/author-item';
+import {CourseVerticalItem} from '../ListCourseVertical';
+import {PathItemVertical} from '../ListPathVertical';
+import {AuthorVerticalItem} from '../ListAuthorVertical';
 
-import mainStyle from '../../styles/styles';
-import colors from '../../styles/color';
+import {Styles, Colors, Typography} from '../../styles';
 import SeeAllBtn from '../common/see-all-button';
-
+import {ShowListCourseScreenName} from '../../config/ScreenName';
 const Search = (props) => {
+  const {navigation, route} = props;
+
+  const showAll = (e) => {
+    if (e === 'Courses') {
+      navigation.push(ShowListCourseScreenName);
+    }
+  };
   const flatListSeparator = () => {
     return <View style={styles.separator} />;
   };
   const renderHeader = (title) => {
     return (
       <View style={styles.headerContainer}>
-        <Text style={[mainStyle.titleInList, styles.textHeader]}>{title}</Text>
-        <SeeAllBtn />
+        <Text style={[Styles.titleRow, Typography.fontBold]}>{title}</Text>
+        <SeeAllBtn onPress={() => showAll(title)} />
       </View>
     );
   };
   const renderCoursesItem = (item) => {
     return (
-      <ItemCourse
+      <CourseVerticalItem
+        navigation={navigation}
+        route={route}
         name={item.name}
         author={item.author}
         level={item.level}
@@ -41,7 +49,9 @@ const Search = (props) => {
   };
   const renderPathItem = (item) => {
     return (
-      <ItemPath
+      <PathItemVertical
+        navigation={navigation}
+        route={route}
         name={item.name}
         image={item.image}
         numberOfCourse={item.numberOfCourse}
@@ -51,7 +61,9 @@ const Search = (props) => {
   };
   const renderAuthorItem = (item) => {
     return (
-      <ItemAuthor
+      <AuthorVerticalItem
+        navigation={navigation}
+        route={route}
         name={item.name}
         image={item.image}
         numberOfCourse={item.numberOfCourse}
@@ -72,6 +84,8 @@ const Search = (props) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar translucent backgroundColor={Colors.primaryColor} {...props} />
+
       <SectionList
         ItemSeparatorComponent={flatListSeparator}
         sections={[
@@ -91,18 +105,18 @@ const Search = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: Colors.backgroundColor,
   },
   headerContainer: {
     height: 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: Colors.backgroundSeeAllButton,
   },
   separator: {
     height: 1,
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: Colors.backgroundColor,
   },
   textHeader: {
     marginLeft: 10,
