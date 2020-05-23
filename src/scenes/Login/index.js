@@ -14,15 +14,17 @@ import {
   FormInput,
 } from '../../components/Authentication';
 import {Colors, BoxModel, Styles, Typography, Platform} from '../../styles';
-import {RegisterScreenName, HomeScreenName} from '../../config/ScreenName';
+import {
+  RegisterScreenName,
+  HomeScreenName,
+  AppTab,
+} from '../../config/ScreenName';
 // format debug consol
-import prettyFormat from 'pretty-format';
 
 const Login = (props) => {
-  console.log(prettyFormat(props));
   const {navigation} = props;
   const handleLoginPress = () => {
-    navigation.replace(HomeScreenName);
+    navigation.replace(AppTab, {screen: HomeScreenName});
   };
   const handleRegisterPress = () => {
     return navigation.navigate(RegisterScreenName);

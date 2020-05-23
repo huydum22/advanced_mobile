@@ -7,6 +7,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
   SubscriptionScreenName,
   LocationScreenName,
+  AuthenticateTab,
+  LoginScreenName,
 } from '../../../config/ScreenName';
 import Item from '../ProfileItem';
 const Profile = (props) => {
@@ -15,7 +17,12 @@ const Profile = (props) => {
     navigation.navigate(SubscriptionScreenName);
   };
   const onPressLocation = () => {
-    navigation.navigate(LocationScreenName);
+    // navigation.navigate(LocationScreenName);
+  };
+  const onPressLogout = () => {
+    navigation.replace(AuthenticateTab, {
+      screen: AuthenticateTab,
+    });
   };
 
   return (
@@ -54,7 +61,7 @@ const Profile = (props) => {
         <Item icon="apps" name="App version" />
         <Item icon="tooltip-plus-outline" name="About us" />
         <View style={styles.divider} />
-        <Item name="Log out" />
+        <Item name="Log out" onPress={onPressLogout} />
       </View>
       <View style={styles.footer} />
     </ScrollView>

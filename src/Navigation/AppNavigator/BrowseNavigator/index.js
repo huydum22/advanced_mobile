@@ -7,11 +7,16 @@ import {
   ShowListCourseScreenName,
   AuthorDetailScreenName,
   PathDetailScreenName,
+  ShowListPathScreenName,
+  PopularSkillScreenName,
 } from '../../../config/ScreenName';
 import AuthorDetail from '../../../scenes/AuthorDetail';
 import PathDetail from '../../../scenes/PathDetail';
 import Browse from '../../../scenes/Browse';
 import ListOfCourse from '../../../scenes/ListOfCourse';
+import ListOfPath from '../../../scenes/ListOfPath';
+import PopularSkill from '../../../scenes/PopularSkill';
+
 const BrowseStack = createStackNavigator();
 const configBrowseNavigator = {
   title: 'Browse',
@@ -41,6 +46,14 @@ const BrowseNavigatorStack = () => {
         component={AuthorDetail}
       />
       <BrowseStack.Screen name={PathDetailScreenName} component={PathDetail} />
+      <BrowseStack.Screen
+        name={ShowListPathScreenName}
+        component={ListOfPath}
+      />
+      <BrowseStack.Screen
+        name={PopularSkillScreenName}
+        component={PopularSkill}
+      />
     </BrowseStack.Navigator>
   );
 };

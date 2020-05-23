@@ -3,6 +3,9 @@ import {StyleSheet, ScrollView, View, SafeAreaView} from 'react-native';
 import {ListCourseHorizontal} from '../../components/ListCourseHorizontal';
 import EmptyComponent from '../../components/EmptyComponent';
 import {Colors, Distance} from '../../styles';
+import Banner from '../../components/Banner';
+import backgroundImage02 from '../../assets/image/backgroundImage02.jpg';
+
 const home = (props) => {
   const {navigation, route} = props;
 
@@ -12,21 +15,26 @@ const home = (props) => {
         style={styles.container}
         showsVerticalScrollIndicator={false}
         alwaysBounceVertical={true}>
+        <Banner backgroundImage={backgroundImage02} name="Stay at Home" />
         <ListCourseHorizontal
           title="Software development"
-          navigation={props.navigation}
+          navigation={navigation}
+          route={route}
         />
         <ListCourseHorizontal
           title="IT operations"
-          navigation={props.navigation}
+          navigation={navigation}
+          route={route}
         />
         <ListCourseHorizontal
           title="Data Professional"
-          navigation={props.navigation}
+          navigation={navigation}
+          route={route}
         />
         <ListCourseHorizontal
           title="Security Professional"
-          navigation={props.navigation}
+          navigation={navigation}
+          route={route}
         />
         <EmptyComponent
           title="My paths"

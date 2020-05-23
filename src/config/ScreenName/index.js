@@ -1,3 +1,5 @@
+export const AuthenticateTab = 'Authenticate';
+export const AppTab = 'appTab';
 export const LoginScreenName = 'login';
 export const RegisterScreenName = 'register';
 export const HomeScreenName = 'home';
@@ -15,3 +17,6 @@ export const PathDetailScreenName = 'pathDetail';
 export const AuthorDetailScreenName = 'authorDetail';
 export const SubscriptionScreenName = 'subscription';
 export const LocationScreenName = 'yourLocation';
+export const ShowListPathScreenName = 'listPath';
+export const PopularSkillScreenName = 'popularSkill';
+export const RelateSkillScreenName = 'relateSkill';

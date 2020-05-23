@@ -19,9 +19,8 @@ const SearchNavigatorStack = () => {
     setSearchText(text);
   };
 
-  const HeaderSearch = ({scene, previous, navigation}) => {
+  const HeaderSearch = () => {
     const insets = useSafeArea();
-
     return (
       <SearchBar
         placeholder="Search here..."

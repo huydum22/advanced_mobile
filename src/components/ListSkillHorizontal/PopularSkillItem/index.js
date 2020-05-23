@@ -2,9 +2,9 @@ import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {BoxModel, Styles, Colors, Distance} from '../../../styles';
 const Item = (props) => {
-  const {name} = props;
+  const {name, onPress} = props;
   return (
-    <TouchableOpacity style={styles.skillContainer}>
+    <TouchableOpacity style={styles.skillContainer} onPress={onPress}>
       <Text>{name}</Text>
     </TouchableOpacity>
   );

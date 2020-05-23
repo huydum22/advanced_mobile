@@ -3,9 +3,16 @@ import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import {Styles, Typography, Distance, BoxModel} from '../../../styles';
 import Item from '../PopularSkillItem';
 import data from '../../../ExampleData/skill';
+import {PopularSkillScreenName} from '../../../config/ScreenName';
 const PopularSkill = (props) => {
+  const {navigation, route} = props;
+  const onPress = () => {
+    navigation.push(PopularSkillScreenName);
+  };
   const renderList = (listData) => {
-    return listData.map((item) => <Item key={item.id} name={item.name} />);
+    return listData.map((item) => (
+      <Item key={item.id} name={item.name} onPress={onPress} />
+    ));
   };
   return (
     <View style={styles.container}>
