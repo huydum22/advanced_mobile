@@ -121,12 +121,17 @@ export const fillRow = {
 export const fillRowStart = {
   flex: 1,
   flexDirection: 'row',
-  justifyContent: 'center',
+  justifyContent: 'flex-start',
 };
 
 export const fillColumn = {
   flex: 1,
   flexDirection: 'column',
+};
+export const fillColumnStart = {
+  flex: 1,
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
 };
 export const rowBetween = {
   flexDirection: 'row',

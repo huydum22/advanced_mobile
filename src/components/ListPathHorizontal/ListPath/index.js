@@ -17,6 +17,7 @@ const Path = (props) => {
         route={route}
         name={item.name}
         numberOfCourse={item.numberOfCourse}
+        totalHour={item.totalHour}
         key={item.id}
       />
     ));

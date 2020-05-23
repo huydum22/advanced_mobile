@@ -1,12 +1,9 @@
 import React from 'react';
 import {StyleSheet, View, SectionList, Text, StatusBar} from 'react-native';
-
 import courseData from '../../../ExampleData/course';
-
 import {CourseVerticalItem} from '../../ListCourseVertical';
-
 import {Styles, Colors, Typography} from '../../../styles';
-
+import Header from '../HeaderPathDetail';
 const PathDetail = (props) => {
   const {navigation, route} = props;
 
@@ -53,6 +50,15 @@ const PathDetail = (props) => {
         renderSectionHeader={({section: {title}}) => renderHeader(title)}
         stickySectionHeadersEnabled
         showsVerticalScrollIndicator={false}
+        ListHeaderComponent={() => {
+          return (
+            <Header
+              name={route.params.name}
+              numberOfCourse={route.params.numberOfCourse}
+              totalHour={route.params.totalHour}
+            />
+          );
+        }}
       />
     </View>
   );
