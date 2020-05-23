@@ -11,3 +11,5 @@ export const SearchAllScreenName = 'searchAll';
 export const SearchCourseScreenName = 'searchCourse';
 export const SearchPathScreenName = 'searchPath';
 export const SearchAuthorScreenName = 'searchAuthor';
+export const PathDetailScreenName = 'pathDetail';
+export const AuthorDetailScreenName = 'authorDetail';

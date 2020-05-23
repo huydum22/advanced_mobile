@@ -1,9 +1,12 @@
 import React from 'react';
 import {StyleSheet, Image, Text, View, TouchableHighlight} from 'react-native';
 import {Colors} from '../../../styles';
-
+import {AuthorDetailScreenName} from '../../../config/ScreenName';
 const Item = (props) => {
-  const onPress01 = () => {};
+  const {navigation, route} = props;
+  const onPress01 = () => {
+    navigation.push(AuthorDetailScreenName);
+  };
   return (
     <View style={styles.container}>
       <TouchableHighlight

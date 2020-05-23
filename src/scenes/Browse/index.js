@@ -13,6 +13,7 @@ import {
 } from '../../components/ListSkillHorizontal';
 import Banner from '../../components/Banner';
 import {ShowListCourseScreenName} from '../../config/ScreenName';
+import p from 'pretty-format';
 const brown = (props) => {
   const {navigation, route} = props;
   const onPressBanner01 = () => {
@@ -42,8 +43,12 @@ const brown = (props) => {
         />
         <ListPopularSkillHorizontal />
         <ListRelateSkillHorizontal />
-        <ListPathHorizontal title="Path" />
-        <ListAuthorHorizontal />
+        <ListPathHorizontal
+          title="Path"
+          navigation={navigation}
+          route={route}
+        />
+        <ListAuthorHorizontal navigation={navigation} route={route} />
       </ScrollView>
     </SafeAreaView>
   );

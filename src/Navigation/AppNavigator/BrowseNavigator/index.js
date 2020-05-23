@@ -5,8 +5,11 @@ import {Colors, Typography} from '../../../styles';
 import {
   BrowseScreenName,
   ShowListCourseScreenName,
+  AuthorDetailScreenName,
+  PathDetailScreenName,
 } from '../../../config/ScreenName';
-
+import AuthorDetail from '../../../scenes/AuthorDetail';
+import PathDetail from '../../../scenes/PathDetail';
 import Browse from '../../../scenes/Browse';
 import ListOfCourse from '../../../scenes/ListOfCourse';
 const BrowseStack = createStackNavigator();
@@ -33,6 +36,11 @@ const BrowseNavigatorStack = () => {
         }}
         options={({route}) => ({title: route.params.title})}
       />
+      <BrowseStack.Screen
+        name={AuthorDetailScreenName}
+        component={AuthorDetail}
+      />
+      <BrowseStack.Screen name={PathDetailScreenName} component={PathDetail} />
     </BrowseStack.Navigator>
   );
 };

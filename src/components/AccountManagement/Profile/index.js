@@ -43,7 +43,6 @@ const Profile = (props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.backgroundColor,
-    height: Size.HEIGHT,
   },
   mainContainer: {
     flex: 1,

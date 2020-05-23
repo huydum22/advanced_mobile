@@ -11,13 +11,23 @@ import {AuthorVerticalItem} from '../ListAuthorVertical';
 
 import {Styles, Colors, Typography} from '../../styles';
 import SeeAllBtn from '../common/see-all-button';
-import {ShowListCourseScreenName} from '../../config/ScreenName';
+import {
+  SearchCourseScreenName,
+  SearchPathScreenName,
+  SearchAuthorScreenName,
+} from '../../config/ScreenName';
 const Search = (props) => {
   const {navigation, route} = props;
 
   const showAll = (e) => {
     if (e === 'Courses') {
-      navigation.push(ShowListCourseScreenName);
+      navigation.jumpTo(SearchCourseScreenName);
+    }
+    if (e === 'Paths') {
+      navigation.jumpTo(SearchPathScreenName);
+    }
+    if (e === 'Authors') {
+      navigation.jumpTo(SearchAuthorScreenName);
     }
   };
   const flatListSeparator = () => {

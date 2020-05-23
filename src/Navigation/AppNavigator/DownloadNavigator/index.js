@@ -19,12 +19,8 @@ const configDownloadNavigator = {
 
 const DownloadNavigator = () => {
   return (
-    <DownloadStack.Navigator>
-      <DownloadStack.Screen
-        name={DownloadScreenName}
-        component={Download}
-        options={configDownloadNavigator}
-      />
+    <DownloadStack.Navigator screenOptions={configDownloadNavigator}>
+      <DownloadStack.Screen name={DownloadScreenName} component={Download} />
     </DownloadStack.Navigator>
   );
 };

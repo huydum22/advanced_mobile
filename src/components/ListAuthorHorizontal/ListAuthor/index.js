@@ -4,9 +4,16 @@ import {Styles, Typography, BoxModel, Distance} from '../../../styles';
 import data from '../../../ExampleData/author';
 import Item from '../AuthorItem';
 const TopAuthor = (props) => {
+  const {navigation, route} = props;
   const renderListData = (list) => {
     return list.map((item) => (
-      <Item name={item.name} image={item.image} key={item.id} />
+      <Item
+        name={item.name}
+        image={item.image}
+        key={item.id}
+        navigation={navigation}
+        route={route}
+      />
     ));
   };
   return (

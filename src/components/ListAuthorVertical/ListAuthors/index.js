@@ -4,6 +4,7 @@ import {Colors} from '../../../styles';
 import data from '../../../ExampleData/author';
 import Item from '../AuthorItem';
 const Authors = (props) => {
+  const {navigation, route} = props;
   const flatListSeparator = () => {
     return <View style={styles.separator} />;
   };
@@ -16,6 +17,8 @@ const Authors = (props) => {
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
           <Item
+            navigation={navigation}
+            route={route}
             name={item.name}
             image={item.image}
             numberOfCourse={item.numberOfCourse}

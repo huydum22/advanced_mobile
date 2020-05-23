@@ -1,10 +1,22 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Text,
+  TouchableHighlight,
+} from 'react-native';
 import {Styles} from '../../../styles';
 import image from '../../../assets/image/path.jpg';
+import {PathDetailScreenName} from '../../../config/ScreenName';
 const Item = (props) => {
+  const {navigation, route} = props;
+  const onPress = () => {
+    navigation.push(PathDetailScreenName);
+  };
   return (
-    <TouchableOpacity style={Styles.horizontalCourse} activeOpacity={0.6}>
+    <TouchableOpacity style={Styles.horizontalCourse} onPress={onPress}>
       <Image
         source={image}
         style={[Styles.imageInHorizontalCourse, styles.image]}

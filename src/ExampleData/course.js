@@ -2,7 +2,7 @@ import image01 from '../assets/image/skill01.jpg';
 import image02 from '../assets/image/skill02.jpg';
 import image03 from '../assets/image/skill03.jpg';
 const randomRate = () => {
-  return Math.floor(Math.random() * 5);
+  return Math.floor(Math.random() * 5 + 1);
 };
 const data = [
   {
@@ -124,6 +124,66 @@ const data = [
     totalRate: 42,
     rate: randomRate(),
     image: image03,
+  },
+  {
+    id: '11',
+    name: 'Domain-Driven Design',
+    numberOfCourse: '5 course',
+    author: 'Jim Wilson',
+    level: 'Intermediate',
+    timeToStart: 'Jan 2020',
+    totalHour: '10h',
+    totalRate: 6,
+    rate: randomRate(),
+    image: image01,
+  },
+  {
+    id: '12',
+    name: 'Building Application with React and Flux',
+    numberOfCourse: '5 course',
+    author: 'Jim Cooper',
+    level: 'Intermediate',
+    timeToStart: 'Apr 2017',
+    totalHour: '5h',
+    totalRate: 912,
+    rate: randomRate(),
+    image: image02,
+  },
+  {
+    id: '13',
+    name: 'Angular Fundamentals',
+    numberOfCourse: '5 course',
+    author: 'Deborah House',
+    level: 'Beginner',
+    timeToStart: 'Apr 2020',
+    totalHour: '1h',
+    totalRate: 124,
+    rate: randomRate(),
+    image: image01,
+  },
+  {
+    id: '14',
+    name: 'Spring Framework: Spring MVC Fundamentals',
+    numberOfCourse: '5 course',
+    author: 'Allen Scott',
+    level: 'Intermediate',
+    timeToStart: 'Apr 2019',
+    totalHour: '5h',
+    totalRate: 90,
+    rate: randomRate(),
+    image: image03,
+  },
+  {
+    id: '15',
+    name: 'C# Fundamentals',
+    numberOfCourse: '5 course',
+    author: 'Scott Jimmy',
+    level: 'Beginner',
+    timeToStart: 'Feb 2018',
+    totalHour: '2h',
+    totalRate: 12,
+    rate: randomRate(),
+    image: image02,
   },
 ];
 export default data;

@@ -5,9 +5,12 @@ import SeeAllBtn from '../../common/see-all-button';
 import {Styles, BoxModel, Distance, Typography} from '../../../styles';
 import data from '../../../ExampleData/path';
 const Path = (props) => {
+  const {navigation, route} = props;
   const renderListData = (list) => {
     return list.map((item) => (
       <Item
+        navigation={navigation}
+        route={route}
         name={item.name}
         numberOfCourse={item.numberOfCourse}
         key={item.id}

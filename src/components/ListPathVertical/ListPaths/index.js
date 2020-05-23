@@ -4,6 +4,7 @@ import data from '../../../ExampleData/path';
 import {Colors} from '../../../styles';
 import Item from '../PathItem';
 const Paths = (props) => {
+  const {navigation, route} = props;
   const flatListSeparator = () => {
     return <View style={styles.separator} />;
   };
@@ -16,6 +17,8 @@ const Paths = (props) => {
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
           <Item
+            navigation={navigation}
+            route={route}
             name={item.name}
             image={item.image}
             numberOfCourse={item.numberOfCourse}
