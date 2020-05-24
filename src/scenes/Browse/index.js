@@ -16,12 +16,12 @@ import {ShowListCourseScreenName} from '../../config/ScreenName';
 const brown = (props) => {
   const {navigation, route} = props;
   const onPressBanner01 = () => {
-    navigation.push(ShowListCourseScreenName, {
+    navigation.navigate(ShowListCourseScreenName, {
       title: 'New',
     });
   };
   const onPressBanner02 = () => {
-    navigation.push(ShowListCourseScreenName, {
+    navigation.navigate(ShowListCourseScreenName, {
       title: 'Recommend',
     });
   };

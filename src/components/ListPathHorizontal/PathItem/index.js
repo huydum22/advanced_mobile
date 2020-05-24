@@ -13,7 +13,7 @@ import {PathDetailScreenName} from '../../../config/ScreenName';
 const Item = (props) => {
   const {navigation, route, name, numberOfCourse, totalHour} = props;
   const onPress = () => {
-    navigation.push(PathDetailScreenName, {
+    navigation.navigate(PathDetailScreenName, {
       name: name,
       numberOfCourse: numberOfCourse,
       totalHour: totalHour,

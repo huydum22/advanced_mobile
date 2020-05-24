@@ -117,11 +117,18 @@ export const fillRow = {
   flex: 1,
   flexDirection: 'row',
 };
+export const separator = {
+  height: 1,
+  backgroundColor: backgroundColor,
+};
+export const fillCenter = {
+  flex: 1,
+  justifyContent: 'center',
+};
 export const fillRowBetween = {
   flex: 1,
   flexDirection: 'row',
   justifyContent: 'space-between',
-
 };
 
 export const fillRowStart = {

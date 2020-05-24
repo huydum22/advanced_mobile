@@ -5,27 +5,70 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
-import {ListCourseVertical} from '../../components/ListCourseVertical';
-import {Styles, Distance, BoxModel, Typography, Colors} from '../../styles';
+import {CourseVerticalItem} from '../../components/ListCourseVertical';
+import {
+  Styles,
+  Distance,
+  BoxModel,
+  Typography,
+  Colors,
+  Size,
+} from '../../styles';
+import data from '../../ExampleData/course';
+import separator from '../../components/Separator';
 const ListCourse = (props) => {
   const {navigation, route} = props;
-  return (
-    <SafeAreaView>
+  const Header = () => {
+    return (
       <View style={styles.container}>
         <Text style={styles.textDownload}>Downloads</Text>
         <TouchableOpacity>
           <Text style={styles.textRemove}>Remove all</Text>
         </TouchableOpacity>
       </View>
-      <ListCourseVertical navigation={navigation} route={route} />
+    );
+  };
+  return (
+    <SafeAreaView>
+      <FlatList
+        data={data}
+        image
+        ItemSeparatorComponent={separator}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item}) => (
+          <CourseVerticalItem
+            navigation={navigation}
+            route={route}
+            name={item.name}
+            author={item.author}
+            level={item.level}
+            timeToStart={item.timeToStart}
+            totalHour={item.totalHour}
+            totalRate={item.totalRate}
+            rate={item.rate}
+            image={item.image}
+          />
+        )}
+        keyExtractor={(item, index) => item + index}
+        getItemLayout={(data, index) => ({
+          length: Size.scaleSize(100),
+          offset: Size.scaleSize(100) * index,
+          index,
+        })}
+        ListHeaderComponent={() => {
+          return <Header />;
+        }}
+        stickyHeaderIndices={[0]}
+      />
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
   container: {
     ...Styles.rowBetween,
-    ...BoxModel.smallMarginHorizontal,
+    ...BoxModel.smallPaddingHorizontal,
     height: Distance.spacing_40,
     backgroundColor: Colors.whiteColor,
   },

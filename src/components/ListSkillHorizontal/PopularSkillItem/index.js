@@ -1,11 +1,11 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
-import {BoxModel, Styles, Colors, Distance} from '../../../styles';
+import {BoxModel, Styles, Colors, Distance, Typography} from '../../../styles';
 const Item = (props) => {
   const {name, onPress} = props;
   return (
     <TouchableOpacity style={styles.skillContainer} onPress={onPress}>
-      <Text>{name}</Text>
+      <Text style={styles.text}>{name}</Text>
     </TouchableOpacity>
   );
 };
@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.backgroundSeeAllButton,
     marginLeft: Distance.spacing_10,
     height: Distance.spacing_30,
+  },
+  text: {
+    ...Typography.fontRegular,
+    color: Colors.blackColor,
   },
 });
 export default Item;

@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleSheet, Image, Text, View, TouchableHighlight} from 'react-native';
-import {Colors} from '../../../styles';
+import {Colors, Styles, Size, Distance, BoxModel} from '../../../styles';
 import {AuthorDetailScreenName} from '../../../config/ScreenName';
 const Item = (props) => {
   const {navigation, route, image, name, numberOfCourse} = props;
   const onPress01 = () => {
-    navigation.push(AuthorDetailScreenName, {
+    navigation.navigate(AuthorDetailScreenName, {
       name: name,
     });
   };
@@ -20,8 +20,10 @@ const Item = (props) => {
             <Image source={image} style={styles.image} />
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.textTitle}>{name}</Text>
-            <Text style={styles.textSubTitle}>{numberOfCourse}</Text>
+            <Text style={Styles.titleInHorizontalList}>{name}</Text>
+            <Text style={Styles.subTitleInHorizontalList}>
+              {numberOfCourse}
+            </Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -30,44 +32,29 @@ const Item = (props) => {
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'row',
+    ...Styles.fillRow,
     backgroundColor: Colors.whiteColor,
   },
   main: {
-    flex: 1,
-    flexDirection: 'row',
+    ...Styles.fillRow,
   },
   imageContainer: {
+    ...Styles.center,
     flex: 2,
-    height: 90,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 5,
+    height: Size.scaleSize(90),
+    marginLeft: Distance.spacing_8,
   },
   image: {
     resizeMode: 'cover',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    margin: 10,
+    width: Size.scaleSize(60),
+    height: Size.scaleSize(60),
+    borderRadius: Size.scaleSize(30),
+    margin: Distance.spacing_10,
   },
   textContainer: {
+    ...Styles.fillColumnStart,
+    ...BoxModel.smallMargin,
     flex: 8,
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'flex-start',
-    marginVertical: 10,
-    marginHorizontal: 5,
-  },
-  textTitle: {
-    fontWeight: '500',
-    textDecorationStyle: 'solid',
-  },
-  textSubTitle: {
-    fontWeight: '500',
-    color: Colors.grayDarkColor,
-    fontSize: 12,
   },
 });
 export default Item;

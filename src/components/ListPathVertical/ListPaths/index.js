@@ -25,7 +25,7 @@ const Paths = (props) => {
             totalHour={item.totalHour}
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => item + index}
       />
     </View>
   );

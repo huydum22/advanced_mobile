@@ -14,7 +14,6 @@ const ListCourseOfAuthor = (props) => {
     <View style={styles.container}>
       <FlatList
         data={data}
-        image
         ItemSeparatorComponent={flatListSeparator}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
@@ -31,7 +30,7 @@ const ListCourseOfAuthor = (props) => {
             image={item.image}
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => item + index}
         ListHeaderComponent={() => {
           return <Header name={route.params.name} />;
         }}

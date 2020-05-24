@@ -8,7 +8,7 @@ import {ShowListPathScreenName} from '../../../config/ScreenName';
 const Path = (props) => {
   const {navigation, route} = props;
   const seeAllPath = () => {
-    navigation.push(ShowListPathScreenName);
+    navigation.navigate(ShowListPathScreenName);
   };
   const renderListData = (list) => {
     return list.map((item) => (

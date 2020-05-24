@@ -5,7 +5,7 @@ import {AuthorDetailScreenName} from '../../../config/ScreenName';
 const Author = (props) => {
   const {navigation, route, name, image} = props;
   const onPress = () => {
-    navigation.push(AuthorDetailScreenName, {
+    navigation.navigate(AuthorDetailScreenName, {
       name: name,
     });
   };

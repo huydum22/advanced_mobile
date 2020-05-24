@@ -23,7 +23,7 @@ const Header = (props) => {
     route,
   } = props;
   const onPressAuthor = () => {
-    navigation.push(AuthorDetailScreenName, {
+    navigation.navigate(AuthorDetailScreenName, {
       name: name,
     });
   };

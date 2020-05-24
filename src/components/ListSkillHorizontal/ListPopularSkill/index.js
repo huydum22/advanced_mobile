@@ -7,7 +7,7 @@ import {PopularSkillScreenName} from '../../../config/ScreenName';
 const PopularSkill = (props) => {
   const {navigation, route} = props;
   const onPress = () => {
-    navigation.push(PopularSkillScreenName);
+    navigation.navigate(PopularSkillScreenName);
   };
   const renderList = (listData) => {
     return listData.map((item) => (

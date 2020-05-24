@@ -1,7 +1,14 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import data from '../../../ExampleData/profile';
-import {Colors, Size} from '../../../styles';
+import {
+  Colors,
+  Size,
+  Typography,
+  Styles,
+  BoxModel,
+  Distance,
+} from '../../../styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
@@ -14,7 +21,9 @@ import Item from '../ProfileItem';
 const Profile = (props) => {
   const {navigation, route} = props;
   const onPressSubscription = () => {
-    navigation.navigate(SubscriptionScreenName);
+    navigation.navigate(SubscriptionScreenName, {
+      screen: LoginScreenName,
+    });
   };
   const onPressLocation = () => {
     // navigation.navigate(LocationScreenName);
@@ -72,40 +81,39 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.backgroundColor,
   },
   mainContainer: {
-    flex: 1,
+    ...Styles.fillColumn,
   },
   userContainer: {
     backgroundColor: Colors.whiteColor,
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-    paddingVertical: 22,
-    alignItems: 'center',
+    ...Styles.rowCenter,
+    ...BoxModel.mediumPadding,
   },
   avatarContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: Size.scaleSize(50),
+    height: Size.scaleSize(50),
+    borderRadius: Size.scaleSize(25),
+    ...Styles.center,
     backgroundColor: Colors.primaryColor,
   },
   textContainer: {
     flex: 1,
-    marginLeft: 20,
+    marginLeft: Distance.spacing_20,
   },
   nameText: {
     color: Colors.primaryColor,
-    fontSize: 18,
-    fontWeight: '500',
+    ...Typography.fontBold,
+    fontSize: Typography.fontSize18,
   },
   emailText: {
-    color: '#828282',
+    color: Colors.grayDarkColor,
+    ...Typography.fontRegular,
+    fontSize: Typography.fontSize14,
   },
   divider: {
-    height: 20,
+    height: Size.scaleSize(30),
   },
   footer: {
-    height: 50,
+    height: Size.scaleSize(50),
     backgroundColor: Colors.backgroundColor,
   },
 });

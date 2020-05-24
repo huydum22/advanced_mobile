@@ -1,20 +1,17 @@
 import React from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
-import {Colors} from '../../../styles';
+import {Colors, Size} from '../../../styles';
 import data from '../../../ExampleData/course';
 import Item from '../CourseItem';
-
+import separator from '../../Separator';
 const ListCourse = (props) => {
   const {navigation, route} = props;
-  const flatListSeparator = () => {
-    return <View style={styles.separator} />;
-  };
   return (
     <View style={styles.container}>
       <FlatList
         data={data}
         image
-        ItemSeparatorComponent={flatListSeparator}
+        ItemSeparatorComponent={separator}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
           <Item
@@ -30,17 +27,18 @@ const ListCourse = (props) => {
             image={item.image}
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => item + index}
+        getItemLayout={(data, index) => ({
+          length: Size.scaleSize(100),
+          offset: Size.scaleSize(100) * index,
+          index,
+        })}
       />
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.backgroundColor,
-  },
-  separator: {
-    height: 1,
     backgroundColor: Colors.backgroundColor,
   },
 });

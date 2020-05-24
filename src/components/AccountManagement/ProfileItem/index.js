@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
-import {Colors} from '../../../styles';
+import {Colors, Styles, BoxModel, Typography, Distance} from '../../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const isLogout = (icon) => {
@@ -32,30 +32,29 @@ const Item = ({icon, name, onPress}) => {
 };
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    ...Styles.rowCenter,
     backgroundColor: Colors.whiteColor,
-    alignItems: 'center',
   },
   itemContainer: {
     backgroundColor: Colors.whiteColor,
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    alignItems: 'center',
+    ...Styles.rowCenter,
+    ...BoxModel.padding,
   },
   itemText: {
     flex: 1,
     color: Colors.blackColor,
+    ...Typography.fontRegular,
+    fontSize: Typography.fontSize16,
   },
   logoutText: {
     flex: 1,
     color: Colors.redColor,
     textAlign: 'center',
-    fontWeight: '600',
-    fontSize: 17,
+    ...Typography.fontBold,
+    fontSize: Typography.fontSize18,
   },
   marginItemText: {
-    marginLeft: 20,
+    marginLeft: Distance.spacing_20,
   },
   noneMarginItemText: {
     marginLeft: 0,

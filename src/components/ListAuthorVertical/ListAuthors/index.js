@@ -24,7 +24,7 @@ const Authors = (props) => {
             numberOfCourse={item.numberOfCourse}
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => item + index}
       />
     </View>
   );

@@ -10,7 +10,7 @@ YellowBox.ignoreWarnings([
 const RelateSkill = (props) => {
   const {navigation, route} = props;
   const onPress = () => {
-    navigation.push(RelateSkillScreenName);
+    navigation.navigate(RelateSkillScreenName);
   };
   const randomID = (i) => {
     return (Math.floor(Math.random() * 100) * i) % 3;
@@ -27,7 +27,7 @@ const RelateSkill = (props) => {
         numColumns={data.length / 2}
         alwaysBounceVertical={false}
         data={data}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => item + index}
         renderItem={({item}) => (
           <Item name={item.name} image={randomID(item.id)} onPress={onPress} />
         )}

@@ -7,12 +7,22 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
-import {Colors} from '../../../styles';
+import {Colors, Size, Styles, Distance, Typography} from '../../../styles';
 import {Rating} from 'react-native-ratings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {CourseDetailScreenName} from '../../../config/ScreenName';
 const Item = (props) => {
-  const {navigation, route} = props;
+  const {
+    navigation,
+    route,
+    image,
+    name,
+    author,
+    level,
+    timeToStart,
+    totalHour,
+    rate,
+  } = props;
   const onPress01 = () => {
     navigation.navigate(CourseDetailScreenName);
   };
@@ -24,25 +34,27 @@ const Item = (props) => {
         underlayColor={Colors.whiteColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
-            <Image source={props.image} style={styles.image} />
+            <Image source={image} style={styles.image} />
           </View>
           <View style={styles.mainContainer}>
-            <Text style={styles.name}>{props.name}</Text>
-            <Text style={styles.author}>{props.author}</Text>
+            <Text style={Styles.titleInHorizontalList}>{name}</Text>
+            <Text style={Styles.subTitleInHorizontalList}>{author}</Text>
             <View style={styles.levelContainer}>
-              <Text style={styles.author}>{props.level}</Text>
-              <Text style={[styles.author, styles.textCenter]}>
-                {props.timeToStart}
+              <Text style={Styles.subTitleInHorizontalList}>{level}</Text>
+              <Text
+                style={[Styles.subTitleInHorizontalList, Styles.textCenter]}>
+                {timeToStart}
               </Text>
-              <Text style={[styles.author, styles.textCenter]}>
-                {props.totalHour}
+              <Text
+                style={[Styles.subTitleInHorizontalList, Styles.textCenter]}>
+                {totalHour}
               </Text>
             </View>
             <View style={styles.ratingContainer}>
               <Rating
                 readonly={true}
                 imageSize={14}
-                startingValue={props.rate}
+                startingValue={rate}
                 ratingCount={5}
               />
             </View>
@@ -59,8 +71,7 @@ const Item = (props) => {
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'row',
+    ...Styles.fillRow,
     backgroundColor: Colors.backgroundItem,
   },
   main: {
@@ -69,61 +80,38 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 3,
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 5,
+    ...Styles.center,
+    height: Size.scaleSize(100),
+    marginLeft: Distance.spacing_8,
   },
   image: {
     resizeMode: 'cover',
-    width: 80,
-    height: 60,
+    width: Size.scaleSize(80),
+    height: Size.scaleSize(60),
   },
 
   mainContainer: {
+    ...Styles.fillColumnStart,
     flex: 8,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
     marginVertical: 10,
     marginLeft: 5,
   },
   subContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  name: {
-    flex: 1,
-    fontWeight: '500',
-    textDecorationStyle: 'solid',
-  },
-  author: {
-    flex: 1,
-    fontWeight: '500',
-    color: Colors.subTextColor,
-    fontSize: 12,
+    ...Styles.center,
   },
   levelContainer: {
-    flex: 1,
-    flexDirection: 'row',
+    ...Styles.fillRowBetween,
     marginTop: 5,
-    justifyContent: 'space-between',
   },
   ratingContainer: {
     flex: 1.5,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+    ...Styles.fillRowStart,
     marginTop: 10,
   },
   more: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
+    ...Styles.fillCenter,
     marginRight: 5,
-    // backgroundColor: colors.mainColor
-  },
-  textCenter: {
-    textAlign: 'center',
   },
 });
 export default Item;
