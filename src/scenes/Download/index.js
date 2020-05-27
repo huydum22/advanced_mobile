@@ -52,7 +52,7 @@ const ListCourse = (props) => {
           />
         )}
         keyExtractor={(item, index) => item + index}
-        getItemLayout={(data, index) => ({
+        getItemLayout={(_, index) => ({
           length: Size.scaleSize(100),
           offset: Size.scaleSize(100) * index,
           index,

@@ -1,11 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import CourseDetail from '../../../scenes/CourseDetail';
-import AuthorDetail from '../../../scenes/AuthorDetail';
-import {
-  CourseDetailScreenName,
-  AuthorDetailScreenName,
-} from '../../../config/ScreenName';
+import * as scenes from '../../../scenes';
+import * as screenName from '../../../config/ScreenName';
 import {Colors, Typography} from '../../../styles';
 const CourseDetailStack = createStackNavigator();
 const configNavigator = {
@@ -25,13 +21,13 @@ const CourseDetailNavigatorStack = () => {
       headerMode="screen"
       screenOptions={configNavigator}>
       <CourseDetailStack.Screen
-        name={CourseDetailScreenName}
-        component={CourseDetail}
+        name={screenName.CourseDetailScreenName}
+        component={scenes.CourseDetail}
         options={{headerShown: false}}
       />
       <CourseDetailStack.Screen
-        name={AuthorDetailScreenName}
-        component={AuthorDetail}
+        name={screenName.AuthorDetailScreenName}
+        component={scenes.AuthorDetail}
         options={{title: 'Author'}}
       />
     </CourseDetailStack.Navigator>

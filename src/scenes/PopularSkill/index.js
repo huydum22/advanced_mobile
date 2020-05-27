@@ -4,6 +4,7 @@ import {ListCourseHorizontal} from '../../components/ListCourseHorizontal';
 import {ListPathHorizontal} from '../../components/ListPathHorizontal';
 import {ListAuthorHorizontal} from '../../components/ListAuthorHorizontal';
 import {Colors, Distance} from '../../styles';
+import data from '../../ExampleData/course';
 
 const PopularSkill = (props) => {
   const {navigation, route} = props;
@@ -18,13 +19,19 @@ const PopularSkill = (props) => {
           title="Path"
           navigation={navigation}
           route={route}
+          data={data}
         />
         <ListCourseHorizontal
           title="New"
           navigation={navigation}
           route={route}
+          data={data}
         />
-        <ListCourseHorizontal title="Trending" navigation={navigation} />
+        <ListCourseHorizontal
+          title="Trending"
+          navigation={navigation}
+          data={data}
+        />
         <ListAuthorHorizontal navigation={navigation} route={route} />
 
         <View style={styles.footer} />

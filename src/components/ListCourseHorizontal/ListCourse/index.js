@@ -22,7 +22,7 @@ const SectionCourses = (props) => {
       <FlatList
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        data={data}
+        data={data.slice(0, 5)}
         renderItem={({item}) => (
           <Item
             navigation={navigation}

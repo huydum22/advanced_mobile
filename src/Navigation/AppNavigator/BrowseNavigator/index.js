@@ -2,22 +2,8 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Colors, Typography} from '../../../styles';
 
-import {
-  BrowseScreenName,
-  ShowListCourseScreenName,
-  AuthorDetailScreenName,
-  PathDetailScreenName,
-  ShowListPathScreenName,
-  PopularSkillScreenName,
-  RelateSkillScreenName,
-} from '../../../config/ScreenName';
-import AuthorDetail from '../../../scenes/AuthorDetail';
-import PathDetail from '../../../scenes/PathDetail';
-import Browse from '../../../scenes/Browse';
-import ListOfCourse from '../../../scenes/ListOfCourse';
-import ListOfPath from '../../../scenes/ListOfPath';
-import PopularSkill from '../../../scenes/PopularSkill';
-import RelateSkill from '../../../scenes/RelateSkill';
+import * as screenName from '../../../config/ScreenName';
+import * as scenes from '../../../scenes';
 
 const BrowseStack = createStackNavigator();
 const configBrowseNavigator = {
@@ -34,37 +20,40 @@ const BrowseNavigatorStack = () => {
   return (
     <BrowseStack.Navigator screenOptions={configBrowseNavigator}>
       <BrowseStack.Screen
-        name={BrowseScreenName}
-        component={Browse}
+        name={screenName.BrowseScreenName}
+        component={scenes.Browse}
         options={{title: 'Browse'}}
       />
       <BrowseStack.Screen
-        name={ShowListCourseScreenName}
-        component={ListOfCourse}
+        name={screenName.ShowListCourseScreenName}
+        component={scenes.ListOfCourse}
         initialParams={{
           title: 'Course',
         }}
         options={({route}) => ({title: route.params.title})}
       />
       <BrowseStack.Screen
-        name={AuthorDetailScreenName}
-        component={AuthorDetail}
+        name={screenName.AuthorDetailScreenName}
+        component={scenes.AuthorDetail}
         options={{title: 'Author'}}
       />
-      <BrowseStack.Screen name={PathDetailScreenName} component={PathDetail} />
       <BrowseStack.Screen
-        name={ShowListPathScreenName}
-        component={ListOfPath}
+        name={screenName.PathDetailScreenName}
+        component={scenes.PathDetail}
+      />
+      <BrowseStack.Screen
+        name={screenName.ShowListPathScreenName}
+        component={scenes.ListOfPath}
         options={{title: 'Path'}}
       />
       <BrowseStack.Screen
-        name={PopularSkillScreenName}
-        component={PopularSkill}
+        name={screenName.PopularSkillScreenName}
+        component={scenes.PopularSkill}
         options={{title: 'Popular skill'}}
       />
       <BrowseStack.Screen
-        name={RelateSkillScreenName}
-        component={RelateSkill}
+        name={screenName.RelateSkillScreenName}
+        component={scenes.RelateSkill}
         options={{title: 'Skill'}}
       />
     </BrowseStack.Navigator>

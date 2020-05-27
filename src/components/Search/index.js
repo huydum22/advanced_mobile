@@ -81,13 +81,13 @@ const Search = (props) => {
     );
   };
   const renderListItem = (item) => {
-    if (courseData.find((e) => e === item)) {
+    if (courseData.includes(item)) {
       return renderCoursesItem(item);
     }
-    if (pathData.find((e) => e === item)) {
+    if (pathData.includes(item)) {
       return renderPathItem(item);
     }
-    if (authorData.find((e) => e === item)) {
+    if (authorData.includes(item)) {
       return renderAuthorItem(item);
     }
   };

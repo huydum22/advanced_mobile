@@ -44,7 +44,7 @@ export const horizontalCourse = {
   height: scaleSize(180),
   backgroundColor: whiteColor,
   borderWidth: 0.25,
-  ...boxShadow(blackWith08OpacityColor, {width: 5, height: 5}, 8, 0.2),
+  ...boxShadow(blackWith08OpacityColor),
   borderColor: blackWithOpacity,
 };
 export const imageInHorizontalCourse = {

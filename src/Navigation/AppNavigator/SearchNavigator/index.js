@@ -1,16 +1,10 @@
 import React, {useState} from 'react';
 import {useSafeArea} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
-import Search from '../../../scenes/Search';
-import {
-  SearchScreenName,
-  PathDetailScreenName,
-  AuthorDetailScreenName,
-} from '../../../config/ScreenName';
-import {Colors, Typography, Size, BoxModel, Distance} from '../../../styles';
+import * as scenes from '../../../scenes';
+import * as screenName from '../../../config/ScreenName';
+import {Colors, Typography, Size} from '../../../styles';
 import {SearchBar} from 'react-native-elements';
-import PathDetail from '../../../scenes/PathDetail';
-import AuthorDetail from '../../../scenes/AuthorDetail';
 
 const SearchStack = createStackNavigator();
 const SearchNavigatorStack = () => {
@@ -24,7 +18,6 @@ const SearchNavigatorStack = () => {
     return (
       <SearchBar
         placeholder="Search here..."
-        // onChangeText={updateSearch}
         value={searchText}
         lightTheme={true}
         containerStyle={{
@@ -71,22 +64,22 @@ const SearchNavigatorStack = () => {
   };
   return (
     <SearchStack.Navigator
-      initialRouteName={SearchScreenName}
+      initialRouteName={screenName.SearchScreenName}
       headerMode="screen"
       screenOptions={configNavigator}>
       <SearchStack.Screen
-        name={SearchScreenName}
-        component={Search}
+        name={screenName.SearchScreenName}
+        component={scenes.Search}
         options={configSearchNavigator}
       />
       <SearchStack.Screen
-        name={PathDetailScreenName}
-        component={PathDetail}
+        name={screenName.PathDetailScreenName}
+        component={scenes.PathDetail}
         options={{title: 'Path'}}
       />
       <SearchStack.Screen
-        name={AuthorDetailScreenName}
-        component={AuthorDetail}
+        name={screenName.AuthorDetailScreenName}
+        component={scenes.AuthorDetail}
         options={{title: 'Author'}}
       />
     </SearchStack.Navigator>

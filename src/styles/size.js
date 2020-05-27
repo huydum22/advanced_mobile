@@ -15,8 +15,8 @@ export const bannerHeight = scaleSize(100);
 export function boxShadow(
   color,
   offset = {height: 5, width: 5},
-  radius = 8,
-  opacity = 0.2,
+  radius = 5,
+  opacity = 0.3,
 ) {
   return {
     shadowColor: color,

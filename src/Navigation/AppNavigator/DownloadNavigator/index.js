@@ -1,9 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Colors, Typography} from '../../../styles';
-import {DownloadScreenName} from '../../../config/ScreenName';
+import * as screenName from '../../../config/ScreenName';
 
-import Download from '../../../scenes/Download';
+import * as scenes from '../../../scenes';
 const DownloadStack = createStackNavigator();
 const configDownloadNavigator = {
   title: 'Downloads',
@@ -20,7 +20,10 @@ const configDownloadNavigator = {
 const DownloadNavigator = () => {
   return (
     <DownloadStack.Navigator screenOptions={configDownloadNavigator}>
-      <DownloadStack.Screen name={DownloadScreenName} component={Download} />
+      <DownloadStack.Screen
+        name={screenName.DownloadScreenName}
+        component={scenes.Download}
+      />
     </DownloadStack.Navigator>
   );
 };

@@ -5,7 +5,7 @@ import {ListPathHorizontal} from '../../components/ListPathHorizontal';
 import {ListAuthorHorizontal} from '../../components/ListAuthorHorizontal';
 import {ListPopularSkillHorizontal} from '../../components/ListSkillHorizontal';
 import {Colors, Distance} from '../../styles';
-
+import data from '../../ExampleData/course';
 const RelateSkill = (props) => {
   const {navigation, route} = props;
 
@@ -21,14 +21,24 @@ const RelateSkill = (props) => {
           title="Path"
           navigation={navigation}
           route={route}
+          data={data}
         />
         <ListCourseHorizontal
           title="New"
           navigation={navigation}
           route={route}
+          data={data}
         />
-        <ListCourseHorizontal title="Trending" navigation={navigation} />
-        <ListAuthorHorizontal navigation={navigation} route={route} />
+        <ListCourseHorizontal
+          title="Trending"
+          navigation={navigation}
+          data={data}
+        />
+        <ListAuthorHorizontal
+          navigation={navigation}
+          route={route}
+          data={data}
+        />
 
         <View style={styles.footer} />
       </ScrollView>
