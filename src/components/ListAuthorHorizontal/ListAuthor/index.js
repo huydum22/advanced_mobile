@@ -1,30 +1,31 @@
 import React from 'react';
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
+import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {Styles, Typography, BoxModel, Distance} from '../../../styles';
-import data from '../../../ExampleData/author';
 import Item from '../AuthorItem';
 const TopAuthor = (props) => {
-  const {navigation, route} = props;
-  const renderListData = (list) => {
-    return list.map((item) => (
-      <Item
-        name={item.name}
-        image={item.image}
-        key={item.id}
-        navigation={navigation}
-        route={route}
-      />
-    ));
-  };
+  const {navigation, route, data} = props;
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={[Styles.titleRow, Typography.fontBold]}>Top Authors</Text>
       </View>
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        {renderListData(data)}
-        <View style={styles.footer} />
-      </ScrollView>
+      <FlatList
+        data={data.slice(0, 5)}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({item}) => (
+          <Item
+            name={item.name}
+            image={item.image}
+            key={item.id}
+            navigation={navigation}
+            route={route}
+          />
+        )}
+        ListFooterComponent={() => {
+          return <View style={styles.footer} />;
+        }}
+      />
     </View>
   );
 };

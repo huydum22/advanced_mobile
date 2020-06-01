@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     height: Size.bannerHeight,
   },
   blurContainer: {
-    backgroundColor: Colors.alphaBackgroundImageColor,
+    backgroundColor: Colors.blackWith05OpacityColor,
   },
   text: {
     ...BoxModel.smallPadding,

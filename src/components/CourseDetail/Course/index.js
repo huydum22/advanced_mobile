@@ -62,7 +62,6 @@ const renderListItem = (item) => {
   );
 };
 const CourseDetail = (props) => {
-  console.log(p(props));
   const {navigation, route} = props;
   const dismiss = () => {
     navigation.goBack();

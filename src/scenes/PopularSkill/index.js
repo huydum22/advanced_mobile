@@ -5,7 +5,8 @@ import {ListPathHorizontal} from '../../components/ListPathHorizontal';
 import {ListAuthorHorizontal} from '../../components/ListAuthorHorizontal';
 import {Colors, Distance} from '../../styles';
 import data from '../../ExampleData/course';
-
+import dataAuthor from '../../ExampleData/author';
+import dataPath from '../../ExampleData/path';
 const PopularSkill = (props) => {
   const {navigation, route} = props;
 
@@ -19,7 +20,7 @@ const PopularSkill = (props) => {
           title="Path"
           navigation={navigation}
           route={route}
-          data={data}
+          data={dataPath}
         />
         <ListCourseHorizontal
           title="New"
@@ -32,7 +33,11 @@ const PopularSkill = (props) => {
           navigation={navigation}
           data={data}
         />
-        <ListAuthorHorizontal navigation={navigation} route={route} />
+        <ListAuthorHorizontal
+          navigation={navigation}
+          route={route}
+          data={dataAuthor}
+        />
 
         <View style={styles.footer} />
       </ScrollView>

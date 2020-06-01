@@ -13,6 +13,10 @@ import {
 } from '../../components/ListSkillHorizontal';
 import Banner from '../../components/Banner';
 import {ShowListCourseScreenName} from '../../config/ScreenName';
+import dataSkill from '../../ExampleData/skill';
+import dataRelate from '../../ExampleData/relate-skill';
+import dataAuthor from '../../ExampleData/author';
+import dataPath from '../../ExampleData/path';
 const brown = (props) => {
   const {navigation, route} = props;
   const onPressBanner01 = () => {
@@ -40,14 +44,27 @@ const brown = (props) => {
           name="recommended for you"
           onPress={onPressBanner02}
         />
-        <ListPopularSkillHorizontal navigation={navigation} route={route} />
-        <ListRelateSkillHorizontal navigation={navigation} route={route} />
+        <ListPopularSkillHorizontal
+          navigation={navigation}
+          route={route}
+          data={dataSkill}
+        />
+        <ListRelateSkillHorizontal
+          navigation={navigation}
+          route={route}
+          data={dataRelate}
+        />
         <ListPathHorizontal
           title="Path"
           navigation={navigation}
           route={route}
+          data={dataPath}
         />
-        <ListAuthorHorizontal navigation={navigation} route={route} />
+        <ListAuthorHorizontal
+          navigation={navigation}
+          route={route}
+          data={dataAuthor}
+        />
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,19 +1,14 @@
 import React from 'react';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, FlatList} from 'react-native';
 import {Styles, Typography, Distance, BoxModel} from '../../../styles';
 import Item from '../PopularSkillItem';
-import data from '../../../ExampleData/skill';
 import {PopularSkillScreenName} from '../../../config/ScreenName';
 const PopularSkill = (props) => {
-  const {navigation, route} = props;
+  const {navigation, route, data} = props;
   const onPress = () => {
     navigation.navigate(PopularSkillScreenName);
   };
-  const renderList = (listData) => {
-    return listData.map((item) => (
-      <Item key={item.id} name={item.name} onPress={onPress} />
-    ));
-  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -21,10 +16,17 @@ const PopularSkill = (props) => {
           Popular skills
         </Text>
       </View>
-      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        {renderList(data)}
-        <View style={styles.footer} />
-      </ScrollView>
+      <FlatList
+        data={data}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({item}) => (
+          <Item key={item.id} name={item.name} onPress={onPress} />
+        )}
+        ListFooterComponent={() => {
+          return <View style={styles.footer} />;
+        }}
+      />
     </View>
   );
 };

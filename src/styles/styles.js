@@ -1,5 +1,5 @@
 import {
-  blackWithOpacity,
+  blackWith03OpacityColor,
   BLACK,
   whiteColor,
   backgroundColor,
@@ -45,7 +45,7 @@ export const horizontalCourse = {
   backgroundColor: whiteColor,
   borderWidth: 0.25,
   ...boxShadow(blackWith08OpacityColor),
-  borderColor: blackWithOpacity,
+  borderColor: blackWith03OpacityColor,
 };
 export const imageInHorizontalCourse = {
   flex: 1,

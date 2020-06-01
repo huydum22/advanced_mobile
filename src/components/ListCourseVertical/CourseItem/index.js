@@ -72,7 +72,7 @@ const Item = (props) => {
 const styles = StyleSheet.create({
   container: {
     ...Styles.fillRow,
-    backgroundColor: Colors.backgroundItem,
+    backgroundColor: Colors.whiteColor,
   },
   main: {
     flex: 9,

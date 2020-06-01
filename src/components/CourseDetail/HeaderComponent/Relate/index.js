@@ -3,9 +3,7 @@ import {View, StyleSheet, Text, TouchableHighlight} from 'react-native';
 import {Colors, Typography} from '../../../../styles';
 import Feather from 'react-native-vector-icons/Feather';
 const Relate = (props) => {
-  const onPress = () => {
-    // console.log('test');
-  };
+  const onPress = () => {};
   return (
     <TouchableHighlight underlayColor={Colors.whiteColor} onPress={onPress}>
       <View style={styles.container}>
