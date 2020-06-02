@@ -7,7 +7,7 @@ import {
   SearchPathScreenName,
 } from '../../config/ScreenName';
 
-import searchAll from '../../components/Search';
+import SearchAll from '../../components/Search';
 import {ListCourseVertical} from '../../components/ListCourseVertical';
 import {ListPathVertical} from '../../components/ListPathVertical';
 import {ListAuthorVertical} from '../../components/ListAuthorVertical';
@@ -32,7 +32,7 @@ const SearchNavigator = (props) => {
       animationEnabled={true}>
       <Tab.Screen
         name={SearchAllScreenName}
-        component={searchAll}
+        component={SearchAll}
         options={{tabBarLabel: 'All'}}
       />
       <Tab.Screen

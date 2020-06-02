@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useSafeArea} from 'react-native-safe-area-context';
+import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import * as scenes from '../../../scenes';
 import * as screenName from '../../../config/ScreenName';
@@ -12,44 +13,32 @@ const SearchNavigatorStack = () => {
   const updateSearch = (text) => {
     setSearchText(text);
   };
+  const insets = useSafeArea();
 
-  const HeaderSearch = () => {
-    const insets = useSafeArea();
-    return (
-      <SearchBar
-        placeholder="Search here..."
-        value={searchText}
-        lightTheme={true}
-        containerStyle={{
-          width: Size.WIDTH,
-          backgroundColor: Colors.primaryColor,
-        }}
-        inputContainerStyle={{
-          height: 35,
-          marginTop: insets.top + 20,
-          backgroundColor: Colors.whiteColor,
-        }}
-        cancelButtonProps={{
-          color: Colors.whiteColor,
-          backgroundColor: Colors.whiteColor,
-          buttonStyle: {
-            marginTop: 50,
-          },
-        }}
-        platform="ios"
-        round={true}
-      />
-    );
-  };
   const configSearchNavigator = {
-    header: () => <HeaderSearch />,
-    headerStyle: {
-      backgroundColor: Colors.primaryColor,
-    },
-    headerTintColor: Colors.whiteColor,
-    headerTitleStyle: {
-      ...Typography.fontBold,
-      fontSize: Typography.fontSize20,
+    header: (props) => {
+      return (
+        <SearchBar
+          placeholder="Search here..."
+          onChangeText={(search) => updateSearch(search)}
+          value={searchText}
+          lightTheme={true}
+          containerStyle={{
+            width: Size.WIDTH,
+            backgroundColor: Colors.primaryColor,
+          }}
+          inputContainerStyle={[styles.input, {marginTop: insets.top + 20}]}
+          cancelButtonProps={{
+            color: Colors.whiteColor,
+            backgroundColor: Colors.whiteColor,
+            buttonStyle: {
+              marginTop: 50,
+            },
+          }}
+          platform="ios"
+          round={true}
+        />
+      );
     },
   };
   const configNavigator = {
@@ -85,4 +74,10 @@ const SearchNavigatorStack = () => {
     </SearchStack.Navigator>
   );
 };
+const styles = StyleSheet.create({
+  input: {
+    height: 35,
+    backgroundColor: Colors.whiteColor,
+  },
+});
 export default SearchNavigatorStack;
