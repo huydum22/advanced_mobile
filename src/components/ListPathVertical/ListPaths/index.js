@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import data from '../../../ExampleData/path';
-import {Colors} from '../../../styles';
+import {Colors, Size} from '../../../styles';
 import Item from '../PathItem';
 import {PathDetailScreenName} from '../../../config/ScreenName';
 
@@ -26,6 +26,11 @@ const Paths = (props) => {
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => <Item onPressItem={onPressItem} item={item} />}
         keyExtractor={(item, index) => item + index}
+        getItemLayout={(data, index) => ({
+          length: Size.scaleSize(90),
+          offset: Size.scaleSize(90) * index,
+          index,
+        })}
       />
     </View>
   );

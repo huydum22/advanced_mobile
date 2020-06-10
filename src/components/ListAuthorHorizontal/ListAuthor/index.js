@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, FlatList} from 'react-native';
-import {Styles, Typography, BoxModel, Distance} from '../../../styles';
+import {Styles, Typography, BoxModel, Distance, Size} from '../../../styles';
 import Item from '../AuthorItem';
 import {AuthorDetailScreenName} from '../../../config/ScreenName';
 
@@ -26,6 +26,11 @@ const TopAuthor = (props) => {
         ListFooterComponent={() => {
           return <View style={styles.footer} />;
         }}
+        getItemLayout={(data, index) => ({
+          length: Size.scaleSize(160),
+          offset: Size.scaleSize(160) * index,
+          index,
+        })}
       />
     </View>
   );

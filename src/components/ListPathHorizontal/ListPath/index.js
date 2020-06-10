@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Text, ScrollView, FlatList} from 'react-native';
 import Item from '../PathItem';
 import SeeAllBtn from '../../common/see-all-button';
-import {Styles, BoxModel, Distance, Typography} from '../../../styles';
+import {Styles, BoxModel, Distance, Typography, Size} from '../../../styles';
 import {
   ShowListPathScreenName,
   PathDetailScreenName,
@@ -34,6 +34,11 @@ const Path = (props) => {
         renderItem={({item}) => (
           <Item item={item} key={item.id} onPress={onPress} />
         )}
+        getItemLayout={(data, index) => ({
+          length: Size.scaleSize(200),
+          offset: Size.scaleSize(200) * index,
+          index,
+        })}
       />
     </View>
   );

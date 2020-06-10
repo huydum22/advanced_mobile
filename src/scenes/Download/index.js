@@ -46,7 +46,7 @@ const ListCourse = (props) => {
           <CourseVerticalItem onPressItem={onPressItem} item={item} />
         )}
         keyExtractor={(item, index) => item.id + index}
-        getItemLayout={(_, index) => ({
+        getItemLayout={(data, index) => ({
           length: Size.scaleSize(100),
           offset: Size.scaleSize(100) * index,
           index,

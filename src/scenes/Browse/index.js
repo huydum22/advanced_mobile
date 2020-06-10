@@ -8,14 +8,13 @@ import {
   FlatList,
   StyleSheet,
 } from 'react-native';
-import {Styles, Typography, Colors, Distance, BoxModel} from '../../styles';
+import {Styles, Typography, Distance, BoxModel, Size} from '../../styles';
 import backgroundImage from '../../assets/image/backgroundImage.png';
 import backgroundImage02 from '../../assets/image/backgroundImage02.png';
 import {PathItemHorizontal} from '../../components/ListPathHorizontal';
 import {AuthorHorizontalItem} from '../../components/ListAuthorHorizontal';
 import {
   PopularSkillItem,
-  ListRelateSkillHorizontal,
   RelateSkillItem,
 } from '../../components/ListSkillHorizontal';
 import Banner from '../../components/Banner';
@@ -58,7 +57,6 @@ const brown = (props) => {
   };
   const showAllPath = (title) => {};
   const renderHeader = (title, data) => {
-    console.log(data[0]);
     if (data[0] === 2) {
       return (
         <View style={styles.titleContainer}>
@@ -119,6 +117,11 @@ const brown = (props) => {
             renderItem={({item}) => (
               <RelateSkillItem item={item} onPress={onPressRelateSkill} />
             )}
+            getItemLayout={(data, index) => ({
+              length: Size.scaleSize(150),
+              offset: Size.scaleSize(150) * index,
+              index,
+            })}
           />
         </ScrollView>
       );
@@ -137,6 +140,11 @@ const brown = (props) => {
               onPress={onPressPath}
             />
           )}
+          getItemLayout={(data, index) => ({
+            length: Size.scaleSize(200),
+            offset: Size.scaleSize(200) * index,
+            index,
+          })}
         />
       );
     }
@@ -156,6 +164,11 @@ const brown = (props) => {
           ListFooterComponent={() => {
             return <View style={Styles.footer} />;
           }}
+          getItemLayout={(data, index) => ({
+            length: Size.scaleSize(160),
+            offset: Size.scaleSize(160) * index,
+            index,
+          })}
         />
       );
     }

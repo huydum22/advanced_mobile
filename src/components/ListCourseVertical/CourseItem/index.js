@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     flex: 3,
     ...Styles.center,
     height: Size.scaleSize(100),
+    width: Size.scaleSize(50),
     marginLeft: Distance.spacing_8,
   },
   image: {

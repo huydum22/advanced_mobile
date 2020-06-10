@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, FlatList, SafeAreaView} from 'react-native';
-import {Colors} from '../../styles';
+import {Colors, Size} from '../../styles';
 import data from '../../ExampleData/course';
 import {CourseVerticalItem} from '../../components/ListCourseVertical';
 import {Header} from '../../components/AuthorDetail';
@@ -27,6 +27,11 @@ const AuthorDetail = (props) => {
           ListHeaderComponent={() => {
             return <Header name={route.params.name} />;
           }}
+          getItemLayout={(data, index) => ({
+            length: Size.scaleSize(100),
+            offset: Size.scaleSize(100) * index,
+            index,
+          })}
         />
       </View>
     </SafeAreaView>
