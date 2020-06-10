@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     ...Styles.center,
     ...BoxModel.margin,
     height: Size.bannerHeight,
+    width: Size.bannerWidth,
   },
   blurBackground: {
     ...Styles.center,

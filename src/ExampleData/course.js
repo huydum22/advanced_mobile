@@ -1,6 +1,9 @@
 import image01 from '../assets/image/skill01.png';
 import image02 from '../assets/image/skill02.png';
 import image03 from '../assets/image/skill03.png';
+// import image01 from 'https://cdn7.allevents.in/banners/ad86ad20-4ef5-11ea-9080-655b143463bb-rimg-w526-h276-gmir.jpg?v=1581662768';
+// import image02 from 'https://i.pinimg.com/originals/42/29/8b/42298b88b9656ae5692b4c1cb38aa901.jpg';
+// import image03 from 'https://bacp-web-live-endpoint.azureedge.net/cache/7/6/8/1/3/b/76813b49c658d7f7a44cec754753861d76cc1bf1.jpg';
 const randomRate = () => {
   return Math.floor(Math.random() * 5 + 1);
 };
