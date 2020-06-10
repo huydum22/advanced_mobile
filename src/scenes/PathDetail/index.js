@@ -11,8 +11,12 @@ import courseData from '../../ExampleData/course';
 import {CourseVerticalItem} from '../../components/ListCourseVertical';
 import {Styles, Colors, Typography} from '../../styles';
 import {Header} from '../../components/PathDetail';
+import {CourseDetailScreenName} from '../../config/ScreenName';
 const PathDetail = (props) => {
   const {navigation, route} = props;
+  const onPressItem = (item) => {
+    navigation.push(CourseDetailScreenName);
+  };
   const flatListSeparator = () => {
     return <View style={styles.separator} />;
   };
@@ -24,20 +28,7 @@ const PathDetail = (props) => {
     );
   };
   const renderCoursesItem = (item) => {
-    return (
-      <CourseVerticalItem
-        navigation={navigation}
-        route={route}
-        name={item.name}
-        author={item.author}
-        level={item.level}
-        timeToStart={item.timeToStart}
-        totalHour={item.totalHour}
-        totalRate={item.totalRate}
-        rate={item.rate}
-        image={item.image}
-      />
-    );
+    return <CourseVerticalItem onPressItem={onPressItem} item={item} />;
   };
   return (
     <SafeAreaView style={{backgroundColor: Colors.whiteColor}}>

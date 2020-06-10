@@ -3,8 +3,15 @@ import {View, StyleSheet, FlatList} from 'react-native';
 import {Colors} from '../../../styles';
 import data from '../../../ExampleData/author';
 import Item from '../AuthorItem';
+import {AuthorDetailScreenName} from '../../../config//ScreenName';
+
 const Authors = (props) => {
   const {navigation, route} = props;
+  const onPressItem = (item) => {
+    navigation.navigate(AuthorDetailScreenName, {
+      name: item.name,
+    });
+  };
   const flatListSeparator = () => {
     return <View style={styles.separator} />;
   };
@@ -15,15 +22,7 @@ const Authors = (props) => {
         image
         ItemSeparatorComponent={flatListSeparator}
         showsVerticalScrollIndicator={false}
-        renderItem={({item}) => (
-          <Item
-            navigation={navigation}
-            route={route}
-            name={item.name}
-            image={item.image}
-            numberOfCourse={item.numberOfCourse}
-          />
-        )}
+        renderItem={({item}) => <Item onPressItem={onPressItem} item={item} />}
         keyExtractor={(item, index) => item + index}
       />
     </View>

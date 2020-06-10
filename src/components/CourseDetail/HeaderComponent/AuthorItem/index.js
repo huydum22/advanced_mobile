@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import {Colors, Typography} from '../../../../styles';
-import image from '../../../../assets/image/person.jpg';
+import image from '../../../../assets/image/person.png';
 const Author = (props) => {
   const {onPress} = props;
   return (

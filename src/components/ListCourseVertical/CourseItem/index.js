@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,54 +7,48 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
-import {Colors, Size, Styles, Distance, Typography} from '../../../styles';
+import {Colors, Size, Styles, Distance} from '../../../styles';
 import {Rating} from 'react-native-ratings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {CourseDetailScreenName} from '../../../config/ScreenName';
+import ActionSheet from 'react-native-actionsheet';
 const Item = (props) => {
-  const {
-    navigation,
-    route,
-    image,
-    name,
-    author,
-    level,
-    timeToStart,
-    totalHour,
-    rate,
-  } = props;
-  const onPress01 = () => {
-    navigation.navigate(CourseDetailScreenName);
+  const {onPressItem, item} = props;
+
+  const onPressMore = (itemShow) => {
+    this.ActionSheet.context = itemShow;
+    this.ActionSheet.show();
   };
   return (
     <View style={styles.container}>
       <TouchableHighlight
         style={styles.main}
-        onPress={onPress01}
+        onPress={() => {
+          onPressItem(item);
+        }}
         underlayColor={Colors.whiteColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
-            <Image source={image} style={styles.image} />
+            <Image source={item.image} style={styles.image} />
           </View>
           <View style={styles.mainContainer}>
-            <Text style={Styles.titleInHorizontalList}>{name}</Text>
-            <Text style={Styles.subTitleInHorizontalList}>{author}</Text>
+            <Text style={Styles.titleInHorizontalList}>{item.name}</Text>
+            <Text style={Styles.subTitleInHorizontalList}>{item.author}</Text>
             <View style={styles.levelContainer}>
-              <Text style={Styles.subTitleInHorizontalList}>{level}</Text>
+              <Text style={Styles.subTitleInHorizontalList}>{item.level}</Text>
               <Text
                 style={[Styles.subTitleInHorizontalList, Styles.textCenter]}>
-                {timeToStart}
+                {item.timeToStart}
               </Text>
               <Text
                 style={[Styles.subTitleInHorizontalList, Styles.textCenter]}>
-                {totalHour}
+                {item.totalHour}
               </Text>
             </View>
             <View style={styles.ratingContainer}>
               <Rating
                 readonly={true}
                 imageSize={14}
-                startingValue={rate}
+                startingValue={item.rate}
                 ratingCount={5}
               />
             </View>
@@ -62,9 +56,21 @@ const Item = (props) => {
         </View>
       </TouchableHighlight>
       <View style={styles.subContainer}>
-        <TouchableOpacity style={styles.more}>
+        <TouchableOpacity
+          style={styles.more}
+          onPress={() => {
+            onPressMore(item);
+          }}>
           <Ionicons name="ios-more" size={25} />
         </TouchableOpacity>
+        <ActionSheet
+          ref={(o) => (this.ActionSheet = o)}
+          options={['Bookmark', 'Add to channel', 'Download', 'cancel']}
+          cancelButtonIndex={3}
+          onPress={(index) => {
+            /* do something */
+          }}
+        />
       </View>
     </View>
   );

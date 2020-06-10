@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import avatar from '../../../assets/image/person.jpg';
+import avatar from '../../../assets/image/person.png';
 import {
   Styles,
   Size,

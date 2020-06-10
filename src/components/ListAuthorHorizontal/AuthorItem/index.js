@@ -1,23 +1,20 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image, TouchableHighlight} from 'react-native';
 import {Colors, Styles, Typography} from '../../../styles';
-import {AuthorDetailScreenName} from '../../../config/ScreenName';
 const Author = (props) => {
-  const {navigation, route, name, image} = props;
-  const onPress = () => {
-    navigation.navigate(AuthorDetailScreenName, {
-      name: name,
-    });
-  };
+  const {onPress, item} = props;
+
   return (
     <TouchableHighlight
       style={Styles.horizontalAuthor}
-      onPress={onPress}
+      onPress={() => {
+        onPress(item);
+      }}
       underlayColor={Colors.backgroundColor}>
       <View style={Styles.horizontalAuthor}>
-        <Image source={image} style={Styles.imageInHorizontalAuthor} />
+        <Image source={item.image} style={Styles.imageInHorizontalAuthor} />
         <View style={Styles.containerInHorizontalAuthor}>
-          <Text style={styles.text}>{name}</Text>
+          <Text style={styles.text}>{item.name}</Text>
         </View>
       </View>
     </TouchableHighlight>

@@ -10,21 +10,21 @@ import {
   Typography,
 } from '../../styles';
 const Empty = (props) => {
-  const onPressEmptyCourse = () => {};
+  const {onPress, title, icon, message} = props;
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={[Styles.titleRow, Typography.fontBold]}>
-          {props.title}{' '}
-        </Text>
+        <Text style={[Styles.titleRow, Typography.fontBold]}>{title} </Text>
       </View>
       <TouchableHighlight
-        onPress={onPressEmptyCourse}
+        onPress={() => {
+          onPress;
+        }}
         underlayColor={Colors.whiteColor}
         style={[styles.contentContainer, Size.boxShadow(Colors.blackColor)]}>
         <View style={styles.contentContainer}>
-          <Feather name={props.icon} size={50} />
-          <Text style={styles.text}>{props.message}</Text>
+          <Feather name={icon} size={50} />
+          <Text style={styles.text}>{message}</Text>
         </View>
       </TouchableHighlight>
     </View>

@@ -3,8 +3,17 @@ import {View, StyleSheet, FlatList} from 'react-native';
 import data from '../../../ExampleData/path';
 import {Colors} from '../../../styles';
 import Item from '../PathItem';
+import {PathDetailScreenName} from '../../../config/ScreenName';
+
 const Paths = (props) => {
   const {navigation, route} = props;
+  const onPressItem = (item) => {
+    navigation.navigate(PathDetailScreenName, {
+      name: item.name,
+      numberOfCourse: item.numberOfCourse,
+      totalHour: item.totalHour,
+    });
+  };
   const flatListSeparator = () => {
     return <View style={styles.separator} />;
   };
@@ -15,16 +24,7 @@ const Paths = (props) => {
         image
         ItemSeparatorComponent={flatListSeparator}
         showsVerticalScrollIndicator={false}
-        renderItem={({item}) => (
-          <Item
-            navigation={navigation}
-            route={route}
-            name={item.name}
-            image={item.image}
-            numberOfCourse={item.numberOfCourse}
-            totalHour={item.totalHour}
-          />
-        )}
+        renderItem={({item}) => <Item onPressItem={onPressItem} item={item} />}
         keyExtractor={(item, index) => item + index}
       />
     </View>

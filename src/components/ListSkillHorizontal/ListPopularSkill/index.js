@@ -21,7 +21,7 @@ const PopularSkill = (props) => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         renderItem={({item}) => (
-          <Item key={item.id} name={item.name} onPress={onPress} />
+          <Item key={item.id} item={item} onPress={onPress} />
         )}
         ListFooterComponent={() => {
           return <View style={styles.footer} />;

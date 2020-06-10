@@ -15,10 +15,27 @@ import {
   SearchCourseScreenName,
   SearchPathScreenName,
   SearchAuthorScreenName,
+  CourseDetailScreenName,
+  PathDetailScreenName,
+  AuthorDetailScreenName,
 } from '../../config/ScreenName';
 const Search = (props) => {
   const {navigation, route} = props;
-
+  const onPressItem = (item) => {
+    navigation.navigate(CourseDetailScreenName);
+  };
+  const onPressPathItem = (item) => {
+    navigation.navigate(PathDetailScreenName, {
+      name: item.name,
+      numberOfCourse: item.numberOfCourse,
+      totalHour: item.totalHour,
+    });
+  };
+  const onPressAuthorItem = (item) => {
+    navigation.navigate(AuthorDetailScreenName, {
+      name: item.name,
+    });
+  };
   const showAll = (e) => {
     if (e === 'Courses') {
       navigation.jumpTo(SearchCourseScreenName);
@@ -42,43 +59,13 @@ const Search = (props) => {
     );
   };
   const renderCoursesItem = (item) => {
-    return (
-      <CourseVerticalItem
-        navigation={navigation}
-        route={route}
-        name={item.name}
-        author={item.author}
-        level={item.level}
-        timeToStart={item.timeToStart}
-        totalHour={item.totalHour}
-        totalRate={item.totalRate}
-        rate={item.rate}
-        image={item.image}
-      />
-    );
+    return <CourseVerticalItem onPressItem={onPressItem} item={item} />;
   };
   const renderPathItem = (item) => {
-    return (
-      <PathItemVertical
-        navigation={navigation}
-        route={route}
-        name={item.name}
-        image={item.image}
-        numberOfCourse={item.numberOfCourse}
-        totalHour={item.totalHour}
-      />
-    );
+    return <PathItemVertical onPressItem={onPressPathItem} item={item} />;
   };
   const renderAuthorItem = (item) => {
-    return (
-      <AuthorVerticalItem
-        navigation={navigation}
-        route={route}
-        name={item.name}
-        image={item.image}
-        numberOfCourse={item.numberOfCourse}
-      />
-    );
+    return <AuthorVerticalItem onPressItem={onPressAuthorItem} item={item} />;
   };
   const renderListItem = (item) => {
     if (courseData.includes(item)) {

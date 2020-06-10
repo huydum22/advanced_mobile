@@ -1,46 +1,48 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
+import {View, StyleSheet, TouchableHighlight, Image, Text} from 'react-native';
 import {Colors, Styles, BoxModel, Size, Typography} from '../../../styles';
 import {Rating} from 'react-native-ratings';
-import {CourseDetailScreenName} from '../../../config/ScreenName';
 const Item = (props) => {
-  const {navigation} = props;
-  const openCourseDetail = () => {
-    navigation.navigate(CourseDetailScreenName);
-  };
+  const {item, onPress} = props;
   return (
-    <TouchableOpacity
+    <TouchableHighlight
       style={Styles.horizontalCourse}
-      activeOpacity={0.6}
-      onPress={openCourseDetail}>
-      <Image source={props.image} style={Styles.imageInHorizontalCourse} />
-      <View style={Styles.containerInHorizontalCourse}>
-        <View style={Styles.breakContentText}>
-          <Text style={[Styles.titleInHorizontalList, styles.nameTitle]}>
-            {props.name}
-          </Text>
-        </View>
-        <View style={Styles.breakContentText}>
-          <Text style={Styles.subTitleInHorizontalList}>{props.author}</Text>
-        </View>
-        <View style={Styles.fillRow}>
-          <Text style={Styles.subTitleInHorizontalList}>{props.level}</Text>
-          <Text style={Styles.subTitleInHorizontalList}>
-            {props.timeToStart}
-          </Text>
-          <Text style={Styles.subTitleInHorizontalList}>{props.totalHour}</Text>
-        </View>
-        <View style={Styles.fillRow}>
-          <Rating
-            readonly={true}
-            imageSize={Size.ratingSize}
-            startingValue={props.rate}
-            ratingCount={5}
-          />
-          <Text style={styles.ratingText}>({props.totalRate})</Text>
+      underlayColor={Colors.whiteColor}
+      onPress={() => {
+        onPress(item);
+      }}>
+      <View style={Styles.fillColumn}>
+        <Image source={item.image} style={Styles.imageInHorizontalCourse} />
+        <View style={Styles.containerInHorizontalCourse}>
+          <View style={Styles.breakContentText}>
+            <Text style={[Styles.titleInHorizontalList, styles.nameTitle]}>
+              {item.name}
+            </Text>
+          </View>
+          <View style={Styles.breakContentText}>
+            <Text style={Styles.subTitleInHorizontalList}>{item.author}</Text>
+          </View>
+          <View style={Styles.fillRow}>
+            <Text style={Styles.subTitleInHorizontalList}>{item.level}</Text>
+            <Text style={Styles.subTitleInHorizontalList}>
+              {item.timeToStart}
+            </Text>
+            <Text style={Styles.subTitleInHorizontalList}>
+              {item.totalHour}
+            </Text>
+          </View>
+          <View style={Styles.fillRow}>
+            <Rating
+              readonly={true}
+              imageSize={Size.ratingSize}
+              startingValue={item.rate}
+              ratingCount={5}
+            />
+            <Text style={styles.ratingText}>({item.totalRate})</Text>
+          </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 const styles = StyleSheet.create({

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useSafeArea} from 'react-native-safe-area-context';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import * as scenes from '../../../scenes';
 import * as screenName from '../../../config/ScreenName';
@@ -9,11 +9,18 @@ import {SearchBar} from 'react-native-elements';
 
 const SearchStack = createStackNavigator();
 const SearchNavigatorStack = () => {
+  const insets = useSafeArea();
+  const styles = StyleSheet.create({
+    input: {
+      height: 40,
+      backgroundColor: Colors.whiteColor,
+      marginTop: insets.top + 20,
+    },
+  });
   const [searchText, setSearchText] = useState('');
   const updateSearch = (text) => {
     setSearchText(text);
   };
-  const insets = useSafeArea();
 
   const configSearchNavigator = {
     header: (props) => {
@@ -27,7 +34,7 @@ const SearchNavigatorStack = () => {
             width: Size.WIDTH,
             backgroundColor: Colors.primaryColor,
           }}
-          inputContainerStyle={[styles.input, {marginTop: insets.top + 20}]}
+          inputContainerStyle={styles.input}
           cancelButtonProps={{
             color: Colors.whiteColor,
             backgroundColor: Colors.whiteColor,
@@ -74,10 +81,5 @@ const SearchNavigatorStack = () => {
     </SearchStack.Navigator>
   );
 };
-const styles = StyleSheet.create({
-  input: {
-    height: 35,
-    backgroundColor: Colors.whiteColor,
-  },
-});
+
 export default SearchNavigatorStack;

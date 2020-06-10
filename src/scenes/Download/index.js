@@ -18,8 +18,13 @@ import {
 } from '../../styles';
 import data from '../../ExampleData/course';
 import separator from '../../components/Separator';
+import {CourseDetailScreenName} from '../../config/ScreenName';
+
 const ListCourse = (props) => {
   const {navigation, route} = props;
+  const onPressItem = (item) => {
+    navigation.navigate(CourseDetailScreenName);
+  };
   const Header = () => {
     return (
       <View style={styles.container}>
@@ -38,20 +43,9 @@ const ListCourse = (props) => {
         ItemSeparatorComponent={separator}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
-          <CourseVerticalItem
-            navigation={navigation}
-            route={route}
-            name={item.name}
-            author={item.author}
-            level={item.level}
-            timeToStart={item.timeToStart}
-            totalHour={item.totalHour}
-            totalRate={item.totalRate}
-            rate={item.rate}
-            image={item.image}
-          />
+          <CourseVerticalItem onPressItem={onPressItem} item={item} />
         )}
-        keyExtractor={(item, index) => item + index}
+        keyExtractor={(item, index) => item.id + index}
         getItemLayout={(_, index) => ({
           length: Size.scaleSize(100),
           offset: Size.scaleSize(100) * index,

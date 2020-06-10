@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableHighlight} from 'react-native';
 import {
   Colors,
   Styles,
@@ -11,9 +11,12 @@ import {
 // import LinearGradient from 'react-native-linear-gradient';
 const Button = (props) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={props.onPress}>
+    <TouchableHighlight
+      style={styles.container}
+      onPress={props.onPress}
+      underlayColor={Colors.whiteColor}>
       <Text style={styles.text}> {props.title}</Text>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 

@@ -3,11 +3,21 @@ import {View, StyleSheet, Text, ScrollView, FlatList} from 'react-native';
 import Item from '../PathItem';
 import SeeAllBtn from '../../common/see-all-button';
 import {Styles, BoxModel, Distance, Typography} from '../../../styles';
-import {ShowListPathScreenName} from '../../../config/ScreenName';
+import {
+  ShowListPathScreenName,
+  PathDetailScreenName,
+} from '../../../config/ScreenName';
 const Path = (props) => {
   const {navigation, route, data} = props;
   const seeAllPath = () => {
     navigation.navigate(ShowListPathScreenName);
+  };
+  const onPress = (item) => {
+    navigation.navigate(PathDetailScreenName, {
+      name: item.name,
+      numberOfCourse: item.numberOfCourse,
+      totalHour: item.totalHour,
+    });
   };
   return (
     <View style={styles.container}>
@@ -22,14 +32,7 @@ const Path = (props) => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         renderItem={({item}) => (
-          <Item
-            navigation={navigation}
-            route={route}
-            name={item.name}
-            numberOfCourse={item.numberOfCourse}
-            totalHour={item.totalHour}
-            key={item.id}
-          />
+          <Item item={item} key={item.id} onPress={onPress} />
         )}
       />
     </View>

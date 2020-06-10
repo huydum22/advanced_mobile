@@ -8,9 +8,6 @@ const RelateSkill = (props) => {
   const onPress = () => {
     navigation.navigate(RelateSkillScreenName);
   };
-  const randomID = (i) => {
-    return (Math.floor(Math.random() * 100) * i) % 3;
-  };
 
   return (
     <ScrollView
@@ -23,10 +20,8 @@ const RelateSkill = (props) => {
         numColumns={data.length / 2}
         alwaysBounceVertical={false}
         data={data}
-        keyExtractor={(item, index) => item + index}
-        renderItem={({item}) => (
-          <Item name={item.name} image={randomID(item.id)} onPress={onPress} />
-        )}
+        keyExtractor={(item, index) => item.id}
+        renderItem={({item}) => <Item item={item} onPress={onPress} />}
       />
     </ScrollView>
   );

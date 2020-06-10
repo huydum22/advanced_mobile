@@ -1,33 +1,30 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image, TouchableHighlight} from 'react-native';
 import {Colors, Styles, Size, Distance, BoxModel} from '../../../styles';
-import {PathDetailScreenName} from '../../../config/ScreenName';
 const Item = (props) => {
-  const {navigation, route, image, name, numberOfCourse, totalHour} = props;
-  const onPress01 = () => {
-    navigation.navigate(PathDetailScreenName, {
-      name: name,
-      numberOfCourse: numberOfCourse,
-      totalHour: totalHour,
-    });
-  };
+  const {onPressItem, item} = props;
+
   return (
     <View style={styles.container}>
       <TouchableHighlight
         style={styles.main}
-        onPress={onPress01}
+        onPress={() => {
+          onPressItem(item);
+        }}
         underlayColor={Colors.whiteColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
-            <Image source={image} style={styles.image} />
+            <Image source={item.image} style={styles.image} />
           </View>
           <View style={styles.mainContainer}>
-            <Text style={Styles.titleInHorizontalList}>{name}</Text>
+            <Text style={Styles.titleInHorizontalList}>{item.name}</Text>
             <View style={styles.levelContainer}>
               <Text style={Styles.subTitleInHorizontalList}>
-                {numberOfCourse}
+                {item.numberOfCourse}
               </Text>
-              <Text style={Styles.subTitleInHorizontalList}>{totalHour}</Text>
+              <Text style={Styles.subTitleInHorizontalList}>
+                {item.totalHour}
+              </Text>
             </View>
           </View>
         </View>

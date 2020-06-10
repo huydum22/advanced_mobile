@@ -11,7 +11,7 @@ import SearchAll from '../../components/Search';
 import {ListCourseVertical} from '../../components/ListCourseVertical';
 import {ListPathVertical} from '../../components/ListPathVertical';
 import {ListAuthorVertical} from '../../components/ListAuthorVertical';
-import {Colors, Typography, Size} from '../../styles';
+import {Colors, Typography} from '../../styles';
 const Tab = createMaterialTopTabNavigator();
 const SearchNavigator = (props) => {
   return (
@@ -22,12 +22,13 @@ const SearchNavigator = (props) => {
         inactiveTintColor: Colors.grayDarkColor,
         labelStyle: {...Typography.fontBold, fontSize: Typography.fontSize14},
         tabStyle: {
-          height: Size.scaleSize(40),
+          // height: Size.scaleSize(40),
           backgroundColor: Colors.primaryColor,
         },
         indicatorStyle: {
           backgroundColor: Colors.whiteColor,
         },
+        pressOpacity: 1,
       }}
       animationEnabled={true}>
       <Tab.Screen

@@ -4,8 +4,12 @@ import {Colors} from '../../styles';
 import data from '../../ExampleData/course';
 import {CourseVerticalItem} from '../../components/ListCourseVertical';
 import {Header} from '../../components/AuthorDetail';
+import {CourseDetailScreenName} from '../../config/ScreenName';
 const AuthorDetail = (props) => {
   const {navigation, route} = props;
+  const onPressItem = (item) => {
+    navigation.navigate(CourseDetailScreenName);
+  };
   const flatListSeparator = () => {
     return <View style={styles.separator} />;
   };
@@ -17,18 +21,7 @@ const AuthorDetail = (props) => {
           ItemSeparatorComponent={flatListSeparator}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
-            <CourseVerticalItem
-              navigation={navigation}
-              route={route}
-              name={item.name}
-              author={item.author}
-              level={item.level}
-              timeToStart={item.timeToStart}
-              totalHour={item.totalHour}
-              totalRate={item.totalRate}
-              rate={item.rate}
-              image={item.image}
-            />
+            <CourseVerticalItem onPressItem={onPressItem} item={item} />
           )}
           keyExtractor={(item, index) => item + index}
           ListHeaderComponent={() => {

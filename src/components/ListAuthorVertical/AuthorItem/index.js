@@ -1,28 +1,25 @@
 import React from 'react';
 import {StyleSheet, Image, Text, View, TouchableHighlight} from 'react-native';
 import {Colors, Styles, Size, Distance, BoxModel} from '../../../styles';
-import {AuthorDetailScreenName} from '../../../config/ScreenName';
 const Item = (props) => {
-  const {navigation, route, image, name, numberOfCourse} = props;
-  const onPress01 = () => {
-    navigation.navigate(AuthorDetailScreenName, {
-      name: name,
-    });
-  };
+  const {item, onPressItem} = props;
+
   return (
     <View style={styles.container}>
       <TouchableHighlight
         style={styles.main}
-        onPress={onPress01}
+        onPress={() => {
+          onPressItem(item);
+        }}
         underlayColor={Colors.whiteColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
-            <Image source={image} style={styles.image} />
+            <Image source={item.image} style={styles.image} />
           </View>
           <View style={styles.textContainer}>
-            <Text style={Styles.titleInHorizontalList}>{name}</Text>
+            <Text style={Styles.titleInHorizontalList}>{item.name}</Text>
             <Text style={Styles.subTitleInHorizontalList}>
-              {numberOfCourse}
+              {item.numberOfCourse}
             </Text>
           </View>
         </View>

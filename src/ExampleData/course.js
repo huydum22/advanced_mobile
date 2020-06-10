@@ -1,6 +1,6 @@
-import image01 from '../assets/image/skill01.jpg';
-import image02 from '../assets/image/skill02.jpg';
-import image03 from '../assets/image/skill03.jpg';
+import image01 from '../assets/image/skill01.png';
+import image02 from '../assets/image/skill02.png';
+import image03 from '../assets/image/skill03.png';
 const randomRate = () => {
   return Math.floor(Math.random() * 5 + 1);
 };

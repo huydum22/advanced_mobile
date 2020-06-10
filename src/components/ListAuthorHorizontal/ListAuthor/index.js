@@ -2,8 +2,15 @@ import React from 'react';
 import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {Styles, Typography, BoxModel, Distance} from '../../../styles';
 import Item from '../AuthorItem';
+import {AuthorDetailScreenName} from '../../../config/ScreenName';
+
 const TopAuthor = (props) => {
   const {navigation, route, data} = props;
+  const onPress = (item) => {
+    navigation.navigate(AuthorDetailScreenName, {
+      name: item.name,
+    });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -14,13 +21,7 @@ const TopAuthor = (props) => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         renderItem={({item}) => (
-          <Item
-            name={item.name}
-            image={item.image}
-            key={item.id}
-            navigation={navigation}
-            route={route}
-          />
+          <Item item={item} key={item.id} onPress={onPress} />
         )}
         ListFooterComponent={() => {
           return <View style={styles.footer} />;

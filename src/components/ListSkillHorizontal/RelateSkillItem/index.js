@@ -6,32 +6,32 @@ import {
   Text,
 } from 'react-native';
 import {Colors, Styles, Size, BoxModel, Typography} from '../../../styles';
-import skill01 from '../../../assets/image/skill01.jpg';
-import skill02 from '../../../assets/image/skill02.jpg';
-import skill03 from '../../../assets/image/skill03.jpg';
+import skill01 from '../../../assets/image/skill01.png';
+import skill02 from '../../../assets/image/skill02.png';
+import skill03 from '../../../assets/image/skill03.png';
 
 const Item = (props) => {
-  const {onPress} = props;
+  const {onPress, item} = props;
   const imageBackground = (id) => {
-    if (id === 0) {
+    if (parseInt(id, 10) % 3 === 0) {
       return skill01;
     }
-    if (id === 1) {
+    if (parseInt(id, 10) % 3 === 1) {
       return skill02;
     }
-    if (id === 2) {
+    if (parseInt(id, 10) % 3 === 2) {
       return skill03;
     }
   };
 
   return (
-    <ImageBackground
-      style={styles.container}
-      source={imageBackground(props.image)}>
+    <ImageBackground style={styles.container} source={imageBackground(item.id)}>
       <TouchableOpacity
         style={[styles.blurContainer, styles.container]}
-        onPress={onPress}>
-        <Text style={[Styles.textInBanner, styles.text]}>{props.name}</Text>
+        onPress={() => {
+          onPress(item);
+        }}>
+        <Text style={[Styles.textInBanner, styles.text]}>{item.name}</Text>
       </TouchableOpacity>
     </ImageBackground>
   );

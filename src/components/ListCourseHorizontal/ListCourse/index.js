@@ -3,11 +3,15 @@ import {View, StyleSheet, Text, FlatList} from 'react-native';
 import Item from '../CourseItem';
 import SeeAllBtn from '../../common/see-all-button';
 import {Styles, Distance, Typography, BoxModel, Size} from '../../../styles';
-// import data from '../../../ExampleData/course';
-import {ShowListCourseScreenName} from '../../../config/ScreenName';
+import {
+  ShowListCourseScreenName,
+  CourseDetailScreenName,
+} from '../../../config/ScreenName';
 const SectionCourses = (props) => {
   const {navigation, data, route, title} = props;
-
+  const onPressItem = (item) => {
+    navigation.navigate(CourseDetailScreenName);
+  };
   const showListCourse = () => {
     navigation.navigate(ShowListCourseScreenName, {
       title: title,
@@ -23,20 +27,7 @@ const SectionCourses = (props) => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         data={data.slice(0, 5)}
-        renderItem={({item}) => (
-          <Item
-            navigation={navigation}
-            route={route}
-            name={item.name}
-            author={item.author}
-            level={item.level}
-            timeToStart={item.timeToStart}
-            totalHour={item.totalHour}
-            totalRate={item.totalRate}
-            rate={item.rate}
-            image={item.image}
-          />
-        )}
+        renderItem={({item}) => <Item item={item} onPress={onPressItem} />}
         keyExtractor={(item, index) => item + index}
         getItemLayout={(data, index) => ({
           length: Size.scaleSize(200),

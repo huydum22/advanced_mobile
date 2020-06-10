@@ -1,7 +1,7 @@
 const randomRate = () => {
   return Math.floor(Math.random() * 20);
 };
-import image from '../assets/image/path.jpg';
+import image from '../assets/image/path.png';
 
 const data = [
   {

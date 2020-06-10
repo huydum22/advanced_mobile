@@ -1,34 +1,24 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Text,
-  TouchableHighlight,
-} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
 import {Styles} from '../../../styles';
-import image from '../../../assets/image/path.jpg';
-import {PathDetailScreenName} from '../../../config/ScreenName';
+import image from '../../../assets/image/path.png';
 const Item = (props) => {
-  const {navigation, route, name, numberOfCourse, totalHour} = props;
-  const onPress = () => {
-    navigation.navigate(PathDetailScreenName, {
-      name: name,
-      numberOfCourse: numberOfCourse,
-      totalHour: totalHour,
-    });
-  };
+  const {item, onPress} = props;
+
   return (
-    <TouchableOpacity style={Styles.horizontalCourse} onPress={onPress}>
+    <TouchableOpacity
+      style={Styles.horizontalCourse}
+      onPress={() => {
+        onPress(item);
+      }}>
       <Image
         source={image}
         style={[Styles.imageInHorizontalCourse, styles.image]}
       />
       <View style={Styles.containerInHorizontalCourse}>
-        <Text style={Styles.titleInHorizontalList}>{props.name}</Text>
+        <Text style={Styles.titleInHorizontalList}>{item.name}</Text>
         <Text style={Styles.subTitleInHorizontalList}>
-          {props.numberOfCourse}
+          {item.numberOfCourse}
         </Text>
       </View>
     </TouchableOpacity>

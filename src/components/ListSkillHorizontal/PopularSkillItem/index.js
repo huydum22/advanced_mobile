@@ -1,12 +1,17 @@
 import React from 'react';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {TouchableHighlight, Text, StyleSheet} from 'react-native';
 import {BoxModel, Styles, Colors, Distance, Typography} from '../../../styles';
 const Item = (props) => {
-  const {name, onPress} = props;
+  const {item, onPress} = props;
   return (
-    <TouchableOpacity style={styles.skillContainer} onPress={onPress}>
-      <Text style={styles.text}>{name}</Text>
-    </TouchableOpacity>
+    <TouchableHighlight
+      style={styles.skillContainer}
+      underlayColor={Colors.backgroundSeeAllButton}
+      onPress={() => {
+        onPress(item);
+      }}>
+      <Text style={styles.text}>{item.name}</Text>
+    </TouchableHighlight>
   );
 };
 const styles = StyleSheet.create({

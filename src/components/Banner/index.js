@@ -21,7 +21,9 @@ const Banner = (props) => {
     <ImageBackground style={styles.imageBackground} source={backgroundImage}>
       <TouchableHighlight
         style={styles.blurBackground}
-        onPress={onPress}
+        onPress={() => {
+          onPress(name);
+        }}
         underlayColor={Colors.blackWith03OpacityColor}>
         <View style={Styles.breakContentText}>
           <Text style={styles.text}>{name}</Text>

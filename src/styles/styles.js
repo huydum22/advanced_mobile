@@ -6,6 +6,7 @@ import {
   blackWith08OpacityColor,
   blackColor,
   grayDarkColor,
+  backgroundSeeAllButton,
 } from './color';
 import {smallMargin, tinyMargin, smallPaddingHorizontal} from './box-model';
 import {scaleSize, boxShadow, bannerHeight} from './size';
@@ -36,6 +37,13 @@ export const subTitleInHorizontalList = {
   ...fontRegular,
   fontSize: fontSize12,
   color: grayDarkColor,
+};
+export const headerContainer = {
+  height: 40,
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  backgroundColor: backgroundSeeAllButton,
 };
 
 export const horizontalCourse = {
@@ -111,6 +119,9 @@ export const height100 = {
 };
 export const mainStart = {
   justifyContent: 'flex-start',
+};
+export const footer = {
+  width: spacing_14,
 };
 
 export const fillRow = {
