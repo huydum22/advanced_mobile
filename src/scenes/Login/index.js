@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   StyleSheet,
@@ -19,13 +19,24 @@ import {
   HomeScreenName,
   AppTab,
 } from '../../config/ScreenName';
+import {AuthenticationContext} from '../../Provider/Authentication';
+import {LoginProvider} from '../../services/Authentication';
 // format debug consol
 
 const Login = (props) => {
   const {navigation} = props;
-  const handleLoginPress = () => {
-    navigation.replace(AppTab, {screen: HomeScreenName});
-  };
+
+  const {authentication, setAuthentication} = useContext(AuthenticationContext);
+  useEffect(() => {
+    if (
+      authentication &&
+      authentication.status === 200 &&
+      authentication.isLogin
+    ) {
+      navigation.replace(AppTab, {screen: HomeScreenName});
+    }
+  });
+
   const handleRegisterPress = () => {
     return navigation.navigate(RegisterScreenName);
   };
@@ -68,7 +79,12 @@ const Login = (props) => {
         <TouchableOpacity>
           <Text style={styles.txtForgotPass}>Forgot password?</Text>
         </TouchableOpacity>
-        <PrimaryButton title="Log In" onPress={handleLoginPress} />
+        <PrimaryButton
+          title="Log In"
+          onPress={() => {
+            setAuthentication(LoginProvider(email, password));
+          }}
+        />
         <SubPrimaryButton title="Register" onPress={handleRegisterPress} />
       </View>
     </KeyboardAvoidingView>

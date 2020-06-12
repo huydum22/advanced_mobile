@@ -7,7 +7,7 @@ import * as screenName from '../config/ScreenName';
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
 import CourseDetailNavigator from './AppNavigator/CourseDetailNavigator';
-
+import {AuthenticationProvider} from '../Provider/Authentication';
 const RootStack = createStackNavigator();
 
 const RootScreen = () => (
@@ -30,9 +30,11 @@ const RootScreen = () => (
 const Navigation = () => {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <RootScreen />
-      </NavigationContainer>
+      <AuthenticationProvider>
+        <NavigationContainer>
+          <RootScreen />
+        </NavigationContainer>
+      </AuthenticationProvider>
     </SafeAreaProvider>
   );
 };

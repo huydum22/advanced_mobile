@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView, SafeAreaView} from 'react-native';
-import data from '../../ExampleData/profile';
+// import data from '../../ExampleData/profile';
 import {
   Colors,
   Size,
@@ -17,6 +17,8 @@ import {
   LoginScreenName,
 } from '../../config/ScreenName';
 import {Item} from '../../components/AccountManagement';
+import {AuthenticationContext} from '../../Provider/Authentication';
+import {LogoutProvider} from '../../services/Authentication';
 const Account = (props) => {
   const {navigation, route} = props;
   const onPressSubscription = () => {
@@ -24,14 +26,22 @@ const Account = (props) => {
       screen: LoginScreenName,
     });
   };
+  useEffect(() => {
+    if (
+      authentication &&
+      authentication.status === 200 &&
+      authentication.isLogin === false
+    ) {
+      navigation.replace(AuthenticateTab, {
+        screen: AuthenticateTab,
+      });
+    }
+  });
   const onPressLocation = () => {
     // navigation.navigate(LocationScreenName);
   };
-  const onPressLogout = () => {
-    navigation.replace(AuthenticateTab, {
-      screen: AuthenticateTab,
-    });
-  };
+
+  const {authentication, setAuthentication} = useContext(AuthenticationContext);
   return (
     <SafeAreaView>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -41,8 +51,12 @@ const Account = (props) => {
               <MaterialIcons name="person" size={26} color="#fff" />
             </View>
             <View style={styles.textContainer}>
-              <Text style={styles.nameText}>{data.name}</Text>
-              <Text style={styles.emailText}>{data.email}</Text>
+              <Text style={styles.nameText}>
+                {authentication.user ? authentication.user.name : ''}
+              </Text>
+              <Text style={styles.emailText}>
+                {authentication.user ? authentication.user.email : ''}
+              </Text>
             </View>
             <FontAwesome
               name="angle-right"
@@ -76,7 +90,12 @@ const Account = (props) => {
           <Item icon="apps" name="App version" />
           <Item icon="tooltip-plus-outline" name="About us" />
           <View style={styles.divider} />
-          <Item name="Log out" onPress={onPressLogout} />
+          <Item
+            name="Log out"
+            onPress={() => {
+              setAuthentication(LogoutProvider());
+            }}
+          />
         </View>
         <View style={styles.footer} />
       </ScrollView>
