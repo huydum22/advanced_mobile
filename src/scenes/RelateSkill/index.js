@@ -9,10 +9,10 @@ import {
   Text,
 } from 'react-native';
 import SeeAllBtn from '../../components/common/see-all-button';
-import {CourseHorizontalItem} from '../../components/ListCourseHorizontal';
-import {PathItemHorizontal} from '../../components/ListPathHorizontal';
-import {AuthorHorizontalItem} from '../../components/ListAuthorHorizontal';
-import {PopularSkillItem} from '../../components/ListSkillHorizontal';
+import {CourseHorizontalItem} from '../../components/Course';
+import {PathItemHorizontal} from '../../components/Path';
+import {AuthorHorizontalItem} from '../../components/Author';
+import {PopularSkillItem} from '../../components/Skill';
 import {
   Colors,
   Distance,

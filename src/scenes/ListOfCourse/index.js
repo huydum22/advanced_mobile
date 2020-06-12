@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
-import {ListCourseVertical} from '../../components/ListCourseVertical';
+import {ListCourseVertical} from '../../components/Course';
 
 const ListOfCourse = (props) => {
   const {navigation, route} = props;

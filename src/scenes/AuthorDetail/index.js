@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, FlatList, SafeAreaView} from 'react-native';
 import {Colors, Size} from '../../styles';
 import data from '../../ExampleData/course';
-import {CourseVerticalItem} from '../../components/ListCourseVertical';
+import {CourseVerticalItem} from '../../components/Course';
 import {Header} from '../../components/AuthorDetail';
 import {CourseDetailScreenName} from '../../config/ScreenName';
 const AuthorDetail = (props) => {

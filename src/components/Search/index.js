@@ -5,9 +5,9 @@ import courseData from '../../ExampleData/course';
 import pathData from '../../ExampleData/path';
 import authorData from '../../ExampleData/author';
 
-import {CourseVerticalItem} from '../ListCourseVertical';
-import {PathItemVertical} from '../ListPathVertical';
-import {AuthorVerticalItem} from '../ListAuthorVertical';
+import {CourseVerticalItem} from '../Course';
+import {PathItemVertical} from '../Path';
+import {AuthorVerticalItem} from '../Author';
 
 import {Styles, Colors, Typography} from '../../styles';
 import SeeAllBtn from '../common/see-all-button';

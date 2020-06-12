@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
-import {ListPathVertical} from '../../components/ListPathVertical';
+import {ListPathVertical} from '../../components/Path';
 const ListOfPath = (props) => {
   const {navigation, route} = props;
   return (

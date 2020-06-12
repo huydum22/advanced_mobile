@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {CourseVerticalItem} from '../../components/ListCourseVertical';
+import {CourseVerticalItem} from '../../components/Course';
 import {
   Styles,
   Distance,

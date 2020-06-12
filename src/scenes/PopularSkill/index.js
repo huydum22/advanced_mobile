@@ -7,9 +7,9 @@ import {
   Text,
   FlatList,
 } from 'react-native';
-import {CourseHorizontalItem} from '../../components/ListCourseHorizontal';
-import {PathItemHorizontal} from '../../components/ListPathHorizontal';
-import {AuthorHorizontalItem} from '../../components/ListAuthorHorizontal';
+import {CourseHorizontalItem} from '../../components/Course';
+import {PathItemHorizontal} from '../../components/Path';
+import {AuthorHorizontalItem} from '../../components/Author';
 import {
   Colors,
   Distance,

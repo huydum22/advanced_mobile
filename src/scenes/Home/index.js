@@ -7,7 +7,7 @@ import {
   Text,
   FlatList,
 } from 'react-native';
-import {CourseHorizontalItem} from '../../components/ListCourseHorizontal';
+import {CourseHorizontalItem} from '../../components/Course';
 import EmptyComponent from '../../components/EmptyComponent';
 import {
   Colors,

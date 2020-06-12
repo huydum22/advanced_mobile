@@ -8,9 +8,9 @@ import {
 } from '../../config/ScreenName';
 
 import SearchAll from '../../components/Search';
-import {ListCourseVertical} from '../../components/ListCourseVertical';
-import {ListPathVertical} from '../../components/ListPathVertical';
-import {ListAuthorVertical} from '../../components/ListAuthorVertical';
+import {ListCourseVertical} from '../../components/Course';
+import {ListPathVertical} from '../../components/Path';
+import {ListAuthorVertical} from '../../components/Author';
 import {Colors, Typography} from '../../styles';
 const Tab = createMaterialTopTabNavigator();
 const SearchNavigator = (props) => {

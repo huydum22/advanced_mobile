@@ -8,7 +8,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import courseData from '../../ExampleData/course';
-import {CourseVerticalItem} from '../../components/ListCourseVertical';
+import {CourseVerticalItem} from '../../components/Course';
 import {Styles, Colors, Typography} from '../../styles';
 import {Header} from '../../components/PathDetail';
 import {CourseDetailScreenName} from '../../config/ScreenName';

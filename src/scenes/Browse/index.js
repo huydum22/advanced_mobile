@@ -11,12 +11,9 @@ import {
 import {Styles, Typography, Distance, BoxModel, Size} from '../../styles';
 import backgroundImage from '../../assets/image/backgroundImage.png';
 import backgroundImage02 from '../../assets/image/backgroundImage02.png';
-import {PathItemHorizontal} from '../../components/ListPathHorizontal';
-import {AuthorHorizontalItem} from '../../components/ListAuthorHorizontal';
-import {
-  PopularSkillItem,
-  RelateSkillItem,
-} from '../../components/ListSkillHorizontal';
+import {PathItemHorizontal} from '../../components/Path';
+import {AuthorHorizontalItem} from '../../components/Author';
+import {PopularSkillItem, RelateSkillItem} from '../../components/Skill';
 import Banner from '../../components/Banner';
 import {
   ShowListCourseScreenName,
