@@ -15,6 +15,7 @@ import {
   SubscriptionScreenName,
   AuthenticateTab,
   LoginScreenName,
+  ThemeScreenName,
 } from '../../config/ScreenName';
 import {Item} from '../../components/AccountManagement';
 import {AuthenticationContext} from '../../Provider/Authentication';
@@ -39,6 +40,9 @@ const Account = (props) => {
   });
   const onPressLocation = () => {
     // navigation.navigate(LocationScreenName);
+  };
+  const onPressTheme = () => {
+    navigation.navigate(ThemeScreenName);
   };
 
   const {authentication, setAuthentication} = useContext(AuthenticationContext);
@@ -65,7 +69,7 @@ const Account = (props) => {
             />
           </View>
           <View style={styles.divider} />
-          <Item icon="theme-light-dark" name="Theme" />
+          <Item icon="theme-light-dark" name="Theme" onPress={onPressTheme} />
           <Item
             icon="comment-account-outline"
             name="Communication Preferences"

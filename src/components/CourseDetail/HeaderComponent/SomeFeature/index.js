@@ -2,8 +2,9 @@ import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Colors, Typography} from '../../../../styles';
 import Feather from 'react-native-vector-icons/Feather';
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const Feature = (props) => {
+  const {onPressFavorite, checkFavorite, id} = props;
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
@@ -19,10 +20,17 @@ const Feature = (props) => {
         <Text style={styles.textContainer}>Add to channel</Text>
       </View>
       <View style={styles.mainContainer}>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Feather name="download" size={22} />
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => onPressFavorite(id, checkFavorite)}>
+          <MaterialIcons
+            name={checkFavorite === -1 ? 'favorite-border' : 'favorite'}
+            size={22}
+          />
         </TouchableOpacity>
-        <Text style={styles.textContainer}>Download</Text>
+        <Text style={styles.textContainer}>
+          {checkFavorite === -1 ? 'Like' : 'Liked'}
+        </Text>
       </View>
     </View>
   );

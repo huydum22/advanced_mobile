@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   SafeAreaView,
   View,
@@ -16,12 +16,14 @@ import {
   Colors,
   Size,
 } from '../../styles';
-import data from '../../ExampleData/course';
+// import data from '../../ExampleData/course';
 import separator from '../../components/Separator';
 import {CourseDetailScreenName} from '../../config/ScreenName';
-
+import {FavoriteContext} from '../../Provider/Favorite';
 const ListCourse = (props) => {
   const {navigation, route} = props;
+  const {favorite} = useContext(FavoriteContext);
+
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenName);
   };
@@ -38,7 +40,7 @@ const ListCourse = (props) => {
   return (
     <SafeAreaView>
       <FlatList
-        data={data}
+        data={favorite}
         image
         ItemSeparatorComponent={separator}
         showsVerticalScrollIndicator={false}

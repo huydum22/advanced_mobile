@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import Title from './TitleItem';
 import Author from './AuthorItem';
@@ -9,38 +9,64 @@ import Relate from './Relate';
 import LearningCheck from './LearningCheck';
 import SegmentControl from './SegmentControl';
 import {AuthorDetailScreenName} from '../../../config/ScreenName';
+import {FavoriteContext} from '../../../Provider/Favorite';
+import {
+  findExistFavoriteCourse,
+  findIndexFavoriteCourse,
+} from '../../../services/Favorite';
 const Header = (props) => {
-  const {
-    name,
-    author,
-    level,
-    timeToStart,
-    totalHour,
-    totalRate,
-    rate,
-    description,
-    navigation,
-    route,
-  } = props;
+  const {item, navigation, route} = props;
+  const {favorite, setFavorite} = useContext(FavoriteContext);
+  const [indexFavorite, setIndexFavorite] = useState();
+
+  useEffect(() => {
+    const checkExistFavorite = async () => {
+      try {
+        const response = findExistFavoriteCourse(favorite, item.id);
+        const newIndex = findIndexFavoriteCourse(favorite, response);
+        setIndexFavorite(newIndex);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    checkExistFavorite();
+  }, [favorite, item.id]);
+
   const onPressAuthor = () => {
     navigation.navigate(AuthorDetailScreenName, {
-      name: name,
+      name: item.name,
     });
+  };
+  const onPressFavorite = async (id, index) => {
+    try {
+      if (index === -1) {
+        setFavorite((favorite) => [...favorite, item]);
+      } else {
+        setFavorite(favorite.filter((item) => item.id !== id));
+        setIndexFavorite(-1);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <View>
-      <Title name={name} />
-      <Author name={author} onPress={onPressAuthor} />
+      <Title name={item.name} />
+      <Author name={item.author} onPress={onPressAuthor} />
       <InfoCourse
-        level={level}
-        timeToStart={timeToStart}
-        totalHour={totalHour}
-        totalRate={totalRate}
-        rate={rate}
+        level={item.level}
+        timeToStart={item.timeToStart}
+        totalHour={item.totalHour}
+        totalRate={item.totalRate}
+        rate={item.rate}
       />
-      <Feature />
+      <Feature
+        onPressFavorite={onPressFavorite}
+        checkFavorite={indexFavorite}
+        id={item.id}
+      />
       <View style={styles.divide} />
-      <Description description={description} />
+      <Description description={item.description} />
       <Relate />
       <LearningCheck />
       <SegmentControl />

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,13 +7,15 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
+import {FavoriteContext} from '../../../../Provider/Favorite';
 import {Colors, Size, Styles, Distance} from '../../../../styles';
 import {Rating} from 'react-native-ratings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ActionSheet from 'react-native-actionsheet';
+import p from 'pretty-format';
 const Item = (props) => {
   const {onPressItem, item} = props;
-
+  const {favorite, setFavorite} = useContext(FavoriteContext);
   const onPressMore = (itemShow) => {
     this.ActionSheet.context = itemShow;
     this.ActionSheet.show();
@@ -68,6 +70,12 @@ const Item = (props) => {
           options={['Bookmark', 'Add to channel', 'Download', 'cancel']}
           cancelButtonIndex={3}
           onPress={(index) => {
+            if (index === 2) {
+              setFavorite((favorite) => [
+                ...favorite,
+                this.ActionSheet.context,
+              ]);
+            }
             /* do something */
           }}
         />

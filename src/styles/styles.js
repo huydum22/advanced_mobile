@@ -99,6 +99,10 @@ export const columnCenter = {
   alignItems: 'center',
   justifyContent: 'center',
 };
+export const columnCross = {
+  flexDirection: 'column',
+  alignItems: 'center',
+};
 export const rowCenter = {
   flexDirection: 'row',
   alignItems: 'center',

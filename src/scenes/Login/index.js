@@ -51,6 +51,15 @@ const Login = (props) => {
     setPassword(pass);
   };
 
+  const handleLogin = async () => {
+    try {
+      let response = await LoginProvider(email, password);
+      setAuthentication(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -79,12 +88,7 @@ const Login = (props) => {
         <TouchableOpacity>
           <Text style={styles.txtForgotPass}>Forgot password?</Text>
         </TouchableOpacity>
-        <PrimaryButton
-          title="Log In"
-          onPress={() => {
-            setAuthentication(LoginProvider(email, password));
-          }}
-        />
+        <PrimaryButton title="Log In" onPress={handleLogin} />
         <SubPrimaryButton title="Register" onPress={handleRegisterPress} />
       </View>
     </KeyboardAvoidingView>

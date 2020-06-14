@@ -7,7 +7,7 @@ export const BrowseScreenName = 'browse';
 export const DownloadScreenName = 'download';
 export const ProfileScreenName = 'profile';
 export const CourseDetailScreenName = 'courseDetail';
-export const CourseDetailScreenNavigator = 'courseDetail';
+export const CourseDetailScreenStack = 'courseDetailStack';
 
 export const ShowListCourseScreenName = 'listCourse';
 export const SearchScreenName = 'search';
@@ -18,6 +18,7 @@ export const SearchAuthorScreenName = 'searchAuthor';
 export const PathDetailScreenName = 'pathDetail';
 export const AuthorDetailScreenName = 'authorDetail';
 export const SubscriptionScreenName = 'subscription';
+export const ThemeScreenName = 'theme';
 export const LocationScreenName = 'yourLocation';
 export const ShowListPathScreenName = 'listPath';
 export const PopularSkillScreenName = 'popularSkill';

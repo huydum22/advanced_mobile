@@ -1,5 +1,5 @@
-export const LoginProvider = (email, password) => {
-  if (email === '1612253@student.hcmus.edu.vn') {
+export const LoginProvider = async (email, password) => {
+  if (email === '123') {
     if (password === '123') {
       return {
         status: 200,

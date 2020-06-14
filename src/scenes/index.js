@@ -13,7 +13,7 @@ import Register from './Register';
 import RelateSkill from './RelateSkill';
 import Search from './Search';
 import Subscription from './Subscription';
-
+import Theme from './Theme';
 export {
   AuthorDetail,
   Browse,
@@ -30,4 +30,5 @@ export {
   RelateSkill,
   Search,
   Subscription,
+  Theme,
 };

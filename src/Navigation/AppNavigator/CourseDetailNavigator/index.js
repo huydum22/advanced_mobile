@@ -19,11 +19,13 @@ const CourseDetailNavigatorStack = () => {
   return (
     <CourseDetailStack.Navigator
       headerMode="screen"
-      screenOptions={configNavigator}>
+      screenOptions={configNavigator}
+      initialRouteName={screenName.CourseDetailScreenStack}>
       <CourseDetailStack.Screen
         name={screenName.CourseDetailScreenName}
         component={scenes.CourseDetail}
         options={{headerShown: false}}
+        initialParams={{id: 1}}
       />
       <CourseDetailStack.Screen
         name={screenName.AuthorDetailScreenName}

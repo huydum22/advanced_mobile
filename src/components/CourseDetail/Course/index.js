@@ -17,7 +17,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from '../HeaderComponent';
 import p from 'pretty-format';
-import {fontRegular} from '../../../styles/typography';
 const flatListSeparator = () => {
   return <View style={styles.separator} />;
 };
@@ -62,7 +61,7 @@ const renderListItem = (item) => {
   );
 };
 const CourseDetail = (props) => {
-  const {navigation, route} = props;
+  const {navigation, route, item} = props;
   const dismiss = () => {
     navigation.goBack();
   };
@@ -198,7 +197,7 @@ const styles = StyleSheet.create({
   },
   textContent: {
     marginHorizontal: 20,
-    ...fontRegular.fontRegular,
+    ...Typography.fontRegular,
   },
   textContainer: {
     backgroundColor: Colors.whiteColor,

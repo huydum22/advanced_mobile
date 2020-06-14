@@ -8,6 +8,8 @@ import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
 import CourseDetailNavigator from './AppNavigator/CourseDetailNavigator';
 import {AuthenticationProvider} from '../Provider/Authentication';
+import {CoursesProvider} from '../Provider/Course';
+import {FavoriteProvider} from '../Provider/Favorite';
 const RootStack = createStackNavigator();
 
 const RootScreen = () => (
@@ -21,7 +23,7 @@ const RootScreen = () => (
       component={AuthNavigator}
     />
     <RootStack.Screen
-      name={screenName.CourseDetailScreenNavigator}
+      name={screenName.CourseDetailScreenStack}
       component={CourseDetailNavigator}
       options={{animationEnabled: true}}
     />
@@ -31,9 +33,13 @@ const Navigation = () => {
   return (
     <SafeAreaProvider>
       <AuthenticationProvider>
-        <NavigationContainer>
-          <RootScreen />
-        </NavigationContainer>
+        <CoursesProvider>
+          <FavoriteProvider>
+            <NavigationContainer>
+              <RootScreen />
+            </NavigationContainer>
+          </FavoriteProvider>
+        </CoursesProvider>
       </AuthenticationProvider>
     </SafeAreaProvider>
   );

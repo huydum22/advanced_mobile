@@ -5,6 +5,7 @@ import * as screenName from '../../config/ScreenName';
 import {Colors, Typography} from '../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import HomeNavigator from './HomeNavigator';
 import BrowseNavigator from './BrowseNavigator';
@@ -26,7 +27,7 @@ const homeIcon = ({color}) => (
   <MaterialCommunityIcons name="home" size={25} color={color} />
 );
 const downloadIcon = ({color}) => (
-  <Entypo name="download" size={25} color={color} />
+  <MaterialIcons name="favorite-border" size={25} color={color} />
 );
 const configHomeTab = {
   tabBarLabel: 'Home',
@@ -38,7 +39,7 @@ const configBrowseTab = {
   tabBarIcon: browseIcon,
 };
 const configDownloadTab = {
-  tabBarLabel: 'Downloads',
+  tabBarLabel: 'Favorite',
   tabBarIcon: downloadIcon,
 };
 const configSearchTab = {

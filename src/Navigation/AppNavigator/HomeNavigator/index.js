@@ -56,6 +56,11 @@ const HomeNavigatorStack = () => {
         component={scenes.Subscription}
         options={{title: 'Subscription'}}
       />
+      <HomeStack.Screen
+        name={screenName.ThemeScreenName}
+        component={scenes.Theme}
+        options={{title: 'Theme'}}
+      />
     </HomeStack.Navigator>
   );
 };
