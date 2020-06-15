@@ -35,13 +35,13 @@ const Register = (props) => {
   };
   return (
     <KeyboardAvoidingView
-      style={[styles.container, {backgroundColor: theme.primaryColor}]}
+      style={[styles.container, {backgroundColor: Colors.primaryColor}]}
       behavior={Platform.Ios ? 'padding' : 'height'}>
       <View style={styles.logoContainer}>
         <Image source={logo} style={Styles.logoView} />
       </View>
       <View
-        style={[styles.form, {backgroundColor: theme.primaryBackgroundColor}]}>
+        style={[styles.form, {backgroundColor: Colors.primaryBackgroundColor}]}>
         <FormInput
           placeholder="Email"
           value={email}

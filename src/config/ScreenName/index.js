@@ -23,3 +23,4 @@ export const LocationScreenName = 'yourLocation';
 export const ShowListPathScreenName = 'listPath';
 export const PopularSkillScreenName = 'popularSkill';
 export const RelateSkillScreenName = 'relateSkill';
+export const SearchResultScreenName = 'SearchResult';

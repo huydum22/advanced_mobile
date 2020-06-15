@@ -14,6 +14,7 @@ import RelateSkill from './RelateSkill';
 import Search from './Search';
 import Subscription from './Subscription';
 import Theme from './Theme';
+import SearchResult from './SearchResult';
 export {
   AuthorDetail,
   Browse,
@@ -31,4 +32,5 @@ export {
   Search,
   Subscription,
   Theme,
+  SearchResult,
 };

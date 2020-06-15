@@ -6,6 +6,7 @@ import {
   Text,
   KeyboardAvoidingView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import logo from '../../assets/image/logo_.png';
 import {
@@ -13,7 +14,7 @@ import {
   SubPrimaryButton,
   FormInput,
 } from '../../components/Authentication';
-import {BoxModel, Styles, Typography, Platform} from '../../styles';
+import {BoxModel, Styles, Typography, Platform, Colors} from '../../styles';
 import {
   RegisterScreenName,
   HomeScreenName,
@@ -55,7 +56,11 @@ const Login = (props) => {
   const handleLogin = async () => {
     try {
       let response = await LoginProvider(email, password);
-      setAuthentication(response);
+      if (response.status === 200) {
+        setAuthentication(response);
+      } else {
+        Alert.alert('Login Notification', response.error);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -63,13 +68,13 @@ const Login = (props) => {
 
   return (
     <KeyboardAvoidingView
-      style={[styles.container, {backgroundColor: theme.primaryColor}]}
+      style={[styles.container, {backgroundColor: Colors.primaryColor}]}
       behavior={Platform.Ios ? 'padding' : 'height'}>
       <View style={styles.logoContainer}>
         <Image source={logo} style={Styles.logoView} />
       </View>
       <View
-        style={[styles.form, {backgroundColor: theme.primaryBackgroundColor}]}>
+        style={[styles.form, {backgroundColor: Colors.primaryBackgroundColor}]}>
         <FormInput
           placeholder="Email"
           value={email}
@@ -88,7 +93,7 @@ const Login = (props) => {
           icon="lock"
         />
         <TouchableOpacity>
-          <Text style={[styles.txtForgotPass, {color: theme.primaryColor}]}>
+          <Text style={[styles.txtForgotPass, {color: Colors.primaryColor}]}>
             Forgot password?
           </Text>
         </TouchableOpacity>

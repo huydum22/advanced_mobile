@@ -8,14 +8,14 @@ const Button = (props) => {
   return (
     <TouchableHighlight
       style={styles.container}
-      underlayColor={theme.primaryColor}
+      underlayColor={Colors.primaryColor}
       onPress={() => {
         props.onPress();
       }}>
       <LinearGradient
-        colors={[theme.primaryColor, theme.subPrimaryColor]}
+        colors={[Colors.primaryColor, Colors.subPrimaryColor]}
         style={styles.container}>
-        <Text style={[styles.text, {color: theme.primaryBackgroundColor}]}>
+        <Text style={[styles.text, {color: Colors.primaryBackgroundColor}]}>
           {' '}
           {props.title}
         </Text>

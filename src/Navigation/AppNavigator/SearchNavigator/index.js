@@ -7,7 +7,7 @@ import * as screenName from '../../../config/ScreenName';
 import {Typography, Size} from '../../../styles';
 import {SearchBar} from 'react-native-elements';
 import {ThemeContext} from '../../../Provider/Theme';
-
+import {RecentSearchProvider} from '../../../Provider/RecentSearch';
 const SearchStack = createStackNavigator();
 const SearchNavigatorStack = () => {
   const {theme} = useContext(ThemeContext);
@@ -36,6 +36,7 @@ const SearchNavigatorStack = () => {
             width: Size.WIDTH,
             backgroundColor: theme.themeColor,
           }}
+          onFocus={() => props.navigation.navigate(screenName.SearchScreenName)}
           inputContainerStyle={styles.input}
           cancelButtonProps={{
             color: theme.primaryTextColor,
@@ -61,26 +62,33 @@ const SearchNavigatorStack = () => {
     },
   };
   return (
-    <SearchStack.Navigator
-      initialRouteName={screenName.SearchScreenName}
-      headerMode="screen"
-      screenOptions={configNavigator}>
-      <SearchStack.Screen
-        name={screenName.SearchScreenName}
-        component={scenes.Search}
-        options={configSearchNavigator}
-      />
-      <SearchStack.Screen
-        name={screenName.PathDetailScreenName}
-        component={scenes.PathDetail}
-        options={{title: 'Path'}}
-      />
-      <SearchStack.Screen
-        name={screenName.AuthorDetailScreenName}
-        component={scenes.AuthorDetail}
-        options={{title: 'Author'}}
-      />
-    </SearchStack.Navigator>
+    <RecentSearchProvider>
+      <SearchStack.Navigator
+        initialRouteName={screenName.SearchScreenName}
+        headerMode="screen"
+        screenOptions={configNavigator}>
+        <SearchStack.Screen
+          name={screenName.SearchScreenName}
+          component={scenes.Search}
+          options={configSearchNavigator}
+        />
+        <SearchStack.Screen
+          name={screenName.PathDetailScreenName}
+          component={scenes.PathDetail}
+          options={{title: 'Path'}}
+        />
+        <SearchStack.Screen
+          name={screenName.AuthorDetailScreenName}
+          component={scenes.AuthorDetail}
+          options={{title: 'Author'}}
+        />
+        <SearchStack.Screen
+          name={screenName.SearchResultScreenName}
+          component={scenes.SearchResult}
+          options={configSearchNavigator}
+        />
+      </SearchStack.Navigator>
+    </RecentSearchProvider>
   );
 };
 

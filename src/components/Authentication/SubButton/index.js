@@ -17,13 +17,13 @@ const Button = (props) => {
       style={[
         styles.container,
         {
-          backgroundColor: theme.primaryBackgroundColor,
-          borderColor: theme.primaryColor,
+          backgroundColor: Colors.primaryBackgroundColor,
+          borderColor: Colors.primaryColor,
         },
       ]}
       onPress={props.onPress}
-      underlayColor={theme.primaryBackgroundColor}>
-      <Text style={[styles.text, {color: theme.primaryColor}]}>
+      underlayColor={Colors.primaryBackgroundColor}>
+      <Text style={[styles.text, {color: Colors.primaryColor}]}>
         {' '}
         {props.title}
       </Text>
