@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet, TouchableHighlight, Image, Text} from 'react-native';
-import {Colors, Styles, BoxModel, Size, Typography} from '../../../../styles';
-import {Rating} from 'react-native-ratings';
+import {Styles, BoxModel, Size, Typography, Distance} from '../../../../styles';
+import {AirbnbRating} from 'react-native-ratings';
+import {ThemeContext} from '../../../../Provider/Theme';
 const Item = (props) => {
   const {item, onPress} = props;
+  const {theme} = useContext(ThemeContext);
   return (
     <TouchableHighlight
-      style={Styles.horizontalCourse}
-      underlayColor={Colors.whiteColor}
+      style={[
+        Styles.horizontalCourse,
+        {
+          backgroundColor: theme.DialogColor,
+          ...Size.boxShadow(theme.primaryTextColor),
+        },
+      ]}
+      underlayColor={theme.DialogColor}
       onPress={() => {
         onPress(item);
       }}>
@@ -15,30 +23,59 @@ const Item = (props) => {
         <Image source={item.image} style={Styles.imageInHorizontalCourse} />
         <View style={Styles.containerInHorizontalCourse}>
           <View style={Styles.breakContentText}>
-            <Text style={[Styles.titleInHorizontalList, styles.nameTitle]}>
+            <Text
+              style={[
+                Styles.titleInHorizontalList,
+                styles.nameTitle,
+                {color: theme.primaryTextColor},
+              ]}>
               {item.name}
             </Text>
           </View>
           <View style={Styles.breakContentText}>
-            <Text style={Styles.subTitleInHorizontalList}>{item.author}</Text>
+            <Text
+              style={[
+                Styles.subTitleInHorizontalList,
+                {color: theme.grayColor},
+              ]}>
+              {item.author}
+            </Text>
           </View>
           <View style={Styles.fillRow}>
-            <Text style={Styles.subTitleInHorizontalList}>{item.level}</Text>
-            <Text style={Styles.subTitleInHorizontalList}>
+            <Text
+              style={[
+                Styles.subTitleInHorizontalList,
+                {color: theme.grayColor},
+              ]}>
+              {item.level}
+            </Text>
+            <Text
+              style={[
+                Styles.subTitleInHorizontalList,
+                {color: theme.grayColor},
+              ]}>
               {item.timeToStart}
             </Text>
-            <Text style={Styles.subTitleInHorizontalList}>
+            <Text
+              style={[
+                Styles.subTitleInHorizontalList,
+                {color: theme.grayColor},
+              ]}>
               {item.totalHour}
             </Text>
           </View>
-          <View style={Styles.fillRow}>
-            <Rating
-              readonly={true}
-              imageSize={Size.ratingSize}
-              startingValue={item.rate}
-              ratingCount={5}
+          <View style={Styles.fillRowCenter}>
+            <AirbnbRating
+              reviews={false}
+              size={Size.ratingSize}
+              defaultRating={item.rate}
+              count={5}
+              starContainerStyle={{paddingBottom: Distance.spacing_12}}
+              // ratingColor="black"
             />
-            <Text style={styles.ratingText}>({item.totalRate})</Text>
+            <Text style={[styles.ratingText, {color: theme.grayColor}]}>
+              ({item.totalRate})
+            </Text>
           </View>
         </View>
       </View>
@@ -53,7 +90,6 @@ const styles = StyleSheet.create({
   ratingText: {
     ...Typography.fontRegular,
     ...BoxModel.smallMarginHorizontal,
-    color: Colors.grayDarkColor,
     fontSize: Typography.fontSize12,
   },
 });

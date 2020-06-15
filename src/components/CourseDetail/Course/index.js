@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   StyleSheet,
@@ -12,56 +12,77 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import data from '../../../ExampleData/courseDetail';
 import contentData from '../../../ExampleData/contents';
-import {Size, Colors, Typography, Styles} from '../../../styles';
+import {Size, Typography, Styles} from '../../../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from '../HeaderComponent';
-import p from 'pretty-format';
-const flatListSeparator = () => {
-  return <View style={styles.separator} />;
-};
-const onPressHeader = () => {
-  // setExpand(!isExpand);
-};
-const renderHeader = (title, index) => {
-  return (
-    <TouchableHighlight
-      style={styles.headerTouchable}
-      onPress={onPressHeader}
-      underlayColor={Colors.backgroundSeeAllButton}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.textHeader}>
-          {index}
-          {title}
-        </Text>
-        <Ionicons name="ios-arrow-down" size={15} />
-      </View>
-    </TouchableHighlight>
-  );
-};
-const completeSessionCourse = (isCheck) => {
-  if (isCheck) {
-    return (
-      <MaterialCommunityIcons
-        name="check-circle"
-        size={15}
-        color={Colors.successColor}
-        style={styles.checkContainer}
-      />
-    );
-  }
-};
+import {ThemeContext} from '../../../Provider/Theme';
 
-const renderListItem = (item) => {
-  return (
-    <View style={styles.textContainer}>
-      <Text style={styles.textContent}>{item.subTitle}</Text>
-      {completeSessionCourse(item.isCheck)}
-    </View>
-  );
-};
 const CourseDetail = (props) => {
   const {navigation, route, item} = props;
+  const {theme} = useContext(ThemeContext);
+
+  const flatListSeparator = () => {
+    return (
+      <View
+        style={[
+          styles.separator,
+          {backgroundColor: theme.backgroundSeeAllButton},
+        ]}
+      />
+    );
+  };
+  const onPressHeader = () => {
+    // setExpand(!isExpand);
+  };
+  const renderHeader = (title, index) => {
+    return (
+      <TouchableHighlight
+        style={[
+          styles.headerTouchable,
+          {backgroundColor: theme.backgroundSeeAllButton},
+        ]}
+        onPress={onPressHeader}
+        underlayColor={theme.backgroundSeeAllButton}>
+        <View
+          style={[
+            styles.headerContainer,
+            {backgroundColor: theme.backgroundSeeAllButton},
+          ]}>
+          <Text style={[styles.textHeader, {color: theme.primaryTextColor}]}>
+            {index}
+            {title}
+          </Text>
+          <Ionicons name="ios-arrow-down" size={15} />
+        </View>
+      </TouchableHighlight>
+    );
+  };
+  const completeSessionCourse = (isCheck) => {
+    if (isCheck) {
+      return (
+        <MaterialCommunityIcons
+          name="check-circle"
+          size={15}
+          color={theme.successColor}
+          style={styles.checkContainer}
+        />
+      );
+    }
+  };
+
+  const renderListItem = (item) => {
+    return (
+      <View
+        style={[
+          styles.textContainer,
+          {backgroundColor: theme.primaryBackgroundColor},
+        ]}>
+        <Text style={styles.textContent}>{item.subTitle}</Text>
+        {completeSessionCourse(item.isCheck)}
+      </View>
+    );
+  };
   const dismiss = () => {
     navigation.goBack();
   };
@@ -87,32 +108,45 @@ const CourseDetail = (props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <ImageBackground style={styles.videoContainer} source={data.image}>
-        <View style={styles.blurContainer}>
+    <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
+      <ImageBackground
+        style={[
+          styles.videoContainer,
+          {backgroundColor: theme.backgroundColor},
+        ]}
+        source={data.image}>
+        <View
+          style={[
+            styles.blurContainer,
+            {backgroundColor: theme.blackWith05OpacityColor},
+          ]}>
           <TouchableHighlight
             onPress={dismiss}
-            underlayColor={Colors.backgroundColor}>
+            underlayColor={theme.backgroundColor}>
             <MaterialIcons
               name="cancel"
               size={30}
-              color={Colors.whiteWith07OpacityColor}
+              color={theme.whiteWith07OpacityColor}
               style={styles.cancelButton}
             />
           </TouchableHighlight>
           <TouchableHighlight
             onPress={onShare}
-            underlayColor={Colors.backgroundColor}>
+            underlayColor={theme.backgroundColor}>
             <Feather
               name="share"
               size={25}
-              color={Colors.whiteWith07OpacityColor}
+              color={theme.whiteWith07OpacityColor}
               style={styles.shareButton}
             />
           </TouchableHighlight>
         </View>
       </ImageBackground>
-      <View style={styles.mainContainer}>
+      <View
+        style={[
+          styles.mainContainer,
+          {backgroundColor: theme.primaryBackgroundColor},
+        ]}>
         <SectionList
           ItemSeparatorComponent={flatListSeparator}
           sections={contentData}
@@ -147,45 +181,32 @@ const CourseDetail = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.backgroundColor,
     height: Size.HEIGHT,
   },
   videoContainer: {
     flex: 1,
-    backgroundColor: Colors.backgroundColor,
   },
   blurContainer: {
     ...Styles.fillRowBetween,
-    backgroundColor: Colors.blackWith05OpacityColor,
   },
   mainContainer: {
     flex: 2,
     flexDirection: 'column',
-    backgroundColor: Colors.whiteColor,
     justifyContent: 'flex-start',
-  },
-  divide: {
-    backgroundColor: Colors.backgroundGroupButton,
-    height: 1,
-    marginHorizontal: 20,
   },
   footer: {height: 40},
   separator: {
     height: 1,
-    backgroundColor: Colors.backgroundSeeAllButton,
   },
   headerTouchable: {
     height: 50,
-    backgroundColor: Colors.backgroundSeeAllButton,
   },
   headerContainer: {
     height: 50,
     ...Styles.rowBetween,
     marginHorizontal: 20,
-    backgroundColor: Colors.backgroundSeeAllButton,
   },
   textHeader: {
-    color: Colors.blackColor,
     fontSize: Typography.fontSize14,
     ...Typography.fontBold,
   },
@@ -200,7 +221,6 @@ const styles = StyleSheet.create({
     ...Typography.fontRegular,
   },
   textContainer: {
-    backgroundColor: Colors.whiteColor,
     height: 35,
     ...Styles.rowBetween,
   },

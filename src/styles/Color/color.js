@@ -1,9 +1,7 @@
 export const primaryColor = '#3a539b';
 export const subPrimaryColor = '#2a5298';
-export const secondaryColor = '#767676';
-export const whiteColor = '#FFFFFF';
-export const blackColor = '#000000';
-export const redColor = 'red';
+export const primaryBackgroundColor = '#FFFFFF';
+export const primaryTextColor = '#000000';
 
 export const blackWith08OpacityColor = 'rgba(0,0,0,0.8)';
 export const blackWith05OpacityColor = 'rgba(0,0,0,0.5)';

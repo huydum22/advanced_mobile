@@ -1,36 +1,42 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import {
-  Styles,
-  Distance,
-  Size,
-  Colors,
-  BoxModel,
-  Typography,
-} from '../../../styles';
+import {Styles, Distance, Size, BoxModel, Typography} from '../../../styles';
 import logo from '../../../assets/image/logo.png';
-const header = (props) => {
+import {ThemeContext} from '../../../Provider/Theme';
+const text = `React is a Javascript library, developed in 2013 by Jordan Walke of Facebook. You'll find React is both very popular (it's the 5th most starred JS library on GitHub) and used on major sites including on Facebook, Netflix, and Khan Academy. You'll love the flexibility of using React with your favorite web technologies (except for jQuery!), and this path will take you from the fundamentals all the way up to building full apps with custom styling. What you will learn`;
+const Header = (props) => {
+  const {theme} = useContext(ThemeContext);
   const {name, numberOfCourse, totalHour} = props;
   return (
     <View style={styles.mainContainer}>
-      <View style={styles.container}>
+      <View
+        style={{
+          ...BoxModel.mediumMarginVertical,
+          ...BoxModel.smallMarginHorizontal,
+          ...Styles.fillRowStart,
+          backgroundColor: theme.backgroundColor,
+        }}>
         <Image source={logo} style={styles.image} />
-        <View style={styles.titleContainer}>
-          <Text style={styles.textTitle}>{name}</Text>
+        <View
+          style={[
+            styles.titleContainer,
+            {backgroundColor: theme.backgroundColor},
+          ]}>
+          <Text style={[styles.textTitle, {color: theme.primaryTextColor}]}>
+            {name}
+          </Text>
           <View style={styles.subTitleContainer}>
-            <Text style={styles.subtitleText}>{numberOfCourse}</Text>
-            <Text style={styles.subtitleText}>{totalHour}</Text>
+            <Text style={[styles.subtitleText, {color: theme.grayColor}]}>
+              {numberOfCourse}
+            </Text>
+            <Text style={[styles.subtitleText, {color: theme.grayColor}]}>
+              {totalHour}
+            </Text>
           </View>
         </View>
       </View>
-      <Text style={styles.descriptionText}>
-        React is a Javascript library, developed in 2013 by Jordan Walke of
-        Facebook. You'll find React is both very popular (it's the 5th most
-        starred JS library on GitHub) and used on major sites including on
-        Facebook, Netflix, and Khan Academy. You'll love the flexibility of
-        using React with your favorite web technologies (except for jQuery!),
-        and this path will take you from the fundamentals all the way up to
-        building full apps with custom styling. What you will learn
+      <Text style={[styles.descriptionText, {color: theme.primaryTextColor}]}>
+        {text}
       </Text>
     </View>
   );
@@ -38,12 +44,6 @@ const header = (props) => {
 const styles = StyleSheet.create({
   mainContainer: {
     ...Styles.fillColumnStart,
-  },
-  container: {
-    ...BoxModel.mediumMarginVertical,
-    ...BoxModel.smallMarginHorizontal,
-    ...Styles.fillRowStart,
-    backgroundColor: Colors.whiteColor,
   },
   image: {
     width: Size.scaleSize(50),
@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
   subtitleText: {
     ...Typography.fontRegular,
     fontSize: Typography.fontSize12,
-    color: Colors.grayDarkColor,
     marginRight: Distance.spacing_10,
   },
   descriptionText: {
@@ -73,7 +72,6 @@ const styles = StyleSheet.create({
     ...BoxModel.bottomMargin,
     ...Typography.fontRegular,
     fontSize: Typography.fontSize14,
-    color: Colors.blackColor,
   },
 });
-export default header;
+export default Header;

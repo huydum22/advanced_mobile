@@ -1,19 +1,21 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {useSafeArea} from 'react-native-safe-area-context';
 import {StyleSheet, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import * as scenes from '../../../scenes';
 import * as screenName from '../../../config/ScreenName';
-import {Colors, Typography, Size} from '../../../styles';
+import {Typography, Size} from '../../../styles';
 import {SearchBar} from 'react-native-elements';
+import {ThemeContext} from '../../../Provider/Theme';
 
 const SearchStack = createStackNavigator();
 const SearchNavigatorStack = () => {
+  const {theme} = useContext(ThemeContext);
   const insets = useSafeArea();
   const styles = StyleSheet.create({
     input: {
       height: 40,
-      backgroundColor: Colors.whiteColor,
+      backgroundColor: theme.searchBackgroundColor,
       marginTop: insets.top + 20,
     },
   });
@@ -32,12 +34,12 @@ const SearchNavigatorStack = () => {
           lightTheme={true}
           containerStyle={{
             width: Size.WIDTH,
-            backgroundColor: Colors.primaryColor,
+            backgroundColor: theme.themeColor,
           }}
           inputContainerStyle={styles.input}
           cancelButtonProps={{
-            color: Colors.whiteColor,
-            backgroundColor: Colors.whiteColor,
+            color: theme.primaryTextColor,
+            backgroundColor: theme.themeColor,
             buttonStyle: {
               marginTop: 50,
             },
@@ -50,9 +52,9 @@ const SearchNavigatorStack = () => {
   };
   const configNavigator = {
     headerStyle: {
-      backgroundColor: Colors.primaryColor,
+      backgroundColor: theme.themeColor,
     },
-    headerTintColor: Colors.whiteColor,
+    headerTintColor: theme.primaryTextColor,
     headerTitleStyle: {
       ...Typography.fontBold,
       fontSize: Typography.fontSize20,

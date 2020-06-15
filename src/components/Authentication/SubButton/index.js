@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Text, TouchableHighlight} from 'react-native';
 import {
   Colors,
@@ -8,14 +8,25 @@ import {
   Distance,
   BoxModel,
 } from '../../../styles';
+import {ThemeContext} from '../../../Provider/Theme';
 // import LinearGradient from 'react-native-linear-gradient';
 const Button = (props) => {
+  const {theme} = useContext(ThemeContext);
   return (
     <TouchableHighlight
-      style={styles.container}
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme.primaryBackgroundColor,
+          borderColor: theme.primaryColor,
+        },
+      ]}
       onPress={props.onPress}
-      underlayColor={Colors.whiteColor}>
-      <Text style={styles.text}> {props.title}</Text>
+      underlayColor={theme.primaryBackgroundColor}>
+      <Text style={[styles.text, {color: theme.primaryColor}]}>
+        {' '}
+        {props.title}
+      </Text>
     </TouchableHighlight>
   );
 };
@@ -26,14 +37,11 @@ const styles = StyleSheet.create({
     ...Styles.width100,
     ...BoxModel.smallBorderRadius,
     height: Size.scaleSize(40),
-    backgroundColor: Colors.whiteColor,
     borderWidth: Distance.superSmall,
-    borderColor: Colors.primaryColor,
   },
   text: {
     ...Styles.crossCenter,
     ...Typography.fontBold,
-    color: Colors.primaryColor,
     fontSize: Typography.fontSize16,
   },
 });

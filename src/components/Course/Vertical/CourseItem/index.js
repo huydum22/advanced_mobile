@@ -8,50 +8,81 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import {FavoriteContext} from '../../../../Provider/Favorite';
-import {Colors, Size, Styles, Distance} from '../../../../styles';
-import {Rating} from 'react-native-ratings';
+import {Size, Styles, Distance} from '../../../../styles';
+import {AirbnbRating} from 'react-native-ratings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ActionSheet from 'react-native-actionsheet';
 import p from 'pretty-format';
+import {ThemeContext} from '../../../../Provider/Theme';
 const Item = (props) => {
   const {onPressItem, item} = props;
+  const {theme} = useContext(ThemeContext);
   const {favorite, setFavorite} = useContext(FavoriteContext);
   const onPressMore = (itemShow) => {
     this.ActionSheet.context = itemShow;
     this.ActionSheet.show();
   };
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: theme.primaryBackgroundColor},
+      ]}>
       <TouchableHighlight
         style={styles.main}
         onPress={() => {
           onPressItem(item);
         }}
-        underlayColor={Colors.whiteColor}>
+        underlayColor={theme.primaryBackgroundColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
             <Image source={item.image} style={styles.image} />
           </View>
           <View style={styles.mainContainer}>
-            <Text style={Styles.titleInHorizontalList}>{item.name}</Text>
-            <Text style={Styles.subTitleInHorizontalList}>{item.author}</Text>
+            <Text
+              style={[
+                Styles.titleInHorizontalList,
+                {color: theme.primaryTextColor},
+              ]}>
+              {item.name}
+            </Text>
+            <Text
+              style={[
+                Styles.subTitleInHorizontalList,
+                {color: theme.grayColor},
+              ]}>
+              {item.author}
+            </Text>
             <View style={styles.levelContainer}>
-              <Text style={Styles.subTitleInHorizontalList}>{item.level}</Text>
               <Text
-                style={[Styles.subTitleInHorizontalList, Styles.textCenter]}>
+                style={[
+                  Styles.subTitleInHorizontalList,
+                  {color: theme.grayColor},
+                ]}>
+                {item.level}
+              </Text>
+              <Text
+                style={[
+                  Styles.subTitleInHorizontalList,
+                  Styles.textCenter,
+                  {color: theme.grayColor},
+                ]}>
                 {item.timeToStart}
               </Text>
               <Text
-                style={[Styles.subTitleInHorizontalList, Styles.textCenter]}>
+                style={[
+                  Styles.subTitleInHorizontalList,
+                  Styles.textCenter,
+                  {color: theme.grayColor},
+                ]}>
                 {item.totalHour}
               </Text>
             </View>
             <View style={styles.ratingContainer}>
-              <Rating
-                readonly={true}
-                imageSize={14}
-                startingValue={item.rate}
-                ratingCount={5}
+              <AirbnbRating
+                reviews={false}
+                size={14}
+                defaultRating={item.rate}
               />
             </View>
           </View>
@@ -63,7 +94,7 @@ const Item = (props) => {
           onPress={() => {
             onPressMore(item);
           }}>
-          <Ionicons name="ios-more" size={25} />
+          <Ionicons name="ios-more" size={25} color={theme.primaryTextColor} />
         </TouchableOpacity>
         <ActionSheet
           ref={(o) => (this.ActionSheet = o)}
@@ -86,7 +117,6 @@ const Item = (props) => {
 const styles = StyleSheet.create({
   container: {
     ...Styles.fillRow,
-    backgroundColor: Colors.whiteColor,
   },
   main: {
     flex: 9,
@@ -122,7 +152,7 @@ const styles = StyleSheet.create({
   ratingContainer: {
     flex: 1.5,
     ...Styles.fillRowStart,
-    marginTop: 10,
+    marginTop: -Size.scaleSize(20),
   },
   more: {
     ...Styles.fillCenter,

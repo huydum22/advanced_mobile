@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
-import {Colors, Size} from '../../../../styles';
+import {Size} from '../../../../styles';
 import data from '../../../../ExampleData/author';
 import Item from '../AuthorItem';
 import {AuthorDetailScreenName} from '../../../../config/ScreenName';
+import {ThemeContext} from '../../../../Provider/Theme';
 
 const Authors = (props) => {
+  const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const onPressItem = (item) => {
     navigation.navigate(AuthorDetailScreenName, {
@@ -13,10 +15,14 @@ const Authors = (props) => {
     });
   };
   const flatListSeparator = () => {
-    return <View style={styles.separator} />;
+    return (
+      <View
+        style={[styles.separator, {backgroundColor: theme.backgroundColor}]}
+      />
+    );
   };
   return (
-    <View style={styles.container}>
+    <View style={{backgroundColor: theme.backgroundColor}}>
       <FlatList
         data={data}
         image
@@ -35,12 +41,8 @@ const Authors = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.backgroundColor,
-  },
   separator: {
     height: 1,
-    backgroundColor: Colors.backgroundColor,
   },
 });
 export default Authors;

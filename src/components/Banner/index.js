@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   ImageBackground,
@@ -14,19 +14,23 @@ import {
   Typography,
   Distance,
 } from '../../styles';
+import {ThemeContext} from '../../Provider/Theme';
 const Banner = (props) => {
   const {backgroundImage, name, onPress} = props;
-
+  const {theme} = useContext(ThemeContext);
   return (
     <ImageBackground style={styles.imageBackground} source={backgroundImage}>
       <TouchableHighlight
-        style={styles.blurBackground}
+        style={[
+          styles.blurBackground,
+          {backgroundColor: theme.blackWith05OpacityColor},
+        ]}
         onPress={() => {
           onPress(name);
         }}
-        underlayColor={Colors.blackWith03OpacityColor}>
+        underlayColor={theme.blackWith03OpacityColor}>
         <View style={Styles.breakContentText}>
-          <Text style={styles.text}>{name}</Text>
+          <Text style={[styles.text, {color: theme.whiteColor}]}>{name}</Text>
         </View>
       </TouchableHighlight>
     </ImageBackground>
@@ -41,15 +45,12 @@ const styles = StyleSheet.create({
   },
   blurBackground: {
     ...Styles.center,
-    ...BoxModel.paddingHorizontal,
-    backgroundColor: Colors.blackWith05OpacityColor,
     height: Size.bannerHeight,
     width: Size.WIDTH - Distance.spacing_30,
   },
   text: {
     ...Typography.fontBold,
     ...Styles.textInBanner,
-    color: Colors.whiteColor,
     fontSize: Typography.fontSize30,
   },
 });

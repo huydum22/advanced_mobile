@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, SectionList, Text, StatusBar} from 'react-native';
 
 import courseData from '../../ExampleData/course';
@@ -18,11 +18,17 @@ import {
   CourseDetailScreenName,
   PathDetailScreenName,
   AuthorDetailScreenName,
+  CourseDetailScreenStack,
 } from '../../config/ScreenName';
+import {ThemeContext} from '../../Provider/Theme';
 const Search = (props) => {
+  const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenName);
+    navigation.navigate(CourseDetailScreenStack, {
+      screen: CourseDetailScreenName,
+      params: {id: item.id},
+    });
   };
   const onPressPathItem = (item) => {
     navigation.navigate(PathDetailScreenName, {
@@ -48,12 +54,27 @@ const Search = (props) => {
     }
   };
   const flatListSeparator = () => {
-    return <View style={styles.separator} />;
+    return (
+      <View
+        style={[styles.separator, {backgroundColor: theme.backgroundColor}]}
+      />
+    );
   };
   const renderHeader = (title) => {
     return (
-      <View style={styles.headerContainer}>
-        <Text style={[Styles.titleRow, Typography.fontBold]}>{title}</Text>
+      <View
+        style={[
+          styles.headerContainer,
+          {backgroundColor: theme.backgroundSeeAllButton},
+        ]}>
+        <Text
+          style={[
+            Styles.titleRow,
+            Typography.fontBold,
+            {color: theme.primaryTextColor},
+          ]}>
+          {title}
+        </Text>
         <SeeAllBtn onPress={() => showAll(title)} />
       </View>
     );
@@ -80,8 +101,8 @@ const Search = (props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar translucent backgroundColor={Colors.primaryColor} {...props} />
+    <View style={{backgroundColor: theme.backgroundColor}}>
+      <StatusBar translucent backgroundColor={theme.primaryColor} {...props} />
 
       <SectionList
         ItemSeparatorComponent={flatListSeparator}
@@ -101,19 +122,14 @@ const Search = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.backgroundColor,
-  },
   headerContainer: {
     height: 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: Colors.backgroundSeeAllButton,
   },
   separator: {
     height: 1,
-    backgroundColor: Colors.backgroundColor,
   },
   textHeader: {
     marginLeft: 10,

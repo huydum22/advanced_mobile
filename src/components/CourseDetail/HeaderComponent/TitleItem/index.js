@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {Colors, Typography} from '../../../../styles';
+import {Typography} from '../../../../styles';
+import {ThemeContext} from '../../../../Provider/Theme';
 const Title = (props) => {
+  const {theme} = useContext(ThemeContext);
   return (
     <View style={styles.container}>
-      <Text style={styles.textContainer}>{props.name}</Text>
+      <Text style={[styles.textContainer, {color: theme.primaryTextColor}]}>
+        {props.name}
+      </Text>
     </View>
   );
 };
@@ -16,7 +20,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   textContainer: {
-    color: Colors.blackColor,
     fontSize: Typography.fontSize20,
     ...Typography.fontBold,
   },

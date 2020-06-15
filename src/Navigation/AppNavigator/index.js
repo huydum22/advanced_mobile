@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as screenName from '../../config/ScreenName';
 
@@ -11,6 +11,10 @@ import HomeNavigator from './HomeNavigator';
 import BrowseNavigator from './BrowseNavigator';
 import DownloadNavigator from './DownloadNavigator';
 import SearchNavigator from './SearchNavigator';
+import {ThemeContext} from '../../Provider/Theme';
+import {BookmarkProvider} from '../../Provider/Bookmark';
+import {MyChannelProvider} from '../../Provider/MyChannel';
+import {MyPathProvider} from '../../Provider/MyPath';
 const Tab = createBottomTabNavigator();
 
 const searchIcon = ({color}) => (
@@ -50,34 +54,49 @@ const configLabel = {
   ...Typography.fontRegular,
   fontSize: Typography.fontSize14,
 };
-const AppNavigator = () => (
-  <Tab.Navigator
-    initialRouteName={screenName.HomeScreenName}
-    tabBarOptions={{
-      labelStyle: configLabel,
-      activeTintColor: Colors.primaryColor,
-      inactiveTintColor: Colors.grayMediumColor,
-    }}>
-    <Tab.Screen
-      name={screenName.HomeScreenName}
-      component={HomeNavigator}
-      options={configHomeTab}
-    />
-    <Tab.Screen
-      name={screenName.DownloadScreenName}
-      component={DownloadNavigator}
-      options={configDownloadTab}
-    />
-    <Tab.Screen
-      name={screenName.BrowseScreenName}
-      component={BrowseNavigator}
-      options={configBrowseTab}
-    />
-    <Tab.Screen
-      name={screenName.SearchScreenName}
-      component={SearchNavigator}
-      options={configSearchTab}
-    />
-  </Tab.Navigator>
-);
+const AppNavigator = () => {
+  const {theme} = useContext(ThemeContext);
+  return (
+    <BookmarkProvider>
+      <MyChannelProvider>
+        <MyPathProvider>
+          <Tab.Navigator
+            initialRouteName={screenName.HomeScreenName}
+            tabBarOptions={{
+              labelStyle: configLabel,
+              activeTintColor: theme.primaryColor,
+              inactiveTintColor: theme.grayMediumColor,
+              style: {
+                backgroundColor: theme.themeColor,
+                elevation: 0,
+                shadowOpacity: 0,
+                borderTopWidth: 0,
+              },
+            }}>
+            <Tab.Screen
+              name={screenName.HomeScreenName}
+              component={HomeNavigator}
+              options={configHomeTab}
+            />
+            <Tab.Screen
+              name={screenName.DownloadScreenName}
+              component={DownloadNavigator}
+              options={configDownloadTab}
+            />
+            <Tab.Screen
+              name={screenName.BrowseScreenName}
+              component={BrowseNavigator}
+              options={configBrowseTab}
+            />
+            <Tab.Screen
+              name={screenName.SearchScreenName}
+              component={SearchNavigator}
+              options={configSearchTab}
+            />
+          </Tab.Navigator>
+        </MyPathProvider>
+      </MyChannelProvider>
+    </BookmarkProvider>
+  );
+};
 export default AppNavigator;

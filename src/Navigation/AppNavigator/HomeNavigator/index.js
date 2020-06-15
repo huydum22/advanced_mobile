@@ -1,41 +1,48 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {TouchableHighlight, alert} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as scenes from '../../../scenes';
 import * as screenName from '../../../config/ScreenName';
 import {Colors, Typography, Distance} from '../../../styles';
+import {ThemeContext} from '../../../Provider/Theme';
 
 const HomeStack = createStackNavigator();
-const headerRight = (navigation) => (
-  <TouchableHighlight
-    onPress={() => {
-      navigation.navigate(screenName.ProfileScreenName);
-    }}
-    underlayColor={Colors.primaryColor}
-    style={{marginRight: Distance.spacing_14}}>
-    <FontAwesome name="user" size={25} color={Colors.whiteColor} />
-  </TouchableHighlight>
-);
-const configHomeNavigator = {
-  headerStyle: {
-    backgroundColor: Colors.primaryColor,
-  },
-  headerTintColor: Colors.whiteColor,
-  headerTitleStyle: {
-    ...Typography.fontBold,
-    fontSize: Typography.fontSize20,
-  },
-};
+
 const HomeNavigatorStack = () => {
+  const {theme} = useContext(ThemeContext);
+
   return (
-    <HomeStack.Navigator screenOptions={configHomeNavigator}>
+    <HomeStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.themeColor,
+        },
+        headerTintColor: theme.primaryTextColor,
+        headerTitleStyle: {
+          ...Typography.fontBold,
+          fontSize: Typography.fontSize20,
+        },
+      }}>
       <HomeStack.Screen
         name={screenName.HomeScreenName}
         component={scenes.Home}
         options={({navigation}) => ({
           title: 'Home',
-          headerRight: () => headerRight(navigation),
+          headerRight: () => (
+            <TouchableHighlight
+              onPress={() => {
+                navigation.navigate(screenName.ProfileScreenName);
+              }}
+              underlayColor={theme.primaryColor}
+              style={{marginRight: Distance.spacing_14}}>
+              <FontAwesome
+                name="user"
+                size={25}
+                color={theme.primaryTextColor}
+              />
+            </TouchableHighlight>
+          ),
         })}
       />
       <HomeStack.Screen

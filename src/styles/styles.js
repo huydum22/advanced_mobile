@@ -1,13 +1,13 @@
 import {
   blackWith03OpacityColor,
   BLACK,
-  whiteColor,
+  primaryBackgroundColor,
   backgroundColor,
   blackWith08OpacityColor,
-  blackColor,
+  primaryTextColor,
   grayDarkColor,
   backgroundSeeAllButton,
-} from './color';
+} from './Color/color';
 import {smallMargin, tinyMargin, smallPaddingHorizontal} from './box-model';
 import {scaleSize, boxShadow, bannerHeight} from './size';
 import {
@@ -24,7 +24,7 @@ export const titleInList = {
   fontSize: 18,
 };
 export const titleRow = {
-  color: blackColor,
+  color: primaryTextColor,
   fontSize: fontSize18,
 };
 export const titleInHorizontalList = {
@@ -50,10 +50,6 @@ export const horizontalCourse = {
   ...smallMargin,
   width: scaleSize(200),
   height: scaleSize(180),
-  backgroundColor: whiteColor,
-  borderWidth: 0.25,
-  ...boxShadow(blackWith08OpacityColor),
-  borderColor: blackWith03OpacityColor,
 };
 export const imageInHorizontalCourse = {
   flex: 1,
@@ -144,6 +140,11 @@ export const fillRowBetween = {
   flex: 1,
   flexDirection: 'row',
   justifyContent: 'space-between',
+};
+export const fillRowCenter = {
+  flex: 1,
+  flexDirection: 'row',
+  alignItems: 'center',
 };
 
 export const fillRowStart = {

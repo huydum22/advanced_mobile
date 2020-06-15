@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -21,19 +21,23 @@ import {
   PathDetailScreenName,
   AuthorDetailScreenName,
   RelateSkillScreenName,
+  ShowListPathScreenName,
 } from '../../config/ScreenName';
 import SeeAllBtn from '../../components/common/see-all-button';
 import dataSkill from '../../ExampleData/skill';
 import dataRelate from '../../ExampleData/relate-skill';
 import dataAuthor from '../../ExampleData/author';
 import dataPath from '../../ExampleData/path';
-const brown = (props) => {
+import {ThemeContext} from '../../Provider/Theme';
+const Browse = (props) => {
   const {navigation, route} = props;
+  const {theme} = useContext(ThemeContext);
   const onPressBanner = (name) => {
     navigation.navigate(ShowListCourseScreenName, {
-      title: {name},
+      title: name,
     });
   };
+
   const onPressPopularSkill = () => {
     navigation.navigate(PopularSkillScreenName);
   };
@@ -52,19 +56,35 @@ const brown = (props) => {
   const onPressRelateSkill = (item) => {
     navigation.navigate(RelateSkillScreenName);
   };
-  const showAllPath = (title) => {};
+  const showAllPath = (title) => {
+    navigation.navigate(ShowListPathScreenName);
+  };
   const renderHeader = (title, data) => {
     if (data[0] === 2) {
       return (
         <View style={styles.titleContainer}>
-          <Text style={[Styles.titleRow, Typography.fontBold]}>{title} </Text>
+          <Text
+            style={[
+              Styles.titleRow,
+              Typography.fontBold,
+              {color: theme.primaryTextColor},
+            ]}>
+            {title}{' '}
+          </Text>
           <SeeAllBtn onPress={showAllPath} />
         </View>
       );
     } else {
       return (
         <View style={styles.titleContainer}>
-          <Text style={[Styles.titleRow, Typography.fontBold]}>{title} </Text>
+          <Text
+            style={[
+              Styles.titleRow,
+              Typography.fontBold,
+              {color: theme.primaryTextColor},
+            ]}>
+            {title}{' '}
+          </Text>
         </View>
       );
     }
@@ -76,7 +96,7 @@ const brown = (props) => {
         key={item.toString()}
         backgroundImage={backgroundImage02}
         name={item}
-        onPress={onPressBanner}
+        onPress={() => onPressBanner(item)}
       />
     ));
   };
@@ -171,7 +191,8 @@ const brown = (props) => {
     }
   };
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={(styles.container, {backgroundColor: theme.backgroundColor})}>
       <SectionList
         sections={[
           {title: 'Popular Skill', data: [0]},
@@ -199,4 +220,4 @@ const styles = StyleSheet.create({
     height: Distance.medium,
   },
 });
-export default brown;
+export default Browse;

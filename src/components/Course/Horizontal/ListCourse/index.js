@@ -6,11 +6,15 @@ import {Styles, Distance, Typography, BoxModel, Size} from '../../../../styles';
 import {
   ShowListCourseScreenName,
   CourseDetailScreenName,
+  CourseDetailScreenStack,
 } from '../../../../config/ScreenName';
 const SectionCourses = (props) => {
   const {navigation, data, route, title} = props;
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenName);
+    navigation.navigate(CourseDetailScreenStack, {
+      screen: CourseDetailScreenName,
+      params: {id: item.id},
+    });
   };
   const showListCourse = () => {
     navigation.navigate(ShowListCourseScreenName, {

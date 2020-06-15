@@ -1,21 +1,34 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, FlatList, SafeAreaView} from 'react-native';
-import {Colors, Size} from '../../styles';
+import {Size} from '../../styles';
 import data from '../../ExampleData/course';
 import {CourseVerticalItem} from '../../components/Course';
 import {Header} from '../../components/AuthorDetail';
-import {CourseDetailScreenName} from '../../config/ScreenName';
+import {
+  CourseDetailScreenName,
+  CourseDetailScreenStack,
+} from '../../config/ScreenName';
+import {ThemeContext} from '../../Provider/Theme';
 const AuthorDetail = (props) => {
   const {navigation, route} = props;
+  const {theme} = useContext(ThemeContext);
+
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenName);
+    navigation.navigate(CourseDetailScreenStack, {
+      screen: CourseDetailScreenName,
+      params: {id: item.id},
+    });
   };
   const flatListSeparator = () => {
-    return <View style={styles.separator} />;
+    return (
+      <View
+        style={[styles.separator, {backgroundColor: theme.backgroundColor}]}
+      />
+    );
   };
   return (
     <SafeAreaView>
-      <View style={styles.container}>
+      <View style={{backgroundColor: theme.primaryBackgroundColor}}>
         <FlatList
           data={data}
           ItemSeparatorComponent={flatListSeparator}
@@ -38,12 +51,8 @@ const AuthorDetail = (props) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.whiteColor,
-  },
   separator: {
     height: 1,
-    backgroundColor: Colors.backgroundColor,
   },
 });
 export default AuthorDetail;

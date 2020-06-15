@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -9,15 +9,24 @@ import {
 } from 'react-native';
 import {Colors, Typography} from '../../../../styles';
 import image from '../../../../assets/image/person.png';
+import {ThemeContext} from '../../../../Provider/Theme';
 const Author = (props) => {
   const {onPress} = props;
+  const {theme} = useContext(ThemeContext);
   return (
     <View style={styles.container}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         {/* {renderList(props.author)} */}
-        <TouchableOpacity style={styles.skillContainer} onPress={onPress}>
+        <TouchableOpacity
+          style={[
+            styles.skillContainer,
+            {backgroundColor: theme.backgroundSeeAllButton},
+          ]}
+          onPress={onPress}>
           <Image style={styles.image} source={image} />
-          <Text style={styles.text}>{props.name}</Text>
+          <Text style={[styles.text, {color: theme.primaryTextColor}]}>
+            {props.name}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -29,7 +38,6 @@ const styles = StyleSheet.create({
   },
   skillContainer: {
     flexDirection: 'row',
-    backgroundColor: Colors.backgroundSeeAllButton,
     borderRadius: 15,
     marginLeft: 20,
     height: 30,

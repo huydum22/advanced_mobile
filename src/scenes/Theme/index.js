@@ -1,60 +1,106 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   FlatList,
   StyleSheet,
   View,
   Text,
   TouchableHighlight,
+  SafeAreaView,
+  StatusBar,
 } from 'react-native';
-import {Colors, Typography, BoxModel, Styles} from '../../styles';
+import {
+  Typography,
+  BoxModel,
+  Styles,
+  darkTheme,
+  lightTheme,
+  Size,
+} from '../../styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-const data = ['System', 'Light', 'Dark'];
+import {ThemeContext} from '../../Provider/Theme';
+const data = ['Default', 'Light', 'Dark'];
 const Theme = (props) => {
+  const {theme, setTheme} = useContext(ThemeContext);
   const flatListSeparator = () => {
-    return <View style={styles.separator} />;
+    return (
+      <View style={[styles.separator, {backgroundColor: theme.DialogColor}]} />
+    );
+  };
+  const onPressChangeTheme = (value) => {
+    if (value === 'Dark') {
+      setTheme(darkTheme);
+    } else {
+      setTheme(lightTheme);
+    }
+  };
+  const getTheme = () => {
+    if (theme === lightTheme) {
+      return 'Default';
+    } else {
+      return 'Dark';
+    }
   };
   return (
-    <FlatList
-      style={styles.container}
-      data={data}
-      showsVerticalScrollIndicator={false}
-      keyExtractor={(item, index) => item + index}
-      ItemSeparatorComponent={flatListSeparator}
-      renderItem={({item}) => (
-        <TouchableHighlight style={styles.titleContainer}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>{item}</Text>
-            {item !== 'System' ? (
-              <MaterialIcons name="check" size={20} />
-            ) : (
-              <View />
-            )}
-          </View>
-        </TouchableHighlight>
-      )}
-    />
+    <SafeAreaView style={styles.safeAreaView}>
+      <FlatList
+        style={[styles.container, {backgroundColor: theme.backgroundColor}]}
+        data={data}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item, index) => item + index}
+        ItemSeparatorComponent={flatListSeparator}
+        renderItem={({item}) => (
+          <TouchableHighlight
+            style={[
+              styles.titleContainer,
+              {backgroundColor: theme.backgroundColor},
+            ]}
+            onPress={() => onPressChangeTheme(item)}
+            underlayColor={theme.backgroundColor}>
+            <View
+              style={[
+                styles.titleContainer,
+                {backgroundColor: theme.backgroundColor},
+              ]}>
+              <Text style={[styles.title, {color: theme.primaryTextColor}]}>
+                {item}
+              </Text>
+              {item === getTheme() ? (
+                <MaterialIcons
+                  name="check"
+                  size={20}
+                  color={theme.primaryTextColor}
+                />
+              ) : (
+                <View />
+              )}
+            </View>
+          </TouchableHighlight>
+        )}
+      />
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
+  safeAreaView: {
+    width: Size.WIDTH,
+    height: Size.HEIGHT,
+  },
   container: {
-    ...BoxModel.marginHorizontal,
-    ...BoxModel.mediumMarginVertical,
-    backgroundColor: Colors.backgroundColor,
+    ...BoxModel.paddingHorizontal,
+    ...BoxModel.mediumPaddingVertical,
   },
   separator: {
     height: 1,
-    backgroundColor: Colors.grayLightColor,
   },
   titleContainer: {
     flex: 1,
     ...Styles.rowCenter,
     height: 50,
-    backgroundColor: Colors.backgroundColor,
   },
   title: {
     flex: 1,
     ...Typography.fontRegular,
-    fontSize: Typography.fontSize20,
+    fontSize: Typography.fontSize18,
   },
 });
 

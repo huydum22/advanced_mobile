@@ -1,16 +1,23 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {TouchableHighlight, Text, StyleSheet} from 'react-native';
-import {BoxModel, Styles, Colors, Distance, Typography} from '../../../styles';
+import {BoxModel, Styles, Distance, Typography} from '../../../styles';
+import {ThemeContext} from '../../../Provider/Theme';
 const Item = (props) => {
   const {item, onPress} = props;
+  const {theme} = useContext(ThemeContext);
   return (
     <TouchableHighlight
-      style={styles.skillContainer}
-      underlayColor={Colors.backgroundSeeAllButton}
+      style={[
+        styles.skillContainer,
+        {backgroundColor: theme.backgroundSeeAllButton},
+      ]}
+      underlayColor={theme.backgroundSeeAllButton}
       onPress={() => {
         onPress(item);
       }}>
-      <Text style={styles.text}>{item.name}</Text>
+      <Text style={{...Typography.fontRegular, color: theme.primaryTextColor}}>
+        {item.name}
+      </Text>
     </TouchableHighlight>
   );
 };
@@ -19,13 +26,8 @@ const styles = StyleSheet.create({
     ...BoxModel.smallBorderRadius,
     ...Styles.mainCenter,
     ...BoxModel.smallPaddingHorizontal,
-    backgroundColor: Colors.backgroundSeeAllButton,
     marginLeft: Distance.spacing_10,
     height: Distance.spacing_30,
-  },
-  text: {
-    ...Typography.fontRegular,
-    color: Colors.blackColor,
   },
 });
 export default Item;

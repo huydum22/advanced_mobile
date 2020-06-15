@@ -1,31 +1,56 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import {Colors, Styles, BoxModel, Typography, Distance} from '../../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-const isLogout = (icon) => {
-  if (icon) {
-    return (
-      <FontAwesome name="angle-right" size={26} color={Colors.blackColor} />
-    );
-  }
-};
+import {ThemeContext} from '../../../Provider/Theme';
+
 const Item = ({icon, name, onPress}) => {
+  const {theme} = useContext(ThemeContext);
+  const isLogout = (icon) => {
+    if (icon) {
+      return (
+        <FontAwesome
+          name="angle-right"
+          size={26}
+          color={theme.primaryTextColor}
+        />
+      );
+    }
+  };
   return (
     <TouchableHighlight
-      style={styles.container}
-      underlayColor={Colors.whiteColor}
+      style={[
+        styles.container,
+        {backgroundColor: theme.primaryBackgroundColor},
+      ]}
+      underlayColor={theme.primaryBackgroundColor}
       onPress={onPress}>
-      <View style={styles.itemContainer}>
-        <MaterialCommunityIcons name={icon} size={26} color="#1e1e1e" />
-        <Text
+      <View style={{flex: 1}}>
+        <View
+          style={[styles.separator, {backgroundColor: theme.DialogColor}]}
+        />
+        <View
           style={[
-            icon ? styles.itemText : styles.logoutText,
-            icon ? styles.marginItemText : styles.noneMarginItemText,
+            styles.itemContainer,
+            {backgroundColor: theme.primaryBackgroundColor},
           ]}>
-          {name}
-        </Text>
-        {isLogout(icon)}
+          <MaterialCommunityIcons
+            name={icon}
+            size={20}
+            color={theme.primaryTextColor}
+          />
+          <Text
+            style={[
+              icon
+                ? [styles.itemText, {color: theme.primaryTextColor}]
+                : [styles.logoutText, {color: theme.primaryColor}],
+              icon ? styles.marginItemText : styles.noneMarginItemText,
+            ]}>
+            {name}
+          </Text>
+          {isLogout(icon)}
+        </View>
       </View>
     </TouchableHighlight>
   );
@@ -33,22 +58,21 @@ const Item = ({icon, name, onPress}) => {
 const styles = StyleSheet.create({
   container: {
     ...Styles.rowCenter,
-    backgroundColor: Colors.whiteColor,
+  },
+  separator: {
+    height: 1,
   },
   itemContainer: {
-    backgroundColor: Colors.whiteColor,
     ...Styles.rowCenter,
     ...BoxModel.padding,
   },
   itemText: {
     flex: 1,
-    color: Colors.blackColor,
     ...Typography.fontRegular,
     fontSize: Typography.fontSize16,
   },
   logoutText: {
     flex: 1,
-    color: Colors.redColor,
     textAlign: 'center',
     ...Typography.fontBold,
     fontSize: Typography.fontSize18,

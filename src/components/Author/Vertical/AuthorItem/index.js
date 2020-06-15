@@ -1,24 +1,39 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Image, Text, View, TouchableHighlight} from 'react-native';
 import {Colors, Styles, Size, Distance, BoxModel} from '../../../../styles';
+import {ThemeContext} from '../../../../Provider/Theme';
 const Item = (props) => {
   const {item, onPressItem} = props;
-
+  const {theme} = useContext(ThemeContext);
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: theme.primaryBackgroundColor},
+      ]}>
       <TouchableHighlight
         style={styles.main}
         onPress={() => {
           onPressItem(item);
         }}
-        underlayColor={Colors.whiteColor}>
+        underlayColor={theme.primaryBackgroundColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
             <Image source={item.image} style={styles.image} />
           </View>
           <View style={styles.textContainer}>
-            <Text style={Styles.titleInHorizontalList}>{item.name}</Text>
-            <Text style={Styles.subTitleInHorizontalList}>
+            <Text
+              style={[
+                Styles.titleInHorizontalList,
+                {color: theme.primaryTextColor},
+              ]}>
+              {item.name}
+            </Text>
+            <Text
+              style={[
+                Styles.subTitleInHorizontalList,
+                {color: theme.grayColor},
+              ]}>
               {item.numberOfCourse}
             </Text>
           </View>
@@ -30,7 +45,6 @@ const Item = (props) => {
 const styles = StyleSheet.create({
   container: {
     ...Styles.fillRow,
-    backgroundColor: Colors.whiteColor,
   },
   main: {
     ...Styles.fillRow,

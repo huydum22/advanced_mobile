@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -26,10 +26,23 @@ import {
   PathDetailScreenName,
   AuthorDetailScreenName,
   CourseDetailScreenName,
+  CourseDetailScreenStack,
+  ShowListCourseScreenName,
+  ShowListPathScreenName,
 } from '../../config/ScreenName';
+import {ThemeContext} from '../../Provider/Theme';
 const PopularSkill = (props) => {
+  const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
-  const showListCourse = () => {};
+  const showListCourse = (index, title) => {
+    if (index === 0) {
+      navigation.navigate(ShowListPathScreenName);
+    } else {
+      navigation.navigate(ShowListCourseScreenName, {
+        title: title,
+      });
+    }
+  };
   const onPressPathItem = (item) => {
     navigation.navigate(PathDetailScreenName, {
       name: item.name,
@@ -43,13 +56,27 @@ const PopularSkill = (props) => {
     });
   };
   const onPressCourseItem = (item) => {
-    navigation.navigate(CourseDetailScreenName);
+    navigation.navigate(CourseDetailScreenStack, {
+      screen: CourseDetailScreenName,
+      params: {id: item.id},
+    });
   };
-  const renderHeader = (title) => {
+  const renderHeader = (title, indexItem) => {
     return (
       <View style={styles.titleContainer}>
-        <Text style={[Styles.titleRow, Typography.fontBold]}>{title} </Text>
-        <SeeAllBtn onPress={showListCourse} />
+        <Text
+          style={[
+            Styles.titleRow,
+            Typography.fontBold,
+            {color: theme.primaryTextColor},
+          ]}>
+          {title}{' '}
+        </Text>
+        {indexItem[0] === 3 ? (
+          <View />
+        ) : (
+          <SeeAllBtn onPress={() => showListCourse(indexItem[0], title)} />
+        )}
       </View>
     );
   };
@@ -119,7 +146,7 @@ const PopularSkill = (props) => {
   return (
     <SafeAreaView>
       <SectionList
-        style={styles.container}
+        style={{backgroundColor: theme.backgroundColor}}
         sections={[
           {title: 'Path', data: [0]},
           {title: 'New', data: [1]},
@@ -127,7 +154,9 @@ const PopularSkill = (props) => {
           {title: 'Top author', data: [3]},
         ]}
         keyExtractor={(item, index) => item + index}
-        renderSectionHeader={({section: {title}}) => renderHeader(title)}
+        renderSectionHeader={({section: {title, data}}) =>
+          renderHeader(title, data)
+        }
         ListFooterComponent={() => {
           return <View style={styles.footer} />;
         }}
@@ -140,9 +169,6 @@ const PopularSkill = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.backgroundColor,
-  },
   footer: {height: Distance.spacing_20},
   titleContainer: {
     ...BoxModel.marginHorizontal,

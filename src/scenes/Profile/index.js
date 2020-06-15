@@ -20,7 +20,9 @@ import {
 import {Item} from '../../components/AccountManagement';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {LogoutProvider} from '../../services/Authentication';
+import {ThemeContext} from '../../Provider/Theme';
 const Account = (props) => {
+  const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const onPressSubscription = () => {
     navigation.navigate(SubscriptionScreenName, {
@@ -48,24 +50,34 @@ const Account = (props) => {
   const {authentication, setAuthentication} = useContext(AuthenticationContext);
   return (
     <SafeAreaView>
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={{backgroundColor: theme.backgroundColor}}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.mainContainer}>
-          <View style={styles.userContainer}>
-            <View style={styles.avatarContainer}>
+          <View
+            style={[
+              styles.userContainer,
+              {backgroundColor: theme.primaryBackgroundColor},
+            ]}>
+            <View
+              style={[
+                styles.avatarContainer,
+                {backgroundColor: theme.primaryColor},
+              ]}>
               <MaterialIcons name="person" size={26} color="#fff" />
             </View>
             <View style={styles.textContainer}>
-              <Text style={styles.nameText}>
+              <Text style={[styles.nameText, {color: theme.primaryTextColor}]}>
                 {authentication.user ? authentication.user.name : ''}
               </Text>
-              <Text style={styles.emailText}>
+              <Text style={[styles.emailText, {color: theme.primaryTextColor}]}>
                 {authentication.user ? authentication.user.email : ''}
               </Text>
             </View>
             <FontAwesome
               name="angle-right"
               size={26}
-              color={Colors.blackColor}
+              color={theme.primaryTextColor}
             />
           </View>
           <View style={styles.divider} />
@@ -101,20 +113,18 @@ const Account = (props) => {
             }}
           />
         </View>
-        <View style={styles.footer} />
+        <View
+          style={[styles.footer, {backgroundColor: theme.backgroundColor}]}
+        />
       </ScrollView>
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.backgroundColor,
-  },
   mainContainer: {
     ...Styles.fillColumn,
   },
   userContainer: {
-    backgroundColor: Colors.whiteColor,
     ...Styles.rowCenter,
     ...BoxModel.mediumPadding,
   },
@@ -123,28 +133,24 @@ const styles = StyleSheet.create({
     height: Size.scaleSize(50),
     borderRadius: Size.scaleSize(25),
     ...Styles.center,
-    backgroundColor: Colors.primaryColor,
   },
   textContainer: {
     flex: 1,
     marginLeft: Distance.spacing_20,
   },
   nameText: {
-    color: Colors.primaryColor,
     ...Typography.fontBold,
     fontSize: Typography.fontSize18,
   },
   emailText: {
-    color: Colors.grayDarkColor,
     ...Typography.fontRegular,
     fontSize: Typography.fontSize14,
   },
   divider: {
-    height: Size.scaleSize(30),
+    height: Size.scaleSize(20),
   },
   footer: {
     height: Size.scaleSize(50),
-    backgroundColor: Colors.backgroundColor,
   },
 });
 export default Account;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, StyleSheet, Image, KeyboardAvoidingView} from 'react-native';
 import {
   PrimaryButton,
@@ -9,7 +9,9 @@ import logo from '../../assets/image/logo_.png';
 
 // import prettyFormat from 'pretty-format';
 import {Colors, Styles, BoxModel, Platform} from '../../styles';
+import {ThemeContext} from '../../Provider/Theme';
 const Register = (props) => {
+  const {theme} = useContext(ThemeContext);
   const {navigation} = props;
   const handleLoginPress = () => {
     return navigation.goBack();
@@ -33,12 +35,13 @@ const Register = (props) => {
   };
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, {backgroundColor: theme.primaryColor}]}
       behavior={Platform.Ios ? 'padding' : 'height'}>
       <View style={styles.logoContainer}>
         <Image source={logo} style={Styles.logoView} />
       </View>
-      <View style={styles.form}>
+      <View
+        style={[styles.form, {backgroundColor: theme.primaryBackgroundColor}]}>
         <FormInput
           placeholder="Email"
           value={email}
@@ -75,7 +78,6 @@ const styles = StyleSheet.create({
   container: {
     ...Styles.center,
     flex: 1,
-    backgroundColor: Colors.primaryColor,
   },
   logoContainer: {
     flex: 4,
@@ -87,7 +89,6 @@ const styles = StyleSheet.create({
     ...BoxModel.mediumPadding,
     ...Styles.mainStart,
     flex: 5,
-    backgroundColor: Colors.whiteColor,
   },
 });
 export default Register;

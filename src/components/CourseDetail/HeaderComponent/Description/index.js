@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, StyleSheet, Text, TouchableHighlight} from 'react-native';
-import {Colors, Typography} from '../../../../styles';
+import {Typography} from '../../../../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {ThemeContext} from '../../../../Provider/Theme';
 const Description = (props) => {
   const [isExpand, setExpand] = useState(true);
+  const {theme} = useContext(ThemeContext);
   const onPress = () => {
     if (isExpand) {
       setExpand(false);
@@ -13,9 +15,21 @@ const Description = (props) => {
   };
   const renderIcon = () => {
     if (isExpand) {
-      return <Ionicons name="ios-arrow-down" size={15} />;
+      return (
+        <Ionicons
+          name="ios-arrow-down"
+          size={15}
+          color={theme.primaryTextColor}
+        />
+      );
     } else {
-      return <Ionicons name="ios-arrow-up" size={15} />;
+      return (
+        <Ionicons
+          name="ios-arrow-up"
+          size={15}
+          color={theme.primaryTextColor}
+        />
+      );
     }
   };
   return (
@@ -25,13 +39,22 @@ const Description = (props) => {
           styles.textContainer,
           isExpand ? styles.maxHeightText : styles.minHeightText,
         ]}>
-        <Text style={styles.text}>{props.description}</Text>
+        <Text style={[styles.text, {color: theme.blackSubTextColor}]}>
+          {props.description}
+        </Text>
       </View>
-      <View style={styles.buttonContainer}>
+      <View
+        style={[
+          styles.buttonContainer,
+          {backgroundColor: theme.backgroundSeeAllButton},
+        ]}>
         <TouchableHighlight
-          style={styles.buttonContainer}
+          style={[
+            styles.buttonContainer,
+            {backgroundColor: theme.backgroundSeeAllButton},
+          ]}
           onPress={onPress}
-          underlayColor={Colors.backgroundSeeAllButton}>
+          underlayColor={theme.backgroundSeeAllButton}>
           {renderIcon()}
         </TouchableHighlight>
       </View>
@@ -50,7 +73,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: Colors.backgroundSeeAllButton,
     width: 20,
     borderRadius: 5,
     alignItems: 'center',
@@ -67,7 +89,6 @@ const styles = StyleSheet.create({
   },
   text: {
     ...Typography.fontRegular,
-    color: Colors.blackWith05OpacityColor,
   },
 });
 export default Description;

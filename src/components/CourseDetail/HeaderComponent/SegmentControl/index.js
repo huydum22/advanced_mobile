@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
-import {Colors, Typography} from '../../../../styles';
+import {Typography} from '../../../../styles';
+import {ThemeContext} from '../../../../Provider/Theme';
 const SegmentControl = (props) => {
+  const {theme} = useContext(ThemeContext);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const handleIndexChange = (index) => {
     setSelectedIndex(index);
@@ -11,10 +13,25 @@ const SegmentControl = (props) => {
     <View style={styles.container}>
       <SegmentedControlTab
         tabsContainerStyle={styles.tabsContainerStyle}
-        tabStyle={styles.tabStyle}
-        activeTabStyle={styles.activeTabStyle}
-        tabTextStyle={styles.tabTextStyle}
-        activeTabTextStyle={styles.activeTabTextStyle}
+        tabStyle={[
+          styles.tabStyle,
+          {
+            borderColor: theme.themeColor,
+            backgroundColor: theme.themeColor,
+          },
+        ]}
+        activeTabStyle={[
+          styles.activeTabStyle,
+          {
+            backgroundColor: theme.themeColor,
+            borderBottomColor: theme.primaryColor,
+          },
+        ]}
+        tabTextStyle={{
+          color: theme.blackSubTextColor,
+          ...Typography.fontBold,
+        }}
+        activeTabTextStyle={{color: theme.primaryTextColor}}
         borderRadius={0}
         values={['Contents', 'Transcript']}
         selectedIndex={selectedIndex}
@@ -38,21 +55,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: Colors.whiteColor,
     borderWidth: 1,
-    backgroundColor: Colors.whiteColor,
   },
   activeTabStyle: {
-    backgroundColor: Colors.whiteColor,
-    borderBottomColor: Colors.primaryColor,
     borderBottomWidth: 2,
-  },
-  tabTextStyle: {
-    color: Colors.blackWith05OpacityColor,
-    ...Typography.fontBold,
-  },
-  activeTabTextStyle: {
-    color: Colors.blackColor,
   },
 });
 

@@ -18,27 +18,44 @@ import {
 } from '../../styles';
 // import data from '../../ExampleData/course';
 import separator from '../../components/Separator';
-import {CourseDetailScreenName} from '../../config/ScreenName';
+import {
+  CourseDetailScreenName,
+  CourseDetailScreenStack,
+} from '../../config/ScreenName';
 import {FavoriteContext} from '../../Provider/Favorite';
+import {ThemeContext} from '../../Provider/Theme';
 const ListCourse = (props) => {
+  const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const {favorite} = useContext(FavoriteContext);
 
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenName);
+    navigation.navigate(CourseDetailScreenStack, {
+      screen: CourseDetailScreenName,
+      params: {id: item.id},
+    });
   };
   const Header = () => {
     return (
-      <View style={styles.container}>
-        <Text style={styles.textDownload}>Downloads</Text>
+      <View
+        style={[
+          styles.container,
+          {backgroundColor: theme.primaryBackgroundColor},
+        ]}>
+        <Text style={[styles.textDownload, {color: theme.primaryTextColor}]}>
+          Downloads
+        </Text>
         <TouchableOpacity>
-          <Text style={styles.textRemove}>Remove all</Text>
+          <Text style={[styles.textRemove, {color: theme.primaryColor}]}>
+            Remove all
+          </Text>
         </TouchableOpacity>
       </View>
     );
   };
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={[styles.safeAreaView, {backgroundColor: theme.backgroundColor}]}>
       <FlatList
         data={favorite}
         image
@@ -62,11 +79,13 @@ const ListCourse = (props) => {
   );
 };
 const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+  },
   container: {
     ...Styles.rowBetween,
     ...BoxModel.smallPaddingHorizontal,
     height: Distance.spacing_40,
-    backgroundColor: Colors.whiteColor,
   },
   textDownload: {
     ...Typography.fontBold,
@@ -75,7 +94,6 @@ const styles = StyleSheet.create({
   textRemove: {
     ...Typography.fontRegular,
     fontSize: Typography.fontSize16,
-    color: Colors.primaryColor,
   },
 });
 

@@ -14,8 +14,10 @@ import {
   findExistFavoriteCourse,
   findIndexFavoriteCourse,
 } from '../../../services/Favorite';
+import {ThemeContext} from '../../../Provider/Theme';
 const Header = (props) => {
   const {item, navigation, route} = props;
+  const {theme} = useContext(ThemeContext);
   const {favorite, setFavorite} = useContext(FavoriteContext);
   const [indexFavorite, setIndexFavorite] = useState();
 
@@ -50,7 +52,7 @@ const Header = (props) => {
     }
   };
   return (
-    <View>
+    <View style={{backgroundColor: theme.themeColor}}>
       <Title name={item.name} />
       <Author name={item.author} onPress={onPressAuthor} />
       <InfoCourse
@@ -65,7 +67,7 @@ const Header = (props) => {
         checkFavorite={indexFavorite}
         id={item.id}
       />
-      <View style={styles.divide} />
+      <View style={[styles.divide, {backgroundColor: theme.DialogColor}]} />
       <Description description={item.description} />
       <Relate />
       <LearningCheck />
@@ -75,5 +77,8 @@ const Header = (props) => {
 };
 const styles = StyleSheet.create({
   container: {},
+  divide: {
+    height: 1,
+  },
 });
 export default Header;

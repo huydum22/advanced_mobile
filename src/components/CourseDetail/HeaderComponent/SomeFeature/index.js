@@ -1,34 +1,52 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Colors, Typography} from '../../../../styles';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {ThemeContext} from '../../../../Provider/Theme';
 const Feature = (props) => {
   const {onPressFavorite, checkFavorite, id} = props;
+  const {theme} = useContext(ThemeContext);
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: theme.themeColor}]}>
       <View style={styles.mainContainer}>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Feather name="bookmark" size={22} />
+        <TouchableOpacity
+          style={[
+            styles.buttonContainer,
+            {backgroundColor: theme.backgroundSeeAllButton},
+          ]}>
+          <Feather name="bookmark" size={22} color={theme.primaryTextColor} />
         </TouchableOpacity>
-        <Text style={styles.textContainer}>Bookmark</Text>
-      </View>
-      <View style={styles.mainContainer}>
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Feather name="radio" size={22} />
-        </TouchableOpacity>
-        <Text style={styles.textContainer}>Add to channel</Text>
+        <Text style={[styles.textContainer, {color: theme.primaryTextColor}]}>
+          Bookmark
+        </Text>
       </View>
       <View style={styles.mainContainer}>
         <TouchableOpacity
-          style={styles.buttonContainer}
+          style={[
+            styles.buttonContainer,
+            {backgroundColor: theme.backgroundSeeAllButton},
+          ]}>
+          <Feather name="radio" size={22} color={theme.primaryTextColor} />
+        </TouchableOpacity>
+        <Text style={[styles.textContainer, {color: theme.primaryTextColor}]}>
+          Add to channel
+        </Text>
+      </View>
+      <View style={styles.mainContainer}>
+        <TouchableOpacity
+          style={[
+            styles.buttonContainer,
+            {backgroundColor: theme.backgroundSeeAllButton},
+          ]}
           onPress={() => onPressFavorite(id, checkFavorite)}>
           <MaterialIcons
             name={checkFavorite === -1 ? 'favorite-border' : 'favorite'}
             size={22}
+            color={theme.primaryTextColor}
           />
         </TouchableOpacity>
-        <Text style={styles.textContainer}>
+        <Text style={[styles.textContainer, {color: theme.primaryTextColor}]}>
           {checkFavorite === -1 ? 'Like' : 'Liked'}
         </Text>
       </View>
@@ -37,7 +55,6 @@ const Feature = (props) => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.whiteColor,
     flexDirection: 'row',
     height: 100,
   },
@@ -51,13 +68,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     height: 50,
     width: 50,
-    backgroundColor: Colors.backgroundSeeAllButton,
     justifyContent: 'center',
     borderRadius: 25,
     alignItems: 'center',
   },
   textContainer: {
-    color: Colors.blackColor,
     marginTop: 10,
     ...Typography.fontRegular,
   },

@@ -1,17 +1,25 @@
-import React from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
+import React, {useContext} from 'react';
+import {View, FlatList} from 'react-native';
 import {Colors, Size} from '../../../../styles';
 import data from '../../../../ExampleData/course';
 import Item from '../CourseItem';
 import separator from '../../../Separator';
-import {CourseDetailScreenName} from '../../../../config/ScreenName';
+import {
+  CourseDetailScreenName,
+  CourseDetailScreenStack,
+} from '../../../../config/ScreenName';
+import {ThemeContext} from '../../../../Provider/Theme';
 const ListCourse = (props) => {
   const {navigation, route} = props;
+  const {theme} = useContext(ThemeContext);
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenName);
+    navigation.navigate(CourseDetailScreenStack, {
+      screen: CourseDetailScreenName,
+      params: {id: item.id},
+    });
   };
   return (
-    <View style={styles.container}>
+    <View style={{backgroundColor: theme.backgroundColor}}>
       <FlatList
         data={data}
         image
@@ -28,9 +36,4 @@ const ListCourse = (props) => {
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.backgroundColor,
-  },
-});
 export default ListCourse;

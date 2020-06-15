@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {ListCourseVertical} from '../../components/Course';
 
 const ListOfCourse = (props) => {
@@ -8,9 +8,14 @@ const ListOfCourse = (props) => {
     title: navigation.getParam('title'),
   });
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <ListCourseVertical navigation={navigation} route={route} />
     </SafeAreaView>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 export default ListOfCourse;

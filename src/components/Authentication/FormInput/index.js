@@ -1,16 +1,21 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
-import {Colors, Size, Styles, BoxModel, Typography} from '../../../styles';
+import {Size, Styles, BoxModel, Typography} from '../../../styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
+import {ThemeContext} from '../../../Provider/Theme';
 const FormTextInput = (props) => {
+  const {theme} = useContext(ThemeContext);
   return (
     <View style={styles.container}>
-      <FontAwesome name={props.icon} color={Colors.primaryColor} size={20} />
+      <FontAwesome name={props.icon} color={theme.primaryColor} size={20} />
       <TextInput
-        selectionColor={Colors.primaryColor}
-        style={[styles.input, props.style]}
-        placeholderTextColor={Colors.grayMediumColor}
+        selectionColor={theme.primaryColor}
+        style={[
+          styles.input,
+          props.style,
+          {borderColor: theme.grayMediumColor, color: theme.primaryColor},
+        ]}
+        placeholderTextColor={theme.grayMediumColor}
         {...props}
       />
     </View>
@@ -24,9 +29,7 @@ const styles = StyleSheet.create({
     ...Typography.fontRegular,
     height: Size.scaleSize(40),
     fontSize: Typography.fontSize16,
-    borderColor: Colors.grayMediumColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    color: Colors.primaryColor,
   },
   container: {
     ...Styles.rowCenter,

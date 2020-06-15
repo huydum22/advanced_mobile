@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -9,21 +9,44 @@ import {
 } from 'react-native';
 import courseData from '../../ExampleData/course';
 import {CourseVerticalItem} from '../../components/Course';
-import {Styles, Colors, Typography} from '../../styles';
+import {Styles, Typography} from '../../styles';
 import {Header} from '../../components/PathDetail';
-import {CourseDetailScreenName} from '../../config/ScreenName';
+import {
+  CourseDetailScreenName,
+  CourseDetailScreenStack,
+} from '../../config/ScreenName';
+import {ThemeContext} from '../../Provider/Theme';
 const PathDetail = (props) => {
   const {navigation, route} = props;
+  const {theme} = useContext(ThemeContext);
   const onPressItem = (item) => {
-    navigation.push(CourseDetailScreenName);
+    navigation.navigate(CourseDetailScreenStack, {
+      screen: CourseDetailScreenName,
+      params: {id: item.id},
+    });
   };
   const flatListSeparator = () => {
-    return <View style={styles.separator} />;
+    return (
+      <View
+        style={[styles.separator, {backgroundColor: theme.backgroundColor}]}
+      />
+    );
   };
   const renderHeader = (title) => {
     return (
-      <View style={styles.headerContainer}>
-        <Text style={[Styles.titleRow, Typography.fontBold]}>{title}</Text>
+      <View
+        style={[
+          styles.headerContainer,
+          {backgroundColor: theme.backgroundSeeAllButton},
+        ]}>
+        <Text
+          style={[
+            Styles.titleRow,
+            Typography.fontBold,
+            {color: theme.primaryTextColor},
+          ]}>
+          {title}
+        </Text>
       </View>
     );
   };
@@ -31,13 +54,9 @@ const PathDetail = (props) => {
     return <CourseVerticalItem onPressItem={onPressItem} item={item} />;
   };
   return (
-    <SafeAreaView style={{backgroundColor: Colors.whiteColor}}>
-      <View style={styles.container}>
-        <StatusBar
-          translucent
-          backgroundColor={Colors.primaryColor}
-          {...props}
-        />
+    <SafeAreaView style={{backgroundColor: theme.primaryBackgroundColor}}>
+      <View style={{backgroundColor: theme.backgroundColor}}>
+        <StatusBar translucent barStyle="light-content" {...props} />
 
         <SectionList
           ItemSeparatorComponent={flatListSeparator}
@@ -66,19 +85,14 @@ const PathDetail = (props) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.backgroundColor,
-  },
   headerContainer: {
     height: 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: Colors.backgroundSeeAllButton,
   },
   separator: {
     height: 1,
-    backgroundColor: Colors.backgroundColor,
   },
   textHeader: {
     marginLeft: 10,

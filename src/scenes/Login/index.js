@@ -13,7 +13,7 @@ import {
   SubPrimaryButton,
   FormInput,
 } from '../../components/Authentication';
-import {Colors, BoxModel, Styles, Typography, Platform} from '../../styles';
+import {BoxModel, Styles, Typography, Platform} from '../../styles';
 import {
   RegisterScreenName,
   HomeScreenName,
@@ -21,11 +21,12 @@ import {
 } from '../../config/ScreenName';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {LoginProvider} from '../../services/Authentication';
+import {ThemeContext} from '../../Provider/Theme';
 // format debug consol
 
 const Login = (props) => {
   const {navigation} = props;
-
+  const {theme} = useContext(ThemeContext);
   const {authentication, setAuthentication} = useContext(AuthenticationContext);
   useEffect(() => {
     if (
@@ -62,12 +63,13 @@ const Login = (props) => {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, {backgroundColor: theme.primaryColor}]}
       behavior={Platform.Ios ? 'padding' : 'height'}>
       <View style={styles.logoContainer}>
         <Image source={logo} style={Styles.logoView} />
       </View>
-      <View style={styles.form}>
+      <View
+        style={[styles.form, {backgroundColor: theme.primaryBackgroundColor}]}>
         <FormInput
           placeholder="Email"
           value={email}
@@ -86,7 +88,9 @@ const Login = (props) => {
           icon="lock"
         />
         <TouchableOpacity>
-          <Text style={styles.txtForgotPass}>Forgot password?</Text>
+          <Text style={[styles.txtForgotPass, {color: theme.primaryColor}]}>
+            Forgot password?
+          </Text>
         </TouchableOpacity>
         <PrimaryButton title="Log In" onPress={handleLogin} />
         <SubPrimaryButton title="Register" onPress={handleRegisterPress} />
@@ -99,7 +103,6 @@ const styles = StyleSheet.create({
   container: {
     ...Styles.center,
     flex: 1,
-    backgroundColor: Colors.primaryColor,
   },
   logoContainer: {
     ...Styles.center,
@@ -111,13 +114,11 @@ const styles = StyleSheet.create({
     ...BoxModel.mediumPadding,
     ...Styles.mainStart,
     flex: 5,
-    backgroundColor: Colors.whiteColor,
   },
   txtForgotPass: {
     ...BoxModel.smallMarginVertical,
     ...Typography.fontRegular,
     fontSize: Typography.fontSize14,
-    color: Colors.primaryColor,
   },
 });
 export default Login;

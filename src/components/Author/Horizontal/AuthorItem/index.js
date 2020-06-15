@@ -1,20 +1,23 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, Text, Image, TouchableHighlight} from 'react-native';
-import {Colors, Styles, Typography} from '../../../../styles';
+import {Styles, Typography} from '../../../../styles';
+import {ThemeContext} from '../../../../Provider/Theme';
 const Author = (props) => {
   const {onPress, item} = props;
-
+  const {theme} = useContext(ThemeContext);
   return (
     <TouchableHighlight
       style={Styles.horizontalAuthor}
       onPress={() => {
         onPress(item);
       }}
-      underlayColor={Colors.backgroundColor}>
+      underlayColor={theme.backgroundColor}>
       <View style={Styles.horizontalAuthor}>
         <Image source={item.image} style={Styles.imageInHorizontalAuthor} />
         <View style={Styles.containerInHorizontalAuthor}>
-          <Text style={styles.text}>{item.name}</Text>
+          <Text style={[styles.text, {color: theme.primaryTextColor}]}>
+            {item.name}
+          </Text>
         </View>
       </View>
     </TouchableHighlight>
@@ -24,7 +27,6 @@ const styles = StyleSheet.create({
   text: {
     ...Typography.fontRegular,
     textAlign: 'center',
-    color: Colors.blackColor,
     fontSize: Typography.fontSize14,
   },
 });

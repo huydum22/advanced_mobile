@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {findCourseProvider} from '../../services/Courses';
 import {
   SafeAreaView,
@@ -19,7 +19,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import contentData from '../../ExampleData/contents';
 import {Size, Colors, Typography, Styles} from '../../styles';
 import Header from '../../components/CourseDetail/HeaderComponent';
+import {ThemeContext} from '../../Provider/Theme';
 const CourseDetail = (props) => {
+  const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const [item, setItem] = useState('');
   const getItem = async (id) => {
@@ -34,7 +36,14 @@ const CourseDetail = (props) => {
     getItem(route.params.id);
   });
   const flatListSeparator = () => {
-    return <View style={styles.separator} />;
+    return (
+      <View
+        style={[
+          styles.separator,
+          {backgroundColor: theme.backgroundSeeAllButton},
+        ]}
+      />
+    );
   };
   const onPressHeader = () => {
     // setExpand(!isExpand);
@@ -42,11 +51,18 @@ const CourseDetail = (props) => {
   const renderHeader = (title, index) => {
     return (
       <TouchableHighlight
-        style={styles.headerTouchable}
+        style={[
+          styles.headerTouchable,
+          {backgroundColor: theme.backgroundSeeAllButton},
+        ]}
         onPress={onPressHeader}
-        underlayColor={Colors.backgroundSeeAllButton}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.textHeader}>
+        underlayColor={theme.backgroundSeeAllButton}>
+        <View
+          style={[
+            styles.headerContainer,
+            {backgroundColor: theme.backgroundSeeAllButton},
+          ]}>
+          <Text style={[styles.textHeader, {color: theme.primaryTextColor}]}>
             {index}
             {title}
           </Text>
@@ -61,7 +77,7 @@ const CourseDetail = (props) => {
         <MaterialCommunityIcons
           name="check-circle"
           size={15}
-          color={Colors.successColor}
+          color={theme.successColor}
           style={styles.checkContainer}
         />
       );
@@ -70,8 +86,14 @@ const CourseDetail = (props) => {
 
   const renderListItem = (item) => {
     return (
-      <View style={styles.textContainer}>
-        <Text style={styles.textContent}>{item.subTitle}</Text>
+      <View
+        style={[
+          styles.textContainer,
+          {backgroundColor: theme.primaryBackgroundColor},
+        ]}>
+        <Text style={[styles.textContent, {color: theme.primaryTextColor}]}>
+          {item.subTitle}
+        </Text>
         {completeSessionCourse(item.isCheck)}
       </View>
     );
@@ -101,32 +123,46 @@ const CourseDetail = (props) => {
   };
   return (
     <SafeAreaView>
-      <View style={styles.container}>
-        <ImageBackground style={styles.videoContainer} source={item.image}>
-          <View style={styles.blurContainer}>
+      <View
+        style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
+        <ImageBackground
+          style={[
+            styles.videoContainer,
+            {backgroundColor: theme.backgroundColor},
+          ]}
+          source={item.image}>
+          <View
+            style={{
+              ...Styles.fillRowBetween,
+              backgroundColor: theme.blackWith05OpacityColor,
+            }}>
             <TouchableHighlight
               onPress={dismiss}
-              underlayColor={Colors.backgroundColor}>
+              underlayColor={theme.overlayColor}>
               <MaterialIcons
                 name="cancel"
                 size={30}
-                color={Colors.whiteWith07OpacityColor}
+                color={theme.whiteWith07OpacityColor}
                 style={styles.cancelButton}
               />
             </TouchableHighlight>
             <TouchableHighlight
               onPress={onShare}
-              underlayColor={Colors.backgroundColor}>
+              underlayColor={theme.overlayColor}>
               <Feather
                 name="share"
                 size={25}
-                color={Colors.whiteWith07OpacityColor}
+                color={theme.whiteWith07OpacityColor}
                 style={styles.shareButton}
               />
             </TouchableHighlight>
           </View>
         </ImageBackground>
-        <View style={styles.mainContainer}>
+        <View
+          style={[
+            styles.mainContainer,
+            {backgroundColor: theme.primaryBackgroundColor},
+          ]}>
           <SectionList
             ItemSeparatorComponent={flatListSeparator}
             sections={contentData}
@@ -150,45 +186,31 @@ const CourseDetail = (props) => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.backgroundColor,
     height: Size.HEIGHT,
   },
   videoContainer: {
     flex: 1,
-    backgroundColor: Colors.backgroundColor,
   },
-  blurContainer: {
-    ...Styles.fillRowBetween,
-    backgroundColor: Colors.blackWith05OpacityColor,
-  },
+
   mainContainer: {
     flex: 2,
     flexDirection: 'column',
-    backgroundColor: Colors.whiteColor,
     justifyContent: 'flex-start',
   },
-  divide: {
-    backgroundColor: Colors.backgroundGroupButton,
-    height: 1,
-    marginHorizontal: 20,
-  },
+
   footer: {height: 40},
   separator: {
     height: 1,
-    backgroundColor: Colors.backgroundSeeAllButton,
   },
   headerTouchable: {
     height: 50,
-    backgroundColor: Colors.backgroundSeeAllButton,
   },
   headerContainer: {
     height: 50,
     ...Styles.rowBetween,
     marginHorizontal: 20,
-    backgroundColor: Colors.backgroundSeeAllButton,
   },
   textHeader: {
-    color: Colors.blackColor,
     fontSize: Typography.fontSize14,
     ...Typography.fontBold,
   },
@@ -203,7 +225,6 @@ const styles = StyleSheet.create({
     ...Typography.fontRegular,
   },
   textContainer: {
-    backgroundColor: Colors.whiteColor,
     height: 35,
     ...Styles.rowBetween,
   },

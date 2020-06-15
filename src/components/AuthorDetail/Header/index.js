@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import avatar from '../../../assets/image/person.png';
 import {
@@ -10,27 +10,36 @@ import {
   Colors,
 } from '../../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ThemeContext} from '../../../Provider/Theme';
 const Header = (props) => {
+  const {theme} = useContext(ThemeContext);
   const {name} = props;
   return (
     <View style={styles.container}>
       <Image source={avatar} style={styles.image} />
       <View>
-        <Text style={styles.textName}>{name}</Text>
+        <Text style={[styles.textName, {color: theme.primaryTextColor}]}>
+          {name}
+        </Text>
       </View>
       <View>
-        <Text style={styles.textJob}>Software Engineer</Text>
+        <Text style={[styles.textJob, {color: theme.grayColor}]}>
+          Software Engineer
+        </Text>
       </View>
-      <TouchableOpacity style={styles.buttonFollow}>
-        <Text style={styles.textFollow}>Follow</Text>
+      <TouchableOpacity
+        style={[styles.buttonFollow, {backgroundColor: theme.primaryColor}]}>
+        <Text style={[styles.textFollow, {color: theme.primaryTextColor}]}>
+          Follow
+        </Text>
       </TouchableOpacity>
       <View>
-        <Text style={styles.textJob}>
+        <Text style={[styles.textJob, {color: theme.grayColor}]}>
           Follow to be notified when new courses are published.
         </Text>
       </View>
       <View>
-        <Text style={styles.descriptionText}>
+        <Text style={[styles.descriptionText, {color: theme.primaryTextColor}]}>
           Joe began his love of programming on an Apple III in BASIC. Although
           his preferred language is JavaScript, he has worked professionally
           with just about every major Microsoft language. He is currently a
@@ -43,16 +52,27 @@ const Header = (props) => {
         </Text>
       </View>
       <View style={styles.link}>
-        <MaterialCommunityIcons name="link" size={20} />
-        <Text style={styles.linkText}>https://reactnative.dev</Text>
+        <MaterialCommunityIcons
+          name="link"
+          size={20}
+          color={theme.primaryTextColor}
+        />
+        <Text style={[styles.linkText, {color: theme.primaryTextColor}]}>
+          https://reactnative.dev
+        </Text>
       </View>
       <View style={styles.link}>
         <MaterialCommunityIcons
           name="github-circle"
           size={20}
           style={styles.linkGit}
+          color={theme.primaryTextColor}
         />
-        <MaterialCommunityIcons name="facebook-box" size={20} />
+        <MaterialCommunityIcons
+          name="facebook-box"
+          size={20}
+          color={theme.primaryTextColor}
+        />
       </View>
     </View>
   );
@@ -76,26 +96,22 @@ const styles = StyleSheet.create({
     ...Typography.fontRegular,
     fontSize: Typography.fontSize14,
     marginTop: Distance.spacing_8,
-    color: Colors.grayDarkColor,
   },
   buttonFollow: {
     ...BoxModel.largePaddingHorizontal,
     ...BoxModel.tinyPaddingVertical,
     ...BoxModel.tinyBorderRadius,
     marginTop: Distance.spacing_12,
-    backgroundColor: Colors.primaryColor,
   },
   textFollow: {
     ...Typography.fontRegular,
     fontSize: Typography.fontSize16,
-    color: Colors.whiteColor,
   },
   descriptionText: {
     ...BoxModel.smallPaddingHorizontal,
     ...BoxModel.marginVertical,
     ...Typography.fontRegular,
     fontSize: Typography.fontSize14,
-    color: Colors.blackColor,
   },
   link: {
     ...Styles.fillRowStart,
