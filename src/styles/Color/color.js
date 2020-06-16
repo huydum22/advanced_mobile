@@ -30,5 +30,5 @@ export const grayLightColor = '#e6e6e6';
 export const grayMediumColor = '#cacaca';
 export const grayDarkColor = '#8a8a8a';
 export const grayColor = '#8a8a8a';
-export const googleBackground = '#D07760';
+export const googleBackground = '#DB4437';
 export const facebookBackground = '#3b5998';

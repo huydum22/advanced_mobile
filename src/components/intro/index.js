@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: Size.WIDTH - Size.scaleSize(30),
-    height: Size.scaleSize(350),
+    height: Size.HEIGHT - Size.scaleSize(450),
   },
 });
 export default Intro;

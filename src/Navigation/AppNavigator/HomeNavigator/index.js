@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {TouchableHighlight, alert} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as scenes from '../../../scenes';
 import * as screenName from '../../../config/ScreenName';
 import {Colors, Typography, Distance} from '../../../styles';
@@ -34,10 +35,24 @@ const HomeNavigatorStack = () => {
               onPress={() => {
                 navigation.navigate(screenName.ProfileScreenName);
               }}
-              underlayColor={theme.primaryColor}
+              underlayColor={theme.overlayColor}
               style={{marginRight: Distance.spacing_14}}>
               <FontAwesome
                 name="user"
+                size={25}
+                color={theme.primaryTextColor}
+              />
+            </TouchableHighlight>
+          ),
+          headerLeft: () => (
+            <TouchableHighlight
+              onPress={() => {
+                navigation.navigate(screenName.OtherSettingScreenName);
+              }}
+              underlayColor={theme.overlayColor}
+              style={{marginLeft: Distance.spacing_14}}>
+              <MaterialCommunityIcons
+                name="settings"
                 size={25}
                 color={theme.primaryTextColor}
               />
@@ -67,6 +82,11 @@ const HomeNavigatorStack = () => {
         name={screenName.ThemeScreenName}
         component={scenes.Theme}
         options={{title: 'Theme'}}
+      />
+      <HomeStack.Screen
+        name={screenName.OtherSettingScreenName}
+        component={scenes.OtherSetting}
+        options={{title: 'Other Settings'}}
       />
     </HomeStack.Navigator>
   );

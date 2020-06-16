@@ -1,5 +1,11 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {View, SafeAreaView, StyleSheet, Text, Alert} from 'react-native';
+import {
+  View,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  Alert,
+} from 'react-native';
 import {
   Styles,
   Size,
@@ -7,6 +13,7 @@ import {
   Colors,
   Distance,
   Typography,
+  Platform,
 } from '../../styles';
 import * as screenName from '../../config/ScreenName';
 import {CheckBox} from 'react-native-elements';
@@ -19,7 +26,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const Login = (props) => {
   const {navigation} = props;
   const [showPass, setShowPass] = useState(false);
-
+  const [activeBtn, setActiveBtn] = useState(false);
   const {authentication, setAuthentication} = useContext(AuthenticationContext);
   useEffect(() => {
     if (
@@ -30,6 +37,14 @@ const Login = (props) => {
       navigation.replace(screenName.AppTab, {
         screen: screenName.HomeScreenName,
       });
+    }
+  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (email !== '' && password !== '') {
+      setActiveBtn(true);
+    } else {
+      setActiveBtn(false);
     }
   });
 
@@ -63,7 +78,9 @@ const Login = (props) => {
     setShowPass(!showPass);
   };
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.Ios ? 'padding' : 'height'}>
       <TouchableHighlight
         style={[
           styles.socialSignInContainer,
@@ -112,13 +129,13 @@ const Login = (props) => {
         textStyle={{...Typography.fontRegular}}
         onPress={onPressShowPass}
       />
-      <PrimaryButton title="Sign In" onPress={handleLogin} />
+      <PrimaryButton title="Sign In" onPress={handleLogin} active={activeBtn} />
       <TouchableHighlight style={styles.forgotPassContainer}>
         <Text style={[styles.textForgotPass, {color: Colors.grayColor}]}>
           Forgot your Password?
         </Text>
       </TouchableHighlight>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({
@@ -134,7 +151,7 @@ const styles = StyleSheet.create({
   },
   textSocialSignIn: {
     ...Typography.fontBold,
-    fontSize: Typography.fontSize18,
+    fontSize: Typography.fontSize16,
     marginLeft: Distance.spacing_10,
   },
   forgotPassContainer: {
@@ -142,7 +159,7 @@ const styles = StyleSheet.create({
   },
   textForgotPass: {
     ...Typography.fontRegular,
-    fontSize: Typography.fontSize18,
+    fontSize: Typography.fontSize16,
     textAlign: 'center',
   },
 });

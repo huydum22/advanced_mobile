@@ -23,7 +23,6 @@ const Introduce = (props) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={[styles.headerTitle, {color: Colors.primaryColor}]}>
-          {' '}
           Online Course
         </Text>
       </View>

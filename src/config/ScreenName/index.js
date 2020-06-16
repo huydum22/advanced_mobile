@@ -21,6 +21,8 @@ export const PathDetailScreenName = 'pathDetail';
 export const AuthorDetailScreenName = 'authorDetail';
 export const SubscriptionScreenName = 'subscription';
 export const ThemeScreenName = 'theme';
+export const OtherSettingScreenName = 'otherSetting';
+
 export const LocationScreenName = 'yourLocation';
 export const ShowListPathScreenName = 'listPath';
 export const PopularSkillScreenName = 'popularSkill';

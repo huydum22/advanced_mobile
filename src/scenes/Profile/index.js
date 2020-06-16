@@ -15,11 +15,11 @@ import {
   SubscriptionScreenName,
   AuthenticateTab,
   LoginScreenName,
-  ThemeScreenName,
+  OtherSettingScreenName,
 } from '../../config/ScreenName';
+import {Avatar} from 'react-native-elements';
 import {Item} from '../../components/AccountManagement';
 import {AuthenticationContext} from '../../Provider/Authentication';
-import {LogoutProvider} from '../../services/Authentication';
 import {ThemeContext} from '../../Provider/Theme';
 const Account = (props) => {
   const {theme} = useContext(ThemeContext);
@@ -43,45 +43,38 @@ const Account = (props) => {
   const onPressLocation = () => {
     // navigation.navigate(LocationScreenName);
   };
-  const onPressTheme = () => {
-    navigation.navigate(ThemeScreenName);
+  const onPressOtherSetting = () => {
+    navigation.navigate(OtherSettingScreenName);
   };
 
-  const {authentication, setAuthentication} = useContext(AuthenticationContext);
+  const {authentication} = useContext(AuthenticationContext);
   return (
     <SafeAreaView>
       <ScrollView
         style={{backgroundColor: theme.backgroundColor}}
         showsVerticalScrollIndicator={false}>
         <View style={styles.mainContainer}>
-          <View
-            style={[
-              styles.userContainer,
-              {backgroundColor: theme.primaryBackgroundColor},
-            ]}>
-            <View
-              style={[
-                styles.avatarContainer,
-                {backgroundColor: theme.primaryColor},
-              ]}>
-              <MaterialIcons name="person" size={26} color="#fff" />
-            </View>
-            <View style={styles.textContainer}>
-              <Text style={[styles.nameText, {color: theme.primaryTextColor}]}>
-                {authentication.user ? authentication.user.name : ''}
-              </Text>
-              <Text style={[styles.emailText, {color: theme.primaryTextColor}]}>
-                {authentication.user ? authentication.user.email : ''}
-              </Text>
-            </View>
-            <FontAwesome
-              name="angle-right"
-              size={26}
-              color={theme.primaryTextColor}
+          <View style={styles.imageContainer}>
+            <Avatar
+              size="xlarge"
+              rounded
+              title={authentication.user.email.slice(0, 2)}
+              containerStyle={{backgroundColor: theme.primaryColor}}
+              // onPress={() => console.log('Works!')}
             />
+            <Text style={[styles.headerText, {color: theme.primaryTextColor}]}>
+              {authentication.user ? authentication.user.name : ''}
+            </Text>
+            <Text style={[styles.headerSubText, {color: theme.grayColor}]}>
+              {authentication.user ? authentication.user.email : ''}
+            </Text>
           </View>
+
+          <Text
+            style={[styles.headerTitleText, {color: theme.primaryTextColor}]}>
+            Account Settings
+          </Text>
           <View style={styles.divider} />
-          <Item icon="theme-light-dark" name="Theme" onPress={onPressTheme} />
           <Item
             icon="comment-account-outline"
             name="Communication Preferences"
@@ -96,22 +89,12 @@ const Account = (props) => {
             name="Your location"
             onPress={onPressLocation}
           />
-          <View style={styles.divider} />
-          <Item icon="cloud-download" name="Download options" />
-          <Item icon="view-stream" name="Streaming options" />
-          <Item icon="video" name="Video playback options" />
-          <View style={styles.divider} />
-          <Item icon="send" name="Send feedback" />
-          <Item icon="contact-mail" name="Contact support" />
-          <Item icon="apps" name="App version" />
-          <Item icon="tooltip-plus-outline" name="About us" />
-          <View style={styles.divider} />
           <Item
-            name="Log out"
-            onPress={() => {
-              setAuthentication(LogoutProvider());
-            }}
+            icon="settings"
+            name="Other Settings"
+            onPress={onPressOtherSetting}
           />
+          <View style={styles.divider} />
         </View>
         <View
           style={[styles.footer, {backgroundColor: theme.backgroundColor}]}
@@ -151,6 +134,22 @@ const styles = StyleSheet.create({
   },
   footer: {
     height: Size.scaleSize(50),
+  },
+  imageContainer: {...Styles.center, ...BoxModel.smallMarginVertical},
+  headerText: {
+    ...Typography.fontBold,
+    ...BoxModel.marginVertical,
+    fontSize: Typography.fontSize25,
+  },
+  headerSubText: {
+    ...Typography.fontRegular,
+    fontSize: Typography.fontSize20,
+  },
+  headerTitleText: {
+    ...Typography.fontBold,
+    ...BoxModel.marginHorizontal,
+    fontSize: Typography.fontSize18,
+    marginTop: Distance.spacing_10,
   },
 });
 export default Account;

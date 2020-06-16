@@ -16,6 +16,7 @@ import Subscription from './Subscription';
 import Theme from './Theme';
 import SearchResult from './SearchResult';
 import Introduce from './IntroduceView';
+import OtherSetting from './OtherSetting';
 export {
   AuthorDetail,
   Browse,
@@ -35,4 +36,5 @@ export {
   Theme,
   SearchResult,
   Introduce,
+  OtherSetting,
 };
