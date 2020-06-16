@@ -1,33 +1,25 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
+import {View, SafeAreaView, StyleSheet, Text, Alert} from 'react-native';
 import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
-import logo from '../../assets/image/logo_.png';
-import {
-  PrimaryButton,
-  SubPrimaryButton,
-  FormInput,
-} from '../../components/Authentication';
-import {BoxModel, Styles, Typography, Platform, Colors} from '../../styles';
-import {
-  RegisterScreenName,
-  HomeScreenName,
-  AppTab,
-} from '../../config/ScreenName';
-import {AuthenticationContext} from '../../Provider/Authentication';
-import {LoginProvider} from '../../services/Authentication';
-import {ThemeContext} from '../../Provider/Theme';
-// format debug consol
+  Styles,
+  Size,
+  BoxModel,
+  Colors,
+  Distance,
+  Typography,
+} from '../../styles';
+import * as screenName from '../../config/ScreenName';
+import {CheckBox} from 'react-native-elements';
 
+import {TouchableHighlight} from 'react-native-gesture-handler';
+import {FormInput, PrimaryButton} from '../../components/Authentication';
+import {LoginProvider} from '../../services/Authentication';
+import {AuthenticationContext} from '../../Provider/Authentication';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const Login = (props) => {
   const {navigation} = props;
-  const {theme} = useContext(ThemeContext);
+  const [showPass, setShowPass] = useState(false);
+
   const {authentication, setAuthentication} = useContext(AuthenticationContext);
   useEffect(() => {
     if (
@@ -35,12 +27,14 @@ const Login = (props) => {
       authentication.status === 200 &&
       authentication.isLogin
     ) {
-      navigation.replace(AppTab, {screen: HomeScreenName});
+      navigation.replace(screenName.AppTab, {
+        screen: screenName.HomeScreenName,
+      });
     }
   });
 
   const handleRegisterPress = () => {
-    return navigation.navigate(RegisterScreenName);
+    return navigation.navigate(screenName.RegisterScreenName);
   };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -65,65 +59,91 @@ const Login = (props) => {
       console.log(err);
     }
   };
-
+  const onPressShowPass = () => {
+    setShowPass(!showPass);
+  };
   return (
-    <KeyboardAvoidingView
-      style={[styles.container, {backgroundColor: Colors.primaryColor}]}
-      behavior={Platform.Ios ? 'padding' : 'height'}>
-      <View style={styles.logoContainer}>
-        <Image source={logo} style={Styles.logoView} />
-      </View>
-      <View
-        style={[styles.form, {backgroundColor: Colors.primaryBackgroundColor}]}>
-        <FormInput
-          placeholder="Email"
-          value={email}
-          onChangeText={onChangeEmail}
-          keyboardType="email-address"
-          autoCorrect={false}
-          returnKeyType={'next'}
-          icon="user"
-        />
-        <FormInput
-          placeholder="Password"
-          secureTextEntry={true}
-          value={password}
-          onChangeText={onChangePassword}
-          returnKeyType={'done'}
-          icon="lock"
-        />
-        <TouchableOpacity>
-          <Text style={[styles.txtForgotPass, {color: Colors.primaryColor}]}>
-            Forgot password?
+    <SafeAreaView style={styles.container}>
+      <TouchableHighlight
+        style={[
+          styles.socialSignInContainer,
+          {backgroundColor: Colors.googleBackground},
+        ]}>
+        <View style={Styles.rowCenter}>
+          <Ionicons name="logo-google" size={35} color={Colors.whiteColor} />
+          <Text style={[styles.textSocialSignIn, {color: Colors.whiteColor}]}>
+            sign in with Google
           </Text>
-        </TouchableOpacity>
-        <PrimaryButton title="Log In" onPress={handleLogin} />
-        <SubPrimaryButton title="Register" onPress={handleRegisterPress} />
-      </View>
-    </KeyboardAvoidingView>
+        </View>
+      </TouchableHighlight>
+      <TouchableHighlight
+        style={[
+          styles.socialSignInContainer,
+          {backgroundColor: Colors.facebookBackground},
+        ]}>
+        <View style={Styles.rowCenter}>
+          <Ionicons name="logo-facebook" size={35} color={Colors.whiteColor} />
+          <Text style={[styles.textSocialSignIn, {color: Colors.whiteColor}]}>
+            sign in with Facebook
+          </Text>
+        </View>
+      </TouchableHighlight>
+      <FormInput
+        placeholder="Login Email Address"
+        value={email}
+        onChangeText={onChangeEmail}
+        keyboardType="email-address"
+        autoCorrect={false}
+        returnKeyType={'next'}
+      />
+      <FormInput
+        placeholder="Login Password"
+        value={password}
+        onChangeText={onChangePassword}
+        autoCorrect={false}
+        secureTextEntry={!showPass}
+        returnKeyType={'done'}
+      />
+      <CheckBox
+        title="Show Password"
+        checked={showPass}
+        // eslint-disable-next-line react-native/no-inline-styles
+        containerStyle={{backgroundColor: Colors.overlayColor, borderWidth: 0}}
+        textStyle={{...Typography.fontRegular}}
+        onPress={onPressShowPass}
+      />
+      <PrimaryButton title="Sign In" onPress={handleLogin} />
+      <TouchableHighlight style={styles.forgotPassContainer}>
+        <Text style={[styles.textForgotPass, {color: Colors.grayColor}]}>
+          Forgot your Password?
+        </Text>
+      </TouchableHighlight>
+    </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
-    ...Styles.center,
     flex: 1,
+    backgroundColor: 'white',
   },
-  logoContainer: {
+  socialSignInContainer: {
     ...Styles.center,
-    flex: 4,
+    ...BoxModel.smallBorderRadius,
+    ...BoxModel.margin,
+    height: Size.scaleSize(45),
   },
-  form: {
-    ...BoxModel.mediumBorderTopLeft,
-    ...Styles.width100,
-    ...BoxModel.mediumPadding,
-    ...Styles.mainStart,
-    flex: 5,
+  textSocialSignIn: {
+    ...Typography.fontBold,
+    fontSize: Typography.fontSize18,
+    marginLeft: Distance.spacing_10,
   },
-  txtForgotPass: {
+  forgotPassContainer: {
     ...BoxModel.smallMarginVertical,
+  },
+  textForgotPass: {
     ...Typography.fontRegular,
-    fontSize: Typography.fontSize14,
+    fontSize: Typography.fontSize18,
+    textAlign: 'center',
   },
 });
 export default Login;

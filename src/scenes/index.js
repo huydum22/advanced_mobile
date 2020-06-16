@@ -15,6 +15,7 @@ import Search from './Search';
 import Subscription from './Subscription';
 import Theme from './Theme';
 import SearchResult from './SearchResult';
+import Introduce from './IntroduceView';
 export {
   AuthorDetail,
   Browse,
@@ -33,4 +34,5 @@ export {
   Subscription,
   Theme,
   SearchResult,
+  Introduce,
 };

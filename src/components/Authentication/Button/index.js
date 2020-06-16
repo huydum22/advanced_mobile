@@ -12,14 +12,14 @@ const Button = (props) => {
       onPress={() => {
         props.onPress();
       }}>
-      <LinearGradient
+      {/* <LinearGradient
         colors={[Colors.primaryColor, Colors.subPrimaryColor]}
-        style={styles.container}>
-        <Text style={[styles.text, {color: Colors.primaryBackgroundColor}]}>
-          {' '}
-          {props.title}
-        </Text>
-      </LinearGradient>
+        style={styles.container}> */}
+      <Text style={[styles.text, {color: Colors.primaryBackgroundColor}]}>
+        {/* {' '} */}
+        {props.title}
+      </Text>
+      {/* </LinearGradient> */}
     </TouchableHighlight>
   );
 };
@@ -27,15 +27,16 @@ const Button = (props) => {
 const styles = StyleSheet.create({
   container: {
     ...Styles.center,
-    ...Styles.width100,
-    ...BoxModel.marginVertical,
     ...BoxModel.smallBorderRadius,
-    height: Size.scaleSize(40),
+    ...BoxModel.marginHorizontal,
+    ...BoxModel.smallMarginVertical,
+    height: Size.scaleSize(45),
+    backgroundColor: Colors.primaryColor,
   },
   text: {
     ...Styles.crossCenter,
     ...Typography.fontBold,
-    fontSize: Typography.fontSize16,
+    fontSize: Typography.fontSize18,
   },
 });
 export default Button;

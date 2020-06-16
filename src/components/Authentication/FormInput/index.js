@@ -1,20 +1,14 @@
 import React, {useContext} from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 import {Size, Styles, BoxModel, Typography, Colors} from '../../../styles';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {ThemeContext} from '../../../Provider/Theme';
 const FormTextInput = (props) => {
   const {theme} = useContext(ThemeContext);
   return (
     <View style={styles.container}>
-      <FontAwesome name={props.icon} color={Colors.primaryColor} size={20} />
       <TextInput
         selectionColor={Colors.primaryColor}
-        style={[
-          styles.input,
-          props.style,
-          {borderColor: Colors.grayMediumColor, color: Colors.primaryColor},
-        ]}
+        style={[styles.input, props.style]}
         placeholderTextColor={Colors.grayMediumColor}
         {...props}
       />
@@ -29,12 +23,13 @@ const styles = StyleSheet.create({
     ...Typography.fontRegular,
     height: Size.scaleSize(40),
     fontSize: Typography.fontSize16,
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   container: {
-    ...Styles.rowCenter,
-    ...BoxModel.paddingHorizontal,
+    ...BoxModel.smallBorderRadius,
+    ...BoxModel.marginHorizontal,
     ...BoxModel.smallMarginVertical,
+    height: Size.scaleSize(45),
+    backgroundColor: Colors.backgroundColor,
   },
 });
 export default FormTextInput;
