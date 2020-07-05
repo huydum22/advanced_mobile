@@ -77,6 +77,10 @@ const Login = (props) => {
   const onPressShowPass = () => {
     setShowPass(!showPass);
   };
+
+  const onPressForgotPassWord = () => {
+    navigation.navigate(screenName.ForgotPasswordScreenName);
+  };
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -106,7 +110,7 @@ const Login = (props) => {
         </View>
       </TouchableHighlight>
       <FormInput
-        placeholder="Login Email Address"
+        placeholder=" Email Address"
         value={email}
         onChangeText={onChangeEmail}
         keyboardType="email-address"
@@ -114,7 +118,7 @@ const Login = (props) => {
         returnKeyType={'next'}
       />
       <FormInput
-        placeholder="Login Password"
+        placeholder=" Password"
         value={password}
         onChangeText={onChangePassword}
         autoCorrect={false}
@@ -130,7 +134,10 @@ const Login = (props) => {
         onPress={onPressShowPass}
       />
       <PrimaryButton title="Sign In" onPress={handleLogin} active={activeBtn} />
-      <TouchableHighlight style={styles.forgotPassContainer}>
+      <TouchableHighlight
+        style={styles.forgotPassContainer}
+        onPress={onPressForgotPassWord}
+        underlayColor={Colors.overlayColor}>
         <Text style={[styles.textForgotPass, {color: Colors.grayColor}]}>
           Forgot your Password?
         </Text>

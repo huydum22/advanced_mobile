@@ -11,6 +11,7 @@ import {
   Distance,
   Typography,
 } from '../../styles';
+import {color} from 'react-native-reanimated';
 const Introduce = (props) => {
   const {navigation, route} = props;
   const onPressSignIn = () => {
@@ -18,6 +19,9 @@ const Introduce = (props) => {
   };
   const onPressSignUp = () => {
     navigation.navigate(screenName.RegisterScreenName);
+  };
+  const onPressForgotPassWord = () => {
+    navigation.navigate(screenName.ForgotPasswordScreenName);
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -56,6 +60,14 @@ const Introduce = (props) => {
           </Text>
         </TouchableHighlight>
       </View>
+      <TouchableHighlight
+        style={styles.forgotPassContainer}
+        onPress={onPressForgotPassWord}
+        underlayColor={Colors.overlayColor}>
+        <Text style={[styles.textForgotPass, {color: Colors.grayColor}]}>
+          Forgot your Password?
+        </Text>
+      </TouchableHighlight>
     </SafeAreaView>
   );
 };
@@ -96,6 +108,14 @@ const styles = StyleSheet.create({
   headerTitle: {
     ...Typography.fontBold,
     fontSize: Size.scaleFont(50),
+  },
+  forgotPassContainer: {
+    ...BoxModel.smallMarginVertical,
+  },
+  textForgotPass: {
+    ...Typography.fontRegular,
+    fontSize: Typography.fontSize16,
+    textAlign: 'center',
   },
 });
 export default Introduce;

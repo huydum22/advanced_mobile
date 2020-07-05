@@ -4,11 +4,12 @@ import {
   LoginScreenName,
   RegisterScreenName,
   IntroScreenName,
+  ForgotPasswordScreenName,
 } from '../../config/ScreenName';
-import Login from '../../scenes/Login';
-import Register from '../../scenes/Register';
-import Introduce from '../../scenes/IntroduceView';
+
+import {Login, Register, Introduce, ForgotPassword} from '../../scenes';
 import {Typography, Colors} from '../../styles';
+import forgotPassword from '../../scenes/ForgotPassword';
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => (
@@ -33,6 +34,14 @@ const AuthNavigator = () => (
       name={RegisterScreenName}
       component={Register}
       options={{title: 'Sign up', headerTitleStyle: {...Typography.fontBold}}}
+    />
+    <Stack.Screen
+      name={ForgotPasswordScreenName}
+      component={ForgotPassword}
+      options={{
+        title: 'Forgot your Password ',
+        headerTitleStyle: {...Typography.fontBold},
+      }}
     />
   </Stack.Navigator>
 );

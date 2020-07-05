@@ -17,6 +17,7 @@ import Theme from './Theme';
 import SearchResult from './SearchResult';
 import Introduce from './IntroduceView';
 import OtherSetting from './OtherSetting';
+import ForgotPassword from './ForgotPassword';
 export {
   AuthorDetail,
   Browse,
@@ -37,4 +38,5 @@ export {
   SearchResult,
   Introduce,
   OtherSetting,
+  ForgotPassword,
 };

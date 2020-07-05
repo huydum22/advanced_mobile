@@ -25,6 +25,7 @@ const SignUp = (props) => {
   const {navigation} = props;
   const [showPass, setShowPass] = useState(false);
   const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [activeBtn, setActiveBtn] = useState(false);
@@ -34,6 +35,9 @@ const SignUp = (props) => {
   };
   const onChangeName = (txtName) => {
     setName(txtName);
+  };
+  const onChangePhoneNumber = (txtPhone) => {
+    setPhoneNumber(txtPhone);
   };
   const onChangePassword = (pass) => {
     setPassword(pass);
@@ -85,6 +89,13 @@ const SignUp = (props) => {
         placeholder="Your Name"
         value={name}
         onChangeText={onChangeName}
+        autoCorrect={false}
+        returnKeyType={'next'}
+      />
+      <FormInput
+        placeholder="Your Phone Number"
+        value={phoneNumber}
+        onChangeText={onChangePhoneNumber}
         autoCorrect={false}
         returnKeyType={'next'}
       />

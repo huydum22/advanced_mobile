@@ -3,6 +3,7 @@ export const AppTab = 'appTab';
 export const LoginScreenName = 'login';
 export const RegisterScreenName = 'register';
 export const IntroScreenName = 'intro';
+export const ForgotPasswordScreenName = 'forgotPass';
 
 export const HomeScreenName = 'home';
 export const BrowseScreenName = 'browse';
