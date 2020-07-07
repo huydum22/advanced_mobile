@@ -19,7 +19,7 @@ import {FormInput, PrimaryButton} from '../../components/Authentication';
 import {CheckBox} from 'react-native-elements';
 import {LoginProvider} from '../../services/Authentication';
 import {AuthenticationContext} from '../../Provider/Authentication';
-import * as screenName from '../../config/ScreenName';
+import * as screenName from '../../Constants/ScreenName';
 import userImage from '../../assets/image/user.jpg';
 const SignUp = (props) => {
   const {navigation} = props;

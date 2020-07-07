@@ -5,7 +5,7 @@ import {RecentSearchContext} from '../../Provider/RecentSearch';
 import {Styles, Typography, BoxModel} from '../../styles';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {SearchResultScreenName} from '../../config/ScreenName';
+import {SearchResultScreenName} from '../../Constants/ScreenName';
 
 const Search = (props) => {
   const {navigation, route} = props;

@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, FlatList, ScrollView} from 'react-native';
 import Item from '../RelateSkillItem';
 import {Distance, Size} from '../../../styles';
-import {RelateSkillScreenName} from '../../../config/ScreenName';
+import {RelateSkillScreenName} from '../../../Constants/ScreenName';
 const RelateSkill = (props) => {
   const {navigation, route, data} = props;
   const onPress = () => {

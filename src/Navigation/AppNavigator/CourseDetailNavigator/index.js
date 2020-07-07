@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import * as scenes from '../../../scenes';
-import * as screenName from '../../../config/ScreenName';
+import * as screenName from '../../../Constants/ScreenName';
 import {Typography} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 const CourseDetailStack = createStackNavigator();

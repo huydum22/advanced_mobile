@@ -5,7 +5,7 @@ import {
   RegisterScreenName,
   IntroScreenName,
   ForgotPasswordScreenName,
-} from '../../config/ScreenName';
+} from '../../Constants/ScreenName';
 
 import {Login, Register, Introduce, ForgotPassword} from '../../scenes';
 import {Typography, Colors} from '../../styles';

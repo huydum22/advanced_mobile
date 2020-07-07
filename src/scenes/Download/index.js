@@ -21,7 +21,7 @@ import separator from '../../components/Separator';
 import {
   CourseDetailScreenName,
   CourseDetailScreenStack,
-} from '../../config/ScreenName';
+} from '../../Constants/ScreenName';
 import {FavoriteContext} from '../../Provider/Favorite';
 import {ThemeContext} from '../../Provider/Theme';
 const ListCourse = (props) => {

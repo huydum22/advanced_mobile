@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {Styles, Typography, BoxModel, Distance, Size} from '../../../../styles';
 import Item from '../AuthorItem';
-import {AuthorDetailScreenName} from '../../../../config/ScreenName';
+import {AuthorDetailScreenName} from '../../../../Constants/ScreenName';
 
 const TopAuthor = (props) => {
   const {navigation, route, data} = props;

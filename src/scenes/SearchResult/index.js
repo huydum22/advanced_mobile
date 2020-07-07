@@ -5,7 +5,7 @@ import {
   SearchCourseScreenName,
   SearchAuthorScreenName,
   SearchPathScreenName,
-} from '../../config/ScreenName';
+} from '../../Constants/ScreenName';
 
 import SearchAll from '../../components/Search';
 import {ListCourseVertical} from '../../components/Course';

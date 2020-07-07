@@ -27,7 +27,7 @@ import {
   ShowListCourseScreenName,
   CourseDetailScreenName,
   CourseDetailScreenStack,
-} from '../../config/ScreenName';
+} from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 import {BookmarkContext} from '../../Provider/Bookmark';
 import {MyChannelContext} from '../../Provider/MyChannel';

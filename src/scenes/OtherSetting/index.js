@@ -5,7 +5,7 @@ import {AuthenticationContext} from '../../Provider/Authentication';
 import {Item} from '../../components/AccountManagement';
 import {Styles} from '../../styles';
 import {LogoutProvider} from '../../services/Authentication';
-import * as screenName from '../../config/ScreenName';
+import * as screenName from '../../Constants/ScreenName';
 const OtherSetting = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);

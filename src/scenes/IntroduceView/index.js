@@ -1,7 +1,7 @@
 import React from 'react';
 import {SafeAreaView, View, Text, StyleSheet} from 'react-native';
 import Intro from '../../components/intro';
-import * as screenName from '../../config/ScreenName';
+import * as screenName from '../../Constants/ScreenName';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {
   Styles,

@@ -22,7 +22,7 @@ import {
   AuthorDetailScreenName,
   RelateSkillScreenName,
   ShowListPathScreenName,
-} from '../../config/ScreenName';
+} from '../../Constants/ScreenName';
 import SeeAllBtn from '../../components/common/see-all-button';
 import dataSkill from '../../ExampleData/skill';
 import dataRelate from '../../ExampleData/relate-skill';

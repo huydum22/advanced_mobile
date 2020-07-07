@@ -7,7 +7,7 @@ import separator from '../../../Separator';
 import {
   CourseDetailScreenName,
   CourseDetailScreenStack,
-} from '../../../../config/ScreenName';
+} from '../../../../Constants/ScreenName';
 import {ThemeContext} from '../../../../Provider/Theme';
 const ListCourse = (props) => {
   const {navigation, route} = props;

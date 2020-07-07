@@ -29,7 +29,7 @@ import {
   CourseDetailScreenStack,
   ShowListCourseScreenName,
   ShowListPathScreenName,
-} from '../../config/ScreenName';
+} from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 const PopularSkill = (props) => {
   const {theme} = useContext(ThemeContext);

@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {StatusBar} from 'react-native';
-import * as screenName from '../config/ScreenName';
+import * as screenName from '../Constants/ScreenName';
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
 import CourseDetailNavigator from './AppNavigator/CourseDetailNavigator';

@@ -8,7 +8,7 @@ import Description from './Description';
 import Relate from './Relate';
 import LearningCheck from './LearningCheck';
 import SegmentControl from './SegmentControl';
-import {AuthorDetailScreenName} from '../../../config/ScreenName';
+import {AuthorDetailScreenName} from '../../../Constants/ScreenName';
 import {FavoriteContext} from '../../../Provider/Favorite';
 import {
   findExistFavoriteCourse,

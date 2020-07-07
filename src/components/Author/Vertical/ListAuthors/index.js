@@ -3,7 +3,7 @@ import {View, StyleSheet, FlatList} from 'react-native';
 import {Size} from '../../../../styles';
 import data from '../../../../ExampleData/author';
 import Item from '../AuthorItem';
-import {AuthorDetailScreenName} from '../../../../config/ScreenName';
+import {AuthorDetailScreenName} from '../../../../Constants/ScreenName';
 import {ThemeContext} from '../../../../Provider/Theme';
 
 const Authors = (props) => {

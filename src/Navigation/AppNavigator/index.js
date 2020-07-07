@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import * as screenName from '../../config/ScreenName';
+import * as screenName from '../../Constants/ScreenName';
 
 import {Colors, Typography} from '../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';

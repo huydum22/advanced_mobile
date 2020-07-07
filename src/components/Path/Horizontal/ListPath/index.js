@@ -6,7 +6,7 @@ import {Styles, BoxModel, Distance, Typography, Size} from '../../../../styles';
 import {
   ShowListPathScreenName,
   PathDetailScreenName,
-} from '../../../../config/ScreenName';
+} from '../../../../Constants/ScreenName';
 const Path = (props) => {
   const {navigation, route, data} = props;
   const seeAllPath = () => {

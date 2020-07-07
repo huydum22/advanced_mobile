@@ -7,7 +7,7 @@ import {Header} from '../../components/AuthorDetail';
 import {
   CourseDetailScreenName,
   CourseDetailScreenStack,
-} from '../../config/ScreenName';
+} from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 const AuthorDetail = (props) => {
   const {navigation, route} = props;

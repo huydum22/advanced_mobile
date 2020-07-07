@@ -3,7 +3,7 @@ import {View, StyleSheet, FlatList} from 'react-native';
 import data from '../../../../ExampleData/path';
 import {Colors, Size} from '../../../../styles';
 import Item from '../PathItem';
-import {PathDetailScreenName} from '../../../../config/ScreenName';
+import {PathDetailScreenName} from '../../../../Constants/ScreenName';
 import {ThemeContext} from '../../../../Provider/Theme';
 
 const Paths = (props) => {

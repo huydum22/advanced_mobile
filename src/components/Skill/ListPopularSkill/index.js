@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text, ScrollView, FlatList} from 'react-native';
 import {Styles, Typography, Distance, BoxModel} from '../../../styles';
 import Item from '../PopularSkillItem';
-import {PopularSkillScreenName} from '../../../config/ScreenName';
+import {PopularSkillScreenName} from '../../../Constants/ScreenName';
 const PopularSkill = (props) => {
   const {navigation, route, data} = props;
   const onPress = () => {

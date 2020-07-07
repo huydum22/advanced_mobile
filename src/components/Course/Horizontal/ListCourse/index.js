@@ -7,7 +7,7 @@ import {
   ShowListCourseScreenName,
   CourseDetailScreenName,
   CourseDetailScreenStack,
-} from '../../../../config/ScreenName';
+} from '../../../../Constants/ScreenName';
 const SectionCourses = (props) => {
   const {navigation, data, route, title} = props;
   const onPressItem = (item) => {

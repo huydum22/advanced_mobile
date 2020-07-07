@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Typography} from '../../../styles';
-import * as screenName from '../../../config/ScreenName';
+import * as screenName from '../../../Constants/ScreenName';
 
 import * as scenes from '../../../scenes';
 import {ThemeContext} from '../../../Provider/Theme';

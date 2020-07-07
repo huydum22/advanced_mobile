@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as scenes from '../../../scenes';
-import * as screenName from '../../../config/ScreenName';
+import * as screenName from '../../../Constants/ScreenName';
 import {Colors, Typography, Distance} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 

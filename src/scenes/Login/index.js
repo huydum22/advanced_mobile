@@ -15,8 +15,10 @@ import {
   Typography,
   Platform,
 } from '../../styles';
-import * as screenName from '../../config/ScreenName';
+import * as screenName from '../../Constants/ScreenName';
 import {CheckBox} from 'react-native-elements';
+
+import axios from 'axios';
 
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {FormInput, PrimaryButton} from '../../components/Authentication';
@@ -62,17 +64,31 @@ const Login = (props) => {
     setPassword(pass);
   };
 
-  const handleLogin = async () => {
-    try {
-      let response = await LoginProvider(email, password);
-      if (response.status === 200) {
-        setAuthentication(response);
-      } else {
-        Alert.alert('Login Notification', response.error);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  // const handleLogin = async () => {
+  //   try {
+  //     let response = await LoginProvider(email, password);
+  //     if (response.status === 200) {
+  //       setAuthentication(response);
+  //     } else {
+  //       Alert.alert('Login Notification', response.error);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const handleLogin = () => {
+    axios
+      .post('https://api.itedu.me/user/login', {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const onPressShowPass = () => {
     setShowPass(!showPass);

@@ -14,7 +14,7 @@ import {Header} from '../../components/PathDetail';
 import {
   CourseDetailScreenName,
   CourseDetailScreenStack,
-} from '../../config/ScreenName';
+} from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 const PathDetail = (props) => {
   const {navigation, route} = props;

@@ -19,7 +19,7 @@ import {
   PathDetailScreenName,
   AuthorDetailScreenName,
   CourseDetailScreenStack,
-} from '../../config/ScreenName';
+} from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 const Search = (props) => {
   const {theme} = useContext(ThemeContext);

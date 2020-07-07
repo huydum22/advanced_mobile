@@ -16,7 +16,7 @@ import {
   AuthenticateTab,
   LoginScreenName,
   OtherSettingScreenName,
-} from '../../config/ScreenName';
+} from '../../Constants/ScreenName';
 import {Avatar} from 'react-native-elements';
 import {Item} from '../../components/AccountManagement';
 import {AuthenticationContext} from '../../Provider/Authentication';

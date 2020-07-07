@@ -3,7 +3,7 @@ import {useSafeArea} from 'react-native-safe-area-context';
 import {StyleSheet, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import * as scenes from '../../../scenes';
-import * as screenName from '../../../config/ScreenName';
+import * as screenName from '../../../Constants/ScreenName';
 import {Typography, Size} from '../../../styles';
 import {SearchBar} from 'react-native-elements';
 import {ThemeContext} from '../../../Provider/Theme';

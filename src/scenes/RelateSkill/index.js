@@ -33,7 +33,7 @@ import {
   CourseDetailScreenStack,
   ShowListPathScreenName,
   ShowListCourseScreenName,
-} from '../../config/ScreenName';
+} from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 const RelateSkill = (props) => {
   const {navigation, route} = props;
