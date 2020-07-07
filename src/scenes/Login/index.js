@@ -22,20 +22,18 @@ import axios from 'axios';
 
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {FormInput, PrimaryButton} from '../../components/Authentication';
-import {LoginProvider} from '../../services/Authentication';
+import {LoginProvider, LoginAPI} from '../../services/Authentication';
+import {loginAction} from '../../Actions/Login';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const Login = (props) => {
   const {navigation} = props;
   const [showPass, setShowPass] = useState(false);
   const [activeBtn, setActiveBtn] = useState(false);
-  const {authentication, setAuthentication} = useContext(AuthenticationContext);
+
+  const {state, loginProvider} = useContext(AuthenticationContext);
   useEffect(() => {
-    if (
-      authentication &&
-      authentication.status === 200 &&
-      authentication.isLogin
-    ) {
+    if (state.isAuthenticated) {
       navigation.replace(screenName.AppTab, {
         screen: screenName.HomeScreenName,
       });
@@ -49,10 +47,6 @@ const Login = (props) => {
       setActiveBtn(false);
     }
   });
-
-  const handleRegisterPress = () => {
-    return navigation.navigate(screenName.RegisterScreenName);
-  };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -64,31 +58,8 @@ const Login = (props) => {
     setPassword(pass);
   };
 
-  // const handleLogin = async () => {
-  //   try {
-  //     let response = await LoginProvider(email, password);
-  //     if (response.status === 200) {
-  //       setAuthentication(response);
-  //     } else {
-  //       Alert.alert('Login Notification', response.error);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  const handleLogin = () => {
-    axios
-      .post('https://api.itedu.me/user/login', {
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleLogin = async () => {
+    return await loginProvider(email, password);
   };
   const onPressShowPass = () => {
     setShowPass(!showPass);

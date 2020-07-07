@@ -1,3 +1,5 @@
+import {LOGIN} from '../../Constants/API';
+import REQUEST from '../HttpClient';
 export const LoginProvider = async (email, password) => {
   if (email === '1612253@student.hcmus.edu.vn') {
     if (password === '123') {
@@ -26,4 +28,10 @@ export const LogoutProvider = () => {
     status: 200,
     isLogin: false,
   };
+};
+export const LoginAPI = async (email, password) => {
+  return await REQUEST.post(LOGIN, {
+    email: email,
+    password: password,
+  });
 };

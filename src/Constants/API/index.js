@@ -1,5 +1,5 @@
-export const API = 'http://localhost:8000/';
+export const API = 'https://api.itedu.me';
 
-export const LOGIN = `${API}users/login`;
-export const REGISTER = `${API}users/register`;
-export const PROFILE = `${API}users/me`;
+export const LOGIN = '/user/login';
+export const REGISTER = '/user/register';
+export const PROFILE = '/user/me';
