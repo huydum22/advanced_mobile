@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useReducer} from 'react';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -17,17 +17,17 @@ import {
 } from '../../styles';
 import {FormInput, PrimaryButton} from '../../components/Authentication';
 import {CheckBox} from 'react-native-elements';
-import {LoginProvider} from '../../services/Authentication';
-import {AuthenticationContext} from '../../Provider/Authentication';
+import {RegisterAPI} from '../../services/Authentication';
 import * as screenName from '../../Constants/ScreenName';
 import userImage from '../../assets/image/user.jpg';
+
 const SignUp = (props) => {
   const {navigation} = props;
   const [showPass, setShowPass] = useState(false);
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState('testitedu@gmail.com');
+  const [phoneNumber, setPhoneNumber] = useState('0931270721');
+  const [password, setPassword] = useState('12345678');
+  const [name, setName] = useState('testaccount');
   const [activeBtn, setActiveBtn] = useState(false);
 
   const onChangeEmail = (txtEmail) => {
@@ -45,38 +45,27 @@ const SignUp = (props) => {
   const onPressShowPass = () => {
     setShowPass(!showPass);
   };
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
-      let response = await LoginProvider(email, password);
+      const response = await RegisterAPI(name, phoneNumber, email, password);
+      console.log(response);
       if (response.status === 200) {
-        setAuthentication(response);
-      } else {
-        Alert.alert('Login Notification', response.error);
+        navigation.navigate(screenName.LoginScreenName);
       }
-    } catch (err) {
-      console.log(err);
+    } catch ({response}) {
+      Alert.alert(response.data.message);
+      console.log(response);
     }
   };
-  const {authentication, setAuthentication} = useContext(AuthenticationContext);
-  useEffect(() => {
-    if (
-      authentication &&
-      authentication.status === 200 &&
-      authentication.isLogin
-    ) {
-      navigation.replace(screenName.AppTab, {
-        screen: screenName.HomeScreenName,
-      });
-    }
-  });
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (email !== '' && password !== '' && name !== '') {
+    if (email !== '' && password !== '' && name !== '' && phoneNumber !== '') {
       setActiveBtn(true);
     } else {
       setActiveBtn(false);
     }
-  });
+  }, [email, password, name, phoneNumber]);
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -125,7 +114,7 @@ const SignUp = (props) => {
       />
       <PrimaryButton
         title="John With Us"
-        onPress={handleLogin}
+        onPress={handleRegister}
         active={activeBtn}
       />
     </KeyboardAvoidingView>

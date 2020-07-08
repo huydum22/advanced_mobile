@@ -18,37 +18,44 @@ import {
 import * as screenName from '../../Constants/ScreenName';
 import {CheckBox} from 'react-native-elements';
 
-import axios from 'axios';
-
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {FormInput, PrimaryButton} from '../../components/Authentication';
-import {LoginProvider, LoginAPI} from '../../services/Authentication';
-import {loginAction} from '../../Actions/Login';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const Login = (props) => {
   const {navigation} = props;
-  const [showPass, setShowPass] = useState(false);
-  const [activeBtn, setActiveBtn] = useState(false);
-
   const {state, loginProvider} = useContext(AuthenticationContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [formState, setFormState] = useState({
+    showPass: false,
+    activeBtn: false,
+    values: {},
+    isLoading: false,
+  });
   useEffect(() => {
     if (state.isAuthenticated) {
       navigation.replace(screenName.AppTab, {
         screen: screenName.HomeScreenName,
       });
     }
-  });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (state.isAuthenticated === false && state.message !== '') {
+      Alert.alert(state.message);
+    }
+  }, [state, navigation]);
   useEffect(() => {
     if (email !== '' && password !== '') {
-      setActiveBtn(true);
+      setFormState((formState) => ({
+        ...formState,
+        activeBtn: true,
+      }));
     } else {
-      setActiveBtn(false);
+      setFormState((formState) => ({
+        ...formState,
+        activeBtn: false,
+      }));
     }
-  });
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  }, [email, password]);
 
   const onChangeEmail = (txtEmail) => {
     setEmail(txtEmail);
@@ -62,7 +69,10 @@ const Login = (props) => {
     return await loginProvider(email, password);
   };
   const onPressShowPass = () => {
-    setShowPass(!showPass);
+    setFormState(() => ({
+      ...formState,
+      showPass: !formState.showPass,
+    }));
   };
 
   const onPressForgotPassWord = () => {
@@ -99,6 +109,7 @@ const Login = (props) => {
       <FormInput
         placeholder=" Email Address"
         value={email}
+        key="email"
         onChangeText={onChangeEmail}
         keyboardType="email-address"
         autoCorrect={false}
@@ -107,20 +118,25 @@ const Login = (props) => {
       <FormInput
         placeholder=" Password"
         value={password}
+        key="password"
         onChangeText={onChangePassword}
         autoCorrect={false}
-        secureTextEntry={!showPass}
+        secureTextEntry={!formState.showPass}
         returnKeyType={'done'}
       />
       <CheckBox
         title="Show Password"
-        checked={showPass}
+        checked={formState.showPass}
         // eslint-disable-next-line react-native/no-inline-styles
         containerStyle={{backgroundColor: Colors.overlayColor, borderWidth: 0}}
         textStyle={{...Typography.fontRegular}}
         onPress={onPressShowPass}
       />
-      <PrimaryButton title="Sign In" onPress={handleLogin} active={activeBtn} />
+      <PrimaryButton
+        title="Sign In"
+        onPress={handleLogin}
+        active={formState.activeBtn}
+      />
       <TouchableHighlight
         style={styles.forgotPassContainer}
         onPress={onPressForgotPassWord}

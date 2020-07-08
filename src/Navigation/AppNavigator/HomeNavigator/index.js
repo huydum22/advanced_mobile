@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {TouchableHighlight, alert} from 'react-native';
+import {TouchableHighlight} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';

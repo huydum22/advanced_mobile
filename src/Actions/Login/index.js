@@ -1,5 +1,4 @@
 import {LoginAPI} from '../../services/Authentication';
-import p from 'pretty-format';
 export const actionTypes = {
   LOGIN_REQUEST: 'LOGIN_REQUEST',
   LOGIN_ERROR: 'LOGIN_ERROR',
@@ -24,10 +23,8 @@ export const loginAction = (dispatch) => async (email, password) => {
     const response = await LoginAPI(email, password);
     if (response.status === 200) {
       dispatch(loginSuccess(response.data));
-    } else {
-      dispatch(loginError(response.data.message));
     }
-  } catch (error) {
-    dispatch(loginError(error.message));
+  } catch ({response}) {
+    dispatch(loginError(response.data));
   }
 };

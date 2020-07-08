@@ -7,6 +7,7 @@ const initialState = {
   isAuthenticated: false,
   userInfo: null,
   token: null,
+  message: '',
 };
 const AuthenticationProvider = (props) => {
   const [state, dispatch] = useReducer(loginReducer, initialState);

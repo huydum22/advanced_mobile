@@ -10,11 +10,14 @@ export const loginReducer = (prevState, action) => {
         isAuthenticated: true,
         token: action.response.token,
         userInfo: action.response.userInfo,
+        message: '',
       };
     case actionTypes.LOGIN_ERROR:
+      console.log('test ne', action);
       return {
         ...prevState,
         isAuthenticated: false,
+        message: action.error.message,
       };
     default:
       return prevState;
