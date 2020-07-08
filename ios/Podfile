@@ -81,6 +81,8 @@ target 'advanced_mobile' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNFastImage', :path => '../node_modules/react-native-fast-image'
+
   target 'advanced_mobileTests' do
     inherit! :complete
     # Pods for testing

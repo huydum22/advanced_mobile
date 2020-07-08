@@ -1,23 +1,17 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
   SafeAreaView,
   SectionList,
+  ScrollView,
   Text,
   FlatList,
 } from 'react-native';
 import {CourseHorizontalItem} from '../../components/Course';
 import EmptyComponent from '../../components/EmptyComponent';
 import {CourseContext} from '../../Provider/Course';
-import {
-  Colors,
-  Distance,
-  Styles,
-  Typography,
-  BoxModel,
-  Size,
-} from '../../styles';
+import {Distance, Styles, Typography, BoxModel, Size} from '../../styles';
 import Banner from '../../components/Banner';
 import backgroundImage02 from '../../assets/image/backgroundImage02.png';
 import SeeAllBtn from '../../components/common/see-all-button';
@@ -28,20 +22,34 @@ import {
   CourseDetailScreenName,
   CourseDetailScreenStack,
 } from '../../Constants/ScreenName';
+import {
+  SearchAllCategoryAPI,
+  ListCourseByCategoryAPI,
+} from '../../services/Category';
 import {ThemeContext} from '../../Provider/Theme';
 import {BookmarkContext} from '../../Provider/Bookmark';
 import {MyChannelContext} from '../../Provider/MyChannel';
 import {MyPathContext} from '../../Provider/MyPath';
+import {CategoryContext} from '../../Provider/Category';
+
+import p from 'pretty-format';
 const Home = (props) => {
   const {navigation, route} = props;
   const {courses, setCourses} = useContext(CourseContext);
+  const {listCategory, setListCategory} = useContext(CategoryContext);
   const {bookmarkCourses} = useContext(BookmarkContext);
   const {myChannelPath} = useContext(MyChannelContext);
   const {myPath} = useContext(MyPathContext);
   const {theme} = useContext(ThemeContext);
+  const [state1, setState1] = useState([]);
+  const [state2, setState2] = useState([]);
+
   const fetchData = async () => {
     try {
       let response = await listCourseProvider();
+      let res = await SearchAllCategoryAPI();
+      // console.log(p(res.data.payload));
+      setListCategory(res.data.payload);
       setCourses(response);
     } catch (err) {
       console.log(err);
@@ -51,6 +59,9 @@ const Home = (props) => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    getData();
+  }, [listCategory]);
   const onPressEmptyComponent = (title) => {
     navigation.navigate(ShowListCourseScreenName, {
       title: title,
@@ -63,6 +74,17 @@ const Home = (props) => {
       params: {id: item.id},
     });
   };
+
+  const getData = async () => {
+    try {
+      let response = await ListCourseByCategoryAPI(listCategory[0].id);
+      console.log(response.data.payload.rows);
+      setState1(response.data.payload.rows);
+      let response1 = await ListCourseByCategoryAPI(listCategory[1].id);
+      setState2(response1.data.payload.rows);
+    } catch ({response}) {}
+  };
+  console.log(p(listCategory));
   const Footer = () => {
     return emptyCourse.map((item) => (
       <EmptyComponent
@@ -149,7 +171,130 @@ const Home = (props) => {
   };
   return (
     <SafeAreaView style={{backgroundColor: theme.backgroundColor}}>
-      <SectionList
+      <ScrollView>
+        <Banner
+          backgroundImage={backgroundImage02}
+          name="Stay at Home"
+          onPress={onPressBanner}
+        />
+        <View style={styles.titleContainer}>
+          <Text
+            style={[
+              Styles.titleRow,
+              Typography.fontBold,
+              {color: theme.primaryTextColor},
+            ]}>
+            test
+            {}{' '}
+          </Text>
+          <SeeAllBtn onPress={() => showListCourse('test')} />
+        </View>
+        <FlatList
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          data={state1}
+          renderItem={({item}) => (
+            <CourseHorizontalItem
+              item={item}
+              onPress={() => onPressItem(item)}
+            />
+          )}
+          keyExtractor={(item, index) => item + index}
+          getItemLayout={(data, index) => ({
+            length: Size.scaleSize(200),
+            offset: Size.scaleSize(200) * index,
+            index,
+          })}
+        />
+        <View style={styles.titleContainer}>
+          <Text
+            style={[
+              Styles.titleRow,
+              Typography.fontBold,
+              {color: theme.primaryTextColor},
+            ]}>
+            test
+            {}{' '}
+          </Text>
+          <SeeAllBtn onPress={() => showListCourse('test')} />
+        </View>
+        <FlatList
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          data={state2}
+          renderItem={({item}) => (
+            <CourseHorizontalItem
+              item={item}
+              onPress={() => onPressItem(item)}
+            />
+          )}
+          keyExtractor={(item, index) => item + index}
+          getItemLayout={(data, index) => ({
+            length: Size.scaleSize(200),
+            offset: Size.scaleSize(200) * index,
+            index,
+          })}
+        />
+        <View style={styles.titleContainer}>
+          <Text
+            style={[
+              Styles.titleRow,
+              Typography.fontBold,
+              {color: theme.primaryTextColor},
+            ]}>
+            test
+            {}{' '}
+          </Text>
+          <SeeAllBtn onPress={() => showListCourse('test')} />
+        </View>
+        <FlatList
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          data={courses.slice(0, 5)}
+          renderItem={({item}) => (
+            <CourseHorizontalItem
+              item={item}
+              onPress={() => onPressItem(item)}
+            />
+          )}
+          keyExtractor={(item, index) => item + index}
+          getItemLayout={(data, index) => ({
+            length: Size.scaleSize(200),
+            offset: Size.scaleSize(200) * index,
+            index,
+          })}
+        />
+        <View style={styles.titleContainer}>
+          <Text
+            style={[
+              Styles.titleRow,
+              Typography.fontBold,
+              {color: theme.primaryTextColor},
+            ]}>
+            test
+            {}{' '}
+          </Text>
+          <SeeAllBtn onPress={() => showListCourse('test')} />
+        </View>
+        <FlatList
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          data={courses.slice(0, 5)}
+          renderItem={({item}) => (
+            <CourseHorizontalItem
+              item={item}
+              onPress={() => onPressItem(item)}
+            />
+          )}
+          keyExtractor={(item, index) => item + index}
+          getItemLayout={(data, index) => ({
+            length: Size.scaleSize(200),
+            offset: Size.scaleSize(200) * index,
+            index,
+          })}
+        />
+      </ScrollView>
+      {/* <SectionList
         sections={[
           {title: 'Software development', data: [0]},
           {title: 'IT operations', data: [1]},
@@ -178,7 +323,7 @@ const Home = (props) => {
         stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => renderListItem(item)}
-      />
+      /> */}
     </SafeAreaView>
   );
 };

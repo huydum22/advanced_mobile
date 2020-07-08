@@ -54,6 +54,7 @@ export const horizontalCourse = {
 export const imageInHorizontalCourse = {
   flex: 1,
   width: scaleSize(200),
+  height: scaleSize(100),
   resizeMode: 'cover',
 };
 export const containerInHorizontalCourse = {

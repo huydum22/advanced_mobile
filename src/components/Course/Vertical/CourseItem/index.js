@@ -36,7 +36,7 @@ const Item = (props) => {
         underlayColor={theme.primaryBackgroundColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
-            <Image source={item.image} style={styles.image} />
+            <Image source={item.imageUrl} style={styles.image} />
           </View>
           <View style={styles.mainContainer}>
             <Text
@@ -44,14 +44,14 @@ const Item = (props) => {
                 Styles.titleInHorizontalList,
                 {color: theme.primaryTextColor},
               ]}>
-              {item.name}
+              {item.title}
             </Text>
             <Text
               style={[
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item.author}
+              {item.name}
             </Text>
             <View style={styles.levelContainer}>
               <Text
@@ -59,7 +59,7 @@ const Item = (props) => {
                   Styles.subTitleInHorizontalList,
                   {color: theme.grayColor},
                 ]}>
-                {item.level}
+                {item.soldNumber} students
               </Text>
               <Text
                 style={[
@@ -67,7 +67,7 @@ const Item = (props) => {
                   Styles.textCenter,
                   {color: theme.grayColor},
                 ]}>
-                {item.timeToStart}
+                {item.updatedAt}
               </Text>
               <Text
                 style={[
@@ -75,14 +75,14 @@ const Item = (props) => {
                   Styles.textCenter,
                   {color: theme.grayColor},
                 ]}>
-                {item.totalHour}
+                {item.totalHours}
               </Text>
             </View>
             <View style={styles.ratingContainer}>
               <AirbnbRating
                 reviews={false}
                 size={14}
-                defaultRating={item.rate}
+                defaultRating={item.ratedNumber}
               />
             </View>
           </View>

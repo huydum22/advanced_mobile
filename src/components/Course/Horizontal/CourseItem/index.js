@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
-import {View, StyleSheet, TouchableHighlight, Image, Text} from 'react-native';
+import {View, StyleSheet, TouchableHighlight, Text} from 'react-native';
 import {Styles, BoxModel, Size, Typography, Distance} from '../../../../styles';
+import FastImage from 'react-native-fast-image';
 import {AirbnbRating} from 'react-native-ratings';
 import {ThemeContext} from '../../../../Provider/Theme';
 const Item = (props) => {
@@ -20,7 +21,14 @@ const Item = (props) => {
         onPress(item);
       }}>
       <View style={Styles.fillColumn}>
-        <Image source={item.image} style={Styles.imageInHorizontalCourse} />
+        <FastImage
+          style={{width: Size.scaleSize(200), height: Size.scaleSize(100)}}
+          source={{
+            uri: item.imageUrl,
+            priority: FastImage.priority.normal,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
         <View style={Styles.containerInHorizontalCourse}>
           <View style={Styles.breakContentText}>
             <Text
@@ -29,7 +37,7 @@ const Item = (props) => {
                 styles.nameTitle,
                 {color: theme.primaryTextColor},
               ]}>
-              {item.name}
+              {item.title}
             </Text>
           </View>
           <View style={Styles.breakContentText}>
@@ -38,7 +46,7 @@ const Item = (props) => {
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item.author}
+              {item.name}
             </Text>
           </View>
           <View style={Styles.fillRow}>
@@ -47,35 +55,32 @@ const Item = (props) => {
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item.level}
+              {item.soldNumber} students
             </Text>
             <Text
               style={[
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item.timeToStart}
+              {item.updatedAt}
             </Text>
             <Text
               style={[
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item.totalHour}
+              {item.totalHours}
             </Text>
           </View>
           <View style={Styles.fillRowCenter}>
             <AirbnbRating
               reviews={false}
               size={Size.ratingSize}
-              defaultRating={item.rate}
+              defaultRating={item.ratedNumber}
               count={5}
               starContainerStyle={{paddingBottom: Distance.spacing_12}}
               // ratingColor="black"
             />
-            <Text style={[styles.ratingText, {color: theme.grayColor}]}>
-              ({item.totalRate})
-            </Text>
           </View>
         </View>
       </View>

@@ -8,27 +8,23 @@ import {
   FlatList,
 } from 'react-native';
 import {CourseVerticalItem} from '../../components/Course';
-import {
-  Styles,
-  Distance,
-  BoxModel,
-  Typography,
-  Colors,
-  Size,
-} from '../../styles';
+import {Styles, Distance, BoxModel, Typography, Size} from '../../styles';
 // import data from '../../ExampleData/course';
+
 import separator from '../../components/Separator';
 import {
   CourseDetailScreenName,
   CourseDetailScreenStack,
 } from '../../Constants/ScreenName';
 import {FavoriteContext} from '../../Provider/Favorite';
+import {AuthenticationContext} from '../../Provider/Authentication';
 import {ThemeContext} from '../../Provider/Theme';
 const ListCourse = (props) => {
   const {theme} = useContext(ThemeContext);
+  const {state} = useContext(AuthenticationContext);
   const {navigation, route} = props;
   const {favorite} = useContext(FavoriteContext);
-
+  console.log(state);
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenStack, {
       screen: CourseDetailScreenName,
