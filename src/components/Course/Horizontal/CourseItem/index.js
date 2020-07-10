@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet, TouchableHighlight, Text} from 'react-native';
+import Moment from 'moment';
 import {Styles, BoxModel, Size, Typography, Distance} from '../../../../styles';
 import FastImage from 'react-native-fast-image';
 import {AirbnbRating} from 'react-native-ratings';
@@ -62,14 +63,14 @@ const Item = (props) => {
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item.updatedAt}
+              {Moment(item.updatedAt).format('MMMM Do')}
             </Text>
             <Text
               style={[
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item.totalHours}
+              {item.totalHours} Hours
             </Text>
           </View>
           <View style={Styles.fillRowCenter}>
@@ -79,7 +80,6 @@ const Item = (props) => {
               defaultRating={item.ratedNumber}
               count={5}
               starContainerStyle={{paddingBottom: Distance.spacing_12}}
-              // ratingColor="black"
             />
           </View>
         </View>

@@ -1,18 +1,26 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {Item} from '../../components/AccountManagement';
 import {Styles} from '../../styles';
-import {LogoutProvider} from '../../services/Authentication';
 import * as screenName from '../../Constants/ScreenName';
 const OtherSetting = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
-  const {setAuthentication} = useContext(AuthenticationContext);
+  const {state, logoutProvider} = useContext(AuthenticationContext);
   const onPressTheme = () => {
     navigation.navigate(screenName.ThemeScreenName);
   };
+  useEffect(() => {
+    if (state.isAuthenticated === false) {
+      navigation.replace(screenName.AuthenticateTab, {
+        screen: screenName.IntroScreenName,
+      });
+    }
+  }, [state, navigation]);
+
+  console.log(state);
   return (
     <SafeAreaView>
       <ScrollView
@@ -30,7 +38,7 @@ const OtherSetting = (props) => {
           <Item
             name="Log out"
             onPress={() => {
-              setAuthentication(LogoutProvider());
+              logoutProvider();
             }}
           />
         </View>

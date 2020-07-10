@@ -7,11 +7,14 @@ import * as screenName from '../Constants/ScreenName';
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
 import CourseDetailNavigator from './AppNavigator/CourseDetailNavigator';
+import SplashScreen from '../scenes/SplashScreen';
 import {AuthenticationProvider} from '../Provider/Authentication';
 import {CoursesProvider} from '../Provider/Course';
 import {FavoriteProvider} from '../Provider/Favorite';
 import {ThemeContext} from '../Provider/Theme';
 import {darkTheme} from '../styles';
+import {CategoryProvider} from '../Provider/Category';
+
 const RootStack = createStackNavigator();
 
 const RootScreen = () => {
@@ -19,7 +22,11 @@ const RootScreen = () => {
     <RootStack.Navigator
       headerMode="none"
       mode="modal"
-      initialRouteName={screenName.AuthenticateTab}>
+      initialRouteName={screenName.SplashScreen}>
+      <RootStack.Screen
+        name={screenName.SplashScreen}
+        component={SplashScreen}
+      />
       <RootStack.Screen name={screenName.AppTab} component={AppNavigator} />
       <RootStack.Screen
         name={screenName.AuthenticateTab}
@@ -44,13 +51,15 @@ const Navigation = () => {
         <StatusBar translucent barStyle="dark-content" />
       )}
       <AuthenticationProvider>
-        <CoursesProvider>
-          <FavoriteProvider>
-            <NavigationContainer>
-              <RootScreen />
-            </NavigationContainer>
-          </FavoriteProvider>
-        </CoursesProvider>
+        <CategoryProvider>
+          <CoursesProvider>
+            <FavoriteProvider>
+              <NavigationContainer>
+                <RootScreen />
+              </NavigationContainer>
+            </FavoriteProvider>
+          </CoursesProvider>
+        </CategoryProvider>
       </AuthenticationProvider>
     </SafeAreaProvider>
   );

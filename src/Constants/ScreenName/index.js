@@ -1,5 +1,6 @@
 export const AuthenticateTab = 'Authenticate';
 export const AppTab = 'appTab';
+export const SplashScreen = 'splashScreen';
 export const LoginScreenName = 'login';
 export const RegisterScreenName = 'register';
 export const IntroScreenName = 'intro';

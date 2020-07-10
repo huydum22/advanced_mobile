@@ -18,6 +18,7 @@ import SearchResult from './SearchResult';
 import Introduce from './IntroduceView';
 import OtherSetting from './OtherSetting';
 import ForgotPassword from './ForgotPassword';
+import SplashScreen from './SplashScreen';
 export {
   AuthorDetail,
   Browse,
@@ -39,4 +40,5 @@ export {
   Introduce,
   OtherSetting,
   ForgotPassword,
+  SplashScreen,
 };

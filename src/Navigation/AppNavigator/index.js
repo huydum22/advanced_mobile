@@ -15,7 +15,6 @@ import {ThemeContext} from '../../Provider/Theme';
 import {BookmarkProvider} from '../../Provider/Bookmark';
 import {MyChannelProvider} from '../../Provider/MyChannel';
 import {MyPathProvider} from '../../Provider/MyPath';
-import {CategoryProvider} from '../../Provider/Category';
 const Tab = createBottomTabNavigator();
 
 const searchIcon = ({color}) => (
@@ -58,48 +57,46 @@ const configLabel = {
 const AppNavigator = () => {
   const {theme} = useContext(ThemeContext);
   return (
-    <CategoryProvider>
-      <BookmarkProvider>
-        <MyChannelProvider>
-          <MyPathProvider>
-            <Tab.Navigator
-              initialRouteName={screenName.HomeScreenName}
-              tabBarOptions={{
-                labelStyle: configLabel,
-                activeTintColor: theme.primaryColor,
-                inactiveTintColor: theme.grayMediumColor,
-                style: {
-                  backgroundColor: theme.themeColor,
-                  elevation: 0,
-                  shadowOpacity: 0,
-                  borderTopWidth: 0,
-                },
-              }}>
-              <Tab.Screen
-                name={screenName.HomeScreenName}
-                component={HomeNavigator}
-                options={configHomeTab}
-              />
-              <Tab.Screen
-                name={screenName.DownloadScreenName}
-                component={DownloadNavigator}
-                options={configDownloadTab}
-              />
-              <Tab.Screen
-                name={screenName.BrowseScreenName}
-                component={BrowseNavigator}
-                options={configBrowseTab}
-              />
-              <Tab.Screen
-                name={screenName.SearchScreenName}
-                component={SearchNavigator}
-                options={configSearchTab}
-              />
-            </Tab.Navigator>
-          </MyPathProvider>
-        </MyChannelProvider>
-      </BookmarkProvider>
-    </CategoryProvider>
+    <BookmarkProvider>
+      <MyChannelProvider>
+        <MyPathProvider>
+          <Tab.Navigator
+            initialRouteName={screenName.HomeScreenName}
+            tabBarOptions={{
+              labelStyle: configLabel,
+              activeTintColor: theme.primaryColor,
+              inactiveTintColor: theme.grayMediumColor,
+              style: {
+                backgroundColor: theme.themeColor,
+                elevation: 0,
+                shadowOpacity: 0,
+                borderTopWidth: 0,
+              },
+            }}>
+            <Tab.Screen
+              name={screenName.HomeScreenName}
+              component={HomeNavigator}
+              options={configHomeTab}
+            />
+            <Tab.Screen
+              name={screenName.DownloadScreenName}
+              component={DownloadNavigator}
+              options={configDownloadTab}
+            />
+            <Tab.Screen
+              name={screenName.BrowseScreenName}
+              component={BrowseNavigator}
+              options={configBrowseTab}
+            />
+            <Tab.Screen
+              name={screenName.SearchScreenName}
+              component={SearchNavigator}
+              options={configSearchTab}
+            />
+          </Tab.Navigator>
+        </MyPathProvider>
+      </MyChannelProvider>
+    </BookmarkProvider>
   );
 };
 export default AppNavigator;

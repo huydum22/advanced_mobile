@@ -1,5 +1,4 @@
 import {actionTypes} from '../../Actions/Login';
-import p from 'pretty-format';
 export const loginReducer = (prevState, action) => {
   switch (action.type) {
     case actionTypes.LOGIN_REQUEST:
@@ -13,11 +12,17 @@ export const loginReducer = (prevState, action) => {
         message: '',
       };
     case actionTypes.LOGIN_ERROR:
-      console.log('test ne', action);
       return {
         ...prevState,
         isAuthenticated: false,
         message: action.error.message,
+      };
+    case actionTypes.LOGOUT:
+      return {
+        isAuthenticated: false,
+        userInfo: null,
+        token: null,
+        message: '',
       };
     default:
       return prevState;
