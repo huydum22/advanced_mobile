@@ -19,8 +19,8 @@
     "axios": "^0.19.2",
     "moment": "^2.27.0",
     "pretty-format": "^26.0.1",
-    "react": "16.11.0",
-    "react-native": "0.62.2",
+    "react": "16.13.1",
+    "react-native": "0.63.0",
     "react-native-actionsheet": "^2.4.2",
     "react-native-elements": "^2.0.1",
     "react-native-fast-image": "^8.1.5",
@@ -31,7 +31,6 @@
     "react-native-safe-area-context": "^1.0.2",
     "react-native-screens": "^2.7.0",
     "react-native-segmented-control-tab": "^3.4.1",
-    "react-native-splash-screen": "^3.2.0",
     "react-native-swiper": "^1.6.0",
     "react-native-tab-view": "^2.14.2",
     "react-native-vector-icons": "^6.6.0"

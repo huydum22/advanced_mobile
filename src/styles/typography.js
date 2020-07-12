@@ -1,12 +1,12 @@
 import {scaleFont} from './size';
 
 // FONT FAMILY
-export const fontFamilyRegular = 'Lato-Regular';
-export const fontFamilyBold = 'Lato-Bold';
+export const fontFamilyRegular = 'Arial';
+export const fontFamilyBold = 'Arial';
 
 // FONT WEIGHT
 export const fontWeightRegular = '400';
-export const fontWeightBold = '700';
+export const fontWeightBold = 'bold';
 
 // FONT SIZE
 export const fontSize30 = scaleFont(30);

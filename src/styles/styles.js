@@ -29,7 +29,7 @@ export const titleRow = {
 };
 export const titleInHorizontalList = {
   flex: 1,
-  ...fontBold,
+  ...fontRegular,
   fontSize: fontSize14,
 };
 export const subTitleInHorizontalList = {

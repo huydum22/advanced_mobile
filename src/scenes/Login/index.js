@@ -41,9 +41,19 @@ const Login = (props) => {
       // saving error
     }
   };
+
+  const storeUserInfo = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('@userInfo', jsonValue);
+    } catch (e) {
+      // saving error
+    }
+  };
   useEffect(() => {
     if (state.isAuthenticated) {
       storeData(state.token);
+      storeUserInfo(state.userInfo);
       navigation.replace(screenName.AppTab, {
         screen: screenName.HomeScreenName,
       });

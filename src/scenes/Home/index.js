@@ -44,6 +44,7 @@ const Home = (props) => {
     });
   };
   useEffect(() => {
+    console.log('home ne`');
     // fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   });

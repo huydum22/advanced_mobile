@@ -38,8 +38,9 @@ export const loginAction = (dispatch) => async (email, password) => {
 };
 
 export const logoutAction = (dispatch) => async () => {
+  const keys = ['@userToken', '@userInfo'];
   try {
-    await AsyncStorage.removeItem('@userToken');
+    await AsyncStorage.multiRemove(keys);
   } catch (e) {
     // remove error
   }

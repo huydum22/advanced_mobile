@@ -5,6 +5,8 @@ import {AuthenticationContext} from '../../Provider/Authentication';
 import {Item} from '../../components/AccountManagement';
 import {Styles} from '../../styles';
 import * as screenName from '../../Constants/ScreenName';
+import AsyncStorage from '@react-native-community/async-storage';
+
 const OtherSetting = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
@@ -13,11 +15,29 @@ const OtherSetting = (props) => {
     navigation.navigate(screenName.ThemeScreenName);
   };
   useEffect(() => {
-    if (state.isAuthenticated === false) {
-      navigation.replace(screenName.AuthenticateTab, {
-        screen: screenName.IntroScreenName,
-      });
-    }
+    // if (state.isAuthenticated === false) {
+    //   navigation.replace(screenName.AuthenticateTab, {
+    //     screen: screenName.IntroScreenName,
+    //   });
+    // }
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem('@userToken');
+        if (value !== null) {
+          // value previously stored
+        } else {
+          navigation.replace(screenName.AuthenticateTab, {
+            screen: screenName.IntroScreenName,
+          });
+        }
+      } catch (e) {
+        navigation.replace(screenName.AuthenticateTab, {
+          screen: screenName.IntroScreenName,
+        });
+        // error reading value
+      }
+    };
+    getData();
   }, [state, navigation]);
 
   console.log(state);
