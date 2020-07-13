@@ -25,13 +25,11 @@ const ForgotPassword = (props) => {
   const handleForgotPassWord = async () => {
     try {
       const response = await ForgotPasswordAPI(email);
-      console.log(response);
       if (response.status === 200) {
         navigation.navigate(screenName.LoginScreenName);
       }
     } catch ({response}) {
       Alert.alert(response.data.message);
-      console.log(response);
     }
   };
 

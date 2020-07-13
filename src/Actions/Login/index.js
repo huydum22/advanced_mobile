@@ -1,11 +1,15 @@
 import {LoginAPI} from '../../services/Authentication';
-import AsyncStorage from '@react-native-community/async-storage';
+import {useAsyncStorage} from '@react-native-community/async-storage';
 
 export const actionTypes = {
   LOGIN_REQUEST: 'LOGIN_REQUEST',
   LOGIN_ERROR: 'LOGIN_ERROR',
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
   LOGOUT: 'LOGOUT',
+  USER_REQUEST: 'USER_REQUEST',
+  USER_ERROR: 'USER_ERROR',
+  USER_SUCCESS: 'USER_SUCCESS',
+  USER_TOKEN: 'USER_TOKEN',
 };
 const loginRequest = () => ({
   type: actionTypes.LOGIN_REQUEST,
@@ -38,9 +42,10 @@ export const loginAction = (dispatch) => async (email, password) => {
 };
 
 export const logoutAction = (dispatch) => async () => {
-  const keys = ['@userToken', '@userInfo'];
+  const {removeItem} = useAsyncStorage('@userToken');
+
   try {
-    await AsyncStorage.multiRemove(keys);
+    await removeItem();
   } catch (e) {
     // remove error
   }

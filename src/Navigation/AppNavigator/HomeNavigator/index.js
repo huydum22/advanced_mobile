@@ -1,18 +1,34 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {TouchableHighlight} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as scenes from '../../../scenes';
 import * as screenName from '../../../Constants/ScreenName';
-import {Colors, Typography, Distance} from '../../../styles';
+import {Size, Typography, Distance} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
-
+import {AuthenticationContext} from '../../../Provider/Authentication';
 const HomeStack = createStackNavigator();
 
 const HomeNavigatorStack = () => {
   const {theme} = useContext(ThemeContext);
-
+  const {state} = useContext(AuthenticationContext);
+  // const avatarHomeBar = useMemo(
+  //   () => (
+  //     <FastImage
+  //       style={{
+  //         width: Size.scaleSize(25),
+  //         height: Size.scaleSize(25),
+  //         borderRadius: Size.scaleSize(12.5),
+  //       }}
+  //       source={{
+  //         uri: state.userInfo.avatar,
+  //       }}
+  //     />
+  //   ),
+  //   [state.userInfo.avatar],
+  // );
+  console.log(state);
   return (
     <HomeStack.Navigator
       screenOptions={{
@@ -37,10 +53,17 @@ const HomeNavigatorStack = () => {
               }}
               underlayColor={theme.overlayColor}
               style={{marginRight: Distance.spacing_14}}>
-              <FontAwesome
-                name="user"
-                size={25}
-                color={theme.primaryTextColor}
+              {/* {avatarHomeBar} */}
+              <FastImage
+                style={{
+                  width: Size.scaleSize(25),
+                  height: Size.scaleSize(25),
+                  borderRadius: Size.scaleSize(12.5),
+                }}
+                source={{
+                  uri:
+                    'https://storage.googleapis.com/itedu-bucket/Avatar/abf2226c-b853-4e26-a71e-281ed115427c.png',
+                }}
               />
             </TouchableHighlight>
           ),

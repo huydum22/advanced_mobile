@@ -9,8 +9,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import {Styles, Typography, Distance, BoxModel, Size} from '../../styles';
-import backgroundImage from '../../assets/image/backgroundImage.png';
-import backgroundImage02 from '../../assets/image/backgroundImage02.png';
+import backgroundImage03 from '../../assets/image/backgroundImage03.jpg';
+import backgroundImage02 from '../../assets/image/backgroundImage02.jpg';
 import {PathItemHorizontal} from '../../components/Path';
 import {AuthorHorizontalItem} from '../../components/Author';
 import {PopularSkillItem, RelateSkillItem} from '../../components/Skill';
@@ -91,14 +91,30 @@ const Browse = (props) => {
   };
 
   const Header = () => {
-    return ['new releases', 'recommended for you'].map((item) => (
-      <Banner
-        key={item.toString()}
-        backgroundImage={backgroundImage02}
-        name={item}
-        onPress={() => onPressBanner(item)}
-      />
-    ));
+    // return ['new releases', 'recommended for you'].map((item) => (
+    //   <Banner
+    //     key={item.toString()}
+    //     backgroundImage={backgroundImage02}
+    //     name={item}
+    //     onPress={() => onPressBanner(item)}
+    //   />
+    // ));
+    return (
+      <View>
+        <Banner
+          key="new releases"
+          backgroundImage={backgroundImage02}
+          name="new releases"
+          // onPress={() => onPressBanner('new releases')}
+        />
+        <Banner
+          key="recommended for you"
+          backgroundImage={backgroundImage03}
+          name="recommended for you"
+          // onPress={() => onPressBanner('new releases')}
+        />
+      </View>
+    );
   };
   const renderListItem = (data) => {
     if (data === 0) {

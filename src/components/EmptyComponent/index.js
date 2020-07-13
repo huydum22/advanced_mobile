@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     ...Styles.columnCenter,
     ...BoxModel.tinyBorderRadius,
     height: Size.scaleSize(140),
+    width: '100%',
   },
   text: {
     ...BoxModel.mediumMarginHorizontal,

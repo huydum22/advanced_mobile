@@ -24,7 +24,6 @@ const ListCourse = (props) => {
   const {state} = useContext(AuthenticationContext);
   const {navigation, route} = props;
   const {favorite} = useContext(FavoriteContext);
-  console.log(state);
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenStack, {
       screen: CourseDetailScreenName,

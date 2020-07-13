@@ -1,8 +1,10 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {StatusBar} from 'react-native';
+import {useAsyncStorage} from '@react-native-community/async-storage';
+
 import * as screenName from '../Constants/ScreenName';
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
@@ -12,6 +14,7 @@ import {AuthenticationProvider} from '../Provider/Authentication';
 import {CoursesProvider} from '../Provider/Course';
 import {FavoriteProvider} from '../Provider/Favorite';
 import {ThemeContext} from '../Provider/Theme';
+import {TokenContext} from '../Provider/Token';
 import {darkTheme} from '../styles';
 import {CategoryProvider} from '../Provider/Category';
 
@@ -42,7 +45,18 @@ const RootScreen = () => {
 };
 const Navigation = () => {
   const {theme} = useContext(ThemeContext);
+  const {setToken} = useContext(TokenContext);
 
+  const {getItem} = useAsyncStorage('@userToken');
+
+  const readItemFromStorage = async () => {
+    const item = await getItem();
+    setToken(item);
+  };
+  useEffect(() => {
+    readItemFromStorage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <SafeAreaProvider>
       {theme === darkTheme ? (

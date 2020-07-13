@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, SafeAreaView} from 'react-native';
 // import data from '../../ExampleData/profile';
 import {
@@ -9,37 +9,28 @@ import {
   BoxModel,
   Distance,
 } from '../../styles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
   SubscriptionScreenName,
   AuthenticateTab,
   LoginScreenName,
   OtherSettingScreenName,
 } from '../../Constants/ScreenName';
-import {Avatar} from 'react-native-elements';
 import {Item} from '../../components/AccountManagement';
-import {AuthenticationContext} from '../../Provider/Authentication';
+import {TokenContext} from '../../Provider/Token';
 import {ThemeContext} from '../../Provider/Theme';
+import {AuthenticationContext} from '../../Provider/Authentication';
+import FastImage from 'react-native-fast-image';
+
 const Account = (props) => {
   const {theme} = useContext(ThemeContext);
+  const {state} = useContext(AuthenticationContext);
   const {navigation, route} = props;
   const onPressSubscription = () => {
     navigation.navigate(SubscriptionScreenName, {
       screen: LoginScreenName,
     });
   };
-  useEffect(() => {
-    if (
-      authentication &&
-      authentication.status === 200 &&
-      authentication.isLogin === false
-    ) {
-      navigation.replace(AuthenticateTab, {
-        screen: AuthenticateTab,
-      });
-    }
-  });
+
   const onPressLocation = () => {
     // navigation.navigate(LocationScreenName);
   };
@@ -47,7 +38,7 @@ const Account = (props) => {
     navigation.navigate(OtherSettingScreenName);
   };
 
-  const {authentication} = useContext(AuthenticationContext);
+  // const {authentication} = useContext(AuthenticationContext);
   return (
     <SafeAreaView>
       <ScrollView
@@ -55,18 +46,28 @@ const Account = (props) => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.mainContainer}>
           <View style={styles.imageContainer}>
-            <Avatar
+            {/* <Avatar
               size="xlarge"
               rounded
-              title={authentication.user.email.slice(0, 2)}
+              title={userInfo.email}
               containerStyle={{backgroundColor: theme.primaryColor}}
               // onPress={() => console.log('Works!')}
+            /> */}
+            <FastImage
+              style={{
+                width: Size.scaleSize(150),
+                height: Size.scaleSize(150),
+                borderRadius: Size.scaleSize(75),
+              }}
+              source={{
+                uri: state.userInfo.avatar,
+              }}
             />
             <Text style={[styles.headerText, {color: theme.primaryTextColor}]}>
-              {authentication.user ? authentication.user.name : ''}
+              {state.userInfo ? state.userInfo.email : ''}
             </Text>
             <Text style={[styles.headerSubText, {color: theme.grayColor}]}>
-              {authentication.user ? authentication.user.email : ''}
+              {state.userInfo ? state.userInfo.phone : ''}
             </Text>
           </View>
 

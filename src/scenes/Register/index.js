@@ -48,7 +48,6 @@ const SignUp = (props) => {
   const handleRegister = async () => {
     try {
       const response = await RegisterAPI(name, phoneNumber, email, password);
-      console.log(response);
       if (response.status === 200) {
         navigation.navigate(screenName.LoginScreenName);
       }

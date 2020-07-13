@@ -49,7 +49,7 @@ export const headerContainer = {
 export const horizontalCourse = {
   ...smallMargin,
   width: scaleSize(200),
-  height: scaleSize(180),
+  height: scaleSize(190),
 };
 export const imageInHorizontalCourse = {
   flex: 1,

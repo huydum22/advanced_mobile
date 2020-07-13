@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet, TouchableHighlight, Text} from 'react-native';
-import Moment from 'moment';
 import {Styles, BoxModel, Size, Typography, Distance} from '../../../../styles';
 import FastImage from 'react-native-fast-image';
-import {AirbnbRating} from 'react-native-ratings';
+// import {AirbnbRating} from 'react-native-ratings';
 import {ThemeContext} from '../../../../Provider/Theme';
+import {Rating, AirbnbRating} from 'react-native-elements';
 const Item = (props) => {
   const {item, onPress} = props;
   const {theme} = useContext(ThemeContext);
@@ -26,9 +26,7 @@ const Item = (props) => {
           style={{width: Size.scaleSize(200), height: Size.scaleSize(100)}}
           source={{
             uri: item.imageUrl,
-            priority: FastImage.priority.normal,
           }}
-          resizeMode={FastImage.resizeMode.cover}
         />
         <View style={Styles.containerInHorizontalCourse}>
           <View style={Styles.breakContentText}>
@@ -51,36 +49,34 @@ const Item = (props) => {
             </Text>
           </View>
           <View style={Styles.fillRow}>
-            <Text
-              style={[
-                Styles.subTitleInHorizontalList,
-                {color: theme.grayColor},
-              ]}>
-              {item.soldNumber} students
-            </Text>
-            <Text
-              style={[
-                Styles.subTitleInHorizontalList,
-                {color: theme.grayColor},
-              ]}>
-              {Moment(item.updatedAt).format('MMMM Do')}
-            </Text>
-            <Text
-              style={[
-                Styles.subTitleInHorizontalList,
-                {color: theme.grayColor},
-              ]}>
-              {item.totalHours} Hours
-            </Text>
+            <View style={[Styles.center, {flex: 1}]}>
+              <AirbnbRating
+                reviews={false}
+                size={Size.ratingSize}
+                defaultRating={item.ratedNumber}
+                count={5}
+              />
+            </View>
+            <View style={[Styles.center, {flex: 1}]}>
+              <Text
+                style={[
+                  Styles.subTitleInHorizontalList,
+                  {color: theme.grayColor},
+                ]}>
+                {item.soldNumber} students
+              </Text>
+            </View>
           </View>
           <View style={Styles.fillRowCenter}>
-            <AirbnbRating
-              reviews={false}
-              size={Size.ratingSize}
-              defaultRating={item.ratedNumber}
-              count={5}
-              starContainerStyle={{paddingBottom: Distance.spacing_12}}
-            />
+            {item.price === 0 ? (
+              <Text style={[styles.price, {color: theme.alertColor}]}>
+                Miễn phí
+              </Text>
+            ) : (
+              <Text style={[styles.price, {color: theme.alertColor}]}>
+                {item.price}VND
+              </Text>
+            )}
           </View>
         </View>
       </View>
@@ -96,6 +92,11 @@ const styles = StyleSheet.create({
     ...Typography.fontRegular,
     ...BoxModel.smallMarginHorizontal,
     fontSize: Typography.fontSize12,
+  },
+  price: {
+    flex: 1,
+    ...Typography.fontBold,
+    fontSize: Typography.fontSize16,
   },
 });
 export default Item;

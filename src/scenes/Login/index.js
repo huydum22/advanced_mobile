@@ -17,15 +17,17 @@ import {
 } from '../../styles';
 import * as screenName from '../../Constants/ScreenName';
 import {CheckBox} from 'react-native-elements';
-import AsyncStorage from '@react-native-community/async-storage';
+import {useAsyncStorage} from '@react-native-community/async-storage';
 import {TouchableHighlight} from 'react-native-gesture-handler';
+import {TokenContext} from '../../Provider/Token';
 import {FormInput, PrimaryButton} from '../../components/Authentication';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const Login = (props) => {
   const {navigation} = props;
   const {state, loginProvider} = useContext(AuthenticationContext);
-
+  const {setItem} = useAsyncStorage('@userToken');
+  const {setToken} = useContext(TokenContext);
   const [email, setEmail] = useState('testitedu@gmail.com');
   const [password, setPassword] = useState('12345678');
   const [formState, setFormState] = useState({
@@ -34,34 +36,28 @@ const Login = (props) => {
     values: {},
     isLoading: false,
   });
-  const storeData = async (value) => {
-    try {
-      await AsyncStorage.setItem('@userToken', value);
-    } catch (e) {
-      // saving error
-    }
-  };
 
-  const storeUserInfo = async (value) => {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem('@userInfo', jsonValue);
-    } catch (e) {
-      // saving error
-    }
-  };
   useEffect(() => {
-    if (state.isAuthenticated) {
+    const storeData = async (value) => {
+      try {
+        await setItem(value);
+      } catch (e) {
+        // saving error
+      }
+    };
+    if (state.token) {
       storeData(state.token);
-      storeUserInfo(state.userInfo);
+      setToken(state.token);
+      // userProvider(setToken);
       navigation.replace(screenName.AppTab, {
         screen: screenName.HomeScreenName,
       });
     }
-    if (state.isAuthenticated === false && state.message !== '') {
+    if (state.token === null && state.message !== '') {
       Alert.alert(state.message);
     }
-  }, [state, navigation]);
+  });
+
   console.log(state);
   useEffect(() => {
     if (email !== '' && password !== '') {
