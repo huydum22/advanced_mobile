@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -11,9 +11,9 @@ import {
 import {Styles, Typography, Distance, BoxModel, Size} from '../../styles';
 import backgroundImage03 from '../../assets/image/backgroundImage03.jpg';
 import backgroundImage02 from '../../assets/image/backgroundImage02.jpg';
-import {PathItemHorizontal} from '../../components/Path';
 import {AuthorHorizontalItem} from '../../components/Author';
 import {PopularSkillItem, RelateSkillItem} from '../../components/Skill';
+import {listInstructorAPI} from '../../services/Courses';
 import Banner from '../../components/Banner';
 import {
   ShowListCourseScreenName,
@@ -23,20 +23,34 @@ import {
   RelateSkillScreenName,
   ShowListPathScreenName,
 } from '../../Constants/ScreenName';
+import {CategoryContext} from '../../Provider/Category';
 import SeeAllBtn from '../../components/common/see-all-button';
 import dataSkill from '../../ExampleData/skill';
-import dataRelate from '../../ExampleData/relate-skill';
 import dataAuthor from '../../ExampleData/author';
-import dataPath from '../../ExampleData/path';
 import {ThemeContext} from '../../Provider/Theme';
+import p from 'pretty-format';
 const Browse = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
+  const {listCategory} = useContext(CategoryContext);
+  const [listInstructor, setLIstInstructor] = useState([]);
   const onPressBanner = (name) => {
     navigation.navigate(ShowListCourseScreenName, {
       title: name,
     });
   };
+  const getInstructor = async () => {
+    try {
+      const response = await listInstructorAPI();
+      setLIstInstructor(response.data.payload);
+    } catch ({response}) {
+      console.log(response);
+    }
+  };
+  useEffect(() => {
+    getInstructor();
+  }, []);
+  console.log(p(listInstructor));
 
   const onPressPopularSkill = () => {
     navigation.navigate(PopularSkillScreenName);
@@ -143,9 +157,9 @@ const Browse = (props) => {
           <FlatList
             nestedScrollEnabled={true}
             contentContainerStyle={styles.contentContainer}
-            numColumns={dataRelate.length / 2}
+            numColumns={JSON.parse(JSON.stringify(listCategory)).length / 2}
             alwaysBounceVertical={false}
-            data={dataRelate}
+            data={JSON.parse(JSON.stringify(listCategory))}
             keyExtractor={(item, index) => item.id}
             renderItem={({item}) => (
               <RelateSkillItem item={item} onPress={onPressRelateSkill} />
@@ -159,32 +173,11 @@ const Browse = (props) => {
         </ScrollView>
       );
     }
+
     if (data === 2) {
       return (
         <FlatList
-          data={dataPath.slice(0, 5)}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => item.id}
-          renderItem={({item}) => (
-            <PathItemHorizontal
-              item={item}
-              key={item.id}
-              onPress={onPressPath}
-            />
-          )}
-          getItemLayout={(data, index) => ({
-            length: Size.scaleSize(200),
-            offset: Size.scaleSize(200) * index,
-            index,
-          })}
-        />
-      );
-    }
-    if (data === 3) {
-      return (
-        <FlatList
-          data={dataAuthor.slice(0, 5)}
+          data={listInstructor.slice(0, 7)}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
@@ -211,10 +204,9 @@ const Browse = (props) => {
       style={(styles.container, {backgroundColor: theme.backgroundColor})}>
       <SectionList
         sections={[
-          {title: 'Popular Skill', data: [0]},
+          {title: 'Học phí', data: [0]},
           {title: '', data: [1]},
-          {title: 'Paths', data: [2]},
-          {title: 'Top Author', data: [3]},
+          {title: 'Top Author', data: [2]},
         ]}
         keyExtractor={(item, index) => item + index}
         renderSectionHeader={({section: {title, data}}) =>

@@ -6,3 +6,4 @@ export const FORGOT_PASSWORD = '/user/forget-pass/send-email';
 export const ALL_CATEGORY = '/category/all';
 export const SEARCH = '/course/search';
 export const PROFILE = '/user/me';
+export const INSTRUCTOR = '/instructor';

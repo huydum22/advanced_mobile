@@ -9,13 +9,14 @@ import {
   backgroundSeeAllButton,
 } from './Color/color';
 import {smallMargin, tinyMargin, smallPaddingHorizontal} from './box-model';
-import {scaleSize, boxShadow, bannerHeight} from './size';
+import {scaleSize, itemHeight} from './size';
 import {
   fontSize18,
   fontBold,
   fontRegular,
   fontSize14,
   fontSize12,
+  fontSize16,
 } from './typography';
 import {spacing_14} from './distance';
 export const titleInList = {
@@ -30,12 +31,12 @@ export const titleRow = {
 export const titleInHorizontalList = {
   flex: 1,
   ...fontRegular,
-  fontSize: fontSize14,
+  fontSize: fontSize16,
 };
 export const subTitleInHorizontalList = {
   flex: 1,
   ...fontRegular,
-  fontSize: fontSize12,
+  fontSize: fontSize14,
   color: grayDarkColor,
 };
 export const headerContainer = {
@@ -48,8 +49,8 @@ export const headerContainer = {
 
 export const horizontalCourse = {
   ...smallMargin,
-  width: scaleSize(200),
-  height: scaleSize(190),
+  width: scaleSize(220),
+  height: scaleSize(200),
 };
 export const imageInHorizontalCourse = {
   flex: 1,
@@ -71,8 +72,8 @@ export const horizontalAuthor = {
   marginLeft: spacing_14,
 };
 export const imageInHorizontalAuthor = {
-  width: bannerHeight,
-  height: bannerHeight,
+  width: itemHeight,
+  height: itemHeight,
   borderRadius: scaleSize(50),
 };
 export const containerInHorizontalAuthor = {

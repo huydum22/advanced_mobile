@@ -7,6 +7,10 @@ const image03 =
 const randomRate = () => {
   return Math.floor(Math.random() * 5 + 1);
 };
+
+import REQUEST from '../HttpClient';
+import {INSTRUCTOR} from '../../Constants/API';
+
 const data = [
   {
     id: '1',
@@ -196,4 +200,7 @@ export const listCourseProvider = async () => {
 
 export const findCourseProvider = async (id) => {
   return data.find((item) => item.id === id);
+};
+export const listInstructorAPI = async () => {
+  return await REQUEST(INSTRUCTOR);
 };

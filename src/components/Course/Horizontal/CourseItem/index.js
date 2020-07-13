@@ -2,12 +2,13 @@ import React, {useContext} from 'react';
 import {View, StyleSheet, TouchableHighlight, Text} from 'react-native';
 import {Styles, BoxModel, Size, Typography, Distance} from '../../../../styles';
 import FastImage from 'react-native-fast-image';
-// import {AirbnbRating} from 'react-native-ratings';
 import {ThemeContext} from '../../../../Provider/Theme';
-import {Rating, AirbnbRating} from 'react-native-elements';
+import StarRating from 'react-native-star-rating';
+import p from 'pretty-format';
 const Item = (props) => {
   const {item, onPress} = props;
   const {theme} = useContext(ThemeContext);
+
   return (
     <TouchableHighlight
       style={[
@@ -23,7 +24,7 @@ const Item = (props) => {
       }}>
       <View style={Styles.fillColumn}>
         <FastImage
-          style={{width: Size.scaleSize(200), height: Size.scaleSize(100)}}
+          style={{width: Size.scaleSize(220), height: Size.scaleSize(100)}}
           source={{
             uri: item.imageUrl,
           }}
@@ -49,12 +50,18 @@ const Item = (props) => {
             </Text>
           </View>
           <View style={Styles.fillRow}>
-            <View style={[Styles.center, {flex: 1}]}>
-              <AirbnbRating
-                reviews={false}
-                size={Size.ratingSize}
-                defaultRating={item.ratedNumber}
-                count={5}
+            <View style={[Styles.fillRowStart, {flex: 1}]}>
+              <StarRating
+                disabled={false}
+                maxStars={5}
+                starSize={Size.ratingSize}
+                rating={
+                  (item.presentationPoint +
+                    item.formalityPoint +
+                    item.contentPoint) /
+                  3
+                }
+                fullStarColor={'#f1c40f'}
               />
             </View>
             <View style={[Styles.center, {flex: 1}]}>
@@ -69,11 +76,11 @@ const Item = (props) => {
           </View>
           <View style={Styles.fillRowCenter}>
             {item.price === 0 ? (
-              <Text style={[styles.price, {color: theme.alertColor}]}>
+              <Text style={[styles.price, {color: theme.primaryColor}]}>
                 Miễn phí
               </Text>
             ) : (
-              <Text style={[styles.price, {color: theme.alertColor}]}>
+              <Text style={[styles.price, {color: theme.primaryColor}]}>
                 {item.price}VND
               </Text>
             )}

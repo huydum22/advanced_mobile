@@ -10,8 +10,9 @@ const baseWidth = 375;
 export const scaleSize = (size) => (width / baseWidth) * size;
 
 export const scaleFont = (size) => size * PixelRatio.getFontScale();
-export const ratingSize = scaleSize(13);
-export const bannerHeight = scaleSize(150);
+export const ratingSize = scaleSize(15);
+export const itemHeight = scaleSize(100);
+export const bannerHeight = scaleSize(120);
 export const bannerWidth = WIDTH - scaleSize(30);
 export function boxShadow(
   color,
