@@ -7,7 +7,6 @@ import p from 'pretty-format';
 const Author = (props) => {
   const {onPress, item} = props;
   const {theme} = useContext(ThemeContext);
-  console.log(p(item['user.name']));
   return (
     <TouchableHighlight
       style={Styles.horizontalAuthor}

@@ -24,7 +24,7 @@ const Item = (props) => {
       }}>
       <View style={Styles.fillColumn}>
         <FastImage
-          style={{width: Size.scaleSize(220), height: Size.scaleSize(100)}}
+          style={{width: Size.scaleSize(200), height: Size.scaleSize(100)}}
           source={{
             uri: item.imageUrl,
           }}
@@ -49,7 +49,7 @@ const Item = (props) => {
               {item.name}
             </Text>
           </View>
-          <View style={Styles.fillRow}>
+          <View style={[Styles.fillRow, BoxModel.tinyPaddingVertical]}>
             <View style={[Styles.fillRowStart, {flex: 1}]}>
               <StarRating
                 disabled={false}
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   price: {
     flex: 1,
     ...Typography.fontBold,
-    fontSize: Typography.fontSize16,
+    fontSize: Typography.fontSize18,
   },
 });
 export default Item;

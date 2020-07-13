@@ -13,7 +13,7 @@ import backgroundImage03 from '../../assets/image/backgroundImage03.jpg';
 import backgroundImage02 from '../../assets/image/backgroundImage02.jpg';
 import {AuthorHorizontalItem} from '../../components/Author';
 import {PopularSkillItem, RelateSkillItem} from '../../components/Skill';
-import {listInstructorAPI} from '../../services/Courses';
+import {listInstructorAPI} from '../../services/Instructor';
 import Banner from '../../components/Banner';
 import {
   ShowListCourseScreenName,
@@ -26,7 +26,6 @@ import {
 import {CategoryContext} from '../../Provider/Category';
 import SeeAllBtn from '../../components/common/see-all-button';
 import dataSkill from '../../ExampleData/skill';
-import dataAuthor from '../../ExampleData/author';
 import {ThemeContext} from '../../Provider/Theme';
 import p from 'pretty-format';
 const Browse = (props) => {
@@ -50,7 +49,6 @@ const Browse = (props) => {
   useEffect(() => {
     getInstructor();
   }, []);
-  console.log(p(listInstructor));
 
   const onPressPopularSkill = () => {
     navigation.navigate(PopularSkillScreenName);

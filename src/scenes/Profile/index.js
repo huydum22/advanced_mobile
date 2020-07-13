@@ -16,7 +16,6 @@ import {
   OtherSettingScreenName,
 } from '../../Constants/ScreenName';
 import {Item} from '../../components/AccountManagement';
-import {TokenContext} from '../../Provider/Token';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import FastImage from 'react-native-fast-image';

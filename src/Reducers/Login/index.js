@@ -23,24 +23,6 @@ export const loginReducer = (prevState, action) => {
         token: null,
         message: '',
       };
-
-    case actionTypes.USER_REQUEST:
-      return {...prevState};
-    case actionTypes.USER_SUCCESS:
-      return {
-        ...prevState,
-        userInfo: action.response.payload,
-      };
-    case actionTypes.USER_ERROR:
-      return {
-        ...prevState,
-        message: action.error.message,
-      };
-    case actionTypes.USER_TOKEN:
-      return {
-        ...prevState,
-        token: action.response,
-      };
     default:
       return prevState;
   }

@@ -6,10 +6,6 @@ export const actionTypes = {
   LOGIN_ERROR: 'LOGIN_ERROR',
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
   LOGOUT: 'LOGOUT',
-  USER_REQUEST: 'USER_REQUEST',
-  USER_ERROR: 'USER_ERROR',
-  USER_SUCCESS: 'USER_SUCCESS',
-  USER_TOKEN: 'USER_TOKEN',
 };
 const loginRequest = () => ({
   type: actionTypes.LOGIN_REQUEST,

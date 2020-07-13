@@ -8,26 +8,30 @@ import * as screenName from '../../../Constants/ScreenName';
 import {Size, Typography, Distance} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 import {AuthenticationContext} from '../../../Provider/Authentication';
+import {TokenContext} from '../../../Provider/Token';
+import {ProfileAPI} from '../../../services/Authentication';
 const HomeStack = createStackNavigator();
 
 const HomeNavigatorStack = () => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
-  // const avatarHomeBar = useMemo(
-  //   () => (
-  //     <FastImage
-  //       style={{
-  //         width: Size.scaleSize(25),
-  //         height: Size.scaleSize(25),
-  //         borderRadius: Size.scaleSize(12.5),
-  //       }}
-  //       source={{
-  //         uri: state.userInfo.avatar,
-  //       }}
-  //     />
-  //   ),
-  //   [state.userInfo.avatar],
-  // );
+  const {token} = useContext(TokenContext);
+
+  const avatarHomeBar = useMemo(
+    () => (
+      <FastImage
+        style={{
+          width: Size.scaleSize(25),
+          height: Size.scaleSize(25),
+          borderRadius: Size.scaleSize(12.5),
+        }}
+        source={{
+          uri: state.userInfo.avatar,
+        }}
+      />
+    ),
+    [state.userInfo.avatar],
+  );
   console.log(state);
   return (
     <HomeStack.Navigator
@@ -53,8 +57,8 @@ const HomeNavigatorStack = () => {
               }}
               underlayColor={theme.overlayColor}
               style={{marginRight: Distance.spacing_14}}>
-              {/* {avatarHomeBar} */}
-              <FastImage
+              {avatarHomeBar}
+              {/* <FastImage
                 style={{
                   width: Size.scaleSize(25),
                   height: Size.scaleSize(25),
@@ -64,7 +68,7 @@ const HomeNavigatorStack = () => {
                   uri:
                     'https://storage.googleapis.com/itedu-bucket/Avatar/abf2226c-b853-4e26-a71e-281ed115427c.png',
                 }}
-              />
+              /> */}
             </TouchableHighlight>
           ),
           headerLeft: () => (

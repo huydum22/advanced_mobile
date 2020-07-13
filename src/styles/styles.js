@@ -36,7 +36,7 @@ export const titleInHorizontalList = {
 export const subTitleInHorizontalList = {
   flex: 1,
   ...fontRegular,
-  fontSize: fontSize14,
+  fontSize: fontSize12,
   color: grayDarkColor,
 };
 export const headerContainer = {
@@ -50,7 +50,7 @@ export const headerContainer = {
 export const horizontalCourse = {
   ...smallMargin,
   width: scaleSize(220),
-  height: scaleSize(200),
+  // height: scaleSize(200),
 };
 export const imageInHorizontalCourse = {
   flex: 1,

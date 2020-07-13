@@ -9,7 +9,12 @@ const randomRate = () => {
 };
 
 import REQUEST from '../HttpClient';
-import {INSTRUCTOR} from '../../Constants/API';
+import {
+  TOP_NEW,
+  TOP_RATE,
+  TOP_SELL,
+  TOP_USER_FAVORITE,
+} from '../../Constants/API';
 
 const data = [
   {
@@ -201,6 +206,28 @@ export const listCourseProvider = async () => {
 export const findCourseProvider = async (id) => {
   return data.find((item) => item.id === id);
 };
-export const listInstructorAPI = async () => {
-  return await REQUEST(INSTRUCTOR);
+export const topRateCourseAPI = async () => {
+  return await REQUEST.post(TOP_RATE, {
+    limit: 10,
+    page: 1,
+  });
+};
+export const topSellerCourseAPI = async () => {
+  return await REQUEST.post(TOP_SELL, {
+    limit: 10,
+    page: 1,
+  });
+};
+
+export const topNewCourseAPI = async () => {
+  return await REQUEST.post(TOP_NEW, {
+    limit: 10,
+    offset: 0,
+  });
+};
+
+export const topCourseUserFavorite = async (id) => {
+  return await REQUEST.post(TOP_USER_FAVORITE, {
+    userId: id,
+  });
 };

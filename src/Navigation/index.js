@@ -10,7 +10,7 @@ import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
 import CourseDetailNavigator from './AppNavigator/CourseDetailNavigator';
 import SplashScreen from '../scenes/SplashScreen';
-import {AuthenticationProvider} from '../Provider/Authentication';
+import {AuthenticationContext} from '../Provider/Authentication';
 import {CoursesProvider} from '../Provider/Course';
 import {FavoriteProvider} from '../Provider/Favorite';
 import {ThemeContext} from '../Provider/Theme';
@@ -45,13 +45,20 @@ const RootScreen = () => {
 };
 const Navigation = () => {
   const {theme} = useContext(ThemeContext);
-  const {setToken} = useContext(TokenContext);
+  const {loginProvider} = useContext(AuthenticationContext);
 
   const {getItem} = useAsyncStorage('@userToken');
 
   const readItemFromStorage = async () => {
     const item = await getItem();
-    setToken(item);
+    const jsonValue = JSON.parse(item);
+    if (item !== null) {
+      try {
+        return await loginProvider(jsonValue.email, jsonValue.password);
+      } catch ({response}) {
+        console.log(response);
+      }
+    }
   };
   useEffect(() => {
     readItemFromStorage();
@@ -64,17 +71,15 @@ const Navigation = () => {
       ) : (
         <StatusBar translucent barStyle="dark-content" />
       )}
-      <AuthenticationProvider>
-        <CategoryProvider>
-          <CoursesProvider>
-            <FavoriteProvider>
-              <NavigationContainer>
-                <RootScreen />
-              </NavigationContainer>
-            </FavoriteProvider>
-          </CoursesProvider>
-        </CategoryProvider>
-      </AuthenticationProvider>
+      <CategoryProvider>
+        <CoursesProvider>
+          <FavoriteProvider>
+            <NavigationContainer>
+              <RootScreen />
+            </NavigationContainer>
+          </FavoriteProvider>
+        </CoursesProvider>
+      </CategoryProvider>
     </SafeAreaProvider>
   );
 };

@@ -40,13 +40,15 @@ const Login = (props) => {
   useEffect(() => {
     const storeData = async (value) => {
       try {
-        await setItem(value);
+        const jsonValue = JSON.stringify(value);
+        await setItem(jsonValue);
       } catch (e) {
         // saving error
       }
     };
     if (state.token) {
-      storeData(state.token);
+      let value = {email: email, password: password};
+      storeData(value);
       setToken(state.token);
       // userProvider(setToken);
       navigation.replace(screenName.AppTab, {
@@ -58,7 +60,6 @@ const Login = (props) => {
     }
   });
 
-  console.log(state);
   useEffect(() => {
     if (email !== '' && password !== '') {
       setFormState((formState) => ({
