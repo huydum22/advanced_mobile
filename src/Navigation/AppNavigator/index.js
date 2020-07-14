@@ -31,7 +31,7 @@ const homeIcon = ({color}) => (
   <MaterialCommunityIcons name="home" size={25} color={color} />
 );
 const downloadIcon = ({color}) => (
-  <MaterialIcons name="favorite-border" size={25} color={color} />
+  <MaterialIcons name="cloud-download" size={25} color={color} />
 );
 const configHomeTab = {
   tabBarLabel: 'Home',
@@ -43,7 +43,7 @@ const configBrowseTab = {
   tabBarIcon: browseIcon,
 };
 const configDownloadTab = {
-  tabBarLabel: 'Favorite',
+  tabBarLabel: 'Downloads',
   tabBarIcon: downloadIcon,
 };
 const configSearchTab = {

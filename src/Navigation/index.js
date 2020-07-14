@@ -14,7 +14,6 @@ import {AuthenticationContext} from '../Provider/Authentication';
 import {CoursesProvider} from '../Provider/Course';
 import {FavoriteProvider} from '../Provider/Favorite';
 import {ThemeContext} from '../Provider/Theme';
-import {TokenContext} from '../Provider/Token';
 import {darkTheme} from '../styles';
 import {CategoryProvider} from '../Provider/Category';
 

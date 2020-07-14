@@ -19,7 +19,6 @@ import * as screenName from '../../Constants/ScreenName';
 import {CheckBox} from 'react-native-elements';
 import {useAsyncStorage} from '@react-native-community/async-storage';
 import {TouchableHighlight} from 'react-native-gesture-handler';
-import {TokenContext} from '../../Provider/Token';
 import {FormInput, PrimaryButton} from '../../components/Authentication';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -27,7 +26,6 @@ const Login = (props) => {
   const {navigation} = props;
   const {state, loginProvider} = useContext(AuthenticationContext);
   const {setItem} = useAsyncStorage('@userToken');
-  const {setToken} = useContext(TokenContext);
   const [email, setEmail] = useState('testitedu@gmail.com');
   const [password, setPassword] = useState('12345678');
   const [formState, setFormState] = useState({
@@ -49,7 +47,6 @@ const Login = (props) => {
     if (state.token) {
       let value = {email: email, password: password};
       storeData(value);
-      setToken(state.token);
       // userProvider(setToken);
       navigation.replace(screenName.AppTab, {
         screen: screenName.HomeScreenName,

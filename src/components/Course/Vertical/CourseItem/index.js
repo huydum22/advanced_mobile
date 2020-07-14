@@ -9,11 +9,13 @@ import {
 } from 'react-native';
 import {FavoriteContext} from '../../../../Provider/Favorite';
 import {Size, Styles, Distance} from '../../../../styles';
-import {AirbnbRating} from 'react-native-ratings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ActionSheet from 'react-native-actionsheet';
-import p from 'pretty-format';
 import {ThemeContext} from '../../../../Provider/Theme';
+import StarRating from 'react-native-star-rating';
+import FastImage from 'react-native-fast-image';
+import Moment from 'moment';
+
 const Item = (props) => {
   const {onPressItem, item} = props;
   const {theme} = useContext(ThemeContext);
@@ -36,7 +38,12 @@ const Item = (props) => {
         underlayColor={theme.primaryBackgroundColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
-            <Image source={item.imageUrl} style={styles.image} />
+            <FastImage
+              style={styles.image}
+              source={{
+                uri: item.imageUrl,
+              }}
+            />
           </View>
           <View style={styles.mainContainer}>
             <Text
@@ -67,7 +74,7 @@ const Item = (props) => {
                   Styles.textCenter,
                   {color: theme.grayColor},
                 ]}>
-                {item.updatedAt}
+                {Moment(item.updatedAt).format('MMMM Do')}
               </Text>
               <Text
                 style={[
@@ -79,10 +86,22 @@ const Item = (props) => {
               </Text>
             </View>
             <View style={styles.ratingContainer}>
-              <AirbnbRating
+              {/* <AirbnbRating
                 reviews={false}
                 size={14}
                 defaultRating={item.ratedNumber}
+              /> */}
+              <StarRating
+                disabled={false}
+                maxStars={5}
+                starSize={Size.ratingSize}
+                rating={
+                  (item.presentationPoint +
+                    item.formalityPoint +
+                    item.contentPoint) /
+                  3
+                }
+                fullStarColor={'#f1c40f'}
               />
             </View>
           </View>
@@ -125,7 +144,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 3,
     ...Styles.center,
-    height: Size.scaleSize(100),
+    height: Size.scaleSize(110),
     width: Size.scaleSize(50),
     marginLeft: Distance.spacing_8,
   },
@@ -152,7 +171,7 @@ const styles = StyleSheet.create({
   ratingContainer: {
     flex: 1.5,
     ...Styles.fillRowStart,
-    marginTop: -Size.scaleSize(20),
+    // marginTop: -Size.scaleSize(20),
   },
   more: {
     ...Styles.fillCenter,

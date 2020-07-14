@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   SafeAreaView,
   View,
@@ -7,23 +7,32 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
+import {topNewCourseAPI} from '../../services/Courses';
 import {CourseVerticalItem} from '../../components/Course';
 import {Styles, Distance, BoxModel, Typography, Size} from '../../styles';
-// import data from '../../ExampleData/course';
 
 import separator from '../../components/Separator';
 import {
   CourseDetailScreenName,
   CourseDetailScreenStack,
 } from '../../Constants/ScreenName';
-import {FavoriteContext} from '../../Provider/Favorite';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {ThemeContext} from '../../Provider/Theme';
 const ListCourse = (props) => {
   const {theme} = useContext(ThemeContext);
-  const {state} = useContext(AuthenticationContext);
   const {navigation, route} = props;
-  const {favorite} = useContext(FavoriteContext);
+  const [data, setData] = useState([]);
+  const fetchData = async () => {
+    try {
+      let response = topNewCourseAPI();
+      setData((await response).data.payload);
+    } catch ({response}) {
+      console.log(response);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenStack, {
       screen: CourseDetailScreenName,
@@ -52,7 +61,7 @@ const ListCourse = (props) => {
     <SafeAreaView
       style={[styles.safeAreaView, {backgroundColor: theme.backgroundColor}]}>
       <FlatList
-        data={favorite}
+        data={data}
         image
         ItemSeparatorComponent={separator}
         showsVerticalScrollIndicator={false}

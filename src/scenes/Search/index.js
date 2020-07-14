@@ -12,7 +12,9 @@ const Search = (props) => {
   const {theme} = useContext(ThemeContext);
   const {keyword, setKeyword} = useContext(RecentSearchContext);
   const onPressItem = (item) => {
-    navigation.navigate(SearchResultScreenName);
+    navigation.navigate(SearchResultScreenName, {
+      keyword: item,
+    });
   };
   const renderListItem = (item) => {
     return (

@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 const RecentSearchContext = React.createContext();
 
 const RecentSearchProvider = (props) => {
-  const [keyword, setKeyword] = useState(['react', 'angular']);
+  const [keyword, setKeyword] = useState(['swift', 'web']);
   return (
     <RecentSearchContext.Provider
       value={{

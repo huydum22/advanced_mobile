@@ -77,7 +77,7 @@ const Item = (props) => {
           <View style={Styles.fillRowCenter}>
             {item.price === 0 ? (
               <Text style={[styles.price, {color: theme.primaryColor}]}>
-                Miễn phí
+                Free
               </Text>
             ) : (
               <Text style={[styles.price, {color: theme.primaryColor}]}>

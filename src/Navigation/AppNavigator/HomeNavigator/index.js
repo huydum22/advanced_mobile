@@ -8,14 +8,11 @@ import * as screenName from '../../../Constants/ScreenName';
 import {Size, Typography, Distance} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 import {AuthenticationContext} from '../../../Provider/Authentication';
-import {TokenContext} from '../../../Provider/Token';
-import {ProfileAPI} from '../../../services/Authentication';
 const HomeStack = createStackNavigator();
 
 const HomeNavigatorStack = () => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
-  const {token} = useContext(TokenContext);
 
   const avatarHomeBar = useMemo(
     () => (

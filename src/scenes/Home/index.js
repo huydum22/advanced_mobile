@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
@@ -19,7 +20,6 @@ import {
   CourseDetailScreenStack,
 } from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
-import {CategoryContext} from '../../Provider/Category';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {
   topNewCourseAPI,
@@ -32,6 +32,7 @@ const Home = (props) => {
   const {navigation, route} = props;
   // const {listCategory, setListCategory} = useContext(CategoryContext);
   const {theme} = useContext(ThemeContext);
+  const {state} = useContext(AuthenticationContext);
   const [state1, setState1] = useState([]);
   const [state2, setState2] = useState([]);
   const [state3, setState3] = useState([]);
@@ -61,10 +62,19 @@ const Home = (props) => {
       console.log(p(response));
     }
   };
+  const fetchDataState4 = async () => {
+    try {
+      let response = await topCourseUserFavorite(state.userInfo.id);
+      setState4(response.data.payload);
+    } catch ({response}) {
+      console.log(p(response));
+    }
+  };
   useEffect(() => {
     fetchDataState1();
     fetchDataState2();
     fetchDataState3();
+    fetchDataState4();
   }, []);
 
   const onPressEmptyComponent = (title) => {
