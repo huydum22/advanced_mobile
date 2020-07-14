@@ -11,56 +11,91 @@ import {
 } from '../../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ThemeContext} from '../../../Provider/Theme';
+import FastImage from 'react-native-fast-image';
+import StarRating from 'react-native-star-rating';
+import p from 'pretty-format';
 const Header = (props) => {
   const {theme} = useContext(ThemeContext);
-  const {name} = props;
+  const {data} = props;
+  const skillComponent = () => {
+    if (data.skills) {
+      return data.skills.map((item) => (
+        <View style={styles.link} key={item.toString()}>
+          <MaterialCommunityIcons
+            name="check-bold"
+            size={22}
+            color={theme.primaryTextColor}
+          />
+          <Text style={[styles.linkText, {color: theme.primaryTextColor}]}>
+            {item}
+          </Text>
+        </View>
+      ));
+    }
+  };
+  const averagePointRating = () => {
+    if (data.averagePoint) {
+      return data.averagePoint.toFixed(1);
+    }
+    return 0;
+  };
   return (
     <View style={styles.container}>
-      <Image source={avatar} style={styles.image} />
+      <FastImage
+        style={styles.image}
+        source={{
+          uri: data.avatar,
+        }}
+      />
       <View>
         <Text style={[styles.textName, {color: theme.primaryTextColor}]}>
-          {name}
+          {data.name ? data.name : data.email}
         </Text>
       </View>
       <View>
         <Text style={[styles.textJob, {color: theme.grayColor}]}>
-          Software Engineer
+          {data.major ? data.major : 'Nothing'}
         </Text>
       </View>
-      <TouchableOpacity
-        style={[styles.buttonFollow, {backgroundColor: theme.primaryColor}]}>
-        <Text style={[styles.textFollow, {color: theme.primaryTextColor}]}>
-          Follow
-        </Text>
-      </TouchableOpacity>
-      <View>
-        <Text style={[styles.textJob, {color: theme.grayColor}]}>
-          Follow to be notified when new courses are published.
-        </Text>
+      <StarRating
+        disabled={false}
+        maxStars={5}
+        starSize={Size.ratingSize}
+        rating={data.averagePoint}
+        fullStarColor={'#f1c40f'}
+      />
+      <View style={[Styles.fillRowCenter, BoxModel.smallMarginVertical]}>
+        <View
+          style={[
+            Styles.fillColumn,
+            styles.separator,
+            {borderRightColor: theme.grayColor},
+          ]}>
+          <Text style={Styles.textCenter}>{data.soldNumber}</Text>
+          <Text style={Styles.textCenter}>Students</Text>
+        </View>
+
+        <View
+          style={[
+            Styles.fillColumn,
+            styles.separator,
+            {borderRightColor: theme.grayColor},
+          ]}>
+          <Text style={Styles.textCenter}>{data.totalCourse}</Text>
+          <Text style={Styles.textCenter}>Courses</Text>
+        </View>
+        <View style={Styles.fillColumn}>
+          <Text style={Styles.textCenter}>{averagePointRating()}/5</Text>
+          <Text style={Styles.textCenter}>Rating</Text>
+        </View>
       </View>
       <View>
         <Text style={[styles.descriptionText, {color: theme.primaryTextColor}]}>
-          Joe began his love of programming on an Apple III in BASIC. Although
-          his preferred language is JavaScript, he has worked professionally
-          with just about every major Microsoft language. He is currently a
-          consultant and full time author for Pluralsight. Joe has always had a
-          strong interest in education, and has worked both full and part time
-          as a technical teacher for over ten years. He is a frequent blogger
-          and speaker, organizer of ng-conf, the AngularJS conference (www.ng-
-          conf.org), and a panelist on the JavaScript Jabber podcast
-          (http://javascriptjabber.com/)
+          {data.intro ? data.intro : 'Nothing to update'}
         </Text>
       </View>
-      <View style={styles.link}>
-        <MaterialCommunityIcons
-          name="link"
-          size={20}
-          color={theme.primaryTextColor}
-        />
-        <Text style={[styles.linkText, {color: theme.primaryTextColor}]}>
-          https://reactnative.dev
-        </Text>
-      </View>
+      {skillComponent()}
+
       <View style={styles.link}>
         <MaterialCommunityIcons
           name="github-circle"
@@ -121,11 +156,14 @@ const styles = StyleSheet.create({
   },
   linkText: {
     ...Typography.fontRegular,
-    fontSize: Typography.fontSize14,
+    fontSize: Typography.fontSize16,
     marginLeft: Distance.spacing_8,
   },
   linkGit: {
     marginRight: Distance.spacing_10,
+  },
+  separator: {
+    borderRightWidth: 1,
   },
 });
 export default Header;

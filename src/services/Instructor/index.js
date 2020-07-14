@@ -1,6 +1,10 @@
 import REQUEST from '../HttpClient';
-import {INSTRUCTOR} from '../../Constants/API';
+import {INSTRUCTOR, INSTRUCTOR_DETAIL} from '../../Constants/API';
 
 export const listInstructorAPI = async () => {
   return await REQUEST(INSTRUCTOR);
+};
+
+export const instructorDetailAPI = async (id) => {
+  return await REQUEST(`${INSTRUCTOR_DETAIL}${id}`);
 };

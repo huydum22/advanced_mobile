@@ -36,8 +36,6 @@ const Account = (props) => {
   const onPressOtherSetting = () => {
     navigation.navigate(OtherSettingScreenName);
   };
-
-  // const {authentication} = useContext(AuthenticationContext);
   return (
     <SafeAreaView>
       <ScrollView
@@ -45,13 +43,6 @@ const Account = (props) => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.mainContainer}>
           <View style={styles.imageContainer}>
-            {/* <Avatar
-              size="xlarge"
-              rounded
-              title={userInfo.email}
-              containerStyle={{backgroundColor: theme.primaryColor}}
-              // onPress={() => console.log('Works!')}
-            /> */}
             <FastImage
               style={{
                 width: Size.scaleSize(150),

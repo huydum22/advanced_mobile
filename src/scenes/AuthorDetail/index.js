@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {StyleSheet, View, FlatList, SafeAreaView} from 'react-native';
 import {Size} from '../../styles';
-import data from '../../ExampleData/course';
 import {CourseVerticalItem} from '../../components/Course';
 import {Header} from '../../components/AuthorDetail';
+import {instructorDetailAPI} from '../../services/Instructor';
 import {
   CourseDetailScreenName,
   CourseDetailScreenStack,
@@ -12,7 +12,19 @@ import {ThemeContext} from '../../Provider/Theme';
 const AuthorDetail = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
-
+  const [data, setData] = useState({});
+  const fetchInstructorDetail = async () => {
+    try {
+      let response = await instructorDetailAPI(route.params.id);
+      setData(response.data.payload);
+    } catch ({response}) {
+      console.log(response);
+    }
+  };
+  useEffect(() => {
+    fetchInstructorDetail();
+  }, []);
+  console.log(data);
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenStack, {
       screen: CourseDetailScreenName,
@@ -30,7 +42,7 @@ const AuthorDetail = (props) => {
     <SafeAreaView>
       <View style={{backgroundColor: theme.primaryBackgroundColor}}>
         <FlatList
-          data={data}
+          data={data.courses}
           ItemSeparatorComponent={flatListSeparator}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
@@ -38,7 +50,7 @@ const AuthorDetail = (props) => {
           )}
           keyExtractor={(item, index) => item + index}
           ListHeaderComponent={() => {
-            return <Header name={route.params.name} />;
+            return <Header data={data} />;
           }}
           getItemLayout={(data, index) => ({
             length: Size.scaleSize(100),

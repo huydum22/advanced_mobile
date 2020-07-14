@@ -21,7 +21,6 @@ const Author = (props) => {
             uri: item['user.avatar'],
           }}
         />
-        {/* <Image source={item.image} style={Styles.imageInHorizontalAuthor} /> */}
         <View style={Styles.containerInHorizontalAuthor}>
           <Text style={[styles.text, {color: theme.primaryTextColor}]}>
             {item['user.name'] ? item['user.name'] : item['user.email']}

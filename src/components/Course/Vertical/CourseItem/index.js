@@ -82,7 +82,7 @@ const Item = (props) => {
                   Styles.textCenter,
                   {color: theme.grayColor},
                 ]}>
-                {item.totalHours}
+                {item.totalHours} hours
               </Text>
             </View>
             <View style={styles.ratingContainer}>

@@ -27,7 +27,6 @@ import {CategoryContext} from '../../Provider/Category';
 import SeeAllBtn from '../../components/common/see-all-button';
 import dataSkill from '../../ExampleData/skill';
 import {ThemeContext} from '../../Provider/Theme';
-import p from 'pretty-format';
 const Browse = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
@@ -62,7 +61,7 @@ const Browse = (props) => {
   };
   const onPressAuthor = (item) => {
     navigation.navigate(AuthorDetailScreenName, {
-      name: item.name,
+      id: item.id,
     });
   };
   const onPressRelateSkill = (item) => {
@@ -175,7 +174,7 @@ const Browse = (props) => {
     if (data === 2) {
       return (
         <FlatList
-          data={listInstructor.slice(0, 7)}
+          data={listInstructor.slice(0, 10)}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
@@ -202,7 +201,7 @@ const Browse = (props) => {
       style={(styles.container, {backgroundColor: theme.backgroundColor})}>
       <SectionList
         sections={[
-          {title: 'Học phí', data: [0]},
+          {title: 'Price', data: [0]},
           {title: '', data: [1]},
           {title: 'Top Author', data: [2]},
         ]}
