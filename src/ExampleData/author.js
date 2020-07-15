@@ -1,4 +1,4 @@
-import imagePerson from '../assets/image/person.png';
+import imagePerson from '../assets/image/logoItEdu.png';
 const randomRate = () => {
   return Math.floor(Math.random() * 20);
 };

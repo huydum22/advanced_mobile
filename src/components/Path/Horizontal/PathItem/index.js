@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
 import {Styles, Size} from '../../../../styles';
-import image from '../../../../assets/image/path.png';
+import image from '../../../../assets/image/logoItEdu.png';
 import {ThemeContext} from '../../../../Provider/Theme';
 const Item = (props) => {
   const {item, onPress} = props;

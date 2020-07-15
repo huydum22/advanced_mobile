@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {Styles, Distance, Size, BoxModel, Typography} from '../../../styles';
-import logo from '../../../assets/image/logo.png';
+import logo from '../../../assets/image/logoItEdu.png';
 import {ThemeContext} from '../../../Provider/Theme';
 const text = `React is a Javascript library, developed in 2013 by Jordan Walke of Facebook. You'll find React is both very popular (it's the 5th most starred JS library on GitHub) and used on major sites including on Facebook, Netflix, and Khan Academy. You'll love the flexibility of using React with your favorite web technologies (except for jQuery!), and this path will take you from the fundamentals all the way up to building full apps with custom styling. What you will learn`;
 const Header = (props) => {

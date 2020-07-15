@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import {Colors, Typography} from '../../../../styles';
-import image from '../../../../assets/image/person.png';
+import image from '../../../../assets/image/logoItEdu.png';
 import {ThemeContext} from '../../../../Provider/Theme';
 const Author = (props) => {
   const {onPress} = props;
