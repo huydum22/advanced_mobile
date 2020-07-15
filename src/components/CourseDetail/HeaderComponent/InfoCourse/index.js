@@ -3,19 +3,22 @@ import {View, StyleSheet, Text} from 'react-native';
 import {Size, Typography} from '../../../../styles';
 import {AirbnbRating} from 'react-native-ratings';
 import {ThemeContext} from '../../../../Provider/Theme';
+import Moment from 'moment';
 
 const InfoCourse = (props) => {
   const {theme} = useContext(ThemeContext);
   return (
     <View style={styles.container}>
-      <Text style={[styles.text, {color: theme.grayColor}]}>{props.level}</Text>
-      <Text style={[styles.text, {color: theme.grayColor}]}>.</Text>
       <Text style={[styles.text, {color: theme.grayColor}]}>
-        {props.timeToStart}
+        {props.videoNumber} Videos
       </Text>
       <Text style={[styles.text, {color: theme.grayColor}]}>.</Text>
       <Text style={[styles.text, {color: theme.grayColor}]}>
-        {props.totalHour}
+        {Moment(props.createdAt).format('MMM d, yyyy')}
+      </Text>
+      <Text style={[styles.text, {color: theme.grayColor}]}>.</Text>
+      <Text style={[styles.text, {color: theme.grayColor}]}>
+        {props.totalHour} hours
       </Text>
       <AirbnbRating
         reviews={false}

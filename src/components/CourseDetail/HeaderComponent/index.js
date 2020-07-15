@@ -53,14 +53,16 @@ const Header = (props) => {
   };
   return (
     <View style={{backgroundColor: theme.themeColor}}>
-      <Title name={item.name} />
-      <Author name={item.author} onPress={onPressAuthor} />
+      <Title name={item.title} />
+      <Author instructor={item.instructorId} onPress={onPressAuthor} />
       <InfoCourse
-        level={item.level}
-        timeToStart={item.timeToStart}
-        totalHour={item.totalHour}
-        totalRate={item.totalRate}
-        rate={item.rate}
+        videoNumber={item.videoNumber}
+        timeToStart={item.createdAt}
+        totalHour={item.totalHours}
+        totalRate={item.ratedNumber}
+        rate={
+          (item.formalityPoint + item.contentPoint + item.presentationPoint) / 3
+        }
       />
       <Feature
         onPressFavorite={onPressFavorite}

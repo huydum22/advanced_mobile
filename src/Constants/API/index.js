@@ -18,3 +18,4 @@ export const TOP_RATE = '/course/top-rate';
 export const TOP_USER_FAVORITE = '/course/courses-user-favorite-categories';
 export const TOP_FAVORITE_COURSE = '/user/get-favorite-courses';
 export const RECOMMEND_COURSE = '/user/recommend-course/';
+export const COURSE_INFO = '/course/get-course-info';

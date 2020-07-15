@@ -50,6 +50,7 @@ const UpdateProfile = (props) => {
     };
     ImagePicker.launchImageLibrary(options, async (response) => {
       if (response.uri) {
+        console.log(response.uri);
         setAvatar(response.uri);
       }
     });
@@ -83,7 +84,7 @@ const UpdateProfile = (props) => {
         {backgroundColor: theme.backgroundColor},
       ]}
       behavior={Platform.Ios ? 'padding' : 'height'}>
-      <TouchableHighlight
+      {/* <TouchableHighlight
         style={[
           Styles.center,
           BoxModel.bottomMargin,
@@ -104,7 +105,7 @@ const UpdateProfile = (props) => {
             uri: avatar,
           }}
         />
-      </TouchableHighlight>
+      </TouchableHighlight> */}
       <FormInput
         placeholder="Name"
         value={name}

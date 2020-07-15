@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet,
   Text,
-  ImageBackground,
   SectionList,
   TouchableHighlight,
   Share,
@@ -15,26 +14,46 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
-// import data from '../../ExampleData/courseDetail';
+import {courseInfoAPI} from '../../services/Courses';
+import {AuthenticationContext} from '../../Provider/Authentication';
 import contentData from '../../ExampleData/contents';
 import {Size, Colors, Typography, Styles} from '../../styles';
 import Header from '../../components/CourseDetail/HeaderComponent';
 import {ThemeContext} from '../../Provider/Theme';
+import p from 'pretty-format';
 const CourseDetail = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
-  const [item, setItem] = useState('');
-  const getItem = async (id) => {
+  const {state} = useContext(AuthenticationContext);
+  const [item, setItem] = useState({
+    id: '1',
+    title: 'Angular Fundamentals',
+    numberOfCourse: '5 course',
+    name: 'Deborah House',
+    level: 'Beginner',
+    updatedAt: '2020-07-08T17:42:31.370Z',
+    totalHours: '1h',
+    ratedNumber: 124,
+    soldNumber: 10,
+    instructor: {
+      avatar:
+        'https://storage.googleapis.com/itedu-bucket/Avatar/b5980b4a-a723-4577-b195-c829b2fccaac.jpg',
+      name: 'Tuấn Nguyên',
+    },
+    imageUrl: 'https://itedu.me/static/media/bg-sliders-3.ad2511e4.jpg',
+  });
+
+  const fetchData = async () => {
     try {
-      let response = await findCourseProvider(id);
-      setItem(response);
-    } catch (err) {
-      console.log(err);
+      let response = await courseInfoAPI(state.token, route.params.id);
+      setItem(response.data.payload);
+    } catch ({response}) {
+      console.log(p(response.data));
     }
   };
   useEffect(() => {
-    getItem(route.params.id);
-  });
+    fetchData();
+  }, []);
   const flatListSeparator = () => {
     return (
       <View
@@ -125,12 +144,12 @@ const CourseDetail = (props) => {
     <SafeAreaView>
       <View
         style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
-        <ImageBackground
+        <FastImage
           style={[
             styles.videoContainer,
             {backgroundColor: theme.backgroundColor},
           ]}
-          source={item.image}>
+          source={{uri: item.imageUrl}}>
           <View
             style={{
               ...Styles.fillRowBetween,
@@ -157,7 +176,7 @@ const CourseDetail = (props) => {
               />
             </TouchableHighlight>
           </View>
-        </ImageBackground>
+        </FastImage>
         <View
           style={[
             styles.mainContainer,

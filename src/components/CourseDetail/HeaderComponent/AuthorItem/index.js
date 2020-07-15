@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,24 +8,41 @@ import {
   Image,
 } from 'react-native';
 import {Colors, Typography} from '../../../../styles';
-import image from '../../../../assets/image/logoItEdu.png';
+import {instructorDetailAPI} from '../../../../services/Instructor';
 import {ThemeContext} from '../../../../Provider/Theme';
+import FastImage from 'react-native-fast-image';
 const Author = (props) => {
   const {onPress} = props;
   const {theme} = useContext(ThemeContext);
+  const [item, setItem] = useState({});
+  const fetchData = async () => {
+    try {
+      let response = await instructorDetailAPI(props.instructor);
+      setItem(response.data.payload);
+    } catch ({response}) {
+      console.log(response.data);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <View style={styles.container}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        {/* {renderList(props.author)} */}
         <TouchableOpacity
           style={[
             styles.skillContainer,
             {backgroundColor: theme.backgroundSeeAllButton},
           ]}
           onPress={onPress}>
-          <Image style={styles.image} source={image} />
+          <FastImage
+            style={styles.image}
+            source={{
+              uri: item.avatar,
+            }}
+          />
           <Text style={[styles.text, {color: theme.primaryTextColor}]}>
-            {props.name}
+            {item.name}
           </Text>
         </TouchableOpacity>
       </ScrollView>
