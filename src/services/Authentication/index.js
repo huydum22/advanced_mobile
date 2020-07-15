@@ -4,6 +4,7 @@ import {
   FORGOT_PASSWORD,
   PROFILE,
   UPDATE_PASSWORD,
+  UPDATE_PROFILE,
 } from '../../Constants/API';
 import REQUEST from '../HttpClient';
 export const LogoutProvider = () => {
@@ -51,6 +52,21 @@ export const updatePasswordAPI = async (token, id, oldPass, newPass) => {
       id: id,
       oldPass: oldPass,
       newPass: newPass,
+    },
+    {
+      headers: {Authorization},
+    },
+  );
+};
+
+export const updateProfileAPI = async (token, name, avatar, phone) => {
+  const Authorization = `Bearer ${token}`;
+  return await REQUEST.put(
+    UPDATE_PROFILE,
+    {
+      name: name,
+      avatar: avatar,
+      phone: phone,
     },
     {
       headers: {Authorization},

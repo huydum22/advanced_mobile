@@ -1,6 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, SafeAreaView} from 'react-native';
-// import data from '../../ExampleData/profile';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableHighlight,
+} from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 import {
   Colors,
   Size,
@@ -11,7 +17,6 @@ import {
 } from '../../styles';
 import {
   ChangePasswordScreenName,
-  AuthenticateTab,
   LoginScreenName,
   OtherSettingScreenName,
 } from '../../Constants/ScreenName';
@@ -19,7 +24,7 @@ import {Item} from '../../components/AccountManagement';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import FastImage from 'react-native-fast-image';
-
+import {updateProfileAPI} from '../../services/Authentication';
 const Account = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
@@ -29,12 +34,32 @@ const Account = (props) => {
       screen: LoginScreenName,
     });
   };
-
   const onPressLocation = () => {
     // navigation.navigate(LocationScreenName);
   };
   const onPressOtherSetting = () => {
     navigation.navigate(OtherSettingScreenName);
+  };
+  const onPressAvatar = async () => {
+    const options = {
+      noData: true,
+    };
+    ImagePicker.launchImageLibrary(options, async (response) => {
+      if (response.uri) {
+        try {
+          let res = await updateProfileAPI(
+            state.token,
+            state.userInfo.name,
+            response.uri,
+            state.userInfo.phone,
+          );
+          console.log(res.data);
+        } catch ({res}) {
+          console.log(res);
+        }
+        // this.setState({ photo: response });
+      }
+    });
   };
   return (
     <ScrollView
@@ -42,16 +67,25 @@ const Account = (props) => {
       showsVerticalScrollIndicator={false}>
       <View style={styles.mainContainer}>
         <View style={styles.imageContainer}>
-          <FastImage
+          <TouchableHighlight
             style={{
               width: Size.scaleSize(150),
               height: Size.scaleSize(150),
               borderRadius: Size.scaleSize(75),
             }}
-            source={{
-              uri: state.userInfo.avatar,
-            }}
-          />
+            underlayColor={theme.primaryBackgroundColor}
+            onPress={onPressAvatar}>
+            <FastImage
+              style={{
+                width: Size.scaleSize(150),
+                height: Size.scaleSize(150),
+                borderRadius: Size.scaleSize(75),
+              }}
+              source={{
+                uri: state.userInfo.avatar,
+              }}
+            />
+          </TouchableHighlight>
           <Text style={[styles.headerText, {color: theme.primaryTextColor}]}>
             {state.userInfo ? state.userInfo.email : ''}
           </Text>

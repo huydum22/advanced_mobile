@@ -5,6 +5,7 @@ export const REGISTER = '/user/register';
 export const FORGOT_PASSWORD = '/user/forget-pass/send-email';
 export const PROFILE = '/user/me';
 export const UPDATE_PASSWORD = '/user/change-password';
+export const UPDATE_PROFILE = 'https://api.itedu.me/user/update-profile';
 
 export const ALL_CATEGORY = '/category/all';
 export const INSTRUCTOR = '/instructor';
