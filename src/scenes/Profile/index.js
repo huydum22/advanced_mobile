@@ -10,7 +10,7 @@ import {
   Distance,
 } from '../../styles';
 import {
-  SubscriptionScreenName,
+  ChangePasswordScreenName,
   AuthenticateTab,
   LoginScreenName,
   OtherSettingScreenName,
@@ -24,8 +24,8 @@ const Account = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
   const {navigation, route} = props;
-  const onPressSubscription = () => {
-    navigation.navigate(SubscriptionScreenName, {
+  const onPressChangePassword = () => {
+    navigation.navigate(ChangePasswordScreenName, {
       screen: LoginScreenName,
     });
   };
@@ -37,61 +37,53 @@ const Account = (props) => {
     navigation.navigate(OtherSettingScreenName);
   };
   return (
-    <SafeAreaView>
-      <ScrollView
-        style={{backgroundColor: theme.backgroundColor}}
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.mainContainer}>
-          <View style={styles.imageContainer}>
-            <FastImage
-              style={{
-                width: Size.scaleSize(150),
-                height: Size.scaleSize(150),
-                borderRadius: Size.scaleSize(75),
-              }}
-              source={{
-                uri: state.userInfo.avatar,
-              }}
-            />
-            <Text style={[styles.headerText, {color: theme.primaryTextColor}]}>
-              {state.userInfo ? state.userInfo.email : ''}
-            </Text>
-            <Text style={[styles.headerSubText, {color: theme.grayColor}]}>
-              {state.userInfo ? state.userInfo.phone : ''}
-            </Text>
-          </View>
-
-          <Text
-            style={[styles.headerTitleText, {color: theme.primaryTextColor}]}>
-            Account Settings
+    <ScrollView
+      style={{backgroundColor: theme.backgroundColor}}
+      showsVerticalScrollIndicator={false}>
+      <View style={styles.mainContainer}>
+        <View style={styles.imageContainer}>
+          <FastImage
+            style={{
+              width: Size.scaleSize(150),
+              height: Size.scaleSize(150),
+              borderRadius: Size.scaleSize(75),
+            }}
+            source={{
+              uri: state.userInfo.avatar,
+            }}
+          />
+          <Text style={[styles.headerText, {color: theme.primaryTextColor}]}>
+            {state.userInfo ? state.userInfo.email : ''}
           </Text>
-          <View style={styles.divider} />
-          <Item
-            icon="comment-account-outline"
-            name="Communication Preferences"
-          />
-          <Item
-            icon="hand-pointing-up"
-            name="Subscription"
-            onPress={onPressSubscription}
-          />
-          <Item
-            icon="google-maps"
-            name="Your location"
-            onPress={onPressLocation}
-          />
-          <Item
-            icon="settings"
-            name="Other Settings"
-            onPress={onPressOtherSetting}
-          />
-          <View style={styles.divider} />
+          <Text style={[styles.headerSubText, {color: theme.grayColor}]}>
+            {state.userInfo ? state.userInfo.phone : ''}
+          </Text>
         </View>
-        <View
-          style={[styles.footer, {backgroundColor: theme.backgroundColor}]}
+
+        <Text style={[styles.headerTitleText, {color: theme.primaryTextColor}]}>
+          Account Settings
+        </Text>
+        <View style={styles.divider} />
+        <Item icon="account" name="Update Profile" />
+        <Item
+          icon="lock"
+          name="Change Password"
+          onPress={onPressChangePassword}
         />
-      </ScrollView>
-    </SafeAreaView>
+        <Item
+          icon="language-typescript"
+          name="Update Your Favorite Categories"
+          onPress={onPressLocation}
+        />
+        <Item
+          icon="settings"
+          name="Other Settings"
+          onPress={onPressOtherSetting}
+        />
+        <View style={styles.divider} />
+      </View>
+      <View style={[styles.footer, {backgroundColor: theme.backgroundColor}]} />
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({

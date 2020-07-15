@@ -24,7 +24,6 @@ const AuthorDetail = (props) => {
   useEffect(() => {
     fetchInstructorDetail();
   }, []);
-  console.log(data);
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenStack, {
       screen: CourseDetailScreenName,
@@ -39,26 +38,25 @@ const AuthorDetail = (props) => {
     );
   };
   return (
-    <SafeAreaView>
-      <View style={{backgroundColor: theme.primaryBackgroundColor}}>
-        <FlatList
-          data={data.courses}
-          ItemSeparatorComponent={flatListSeparator}
-          showsVerticalScrollIndicator={false}
-          renderItem={({item}) => (
-            <CourseVerticalItem onPressItem={onPressItem} item={item} />
-          )}
-          keyExtractor={(item, index) => item + index}
-          ListHeaderComponent={() => {
-            return <Header data={data} />;
-          }}
-          getItemLayout={(data, index) => ({
-            length: Size.scaleSize(100),
-            offset: Size.scaleSize(100) * index,
-            index,
-          })}
-        />
-      </View>
+    <SafeAreaView
+      style={{backgroundColor: theme.backgroundColor, height: '100%'}}>
+      <FlatList
+        data={data.courses}
+        ItemSeparatorComponent={flatListSeparator}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item}) => (
+          <CourseVerticalItem onPressItem={onPressItem} item={item} />
+        )}
+        keyExtractor={(item, index) => item + index}
+        ListHeaderComponent={() => {
+          return <Header data={data} />;
+        }}
+        getItemLayout={(data, index) => ({
+          length: Size.scaleSize(100),
+          offset: Size.scaleSize(100) * index,
+          index,
+        })}
+      />
     </SafeAreaView>
   );
 };

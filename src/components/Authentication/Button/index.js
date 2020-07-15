@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
     ...BoxModel.marginHorizontal,
     ...BoxModel.smallMarginVertical,
     height: Size.scaleSize(45),
+    borderWidth: 1,
+    borderColor: Colors.primaryColor,
     backgroundColor: Colors.backgroundColor,
   },
   text: {

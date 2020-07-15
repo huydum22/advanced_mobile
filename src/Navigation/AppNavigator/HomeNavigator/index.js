@@ -1,5 +1,5 @@
 import React, {useContext, useMemo} from 'react';
-import {TouchableHighlight} from 'react-native';
+import {TouchableHighlight, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,13 +23,14 @@ const HomeNavigatorStack = () => {
           borderRadius: Size.scaleSize(12.5),
         }}
         source={{
-          uri: state.userInfo.avatar,
+          uri: state.userInfo
+            ? state.userInfo.avatar
+            : 'https://c7.uihere.com/files/592/884/975/programmer-computer-programming-computer-software-computer-icons-programming-language-avatar.jpg',
         }}
       />
     ),
-    [state.userInfo.avatar],
+    [state.userInfo],
   );
-  console.log(state);
   return (
     <HomeStack.Navigator
       screenOptions={{
@@ -54,18 +55,7 @@ const HomeNavigatorStack = () => {
               }}
               underlayColor={theme.overlayColor}
               style={{marginRight: Distance.spacing_14}}>
-              {avatarHomeBar}
-              {/* <FastImage
-                style={{
-                  width: Size.scaleSize(25),
-                  height: Size.scaleSize(25),
-                  borderRadius: Size.scaleSize(12.5),
-                }}
-                source={{
-                  uri:
-                    'https://storage.googleapis.com/itedu-bucket/Avatar/abf2226c-b853-4e26-a71e-281ed115427c.png',
-                }}
-              /> */}
+              <View>{avatarHomeBar}</View>
             </TouchableHighlight>
           ),
           headerLeft: () => (
@@ -98,9 +88,9 @@ const HomeNavigatorStack = () => {
         options={{title: 'Profile'}}
       />
       <HomeStack.Screen
-        name={screenName.SubscriptionScreenName}
-        component={scenes.Subscription}
-        options={{title: 'Subscription'}}
+        name={screenName.ChangePasswordScreenName}
+        component={scenes.ChangePassword}
+        options={{title: 'Change Password'}}
       />
       <HomeStack.Screen
         name={screenName.ThemeScreenName}

@@ -14,6 +14,8 @@ import {
   TOP_RATE,
   TOP_SELL,
   TOP_USER_FAVORITE,
+  TOP_FAVORITE_COURSE,
+  RECOMMEND_COURSE,
 } from '../../Constants/API';
 
 const data = [
@@ -226,8 +228,19 @@ export const topNewCourseAPI = async () => {
   });
 };
 
-export const topCourseUserFavorite = async (id) => {
+export const topCourseUserFavoriteAPI = async (id) => {
   return await REQUEST.post(TOP_USER_FAVORITE, {
     userId: id,
   });
+};
+export const topFavoriteCourseAPI = async (token) => {
+  const Authorization = `Bearer ${token}`;
+
+  return await REQUEST(TOP_FAVORITE_COURSE, {
+    headers: {Authorization},
+  });
+};
+
+export const recommendCourseAPI = async (id) => {
+  return await REQUEST(`${RECOMMEND_COURSE}${id}/10/1`);
 };

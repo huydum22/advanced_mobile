@@ -49,7 +49,7 @@ export const headerContainer = {
 
 export const horizontalCourse = {
   ...smallMargin,
-  width: scaleSize(220),
+  width: scaleSize(200),
   // height: scaleSize(200),
 };
 export const imageInHorizontalCourse = {
@@ -148,7 +148,6 @@ export const fillRowCenter = {
   flexDirection: 'row',
   alignItems: 'center',
 };
-
 
 export const fillRowStart = {
   flex: 1,

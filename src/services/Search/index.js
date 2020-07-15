@@ -9,3 +9,11 @@ export const SearchByKeywordAPI = async (keyword) => {
     offset: 0,
   });
 };
+export const SearchCourseByCategoryAPI = async (id) => {
+  return await REQUEST.post(SEARCH, {
+    keyword: '',
+    opt: {category: [id]},
+    limit: 5,
+    offset: 0,
+  });
+};

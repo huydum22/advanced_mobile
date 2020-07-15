@@ -23,7 +23,6 @@ const SearchNavigator = (props) => {
   useEffect(() => {
     fetchDataByKeyword();
   }, []);
-  console.log(data);
   const onPressItem = () => {};
   return (
     <FlatList

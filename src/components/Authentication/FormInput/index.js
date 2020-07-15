@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     ...BoxModel.marginHorizontal,
     ...BoxModel.smallMarginVertical,
     height: Size.scaleSize(45),
-    backgroundColor: Colors.backgroundColor,
+    backgroundColor: Colors.backgroundSeeAllButton,
   },
 });
 export default FormTextInput;

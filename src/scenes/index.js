@@ -12,7 +12,7 @@ import Profile from './Profile';
 import Register from './Register';
 import RelateSkill from './RelateSkill';
 import Search from './Search';
-import Subscription from './Subscription';
+import ChangePassword from './ChangePassword';
 import Theme from './Theme';
 import SearchResult from './SearchResult';
 import Introduce from './IntroduceView';
@@ -34,7 +34,7 @@ export {
   Register,
   RelateSkill,
   Search,
-  Subscription,
+  ChangePassword,
   Theme,
   SearchResult,
   Introduce,

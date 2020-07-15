@@ -21,7 +21,7 @@ export const SearchPathScreenName = 'searchPath';
 export const SearchAuthorScreenName = 'searchAuthor';
 export const PathDetailScreenName = 'pathDetail';
 export const AuthorDetailScreenName = 'authorDetail';
-export const SubscriptionScreenName = 'subscription';
+export const ChangePasswordScreenName = 'ChangePassword';
 export const ThemeScreenName = 'theme';
 export const OtherSettingScreenName = 'otherSetting';
 
@@ -30,3 +30,9 @@ export const ShowListPathScreenName = 'listPath';
 export const PopularSkillScreenName = 'popularSkill';
 export const RelateSkillScreenName = 'relateSkill';
 export const SearchResultScreenName = 'SearchResult';
+
+export const NewRelease = 'NewRelease';
+export const BestSeller = 'BestSeller';
+export const TopRating = 'TopRating';
+export const YourFavorite = 'YourFavorite';
+export const RecommendCourse = 'RecommendCourse';

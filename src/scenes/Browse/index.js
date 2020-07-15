@@ -15,14 +15,7 @@ import {AuthorHorizontalItem} from '../../components/Author';
 import {PopularSkillItem, RelateSkillItem} from '../../components/Skill';
 import {listInstructorAPI} from '../../services/Instructor';
 import Banner from '../../components/Banner';
-import {
-  ShowListCourseScreenName,
-  PopularSkillScreenName,
-  PathDetailScreenName,
-  AuthorDetailScreenName,
-  RelateSkillScreenName,
-  ShowListPathScreenName,
-} from '../../Constants/ScreenName';
+import * as screenName from '../../Constants/ScreenName';
 import {CategoryContext} from '../../Provider/Category';
 import SeeAllBtn from '../../components/common/see-all-button';
 import dataSkill from '../../ExampleData/skill';
@@ -32,9 +25,10 @@ const Browse = (props) => {
   const {theme} = useContext(ThemeContext);
   const {listCategory} = useContext(CategoryContext);
   const [listInstructor, setLIstInstructor] = useState([]);
-  const onPressBanner = (name) => {
-    navigation.navigate(ShowListCourseScreenName, {
-      title: name,
+  const onPressBanner = (id, title) => {
+    navigation.navigate(screenName.ShowListCourseScreenName, {
+      title: title,
+      id: id,
     });
   };
   const getInstructor = async () => {
@@ -50,25 +44,29 @@ const Browse = (props) => {
   }, []);
 
   const onPressPopularSkill = () => {
-    navigation.navigate(PopularSkillScreenName);
+    navigation.navigate(screenName.PopularSkillScreenName);
   };
   const onPressPath = (item) => {
-    navigation.navigate(PathDetailScreenName, {
+    navigation.navigate(screenName.PathDetailScreenName, {
       name: item.name,
       numberOfCourse: item.numberOfCourse,
       totalHour: item.totalHour,
     });
   };
   const onPressAuthor = (item) => {
-    navigation.navigate(AuthorDetailScreenName, {
+    navigation.navigate(screenName.AuthorDetailScreenName, {
       id: item.id,
     });
   };
   const onPressRelateSkill = (item) => {
-    navigation.navigate(RelateSkillScreenName);
+    navigation.navigate(screenName.ShowListCourseScreenName, {
+      title: item.name,
+      id: item.id,
+    });
+    // navigation.navigate(screenName.RelateSkillScreenName);
   };
   const showAllPath = (title) => {
-    navigation.navigate(ShowListPathScreenName);
+    navigation.navigate(screenName.ShowListPathScreenName);
   };
   const renderHeader = (title, data) => {
     if (data[0] === 2) {
@@ -102,27 +100,21 @@ const Browse = (props) => {
   };
 
   const Header = () => {
-    // return ['new releases', 'recommended for you'].map((item) => (
-    //   <Banner
-    //     key={item.toString()}
-    //     backgroundImage={backgroundImage02}
-    //     name={item}
-    //     onPress={() => onPressBanner(item)}
-    //   />
-    // ));
     return (
       <View>
         <Banner
           key="new releases"
           backgroundImage={backgroundImage02}
           name="new releases"
-          // onPress={() => onPressBanner('new releases')}
+          onPress={() => onPressBanner(screenName.NewRelease, 'New Releases')}
         />
         <Banner
           key="recommended for you"
           backgroundImage={backgroundImage03}
           name="recommended for you"
-          // onPress={() => onPressBanner('new releases')}
+          onPress={() =>
+            onPressBanner(screenName.RecommendCourse, 'Recommended For You')
+          }
         />
       </View>
     );

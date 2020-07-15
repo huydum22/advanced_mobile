@@ -53,7 +53,7 @@ const Header = (props) => {
         </Text>
       </View>
       <View>
-        <Text style={[styles.textJob, {color: theme.grayColor}]}>
+        <Text style={[styles.textJob, {color: theme.primaryTextColor}]}>
           {data.major ? data.major : 'Nothing'}
         </Text>
       </View>
@@ -71,8 +71,12 @@ const Header = (props) => {
             styles.separator,
             {borderRightColor: theme.grayColor},
           ]}>
-          <Text style={Styles.textCenter}>{data.soldNumber}</Text>
-          <Text style={Styles.textCenter}>Students</Text>
+          <Text style={[Styles.textCenter, {color: theme.primaryTextColor}]}>
+            {data.soldNumber}
+          </Text>
+          <Text style={[Styles.textCenter, {color: theme.primaryTextColor}]}>
+            Students
+          </Text>
         </View>
 
         <View
@@ -81,12 +85,20 @@ const Header = (props) => {
             styles.separator,
             {borderRightColor: theme.grayColor},
           ]}>
-          <Text style={Styles.textCenter}>{data.totalCourse}</Text>
-          <Text style={Styles.textCenter}>Courses</Text>
+          <Text style={[Styles.textCenter, {color: theme.primaryTextColor}]}>
+            {data.totalCourse}
+          </Text>
+          <Text style={[Styles.textCenter, {color: theme.primaryTextColor}]}>
+            Courses
+          </Text>
         </View>
         <View style={Styles.fillColumn}>
-          <Text style={Styles.textCenter}>{averagePointRating()}/5</Text>
-          <Text style={Styles.textCenter}>Rating</Text>
+          <Text style={[Styles.textCenter, {color: theme.primaryTextColor}]}>
+            {averagePointRating()}/5
+          </Text>
+          <Text style={[Styles.textCenter, {color: theme.primaryTextColor}]}>
+            Rating
+          </Text>
         </View>
       </View>
       <View>

@@ -14,18 +14,14 @@ import {Distance, Styles, Typography, BoxModel, Size} from '../../styles';
 import Banner from '../../components/Banner';
 import backgroundImage02 from '../../assets/image/backgroundImage.jpg';
 import SeeAllBtn from '../../components/common/see-all-button';
-import {
-  ShowListCourseScreenName,
-  CourseDetailScreenName,
-  CourseDetailScreenStack,
-} from '../../Constants/ScreenName';
+import * as screenName from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {
   topNewCourseAPI,
   topRateCourseAPI,
   topSellerCourseAPI,
-  topCourseUserFavorite,
+  topCourseUserFavoriteAPI,
 } from '../../services/Courses';
 import p from 'pretty-format';
 const Home = (props) => {
@@ -64,7 +60,7 @@ const Home = (props) => {
   };
   const fetchDataState4 = async () => {
     try {
-      let response = await topCourseUserFavorite(state.userInfo.id);
+      let response = await topCourseUserFavoriteAPI(state.userInfo.id);
       setState4(response.data.payload);
     } catch ({response}) {
       console.log(p(response));
@@ -77,22 +73,18 @@ const Home = (props) => {
     fetchDataState4();
   }, []);
 
-  const onPressEmptyComponent = (title) => {
-    navigation.navigate(ShowListCourseScreenName, {
-      title: title,
-    });
-  };
   const onPressBanner = () => {};
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenStack, {
-      screen: CourseDetailScreenName,
+    navigation.navigate(screenName.CourseDetailScreenStack, {
+      screen: screenName.CourseDetailScreenName,
       params: {id: item.id},
     });
   };
 
-  const showListCourse = (title) => {
-    navigation.navigate(ShowListCourseScreenName, {
+  const showListCourse = (id, title) => {
+    navigation.navigate(screenName.ShowListCourseScreenName, {
       title: title,
+      id: id,
     });
   };
 
@@ -113,12 +105,14 @@ const Home = (props) => {
             ]}>
             New Releases
           </Text>
-          <SeeAllBtn onPress={() => showListCourse('NewRelease')} />
+          <SeeAllBtn
+            onPress={() => showListCourse(screenName.NewRelease, 'New Release')}
+          />
         </View>
         <FlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          data={state1}
+          data={state1.slice(0, 7)}
           renderItem={({item}) => (
             <CourseHorizontalItem
               item={item}
@@ -141,12 +135,14 @@ const Home = (props) => {
             ]}>
             Best Seller
           </Text>
-          <SeeAllBtn onPress={() => showListCourse('BestSeller')} />
+          <SeeAllBtn
+            onPress={() => showListCourse(screenName.BestSeller, 'Best Seller')}
+          />
         </View>
         <FlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          data={state2}
+          data={state2.slice(0, 7)}
           renderItem={({item}) => (
             <CourseHorizontalItem
               item={item}
@@ -177,12 +173,16 @@ const Home = (props) => {
                 ]}>
                 Top Rating
               </Text>
-              <SeeAllBtn onPress={() => showListCourse('TopRating')} />
+              <SeeAllBtn
+                onPress={() =>
+                  showListCourse(screenName.TopRating, 'Top Rating')
+                }
+              />
             </View>
             <FlatList
               horizontal={true}
               showsHorizontalScrollIndicator={false}
-              data={state3}
+              data={state3.slice(0, 7)}
               renderItem={({item}) => (
                 <CourseHorizontalItem
                   item={item}
@@ -217,12 +217,16 @@ const Home = (props) => {
                 Your Favorite
               </Text>
 
-              <SeeAllBtn onPress={() => showListCourse('YourFavorite')} />
+              <SeeAllBtn
+                onPress={() =>
+                  showListCourse(screenName.YourFavorite, 'Your Favorite')
+                }
+              />
             </View>
             <FlatList
               horizontal={true}
               showsHorizontalScrollIndicator={false}
-              data={state4}
+              data={state4.slice(0, 7)}
               renderItem={({item}) => (
                 <CourseHorizontalItem
                   item={item}

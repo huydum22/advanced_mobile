@@ -1,4 +1,10 @@
-import {LOGIN, REGISTER, FORGOT_PASSWORD, PROFILE} from '../../Constants/API';
+import {
+  LOGIN,
+  REGISTER,
+  FORGOT_PASSWORD,
+  PROFILE,
+  UPDATE_PASSWORD,
+} from '../../Constants/API';
 import REQUEST from '../HttpClient';
 export const LogoutProvider = () => {
   return {
@@ -34,4 +40,20 @@ export const ProfileAPI = async (token) => {
   return await REQUEST(PROFILE, {
     headers: {Authorization},
   });
+};
+
+export const updatePasswordAPI = async (token, id, oldPass, newPass) => {
+  const Authorization = `Bearer ${token}`;
+
+  return await REQUEST.post(
+    UPDATE_PASSWORD,
+    {
+      id: id,
+      oldPass: oldPass,
+      newPass: newPass,
+    },
+    {
+      headers: {Authorization},
+    },
+  );
 };
