@@ -19,6 +19,7 @@ import Introduce from './IntroduceView';
 import OtherSetting from './OtherSetting';
 import ForgotPassword from './ForgotPassword';
 import SplashScreen from './SplashScreen';
+import UpdateProfile from './UpdateProfile';
 export {
   AuthorDetail,
   Browse,
@@ -41,4 +42,5 @@ export {
   OtherSetting,
   ForgotPassword,
   SplashScreen,
+  UpdateProfile,
 };

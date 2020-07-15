@@ -93,6 +93,11 @@ const HomeNavigatorStack = () => {
         options={{title: 'Change Password'}}
       />
       <HomeStack.Screen
+        name={screenName.UpdateProfileScreenName}
+        component={scenes.UpdateProfile}
+        options={{title: 'Update Profile'}}
+      />
+      <HomeStack.Screen
         name={screenName.ThemeScreenName}
         component={scenes.Theme}
         options={{title: 'Theme'}}

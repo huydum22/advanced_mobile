@@ -24,6 +24,7 @@ export const AuthorDetailScreenName = 'authorDetail';
 export const ChangePasswordScreenName = 'ChangePassword';
 export const ThemeScreenName = 'theme';
 export const OtherSettingScreenName = 'otherSetting';
+export const UpdateProfileScreenName = 'UpdateProfile';
 
 export const LocationScreenName = 'yourLocation';
 export const ShowListPathScreenName = 'listPath';

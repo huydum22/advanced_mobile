@@ -15,11 +15,7 @@ import {
   BoxModel,
   Distance,
 } from '../../styles';
-import {
-  ChangePasswordScreenName,
-  LoginScreenName,
-  OtherSettingScreenName,
-} from '../../Constants/ScreenName';
+import * as screen from '../../Constants/ScreenName';
 import {Item} from '../../components/AccountManagement';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
@@ -30,62 +26,34 @@ const Account = (props) => {
   const {state} = useContext(AuthenticationContext);
   const {navigation, route} = props;
   const onPressChangePassword = () => {
-    navigation.navigate(ChangePasswordScreenName, {
-      screen: LoginScreenName,
-    });
+    navigation.navigate(screen.ChangePasswordScreenName);
+  };
+  const onPressUpdateProfile = () => {
+    navigation.navigate(screen.UpdateProfileScreenName);
   };
   const onPressLocation = () => {
     // navigation.navigate(LocationScreenName);
   };
   const onPressOtherSetting = () => {
-    navigation.navigate(OtherSettingScreenName);
+    navigation.navigate(screen.OtherSettingScreenName);
   };
-  const onPressAvatar = async () => {
-    const options = {
-      noData: true,
-    };
-    ImagePicker.launchImageLibrary(options, async (response) => {
-      if (response.uri) {
-        try {
-          let res = await updateProfileAPI(
-            state.token,
-            state.userInfo.name,
-            response.uri,
-            state.userInfo.phone,
-          );
-          console.log(res.data);
-        } catch ({res}) {
-          console.log(res);
-        }
-        // this.setState({ photo: response });
-      }
-    });
-  };
+
   return (
     <ScrollView
       style={{backgroundColor: theme.backgroundColor}}
       showsVerticalScrollIndicator={false}>
       <View style={styles.mainContainer}>
         <View style={styles.imageContainer}>
-          <TouchableHighlight
+          <FastImage
             style={{
               width: Size.scaleSize(150),
               height: Size.scaleSize(150),
               borderRadius: Size.scaleSize(75),
             }}
-            underlayColor={theme.primaryBackgroundColor}
-            onPress={onPressAvatar}>
-            <FastImage
-              style={{
-                width: Size.scaleSize(150),
-                height: Size.scaleSize(150),
-                borderRadius: Size.scaleSize(75),
-              }}
-              source={{
-                uri: state.userInfo.avatar,
-              }}
-            />
-          </TouchableHighlight>
+            source={{
+              uri: state.userInfo.avatar,
+            }}
+          />
           <Text style={[styles.headerText, {color: theme.primaryTextColor}]}>
             {state.userInfo ? state.userInfo.email : ''}
           </Text>
@@ -98,7 +66,11 @@ const Account = (props) => {
           Account Settings
         </Text>
         <View style={styles.divider} />
-        <Item icon="account" name="Update Profile" />
+        <Item
+          icon="account"
+          name="Update Profile"
+          onPress={onPressUpdateProfile}
+        />
         <Item
           icon="lock"
           name="Change Password"

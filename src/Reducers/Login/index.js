@@ -1,4 +1,5 @@
 import {actionTypes} from '../../Actions/Login';
+import * as actionTypesProfile from '../../Actions/UpdateProfile';
 export const loginReducer = (prevState, action) => {
   switch (action.type) {
     case actionTypes.LOGIN_REQUEST:
@@ -22,6 +23,18 @@ export const loginReducer = (prevState, action) => {
         userInfo: null,
         token: null,
         message: '',
+      };
+    case actionTypesProfile.actionTypes.UPDATE_PROFILE_REQUEST:
+      return {...prevState};
+    case actionTypesProfile.actionTypes.UPDATE_PROFILE_SUCCESS:
+      return {
+        ...prevState,
+        userInfo: action.response.payload,
+      };
+    case actionTypesProfile.actionTypes.UPDATE_PROFILE_ERROR:
+      return {
+        ...prevState,
+        message: action.error.message,
       };
     default:
       return prevState;
