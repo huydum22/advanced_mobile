@@ -9,8 +9,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {Styles, Typography, Distance, BoxModel, Size} from '../../styles';
-import backgroundImage03 from '../../assets/image/backgroundImage03.jpg';
-import backgroundImage02 from '../../assets/image/backgroundImage02.jpg';
+import {background1, background2} from '../../Constants/Image';
 import {AuthorHorizontalItem} from '../../components/Author';
 import {PopularSkillItem, RelateSkillItem} from '../../components/Skill';
 import {listInstructorAPI} from '../../services/Instructor';
@@ -104,13 +103,13 @@ const Browse = (props) => {
       <View>
         <Banner
           key="new releases"
-          backgroundImage={backgroundImage02}
+          backgroundImage={background1}
           name="new releases"
           onPress={() => onPressBanner(screenName.NewRelease, 'New Releases')}
         />
         <Banner
           key="recommended for you"
-          backgroundImage={backgroundImage03}
+          backgroundImage={background2}
           name="recommended for you"
           onPress={() =>
             onPressBanner(screenName.RecommendCourse, 'Recommended For You')

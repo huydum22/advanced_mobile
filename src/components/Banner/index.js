@@ -6,6 +6,7 @@ import {
   View,
   Text,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {
   Styles,
   BoxModel,
@@ -19,7 +20,11 @@ const Banner = (props) => {
   const {backgroundImage, name, onPress} = props;
   const {theme} = useContext(ThemeContext);
   return (
-    <ImageBackground style={styles.imageBackground} source={backgroundImage}>
+    <FastImage
+      style={styles.imageBackground}
+      source={{
+        uri: backgroundImage,
+      }}>
       <TouchableHighlight
         style={[
           styles.blurBackground,
@@ -33,7 +38,7 @@ const Banner = (props) => {
           <Text style={[styles.text, {color: theme.whiteColor}]}>{name}</Text>
         </View>
       </TouchableHighlight>
-    </ImageBackground>
+    </FastImage>
   );
 };
 const styles = StyleSheet.create({

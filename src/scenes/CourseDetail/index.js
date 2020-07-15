@@ -14,7 +14,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import FastImage from 'react-native-fast-image';
 // import data from '../../ExampleData/courseDetail';
 import contentData from '../../ExampleData/contents';
 import {Size, Colors, Typography, Styles} from '../../styles';

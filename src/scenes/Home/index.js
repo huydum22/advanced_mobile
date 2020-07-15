@@ -12,7 +12,7 @@ import {CourseHorizontalItem} from '../../components/Course';
 import EmptyComponent from '../../components/EmptyComponent';
 import {Distance, Styles, Typography, BoxModel, Size} from '../../styles';
 import Banner from '../../components/Banner';
-import backgroundImage02 from '../../assets/image/backgroundImage.jpg';
+import {background3} from '../../Constants/Image';
 import SeeAllBtn from '../../components/common/see-all-button';
 import * as screenName from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
@@ -92,7 +92,7 @@ const Home = (props) => {
     <SafeAreaView style={{backgroundColor: theme.backgroundColor}}>
       <ScrollView>
         <Banner
-          backgroundImage={backgroundImage02}
+          backgroundImage={background3}
           name="Stay at Home"
           onPress={onPressBanner}
         />
