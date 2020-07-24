@@ -2,6 +2,12 @@ import {tiny, small, normal, medium, large} from './distance';
 export const bottomMargin = {
   marginBottom: normal,
 };
+export const tinyBottomMargin = {
+  marginBottom: tiny,
+};
+export const tinyBottomPadding = {
+  paddingBottom: tiny,
+};
 export const mediumBottomMargin = {
   marginBottom: medium,
 };

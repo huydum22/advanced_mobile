@@ -8,7 +8,7 @@ export const ForgotPasswordScreenName = 'forgotPass';
 
 export const HomeScreenName = 'home';
 export const BrowseScreenName = 'browse';
-export const DownloadScreenName = 'download';
+export const MyCourseScreenName = 'myCourse';
 export const ProfileScreenName = 'profile';
 export const CourseDetailScreenName = 'courseDetail';
 export const CourseDetailScreenStack = 'courseDetailStack';

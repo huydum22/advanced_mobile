@@ -5,14 +5,14 @@ import * as screenName from '../../../Constants/ScreenName';
 
 import * as scenes from '../../../scenes';
 import {ThemeContext} from '../../../Provider/Theme';
-const DownloadStack = createStackNavigator();
+const MyCourseStack = createStackNavigator();
 
-const DownloadNavigator = () => {
+const MyCourseNavigator = () => {
   const {theme} = useContext(ThemeContext);
   return (
-    <DownloadStack.Navigator
+    <MyCourseStack.Navigator
       screenOptions={{
-        title: 'Downloads',
+        title: 'My Courses',
         headerStyle: {
           backgroundColor: theme.themeColor,
         },
@@ -22,11 +22,11 @@ const DownloadNavigator = () => {
           fontSize: Typography.fontSize20,
         },
       }}>
-      <DownloadStack.Screen
-        name={screenName.DownloadScreenName}
-        component={scenes.Download}
+      <MyCourseStack.Screen
+        name={screenName.MyCourseScreenName}
+        component={scenes.MyCourses}
       />
-    </DownloadStack.Navigator>
+    </MyCourseStack.Navigator>
   );
 };
-export default DownloadNavigator;
+export default MyCourseNavigator;

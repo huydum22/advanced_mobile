@@ -33,7 +33,6 @@ const Home = (props) => {
   const [state2, setState2] = useState([]);
   const [state3, setState3] = useState([]);
   const [state4, setState4] = useState([]);
-
   const fetchDataState1 = async () => {
     try {
       let response = await topNewCourseAPI();

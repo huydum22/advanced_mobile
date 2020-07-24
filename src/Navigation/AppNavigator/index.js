@@ -4,12 +4,12 @@ import * as screenName from '../../Constants/ScreenName';
 
 import {Colors, Typography} from '../../styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import HomeNavigator from './HomeNavigator';
 import BrowseNavigator from './BrowseNavigator';
-import DownloadNavigator from './DownloadNavigator';
+import MyCoursesNavigator from './MyCoursesNavigator';
 import SearchNavigator from './SearchNavigator';
 import {ThemeContext} from '../../Provider/Theme';
 import {BookmarkProvider} from '../../Provider/Bookmark';
@@ -30,8 +30,8 @@ const browseIcon = ({color}) => (
 const homeIcon = ({color}) => (
   <MaterialCommunityIcons name="home" size={25} color={color} />
 );
-const downloadIcon = ({color}) => (
-  <MaterialIcons name="cloud-download" size={25} color={color} />
+const MyCourseIcon = ({color}) => (
+  <FontAwesome5 name="tasks" size={22} color={color} />
 );
 const configHomeTab = {
   tabBarLabel: 'Home',
@@ -42,9 +42,9 @@ const configBrowseTab = {
   tabBarLabel: 'Browse',
   tabBarIcon: browseIcon,
 };
-const configDownloadTab = {
-  tabBarLabel: 'Downloads',
-  tabBarIcon: downloadIcon,
+const configMyCourseTab = {
+  tabBarLabel: 'My Course',
+  tabBarIcon: MyCourseIcon,
 };
 const configSearchTab = {
   tabBarLabel: 'Search',
@@ -79,9 +79,9 @@ const AppNavigator = () => {
               options={configHomeTab}
             />
             <Tab.Screen
-              name={screenName.DownloadScreenName}
-              component={DownloadNavigator}
-              options={configDownloadTab}
+              name={screenName.MyCourseScreenName}
+              component={MyCoursesNavigator}
+              options={configMyCourseTab}
             />
             <Tab.Screen
               name={screenName.BrowseScreenName}

@@ -1,7 +1,7 @@
 import AuthorDetail from './AuthorDetail';
 import Browse from './Browse';
 import CourseDetail from './CourseDetail';
-import Download from './Download';
+import MyCourses from './MyCourses';
 import Home from './Home';
 import ListOfCourse from './ListOfCourse';
 import ListOfPath from './ListOfPath';
@@ -24,7 +24,7 @@ export {
   AuthorDetail,
   Browse,
   CourseDetail,
-  Download,
+  MyCourses,
   Home,
   ListOfCourse,
   ListOfPath,

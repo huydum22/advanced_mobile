@@ -15,7 +15,7 @@ import {ThemeContext} from '../../../../Provider/Theme';
 import StarRating from 'react-native-star-rating';
 import FastImage from 'react-native-fast-image';
 import Moment from 'moment';
-
+import p from 'pretty-format';
 const Item = (props) => {
   const {onPressItem, item} = props;
   const {theme} = useContext(ThemeContext);
@@ -24,6 +24,7 @@ const Item = (props) => {
     this.ActionSheet.context = itemShow;
     this.ActionSheet.show();
   };
+  console.log(p(item));
   return (
     <View
       style={[
@@ -41,7 +42,7 @@ const Item = (props) => {
             <FastImage
               style={styles.image}
               source={{
-                uri: item.imageUrl,
+                uri: item.imageUrl || item.courseImage,
               }}
             />
           </View>
@@ -51,14 +52,14 @@ const Item = (props) => {
                 Styles.titleInHorizontalList,
                 {color: theme.primaryTextColor},
               ]}>
-              {item.title}
+              {item.title || item.courseTitle}
             </Text>
             <Text
               style={[
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item.name}
+              {item['instructor.user.name']}
             </Text>
             <View style={styles.levelContainer}>
               <Text
@@ -66,7 +67,7 @@ const Item = (props) => {
                   Styles.subTitleInHorizontalList,
                   {color: theme.grayColor},
                 ]}>
-                {item.soldNumber} students
+                {item.soldNumber || item.courseSoldNumber} students
               </Text>
               <Text
                 style={[
@@ -86,11 +87,6 @@ const Item = (props) => {
               </Text>
             </View>
             <View style={styles.ratingContainer}>
-              {/* <AirbnbRating
-                reviews={false}
-                size={14}
-                defaultRating={item.ratedNumber}
-              /> */}
               <StarRating
                 disabled={false}
                 maxStars={5}
@@ -103,6 +99,13 @@ const Item = (props) => {
                 }
                 fullStarColor={'#f1c40f'}
               />
+              <Text
+                style={[
+                  Styles.subTitleInHorizontalList,
+                  {color: theme.grayColor},
+                ]}>
+                ({item.ratedNumber})
+              </Text>
             </View>
           </View>
         </View>

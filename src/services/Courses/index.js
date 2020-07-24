@@ -17,6 +17,7 @@ import {
   TOP_FAVORITE_COURSE,
   RECOMMEND_COURSE,
   COURSE_INFO,
+  MY_COURSE,
 } from '../../Constants/API';
 
 const data = [
@@ -250,6 +251,14 @@ export const courseInfoAPI = async (token, id) => {
   const Authorization = `Bearer ${token}`;
 
   return await REQUEST(`${COURSE_INFO}?id=${id}`, {
+    headers: {Authorization},
+  });
+};
+
+export const getMyCoursesAPI = async (token) => {
+  const Authorization = `Bearer ${token}`;
+
+  return await REQUEST(`${MY_COURSE}`, {
     headers: {Authorization},
   });
 };

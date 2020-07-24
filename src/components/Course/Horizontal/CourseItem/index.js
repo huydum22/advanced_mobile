@@ -4,7 +4,11 @@ import {Styles, BoxModel, Size, Typography, Distance} from '../../../../styles';
 import FastImage from 'react-native-fast-image';
 import {ThemeContext} from '../../../../Provider/Theme';
 import StarRating from 'react-native-star-rating';
+import Moment from 'moment';
 import p from 'pretty-format';
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
 const Item = (props) => {
   const {item, onPress} = props;
   const {theme} = useContext(ThemeContext);
@@ -40,17 +44,26 @@ const Item = (props) => {
               {item.title}
             </Text>
           </View>
-          <View style={Styles.breakContentText}>
+          <View style={[Styles.breakContentText, BoxModel.tinyPaddingVertical]}>
             <Text
               style={[
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item.name}
+              {item['instructor.user.name']}
+            </Text>
+          </View>
+          <View style={[Styles.fillRow]}>
+
+            <Text style={Styles.subTitleInHorizontalList}>
+              {Moment(item.createdAt).format('MMMM Do')}
+            </Text>
+            <Text style={Styles.subTitleInHorizontalList}>
+              {item.totalHours}h
             </Text>
           </View>
           <View style={[Styles.fillRow, BoxModel.tinyPaddingVertical]}>
-            <View style={[Styles.fillRowStart, {flex: 1}]}>
+            <View style={[Styles.fillRowStart, styles.rating]}>
               <StarRating
                 disabled={false}
                 maxStars={5}
@@ -63,8 +76,11 @@ const Item = (props) => {
                 }
                 fullStarColor={'#f1c40f'}
               />
+              <Text style={[styles.subRating, {color: theme.grayColor}]}>
+                ({item.ratedNumber})
+              </Text>
             </View>
-            <View style={[Styles.center, {flex: 1}]}>
+            <View style={[Styles.center, styles.rating]}>
               <Text
                 style={[
                   Styles.subTitleInHorizontalList,
@@ -81,7 +97,7 @@ const Item = (props) => {
               </Text>
             ) : (
               <Text style={[styles.price, {color: theme.primaryColor}]}>
-                {item.price}VND
+                {numberWithCommas(item.price)} VND
               </Text>
             )}
           </View>
@@ -94,16 +110,15 @@ const styles = StyleSheet.create({
   nameTitle: {
     flexWrap: 'wrap',
   },
-  rating: {},
-  ratingText: {
-    ...Typography.fontRegular,
-    ...BoxModel.smallMarginHorizontal,
-    fontSize: Typography.fontSize12,
-  },
+  rating: {flex: 1},
   price: {
     flex: 1,
     ...Typography.fontBold,
     fontSize: Typography.fontSize18,
+  },
+  subRating: {
+    ...Typography.fontRegular,
+    fontSize: Typography.fontSize12,
   },
 });
 export default Item;

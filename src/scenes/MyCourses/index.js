@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useContext, useEffect, useState} from 'react';
 import {
   SafeAreaView,
@@ -7,10 +8,10 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {topNewCourseAPI} from '../../services/Courses';
+import {getMyCoursesAPI} from '../../services/Courses';
 import {CourseVerticalItem} from '../../components/Course';
 import {Styles, Distance, BoxModel, Typography, Size} from '../../styles';
-
+import p from 'pretty-format';
 import separator from '../../components/Separator';
 import {
   CourseDetailScreenName,
@@ -20,14 +21,16 @@ import {AuthenticationContext} from '../../Provider/Authentication';
 import {ThemeContext} from '../../Provider/Theme';
 const ListCourse = (props) => {
   const {theme} = useContext(ThemeContext);
+  const {state} = useContext(AuthenticationContext);
   const {navigation, route} = props;
   const [data, setData] = useState([]);
   const fetchData = async () => {
     try {
-      let response = topNewCourseAPI();
-      setData((await response).data.payload);
+      let response = await getMyCoursesAPI(state.token);
+
+      setData(response.data.payload);
     } catch ({response}) {
-      console.log(response);
+      console.log(p(response.data));
     }
   };
   useEffect(() => {

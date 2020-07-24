@@ -60,7 +60,12 @@ const ListOfCourse = (props) => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const onPressItem = () => {};
+  const onPressItem = (item) => {
+    navigation.navigate(screenName.CourseDetailScreenStack, {
+      screen: screenName.CourseDetailScreenName,
+      params: {id: item.id},
+    });
+  };
   return (
     <SafeAreaView
       style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
@@ -70,7 +75,10 @@ const ListOfCourse = (props) => {
         ItemSeparatorComponent={separator}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
-          <CourseVerticalItem onPressItem={onPressItem} item={item} />
+          <CourseVerticalItem
+            onPressItem={() => onPressItem(item)}
+            item={item}
+          />
         )}
         keyExtractor={(item, index) => item + index}
         getItemLayout={(data, index) => ({
