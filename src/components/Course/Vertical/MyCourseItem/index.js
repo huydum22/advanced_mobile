@@ -1,0 +1,104 @@
+import React, {useContext} from 'react';
+import {StyleSheet, View, Text, TouchableHighlight} from 'react-native';
+import {Size, Styles, Distance, Typography} from '../../../../styles';
+import {ThemeContext} from '../../../../Provider/Theme';
+import FastImage from 'react-native-fast-image';
+import p from 'pretty-format';
+const MyCourseItem = (props) => {
+  const {onPressItem, item} = props;
+  const {theme} = useContext(ThemeContext);
+
+  return (
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: theme.primaryBackgroundColor},
+      ]}>
+      <TouchableHighlight
+        style={styles.main}
+        onPress={() => {
+          onPressItem(item);
+        }}
+        underlayColor={theme.primaryBackgroundColor}>
+        <View style={styles.main}>
+          <View style={styles.imageContainer}>
+            <FastImage
+              style={styles.image}
+              source={{
+                uri: item.imageUrl || item.courseImage,
+              }}
+            />
+          </View>
+          <View style={styles.mainContainer}>
+            <Text
+              style={[
+                Styles.titleInHorizontalList,
+                {color: theme.primaryTextColor},
+              ]}>
+              {item.title || item.courseTitle}
+            </Text>
+            <Text
+              style={[
+                Styles.subTitleInHorizontalList,
+                {color: theme.grayColor},
+              ]}>
+              {item['instructor.user.name'] || item.name || item.instructorName}
+            </Text>
+            {item.process ? undefined : (
+              <View style={styles.levelContainer}>
+                <Text
+                  style={[
+                    styles.startCourseContainer,
+                    {color: theme.primaryColor},
+                  ]}>
+                  START COURSE
+                </Text>
+              </View>
+            )}
+          </View>
+        </View>
+      </TouchableHighlight>
+    </View>
+  );
+};
+const styles = StyleSheet.create({
+  container: {
+    ...Styles.fillRow,
+  },
+  main: {
+    flex: 9,
+    flexDirection: 'row',
+  },
+  imageContainer: {
+    flex: 3,
+    ...Styles.center,
+    height: Size.scaleSize(100),
+    width: Size.scaleSize(50),
+    marginLeft: Distance.spacing_8,
+  },
+  image: {
+    resizeMode: 'cover',
+    width: Size.scaleSize(80),
+    height: Size.scaleSize(60),
+  },
+
+  mainContainer: {
+    ...Styles.fillColumnStart,
+    flex: 8,
+    marginVertical: 10,
+    marginLeft: 5,
+  },
+  subContainer: {
+    flex: 1,
+    ...Styles.center,
+  },
+  levelContainer: {
+    ...Styles.fillRowBetween,
+    marginTop: 5,
+  },
+
+  startCourseContainer: {
+    ...Typography.fontBold,
+  },
+});
+export default MyCourseItem;

@@ -8,7 +8,7 @@ import {
   BoxModel,
   Colors,
 } from '../../../styles';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {ThemeContext} from '../../../Provider/Theme';
 import FastImage from 'react-native-fast-image';
 import StarRating from 'react-native-star-rating';
@@ -20,8 +20,8 @@ const Header = (props) => {
     if (data.skills) {
       return data.skills.map((item) => (
         <View style={styles.link} key={item.toString()}>
-          <MaterialCommunityIcons
-            name="check-bold"
+          <MaterialIcons
+            name="check"
             size={22}
             color={theme.primaryTextColor}
           />
@@ -106,20 +106,6 @@ const Header = (props) => {
         </Text>
       </View>
       {skillComponent()}
-
-      <View style={styles.link}>
-        <MaterialCommunityIcons
-          name="github-circle"
-          size={20}
-          style={styles.linkGit}
-          color={theme.primaryTextColor}
-        />
-        <MaterialCommunityIcons
-          name="facebook-box"
-          size={20}
-          color={theme.primaryTextColor}
-        />
-      </View>
     </View>
   );
 };

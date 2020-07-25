@@ -1,9 +1,7 @@
 import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as screenName from '../../Constants/ScreenName';
-
 import {Colors, Typography} from '../../styles';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -18,17 +16,13 @@ import {MyPathProvider} from '../../Provider/MyPath';
 const Tab = createBottomTabNavigator();
 
 const searchIcon = ({color}) => (
-  <FontAwesome name="search" size={25} color={color} />
+  <FontAwesome name="search" size={22} color={color} />
 );
 const browseIcon = ({color}) => (
-  <MaterialCommunityIcons
-    name="folder-search-outline"
-    size={25}
-    color={color}
-  />
+  <MaterialIcons name="folder-special" size={22} color={color} />
 );
 const homeIcon = ({color}) => (
-  <MaterialCommunityIcons name="home" size={25} color={color} />
+  <MaterialIcons name="home" size={22} color={color} />
 );
 const MyCourseIcon = ({color}) => (
   <FontAwesome5 name="tasks" size={22} color={color} />

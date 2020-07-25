@@ -12,7 +12,6 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 import {courseInfoAPI} from '../../services/Courses';
 import {AuthenticationContext} from '../../Provider/Authentication';
@@ -93,7 +92,7 @@ const CourseDetail = (props) => {
   const completeSessionCourse = (isCheck) => {
     if (isCheck) {
       return (
-        <MaterialCommunityIcons
+        <MaterialIcons
           name="check-circle"
           size={15}
           color={theme.successColor}

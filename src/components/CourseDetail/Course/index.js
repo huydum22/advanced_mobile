@@ -14,7 +14,6 @@ import data from '../../../ExampleData/courseDetail';
 import contentData from '../../../ExampleData/contents';
 import {Size, Typography, Styles} from '../../../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from '../HeaderComponent';
 import {ThemeContext} from '../../../Provider/Theme';
 
@@ -61,7 +60,7 @@ const CourseDetail = (props) => {
   const completeSessionCourse = (isCheck) => {
     if (isCheck) {
       return (
-        <MaterialCommunityIcons
+        <MaterialIcons
           name="check-circle"
           size={15}
           color={theme.successColor}

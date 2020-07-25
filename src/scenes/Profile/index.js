@@ -67,7 +67,7 @@ const Account = (props) => {
         </Text>
         <View style={styles.divider} />
         <Item
-          icon="account"
+          icon="account-box"
           name="Update Profile"
           onPress={onPressUpdateProfile}
         />
@@ -77,7 +77,7 @@ const Account = (props) => {
           onPress={onPressChangePassword}
         />
         <Item
-          icon="language-typescript"
+          icon="favorite-border"
           name="Update Your Favorite Categories"
           onPress={onPressLocation}
         />

@@ -6,7 +6,7 @@ import {Typography, Size, Styles} from '../../styles';
 import {ThemeContext} from '../../Provider/Theme';
 import p from 'pretty-format';
 import {CourseVerticalItem} from '../../components/Course';
-import separator from '../../components/Separator';
+import * as screenName from '../../Constants/ScreenName';
 import {SearchByKeywordAPI} from '../../services/Search';
 import {SearchBar} from 'react-native-elements';
 
@@ -29,7 +29,12 @@ const SearchNavigator = (props) => {
     };
     fetchDataByKeyword();
   }, [keyword]);
-  const onPressItem = () => {};
+  const onPressItem = (item) => {
+    navigation.navigate(screenName.CourseDetailScreenStack, {
+      screen: screenName.CourseDetailScreenName,
+      params: {id: item.id},
+    });
+  };
   const onSubmitEditing = () => {
     setKeyword(searchText);
   };
@@ -85,7 +90,10 @@ const SearchNavigator = (props) => {
         ItemSeparatorComponent={flatListSeparator}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
-          <CourseVerticalItem onPressItem={onPressItem} item={item} />
+          <CourseVerticalItem
+            onPressItem={() => onPressItem(item)}
+            item={item}
+          />
         )}
         keyExtractor={(item, index) => item + index}
         getItemLayout={(data, index) => ({

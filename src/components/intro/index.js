@@ -2,6 +2,8 @@ import React from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
 import Swiper from 'react-native-swiper';
 import {Colors, Typography, BoxModel, Size} from '../../styles';
+import FastImage from 'react-native-fast-image';
+
 import intro01 from '../../assets/image/intro01.jpg';
 import intro02 from '../../assets/image/intro02.jpg';
 import intro03 from '../../assets/image/intro03.jpg';
@@ -10,21 +12,21 @@ const Intro = (props) => {
   return (
     <Swiper>
       <View style={styles.slide1}>
-        <Image source={intro01} style={styles.image} />
+        <FastImage style={styles.image} source={intro01} />
         <Text style={[styles.text, {color: Colors.primaryTextColor}]}>
           Take world's best courses online from top universities and industry
           partners.
         </Text>
       </View>
       <View style={styles.slide2}>
-        <Image source={intro02} style={styles.image} />
+        <FastImage style={styles.image} source={intro02} />
         <Text style={[styles.text, {color: Colors.primaryTextColor}]}>
           Access content anywhere, anytime you can even save content for offline
           usage
         </Text>
       </View>
       <View style={styles.slide3}>
-        <Image source={intro03} style={styles.image} />
+        <FastImage style={styles.image} source={intro03} />
         <Text style={[styles.text, {color: Colors.primaryTextColor}]}>
           Earn employer-recognized credentials and take your career to the next
           level

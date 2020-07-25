@@ -9,7 +9,7 @@ import {
   FlatList,
 } from 'react-native';
 import {getMyCoursesAPI} from '../../services/Courses';
-import {CourseVerticalItem} from '../../components/Course';
+import {MyCourseVerticalItem} from '../../components/Course';
 import {Styles, Distance, BoxModel, Typography, Size} from '../../styles';
 import p from 'pretty-format';
 import separator from '../../components/Separator';
@@ -42,24 +42,7 @@ const ListCourse = (props) => {
       params: {id: item.id},
     });
   };
-  const Header = () => {
-    return (
-      <View
-        style={[
-          styles.container,
-          {backgroundColor: theme.primaryBackgroundColor},
-        ]}>
-        <Text style={[styles.textDownload, {color: theme.primaryTextColor}]}>
-          Downloads
-        </Text>
-        <TouchableOpacity>
-          <Text style={[styles.textRemove, {color: theme.primaryColor}]}>
-            Remove all
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
+
   return (
     <SafeAreaView
       style={[styles.safeAreaView, {backgroundColor: theme.backgroundColor}]}>
@@ -69,7 +52,7 @@ const ListCourse = (props) => {
         ItemSeparatorComponent={separator}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
-          <CourseVerticalItem onPressItem={onPressItem} item={item} />
+          <MyCourseVerticalItem onPressItem={onPressItem} item={item} />
         )}
         keyExtractor={(item, index) => item.id + index}
         getItemLayout={(data, index) => ({
@@ -77,10 +60,6 @@ const ListCourse = (props) => {
           offset: Size.scaleSize(100) * index,
           index,
         })}
-        ListHeaderComponent={() => {
-          return <Header />;
-        }}
-        stickyHeaderIndices={[0]}
       />
     </SafeAreaView>
   );

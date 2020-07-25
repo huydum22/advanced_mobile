@@ -58,6 +58,10 @@ export const imageInHorizontalCourse = {
   height: scaleSize(100),
   resizeMode: 'cover',
 };
+export const barIcon = {
+  width: scaleSize(25),
+  height: scaleSize(25),
+};
 export const containerInHorizontalCourse = {
   ...tinyMargin,
   flex: 1,

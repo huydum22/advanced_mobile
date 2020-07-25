@@ -1,11 +1,11 @@
 import React, {useContext, useMemo} from 'react';
-import {TouchableHighlight, View} from 'react-native';
+import {TouchableHighlight, View, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import FastImage from 'react-native-fast-image';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as scenes from '../../../scenes';
 import * as screenName from '../../../Constants/ScreenName';
-import {Size, Typography, Distance} from '../../../styles';
+import {Size, Typography, Distance, Styles} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 import {AuthenticationContext} from '../../../Provider/Authentication';
 const HomeStack = createStackNavigator();
@@ -65,7 +65,7 @@ const HomeNavigatorStack = () => {
               }}
               underlayColor={theme.overlayColor}
               style={{marginLeft: Distance.spacing_14}}>
-              <MaterialCommunityIcons
+              <MaterialIcons
                 name="settings"
                 size={25}
                 color={theme.primaryTextColor}

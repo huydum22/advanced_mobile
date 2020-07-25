@@ -42,14 +42,14 @@ const OtherSetting = (props) => {
       style={{backgroundColor: theme.backgroundColor}}
       showsVerticalScrollIndicator={false}>
       <View style={styles.mainContainer}>
-        <Item icon="theme-light-dark" name="Theme" onPress={onPressTheme} />
+        <Item icon="lightbulb-outline" name="Theme" onPress={onPressTheme} />
         <Item icon="cloud-download" name="Download options" />
         <Item icon="view-stream" name="Streaming options" />
-        <Item icon="video" name="Video playback options" />
+        <Item icon="videocam" name="Video playback options" />
         <Item icon="send" name="Send feedback" />
         <Item icon="contact-mail" name="Contact support" />
         <Item icon="apps" name="App version" />
-        <Item icon="tooltip-plus-outline" name="About us" />
+        <Item icon="info-outline" name="About us" />
         <Item
           name="Log out"
           onPress={() => {

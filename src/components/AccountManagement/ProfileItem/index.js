@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import {Colors, Styles, BoxModel, Typography, Distance} from '../../../styles';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {ThemeContext} from '../../../Provider/Theme';
 
@@ -35,11 +35,7 @@ const Item = ({icon, name, onPress}) => {
             styles.itemContainer,
             {backgroundColor: theme.primaryBackgroundColor},
           ]}>
-          <MaterialCommunityIcons
-            name={icon}
-            size={20}
-            color={theme.primaryTextColor}
-          />
+          <MaterialIcons name={icon} size={20} color={theme.primaryTextColor} />
           <Text
             style={[
               icon

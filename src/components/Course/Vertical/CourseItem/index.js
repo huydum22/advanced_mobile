@@ -58,7 +58,7 @@ const Item = (props) => {
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item['instructor.user.name']}
+              {item['instructor.user.name'] || item.name || item.instructorName}
             </Text>
             <View style={styles.levelContainer}>
               <Text
