@@ -24,7 +24,6 @@ const Item = (props) => {
     this.ActionSheet.context = itemShow;
     this.ActionSheet.show();
   };
-  console.log(p(item));
   return (
     <View
       style={[

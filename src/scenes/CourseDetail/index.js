@@ -46,7 +46,6 @@ const CourseDetail = (props) => {
   const fetchData = async () => {
     try {
       let response = await courseInfoAPI(state.token, route.params.id);
-      console.log(p(response.data.payload));
       setItem(response.data.payload);
     } catch ({response}) {
       console.log(p(response.data));

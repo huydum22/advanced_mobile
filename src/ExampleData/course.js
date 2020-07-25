@@ -22,6 +22,7 @@ const data = [
     ratedNumber: 124,
     soldNumber: randomRate(),
     imageUrl: image01,
+    price: 0,
   },
   {
     id: '2',
@@ -34,6 +35,7 @@ const data = [
     ratedNumber: 12,
     soldNumber: randomRate(),
     imageUrl: image02,
+    price: 0,
   },
   {
     id: '3',
@@ -46,6 +48,7 @@ const data = [
     ratedNumber: 412,
     soldNumber: randomRate(),
     imageUrl: image03,
+    price: 0,
   },
   {
     id: '4',
@@ -58,6 +61,7 @@ const data = [
     ratedNumber: 90,
     soldNumber: randomRate(),
     imageUrl: image03,
+    price: 0,
   },
   {
     id: '5',
@@ -70,6 +74,7 @@ const data = [
     ratedNumber: 42,
     soldNumber: randomRate(),
     imageUrl: image02,
+    price: 0,
   },
   {
     id: '6',
@@ -82,6 +87,7 @@ const data = [
     ratedNumber: 6,
     soldNumber: randomRate(),
     imageUrl: image01,
+    price: 0,
   },
   {
     id: '7',
@@ -94,6 +100,7 @@ const data = [
     ratedNumber: 54,
     soldNumber: randomRate(),
     imageUrl: image01,
+    price: 0,
   },
   {
     id: '8',
@@ -106,6 +113,7 @@ const data = [
     ratedNumber: 912,
     soldNumber: randomRate(),
     imageUrl: image02,
+    price: 0,
   },
   {
     id: '9',
@@ -118,6 +126,7 @@ const data = [
     ratedNumber: 812,
     soldNumber: randomRate(),
     imageUrl: image03,
+    price: 0,
   },
   {
     id: '10',
@@ -130,6 +139,7 @@ const data = [
     ratedNumber: 42,
     soldNumber: randomRate(),
     imageUrl: image03,
+    price: 0,
   },
   {
     id: '11',
@@ -142,6 +152,7 @@ const data = [
     ratedNumber: 6,
     soldNumber: randomRate(),
     imageUrl: image01,
+    price: 0,
   },
   {
     id: '12',
@@ -154,6 +165,7 @@ const data = [
     ratedNumber: 912,
     soldNumber: randomRate(),
     imageUrl: image02,
+    price: 0,
   },
   {
     id: '13',
@@ -166,6 +178,7 @@ const data = [
     ratedNumber: 124,
     soldNumber: randomRate(),
     imageUrl: image01,
+    price: 0,
   },
   {
     id: '14',
@@ -178,6 +191,7 @@ const data = [
     ratedNumber: 90,
     soldNumber: randomRate(),
     imageUrl: image03,
+    price: 0,
   },
   {
     id: '15',
@@ -190,6 +204,7 @@ const data = [
     ratedNumber: 12,
     soldNumber: randomRate(),
     imageUrl: image02,
+    price: 0,
   },
 ];
 export default data;

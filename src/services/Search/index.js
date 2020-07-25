@@ -13,7 +13,15 @@ export const SearchCourseByCategoryAPI = async (id) => {
   return await REQUEST.post(SEARCH, {
     keyword: '',
     opt: {category: [id]},
-    limit: 5,
+    limit: 7,
+    offset: 0,
+  });
+};
+export const SearchCourseByPrice = async (price) => {
+  return await REQUEST.post(SEARCH, {
+    keyword: '',
+    opt: {price: [price]},
+    limit: 12,
     offset: 0,
   });
 };

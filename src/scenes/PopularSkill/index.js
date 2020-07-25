@@ -1,4 +1,5 @@
-import React, {useContext} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useContext, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,32 +9,25 @@ import {
   FlatList,
 } from 'react-native';
 import {CourseHorizontalItem} from '../../components/Course';
-import {PathItemHorizontal} from '../../components/Path';
-import {AuthorHorizontalItem} from '../../components/Author';
-import {
-  Colors,
-  Distance,
-  Styles,
-  Typography,
-  Size,
-  BoxModel,
-} from '../../styles';
+import {Distance, Styles, Typography, Size, BoxModel} from '../../styles';
+import {SearchCourseByPrice} from '../../services/Search';
 import SeeAllBtn from '../../components/common/see-all-button';
-import dataCourse from '../../ExampleData/course';
-import dataAuthor from '../../ExampleData/author';
-import dataPath from '../../ExampleData/path';
+// import dataCourse from '../../ExampleData/course';
+// import dataPath from '../../ExampleData/path';
+import p from 'pretty-format';
 import {
-  PathDetailScreenName,
-  AuthorDetailScreenName,
   CourseDetailScreenName,
   CourseDetailScreenStack,
   ShowListCourseScreenName,
   ShowListPathScreenName,
 } from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
+import {useState} from 'react';
+
 const PopularSkill = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
+  const [data, setData] = useState([]);
   const showListCourse = (index, title) => {
     if (index === 0) {
       navigation.navigate(ShowListPathScreenName);
@@ -43,18 +37,20 @@ const PopularSkill = (props) => {
       });
     }
   };
-  const onPressPathItem = (item) => {
-    navigation.navigate(PathDetailScreenName, {
-      name: item.name,
-      numberOfCourse: item.numberOfCourse,
-      totalHour: item.totalHour,
-    });
+
+  const fetchData = async () => {
+    try {
+      let response = await SearchCourseByPrice(route.params.item.price);
+      setData(response.data.payload.rows);
+    } catch ({response}) {
+      console.log(response);
+    }
   };
-  const onPressAuthorItem = (item) => {
-    navigation.navigate(AuthorDetailScreenName, {
-      name: item.name,
-    });
-  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const onPressCourseItem = (item) => {
     navigation.navigate(CourseDetailScreenStack, {
       screen: CourseDetailScreenName,
@@ -70,7 +66,7 @@ const PopularSkill = (props) => {
             Typography.fontBold,
             {color: theme.primaryTextColor},
           ]}>
-          {title}{' '}
+          {title}
         </Text>
         {indexItem[0] === 3 ? (
           <View />
@@ -80,62 +76,17 @@ const PopularSkill = (props) => {
       </View>
     );
   };
-  const renderListItem = (data) => {
-    if (data === 0) {
-      return (
-        <FlatList
-          data={dataPath.slice(0, 5)}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => (
-            <PathItemHorizontal
-              item={item}
-              key={item.id}
-              onPress={onPressPathItem}
-            />
-          )}
-          getItemLayout={(data, index) => ({
-            length: Size.scaleSize(200),
-            offset: Size.scaleSize(200) * index,
-            index,
-          })}
-        />
-      );
-    }
-    if (data === 3) {
-      return (
-        <FlatList
-          data={dataAuthor.slice(0, 5)}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => (
-            <AuthorHorizontalItem
-              item={item}
-              key={item.id}
-              onPress={onPressAuthorItem}
-            />
-          )}
-          ListFooterComponent={() => {
-            return <View style={styles.footer} />;
-          }}
-          getItemLayout={(data, index) => ({
-            length: Size.scaleSize(160),
-            offset: Size.scaleSize(160) * index,
-            index,
-          })}
-        />
-      );
-    }
+  const renderListItem = (dataCourse) => {
     return (
       <FlatList
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        data={dataCourse.slice(0, 5)}
+        data={data.slice(0, 7)}
         renderItem={({item}) => (
           <CourseHorizontalItem item={item} onPress={onPressCourseItem} />
         )}
         keyExtractor={(item, index) => item + index}
-        getItemLayout={(data, index) => ({
+        getItemLayout={(dataCourse, index) => ({
           length: Size.scaleSize(200),
           offset: Size.scaleSize(200) * index,
           index,
@@ -148,10 +99,8 @@ const PopularSkill = (props) => {
       <SectionList
         style={{backgroundColor: theme.backgroundColor}}
         sections={[
-          {title: 'Path', data: [0]},
           {title: 'New', data: [1]},
           {title: 'Trending', data: [2]},
-          {title: 'Top author', data: [3]},
         ]}
         keyExtractor={(item, index) => item + index}
         renderSectionHeader={({section: {title, data}}) =>

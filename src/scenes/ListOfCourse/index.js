@@ -11,13 +11,16 @@ import {
   topCourseUserFavoriteAPI,
   recommendCourseAPI,
 } from '../../services/Courses';
-import {SearchCourseByCategoryAPI} from '../../services/Search';
+import {
+  SearchCourseByCategoryAPI,
+  SearchCourseByPrice,
+} from '../../services/Search';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import * as screenName from '../../Constants/ScreenName';
 const ListOfCourse = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
-  const {id} = route.params;
+  const {id, keyword} = route.params;
   const [data, setData] = useState([]);
   const {state} = useContext(AuthenticationContext);
 
@@ -46,6 +49,10 @@ const ListOfCourse = (props) => {
         case screenName.RecommendCourse:
           let recommendCourse = await recommendCourseAPI(state.userInfo.id);
           setData(recommendCourse.data.payload);
+          break;
+        case screenName.searchCourseScreen:
+          let searchCoursePrice = await SearchCourseByPrice(keyword.price);
+          setData(searchCoursePrice.data.payload.rows);
           break;
         default:
           let searchCourse = await SearchCourseByCategoryAPI(id);

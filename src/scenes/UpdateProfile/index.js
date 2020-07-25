@@ -50,7 +50,6 @@ const UpdateProfile = (props) => {
     };
     ImagePicker.launchImageLibrary(options, async (response) => {
       if (response.uri) {
-        console.log(response.uri);
         setAvatar(response.uri);
       }
     });

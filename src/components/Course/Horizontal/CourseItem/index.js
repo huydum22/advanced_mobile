@@ -12,7 +12,6 @@ function numberWithCommas(x) {
 const Item = (props) => {
   const {item, onPress} = props;
   const {theme} = useContext(ThemeContext);
-
   return (
     <TouchableHighlight
       style={[
@@ -50,11 +49,10 @@ const Item = (props) => {
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item['instructor.user.name']}
+              {item['instructor.user.name'] || item.name}
             </Text>
           </View>
           <View style={[Styles.fillRow]}>
-
             <Text style={Styles.subTitleInHorizontalList}>
               {Moment(item.createdAt).format('MMMM Do')}
             </Text>

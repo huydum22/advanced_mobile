@@ -6,19 +6,19 @@ const Item = (props) => {
   const {item, onPress} = props;
   const {theme} = useContext(ThemeContext);
   const titleItem = () => {
-    if (item.name === '0') {
+    if (item.id === 0) {
       return 'Free';
     }
-    if (item.name === '200000') {
+    if (item.id === 1) {
       return '<200.000đ';
     }
-    if (item.name === '500000') {
+    if (item.id === 2) {
       return '200.000đ - 500.000đ';
     }
-    if (item.name === '1000000') {
+    if (item.id === 3) {
       return '500.000đ - 1.000.000đ';
     }
-    if (item.name === '2000000') {
+    if (item.id === 4) {
       return '1.000.000đ - 2.000.000đ ';
     }
     return '>2.000.000đ';
@@ -31,7 +31,7 @@ const Item = (props) => {
       ]}
       underlayColor={theme.backgroundSeeAllButton}
       onPress={() => {
-        onPress(item);
+        onPress(item, titleItem);
       }}>
       <Text style={{...Typography.fontRegular, color: theme.primaryTextColor}}>
         {titleItem()}

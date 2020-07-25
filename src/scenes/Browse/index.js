@@ -19,6 +19,24 @@ import {CategoryContext} from '../../Provider/Category';
 import SeeAllBtn from '../../components/common/see-all-button';
 import dataSkill from '../../ExampleData/skill';
 import {ThemeContext} from '../../Provider/Theme';
+const titleItem = (id) => {
+  if (id === 0) {
+    return 'Free';
+  }
+  if (id === 1) {
+    return '<200.000đ';
+  }
+  if (id === 2) {
+    return '200.000đ - 500.000đ';
+  }
+  if (id === 3) {
+    return '500.000đ - 1.000.000đ';
+  }
+  if (id === 4) {
+    return '1.000.000đ - 2.000.000đ ';
+  }
+  return '>2.000.000đ';
+};
 const Browse = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
@@ -42,16 +60,14 @@ const Browse = (props) => {
     getInstructor();
   }, []);
 
-  const onPressPopularSkill = () => {
-    navigation.navigate(screenName.PopularSkillScreenName);
-  };
-  const onPressPath = (item) => {
-    navigation.navigate(screenName.PathDetailScreenName, {
-      name: item.name,
-      numberOfCourse: item.numberOfCourse,
-      totalHour: item.totalHour,
+  const onPressPopularSkill = (item) => {
+    navigation.navigate(screenName.ShowListCourseScreenName, {
+      title: titleItem(item.id),
+      id: screenName.searchCourseScreen,
+      keyword: item,
     });
   };
+
   const onPressAuthor = (item) => {
     navigation.navigate(screenName.AuthorDetailScreenName, {
       id: item.id,
@@ -64,38 +80,20 @@ const Browse = (props) => {
     });
     // navigation.navigate(screenName.RelateSkillScreenName);
   };
-  const showAllPath = (title) => {
-    navigation.navigate(screenName.ShowListPathScreenName);
-  };
+
   const renderHeader = (title, data) => {
-    if (data[0] === 2) {
-      return (
-        <View style={styles.titleContainer}>
-          <Text
-            style={[
-              Styles.titleRow,
-              Typography.fontBold,
-              {color: theme.primaryTextColor},
-            ]}>
-            {title}{' '}
-          </Text>
-          <SeeAllBtn onPress={showAllPath} />
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.titleContainer}>
-          <Text
-            style={[
-              Styles.titleRow,
-              Typography.fontBold,
-              {color: theme.primaryTextColor},
-            ]}>
-            {title}{' '}
-          </Text>
-        </View>
-      );
-    }
+    return (
+      <View style={styles.titleContainer}>
+        <Text
+          style={[
+            Styles.titleRow,
+            Typography.fontBold,
+            {color: theme.primaryTextColor},
+          ]}>
+          {title}{' '}
+        </Text>
+      </View>
+    );
   };
 
   const Header = () => {
@@ -130,7 +128,7 @@ const Browse = (props) => {
             <PopularSkillItem
               key={item.id}
               item={item}
-              onPress={onPressPopularSkill}
+              onPress={() => onPressPopularSkill(item)}
             />
           )}
         />

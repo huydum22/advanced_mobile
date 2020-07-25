@@ -37,3 +37,4 @@ export const BestSeller = 'BestSeller';
 export const TopRating = 'TopRating';
 export const YourFavorite = 'YourFavorite';
 export const RecommendCourse = 'RecommendCourse';
+export const searchCourseScreen = 'searchScreen';

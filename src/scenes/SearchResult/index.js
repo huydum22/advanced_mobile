@@ -1,81 +1,108 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {FlatList} from 'react-native';
-// import data from '../../ExampleData/course';
+import React, {useContext, useState, useEffect, useMemo} from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
+import {useSafeArea} from 'react-native-safe-area-context';
 import {} from '../../services/Category';
-import {Typography, Size} from '../../styles';
+import {Typography, Size, Styles} from '../../styles';
 import {ThemeContext} from '../../Provider/Theme';
 import p from 'pretty-format';
 import {CourseVerticalItem} from '../../components/Course';
 import separator from '../../components/Separator';
 import {SearchByKeywordAPI} from '../../services/Search';
+import {SearchBar} from 'react-native-elements';
+
 const SearchNavigator = (props) => {
   const {navigation, route} = props;
   const [data, setData] = useState([]);
+  const [keyword, setKeyword] = useState(route.params.keyword);
+  const [searchText, setSearchText] = useState(route.params.keyword);
   const {theme} = useContext(ThemeContext);
-  const fetchDataByKeyword = async () => {
-    try {
-      let response = await SearchByKeywordAPI(route.params.keyword);
-      setData(response.data.payload.rows);
-    } catch ({response}) {
-      console.log(response);
-    }
-  };
+  const insets = useSafeArea();
+
   useEffect(() => {
+    const fetchDataByKeyword = async () => {
+      try {
+        let response = await SearchByKeywordAPI(keyword);
+        setData(response.data.payload.rows);
+      } catch ({response}) {
+        console.log(response);
+      }
+    };
     fetchDataByKeyword();
-  }, []);
+  }, [keyword]);
   const onPressItem = () => {};
+  const onSubmitEditing = () => {
+    setKeyword(searchText);
+  };
+  const updateSearch = (text) => {
+    setSearchText(text);
+  };
+  const onClearText = () => {
+    setSearchText('');
+  };
+  const SearchBarHeader = useMemo(() => {
+    return (
+      <SearchBar
+        placeholder="Search here..."
+        onChangeText={(search) => updateSearch(search)}
+        value={searchText}
+        lightTheme={true}
+        containerStyle={{
+          width: Size.WIDTH,
+          backgroundColor: theme.themeColor,
+        }}
+        onSubmitEditing={onSubmitEditing}
+        onClear={onClearText}
+        inputStyle={{color: theme.primaryTextColor}}
+        inputContainerStyle={{
+          height: Size.scaleSize(40),
+          backgroundColor: theme.searchBackgroundColor,
+          marginTop: insets.top + 20,
+        }}
+        cancelButtonProps={{
+          color: theme.primaryTextColor,
+          backgroundColor: theme.themeColor,
+          buttonStyle: {
+            marginTop: insets.top + 20,
+          },
+        }}
+        platform="ios"
+        round={true}
+      />
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchText, insets, theme]);
+  const flatListSeparator = () => {
+    return (
+      <View style={[Styles.separator, {backgroundColor: theme.DialogColor}]} />
+    );
+  };
   return (
-    <FlatList
-      data={data}
-      image
-      ItemSeparatorComponent={separator}
-      showsVerticalScrollIndicator={false}
-      renderItem={({item}) => (
-        <CourseVerticalItem onPressItem={onPressItem} item={item} />
-      )}
-      keyExtractor={(item, index) => item + index}
-      getItemLayout={(data, index) => ({
-        length: Size.scaleSize(100),
-        offset: Size.scaleSize(100) * index,
-        index,
-      })}
-    /> // <Tab.Navigator
-    //   initialRouteName={SearchAllScreenName}
-    //   tabBarOptions={{
-    //     activeTintColor: theme.primaryTextColor,
-    //     inactiveTintColor: theme.grayDarkColor,
-    //     labelStyle: {...Typography.fontBold, fontSize: Typography.fontSize14},
-    //     indicatorStyle: {
-    //       backgroundColor: theme.primaryColor,
-    //       height: 2,
-    //     },
-    //     style: {
-    //       backgroundColor: theme.themeColor,
-    //     },
-    //     pressOpacity: 1,
-    //   }}
-    //   animationEnabled={true}>
-    //   <Tab.Screen
-    //     name={SearchAllScreenName}
-    //     component={SearchAll}
-    //     options={{tabBarLabel: 'All'}}
-    //   />
-    //   <Tab.Screen
-    //     name={SearchCourseScreenName}
-    //     component={ListCourseVertical}
-    //     options={{tabBarLabel: 'Course'}}
-    //   />
-    //   <Tab.Screen
-    //     name={SearchPathScreenName}
-    //     component={ListPathVertical}
-    //     options={{tabBarLabel: 'Paths'}}
-    //   />
-    //   <Tab.Screen
-    //     name={SearchAuthorScreenName}
-    //     component={ListAuthorVertical}
-    //     options={{tabBarLabel: 'Author'}}
-    //   />
-    // </Tab.Navigator>
+    <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
+      {SearchBarHeader}
+      <FlatList
+        data={data}
+        image
+        ItemSeparatorComponent={flatListSeparator}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item}) => (
+          <CourseVerticalItem onPressItem={onPressItem} item={item} />
+        )}
+        keyExtractor={(item, index) => item + index}
+        getItemLayout={(data, index) => ({
+          length: Size.scaleSize(100),
+          offset: Size.scaleSize(100) * index,
+          index,
+        })}
+      />
+    </View>
   );
 };
+const styles = StyleSheet.create({
+  searchBarContainer: {
+    height: Size.scaleSize(40),
+  },
+  container: {
+    flex: 1,
+  },
+});
 export default SearchNavigator;
