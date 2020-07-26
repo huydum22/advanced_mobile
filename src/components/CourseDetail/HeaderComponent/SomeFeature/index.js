@@ -1,8 +1,6 @@
 import React, {useContext} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Colors, Typography, Styles, BoxModel, Size} from '../../../../styles';
-import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {ThemeContext} from '../../../../Provider/Theme';
 import {PrimaryButton} from '../../../Authentication';
 

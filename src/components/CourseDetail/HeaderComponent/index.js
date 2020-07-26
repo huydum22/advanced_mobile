@@ -8,6 +8,7 @@ import Relate from './Relate';
 import LearningCheck from './LearningCheck';
 import SegmentControl from './SegmentControl';
 import WhatLearn from './WhatLearn';
+import ProfileAuthor from './ProfileAuthor';
 import {AuthorDetailScreenName} from '../../../Constants/ScreenName';
 import {FavoriteContext} from '../../../Provider/Favorite';
 import {ListCourseHorizontal} from '../../Course';
@@ -71,7 +72,8 @@ const Header = (props) => {
         The same topic
       </Text>
       <ListCourseHorizontal data={item.coursesLikeCategory} />
-      <LearningCheck />
+      <ProfileAuthor data={item.instructor} onPress={onPressAuthor} />
+      {/* <LearningCheck /> */}
       <SegmentControl />
     </View>
   );
