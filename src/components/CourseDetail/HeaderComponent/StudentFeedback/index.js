@@ -138,6 +138,13 @@ const StudentFeedback = (props) => {
         icon="star-o"
         style={[styles.buttonContainer, {backgroundColor: theme.primaryColor}]}
       />
+      <View
+        style={[
+          styles.divide,
+          styles.divideContainer,
+          {backgroundColor: theme.DialogColor},
+        ]}
+      />
     </View>
   );
 };
@@ -176,6 +183,9 @@ const styles = StyleSheet.create({
   },
   rating: {
     marginLeft: 10,
+  },
+  divideContainer: {
+    marginTop: Distance.spacing_14,
   },
 });
 export default StudentFeedback;

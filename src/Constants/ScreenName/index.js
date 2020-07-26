@@ -21,6 +21,8 @@ export const SearchPathScreenName = 'searchPath';
 export const SearchAuthorScreenName = 'searchAuthor';
 export const PathDetailScreenName = 'pathDetail';
 export const AuthorDetailScreenName = 'authorDetail';
+export const PlayVideoScreenName = 'PlayVideo';
+
 export const ChangePasswordScreenName = 'ChangePassword';
 export const ThemeScreenName = 'theme';
 export const OtherSettingScreenName = 'otherSetting';

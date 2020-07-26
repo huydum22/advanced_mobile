@@ -33,6 +33,11 @@ const CourseDetailNavigatorStack = () => {
         component={scenes.AuthorDetail}
         options={{title: 'Author'}}
       />
+      <CourseDetailStack.Screen
+        name={screenName.PlayVideoScreenName}
+        component={scenes.PlayReview}
+        options={{headerShown: false}}
+      />
     </CourseDetailStack.Navigator>
   );
 };

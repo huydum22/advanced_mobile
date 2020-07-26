@@ -15,17 +15,20 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import {getCourseDetailAPI} from '../../services/Courses';
 import {AuthenticationContext} from '../../Provider/Authentication';
-import contentData from '../../ExampleData/contents';
-import {Size, Colors, Typography, Styles} from '../../styles';
+import {useSafeArea} from 'react-native-safe-area-context';
+import {Size, Colors, Typography, Styles, BoxModel} from '../../styles';
+import * as screenName from '../../Constants/ScreenName';
 import Header from '../../components/CourseDetail/HeaderComponent';
 import {ThemeContext} from '../../Provider/Theme';
 import p from 'pretty-format';
+
 const CourseDetail = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);
   const [item, setItem] = useState({});
-
+  const insets = useSafeArea();
+  console.log(p(item.promoVidUrl));
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -73,37 +76,52 @@ const CourseDetail = (props) => {
       </TouchableHighlight>
     );
   };
-  const completeSessionCourse = (isCheck) => {
-    if (isCheck) {
-      return (
-        <MaterialIcons
-          name="check-circle"
-          size={15}
-          color={theme.successColor}
-          style={styles.checkContainer}
-        />
-      );
-    }
-  };
 
-  const renderListItem = (item) => {
+  const renderListItem = (itemLesson) => {
     return (
-      <View
-        style={[
-          styles.textContainer,
-          {backgroundColor: theme.primaryBackgroundColor},
-        ]}>
-        <Text style={[styles.textContent, {color: theme.primaryTextColor}]}>
-          {item.subTitle}
-        </Text>
-        {completeSessionCourse(item.isCheck)}
-      </View>
+      <TouchableHighlight
+        onPress={() => onPressPreviewLesson(itemLesson)}
+        underlayColor={theme.overlayColor}>
+        <View
+          style={[
+            styles.textContainer,
+            {backgroundColor: theme.primaryBackgroundColor},
+          ]}>
+          <Text style={[styles.textContent, {color: theme.primaryTextColor}]}>
+            {itemLesson.name}
+          </Text>
+          {itemLesson.isPreview ? (
+            <View
+              style={[
+                styles.previewContainer,
+                {borderColor: theme.primaryColor},
+              ]}>
+              <Text style={[styles.previewText, {color: theme.primaryColor}]}>
+                Preview
+              </Text>
+            </View>
+          ) : undefined}
+        </View>
+      </TouchableHighlight>
     );
   };
   const dismiss = () => {
     navigation.goBack();
   };
-  const onPressPlayVideo = () => {};
+  const onPressPlayVideo = () => {
+    if (item.promoVidUrl) {
+      navigation.navigate(screenName.PlayVideoScreenName, {
+        urlVideo: item.promoVidUrl,
+      });
+    }
+  };
+  const onPressPreviewLesson = (itemLesson) => {
+    if (itemLesson.videoUrl) {
+      navigation.navigate(screenName.PlayVideoScreenName, {
+        urlVideo: itemLesson.videoUrl,
+      });
+    }
+  };
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -180,8 +198,17 @@ const CourseDetail = (props) => {
           ]}>
           <SectionList
             ItemSeparatorComponent={flatListSeparator}
-            sections={contentData}
-            keyExtractor={(item, index) => item + index}
+            sections={
+              item.section
+                ? item.section.map((data) => {
+                    return {
+                      title: data.name,
+                      data: data.lesson,
+                    };
+                  })
+                : []
+            }
+            keyExtractor={(itemLesson, index) => itemLesson + index}
             renderItem={({item}) => renderListItem(item)}
             renderSectionHeader={({section: {title}, index}) =>
               renderHeader(title, index)
@@ -193,7 +220,9 @@ const CourseDetail = (props) => {
               );
             }}
             ListFooterComponent={() => {
-              return <View style={styles.footer} />;
+              return (
+                <View style={[styles.footer, {marginBottom: insets.bottom}]} />
+              );
             }}
           />
         </View>
@@ -242,7 +271,7 @@ const styles = StyleSheet.create({
     ...Typography.fontRegular,
   },
   textContainer: {
-    height: 35,
+    height: Size.scaleSize(50),
     ...Styles.rowBetween,
   },
   checkContainer: {
@@ -259,6 +288,15 @@ const styles = StyleSheet.create({
     top: 15,
     right: 15,
   },
-  playButton: {},
+  previewContainer: {
+    borderWidth: 1,
+    ...BoxModel.tinyPadding,
+
+    ...BoxModel.marginHorizontal,
+  },
+  previewText: {
+    ...Typography.fontRegular,
+    fontSize: Typography.fontSize14,
+  },
 });
 export default CourseDetail;

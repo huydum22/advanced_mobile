@@ -91,8 +91,11 @@ const Header = (props) => {
         ratings={item.ratings}
         onPress={() => onPressStudentFeedback(item.ratings)}
       />
+      <Text style={[styles.title, {color: theme.primaryTextColor}]}>
+        Curriculum
+      </Text>
       {/* <LearningCheck /> */}
-      <SegmentControl />
+      {/* <SegmentControl /> */}
     </View>
   );
 };

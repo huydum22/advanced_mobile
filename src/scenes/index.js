@@ -20,6 +20,7 @@ import OtherSetting from './OtherSetting';
 import ForgotPassword from './ForgotPassword';
 import SplashScreen from './SplashScreen';
 import UpdateProfile from './UpdateProfile';
+import PlayReview from './PlayReview';
 export {
   AuthorDetail,
   Browse,
@@ -43,4 +44,5 @@ export {
   ForgotPassword,
   SplashScreen,
   UpdateProfile,
+  PlayReview,
 };
