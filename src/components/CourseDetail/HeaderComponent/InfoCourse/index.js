@@ -1,35 +1,99 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {Size, Typography} from '../../../../styles';
-import {AirbnbRating} from 'react-native-ratings';
+import {Size, Typography, Styles, BoxModel} from '../../../../styles';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import StarRating from 'react-native-star-rating';
+
 import {ThemeContext} from '../../../../Provider/Theme';
 import Moment from 'moment';
 
 const InfoCourse = (props) => {
   const {theme} = useContext(ThemeContext);
   return (
-    <View style={styles.container}>
-      <Text style={[styles.text, {color: theme.grayColor}]}>
-        {props.videoNumber} Videos
-      </Text>
-      <Text style={[styles.text, {color: theme.grayColor}]}>.</Text>
-      <Text style={[styles.text, {color: theme.grayColor}]}>
-        {Moment(props.createdAt).format('MMM d, yyyy')}
-      </Text>
-      <Text style={[styles.text, {color: theme.grayColor}]}>.</Text>
-      <Text style={[styles.text, {color: theme.grayColor}]}>
-        {props.totalHour} hours
-      </Text>
-      <AirbnbRating
-        reviews={false}
-        size={12}
-        defaultRating={props.rate}
-        count={5}
-        starContainerStyle={{marginTop: -Size.scaleSize(23)}}
-      />
-      <Text style={[styles.text, {color: theme.grayColor}]}>
-        ({props.totalRate})
-      </Text>
+    <View>
+      <View style={styles.container}>
+        <View
+          style={[
+            Styles.rowCross,
+            styles.infoContainer,
+            {borderColor: theme.grayColor},
+          ]}>
+          <FontAwesome
+            name="file-video-o"
+            size={Size.scaleSize(16)}
+            color={theme.grayColor}
+          />
+          <Text style={[styles.text, {color: theme.grayColor}]}>
+            {props.videoNumber} Videos
+          </Text>
+        </View>
+        <View
+          style={[
+            Styles.rowCross,
+            styles.infoContainer,
+            {borderColor: theme.grayColor},
+          ]}>
+          <MaterialIcons
+            name="play-arrow"
+            size={Size.scaleSize(16)}
+            color={theme.grayColor}
+          />
+          <Text style={[styles.text, {color: theme.grayColor}]}>
+            {props.totalHour} hours
+          </Text>
+        </View>
+        <View
+          style={[
+            Styles.rowCross,
+            styles.infoContainer,
+            {borderColor: theme.grayColor},
+          ]}>
+          <StarRating
+            disabled={false}
+            maxStars={5}
+            starSize={13}
+            rating={props.rate}
+            fullStarColor={'#f1c40f'}
+            containerStyle={styles.rating}
+          />
+          <Text style={[styles.text, {color: theme.grayColor}]}>
+            ({props.totalRate})
+          </Text>
+        </View>
+      </View>
+      <View style={styles.container}>
+        <View
+          style={[
+            Styles.rowCross,
+            styles.infoContainer,
+            {borderColor: theme.grayColor},
+          ]}>
+          <MaterialIcons
+            name="person-pin"
+            size={Size.scaleSize(16)}
+            color={theme.grayColor}
+          />
+          <Text style={[styles.text, {color: theme.grayColor}]}>
+            {props.soldNumber} Enrolled
+          </Text>
+        </View>
+        <View
+          style={[
+            Styles.rowCross,
+            styles.infoContainer,
+            {borderColor: theme.grayColor},
+          ]}>
+          <MaterialIcons
+            name="update"
+            size={Size.scaleSize(16)}
+            color={theme.grayColor}
+          />
+          <Text style={[styles.text, {color: theme.grayColor}]}>
+            Updated {Moment(props.updatedAt).format('MMM DD, yyyy')}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };
@@ -43,11 +107,17 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 5,
-    fontSize: 13,
+    fontSize: Typography.fontSize16,
     ...Typography.fontRegular,
   },
+  infoContainer: {
+    borderWidth: 1,
+    ...BoxModel.tinyPadding,
+    ...BoxModel.tinyMarginHorizontal,
+    borderRadius: Size.scaleSize(12),
+  },
   rating: {
-    marginLeft: 10,
+    marginLeft: 5,
   },
 });
 export default InfoCourse;

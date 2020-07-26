@@ -1,13 +1,14 @@
 import React, {useContext} from 'react';
 import {StyleSheet, View, Text, TouchableHighlight} from 'react-native';
-import {Size, Styles, Distance, Typography} from '../../../../styles';
+import {Size, Styles, Distance, Typography, BoxModel} from '../../../../styles';
 import {ThemeContext} from '../../../../Provider/Theme';
 import FastImage from 'react-native-fast-image';
 import p from 'pretty-format';
+import {Bar} from 'react-native-progress';
+
 const MyCourseItem = (props) => {
   const {onPressItem, item} = props;
   const {theme} = useContext(ThemeContext);
-
   return (
     <View
       style={[
@@ -39,12 +40,33 @@ const MyCourseItem = (props) => {
             </Text>
             <Text
               style={[
+                BoxModel.tinyPaddingVertical,
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
               {item['instructor.user.name'] || item.name || item.instructorName}
             </Text>
-            {item.process ? undefined : (
+            {item.process ? (
+              <View
+                style={(Styles.fillColumnStart, BoxModel.tinyPaddingVertical)}>
+                <Bar
+                  progress={item.process / 100}
+                  color={theme.primaryColor}
+                  width={Size.WIDTH - Size.scaleSize(120)}
+                  unfilledColor={theme.DialogColor}
+                  borderColor={theme.DialogColor}
+                  height={3}
+                />
+                <Text
+                  style={[
+                    Styles.subTitleInHorizontalList,
+                    BoxModel.tinyPaddingVertical,
+                    {color: theme.grayColor},
+                  ]}>
+                  {Math.floor(item.process)}% completed
+                </Text>
+              </View>
+            ) : (
               <View style={styles.levelContainer}>
                 <Text
                   style={[
@@ -73,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 3,
     ...Styles.center,
     height: Size.scaleSize(100),
-    width: Size.scaleSize(50),
+    width: Size.scaleSize(80),
     marginLeft: Distance.spacing_8,
   },
   image: {

@@ -13,7 +13,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
-import {courseInfoAPI} from '../../services/Courses';
+import {getCourseDetailAPI} from '../../services/Courses';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import contentData from '../../ExampleData/contents';
 import {Size, Colors, Typography, Styles} from '../../styles';
@@ -24,35 +24,19 @@ const CourseDetail = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);
-  const [item, setItem] = useState({
-    id: '1',
-    title: 'Angular Fundamentals',
-    numberOfCourse: '5 course',
-    name: 'Deborah House',
-    level: 'Beginner',
-    updatedAt: '2020-07-08T17:42:31.370Z',
-    totalHours: '1h',
-    ratedNumber: 124,
-    soldNumber: 10,
-    instructor: {
-      avatar:
-        'https://storage.googleapis.com/itedu-bucket/Avatar/b5980b4a-a723-4577-b195-c829b2fccaac.jpg',
-      name: 'Tuấn Nguyên',
-    },
-    imageUrl: 'https://itedu.me/static/media/bg-sliders-3.ad2511e4.jpg',
-  });
+  const [item, setItem] = useState({});
 
-  const fetchData = async () => {
-    try {
-      let response = await courseInfoAPI(state.token, route.params.id);
-      setItem(response.data.payload);
-    } catch ({response}) {
-      console.log(p(response.data));
-    }
-  };
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let response = await getCourseDetailAPI(route.params.id);
+        setItem(response.data.payload);
+      } catch ({response}) {
+        console.log(p(response.data));
+      }
+    };
     fetchData();
-  }, []);
+  }, [route.params.id]);
   const flatListSeparator = () => {
     return (
       <View
@@ -119,6 +103,7 @@ const CourseDetail = (props) => {
   const dismiss = () => {
     navigation.goBack();
   };
+  const onPressPlayVideo = () => {};
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -146,6 +131,7 @@ const CourseDetail = (props) => {
         <FastImage
           style={[
             styles.videoContainer,
+            Styles.fillRow,
             {backgroundColor: theme.backgroundColor},
           ]}
           source={{uri: item.imageUrl}}>
@@ -162,6 +148,17 @@ const CourseDetail = (props) => {
                 size={30}
                 color={theme.whiteWith07OpacityColor}
                 style={styles.cancelButton}
+              />
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={onPressPlayVideo}
+              underlayColor={theme.overlayColor}
+              style={Styles.center}>
+              <MaterialIcons
+                name="play-arrow"
+                size={150}
+                color={theme.whiteWith07OpacityColor}
+                style={Styles.center}
               />
             </TouchableHighlight>
             <TouchableHighlight
@@ -195,8 +192,10 @@ const CourseDetail = (props) => {
                 <Header navigation={navigation} route={route} item={item} />
               );
             }}
+            ListFooterComponent={() => {
+              return <View style={styles.footer} />;
+            }}
           />
-          <View style={styles.footer} />
         </View>
       </View>
     </SafeAreaView>
@@ -260,5 +259,6 @@ const styles = StyleSheet.create({
     top: 15,
     right: 15,
   },
+  playButton: {},
 });
 export default CourseDetail;

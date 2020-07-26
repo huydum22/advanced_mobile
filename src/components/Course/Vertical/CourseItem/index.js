@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {FavoriteContext} from '../../../../Provider/Favorite';
 import {Size, Styles, Distance} from '../../../../styles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import ActionSheet from 'react-native-actionsheet';
 import {ThemeContext} from '../../../../Provider/Theme';
 import StarRating from 'react-native-star-rating';
@@ -115,7 +115,11 @@ const Item = (props) => {
           onPress={() => {
             onPressMore(item);
           }}>
-          <Ionicons name="ios-more" size={25} color={theme.primaryTextColor} />
+          <Entypo
+            name="dots-three-vertical"
+            size={25}
+            color={theme.primaryTextColor}
+          />
         </TouchableOpacity>
         <ActionSheet
           ref={(o) => (this.ActionSheet = o)}

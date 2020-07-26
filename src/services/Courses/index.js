@@ -18,6 +18,7 @@ import {
   RECOMMEND_COURSE,
   COURSE_INFO,
   MY_COURSE,
+  COURSE_DETAIL,
 } from '../../Constants/API';
 
 const data = [
@@ -261,4 +262,8 @@ export const getMyCoursesAPI = async (token) => {
   return await REQUEST(`${MY_COURSE}`, {
     headers: {Authorization},
   });
+};
+
+export const getCourseDetailAPI = async (id) => {
+  return await REQUEST(`${COURSE_DETAIL}/${id}/null`);
 };

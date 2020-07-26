@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {Typography} from '../../../../styles';
+import {Typography, BoxModel} from '../../../../styles';
 import {ThemeContext} from '../../../../Provider/Theme';
 const Title = (props) => {
   const {theme} = useContext(ThemeContext);
@@ -8,6 +8,9 @@ const Title = (props) => {
     <View style={styles.container}>
       <Text style={[styles.textContainer, {color: theme.primaryTextColor}]}>
         {props.name}
+      </Text>
+      <Text style={[styles.subtitleContainer, {color: theme.primaryTextColor}]}>
+        {props.subtitle}
       </Text>
     </View>
   );
@@ -20,8 +23,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   textContainer: {
-    fontSize: Typography.fontSize20,
+    fontSize: Typography.fontSize25,
     ...Typography.fontBold,
+  },
+  subtitleContainer: {
+    ...BoxModel.smallMarginVertical,
+    fontSize: Typography.fontSize20,
+    ...Typography.fontRegular,
   },
 });
 

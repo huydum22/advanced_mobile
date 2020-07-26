@@ -1,15 +1,17 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Title from './TitleItem';
 import Author from './AuthorItem';
 import InfoCourse from './InfoCourse';
 import Feature from './SomeFeature';
-import Description from './Description';
 import Relate from './Relate';
 import LearningCheck from './LearningCheck';
 import SegmentControl from './SegmentControl';
+import WhatLearn from './WhatLearn';
 import {AuthorDetailScreenName} from '../../../Constants/ScreenName';
 import {FavoriteContext} from '../../../Provider/Favorite';
+import {ListCourseHorizontal} from '../../Course';
+import {Typography, BoxModel} from '../../../styles';
 import {
   findExistFavoriteCourse,
   findIndexFavoriteCourse,
@@ -39,48 +41,46 @@ const Header = (props) => {
       name: item.name,
     });
   };
-  const onPressFavorite = async (id, index) => {
-    try {
-      if (index === -1) {
-        setFavorite((favorite) => [...favorite, item]);
-      } else {
-        setFavorite(favorite.filter((item) => item.id !== id));
-        setIndexFavorite(-1);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
+  const onPressJoin = async (id, index) => {};
+  const onPressLike = async (id, index) => {};
   return (
     <View style={{backgroundColor: theme.themeColor}}>
-      <Title name={item.title} />
-      <Author instructor={item.instructorId} onPress={onPressAuthor} />
+      <Title name={item.title} subtitle={item.subtitle} />
+      <Author instructor={item.instructor} onPress={onPressAuthor} />
       <InfoCourse
         videoNumber={item.videoNumber}
         timeToStart={item.createdAt}
         totalHour={item.totalHours}
         totalRate={item.ratedNumber}
-        rate={
-          (item.formalityPoint + item.contentPoint + item.presentationPoint) / 3
-        }
+        rate={Number(item.averagePoint)}
+        soldNumber={item.soldNumber}
+        updatedAt={item.updatedAt}
       />
       <Feature
-        onPressFavorite={onPressFavorite}
-        checkFavorite={indexFavorite}
+        onPressLike={onPressLike}
+        onPressJoin={onPressJoin}
         id={item.id}
       />
-      <View style={[styles.divide, {backgroundColor: theme.DialogColor}]} />
-      <Description description={item.description} />
-      <Relate />
+      <WhatLearn
+        WhatLearnItem={item.learnWhat}
+        requireItem={item.requirement}
+        description={item.description}
+      />
+      <Text style={[styles.title, {color: theme.primaryTextColor}]}>
+        The same topic
+      </Text>
+      <ListCourseHorizontal data={item.coursesLikeCategory} />
       <LearningCheck />
       <SegmentControl />
     </View>
   );
 };
 const styles = StyleSheet.create({
-  container: {},
-  divide: {
-    height: 1,
+  title: {
+    ...Typography.fontBold,
+    fontSize: Typography.fontSize20,
+    ...BoxModel.margin,
   },
 });
 export default Header;

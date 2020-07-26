@@ -16,22 +16,16 @@ const SectionCourses = (props) => {
       params: {id: item.id},
     });
   };
-  const showListCourse = () => {
-    navigation.navigate(ShowListCourseScreenName, {
-      title: title,
-    });
-  };
+
   return (
     <View style={[Styles.fillColumn, styles.container]}>
-      <View style={styles.titleContainer}>
-        <Text style={[Styles.titleRow, Typography.fontBold]}>{title} </Text>
-        <SeeAllBtn onPress={showListCourse} />
-      </View>
       <FlatList
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        data={data.slice(0, 5)}
-        renderItem={({item}) => <Item item={item} onPress={onPressItem} />}
+        data={data ? data : []}
+        renderItem={({item}) => (
+          <Item item={item} onPress={() => onPressItem(item)} />
+        )}
         keyExtractor={(item, index) => item + index}
         getItemLayout={(data, index) => ({
           length: Size.scaleSize(200),

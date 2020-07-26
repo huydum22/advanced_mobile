@@ -20,7 +20,6 @@ import {Item} from '../../components/AccountManagement';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import FastImage from 'react-native-fast-image';
-import {updateProfileAPI} from '../../services/Authentication';
 const Account = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
@@ -37,7 +36,6 @@ const Account = (props) => {
   const onPressOtherSetting = () => {
     navigation.navigate(screen.OtherSettingScreenName);
   };
-
   return (
     <ScrollView
       style={{backgroundColor: theme.backgroundColor}}
@@ -55,10 +53,10 @@ const Account = (props) => {
             }}
           />
           <Text style={[styles.headerText, {color: theme.primaryTextColor}]}>
-            {state.userInfo ? state.userInfo.email : ''}
+            {state.userInfo ? state.userInfo.name || state.userInfo.email : ''}
           </Text>
           <Text style={[styles.headerSubText, {color: theme.grayColor}]}>
-            {state.userInfo ? state.userInfo.phone : ''}
+            {state.userInfo ? state.userInfo.email || state.userInfo.phone : ''}
           </Text>
         </View>
 

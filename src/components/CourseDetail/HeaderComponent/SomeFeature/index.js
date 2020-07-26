@@ -1,80 +1,62 @@
 import React, {useContext} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import {Colors, Typography} from '../../../../styles';
+import {Colors, Typography, Styles, BoxModel, Size} from '../../../../styles';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {ThemeContext} from '../../../../Provider/Theme';
+import {PrimaryButton} from '../../../Authentication';
+
 const Feature = (props) => {
-  const {onPressFavorite, checkFavorite, id} = props;
+  const {onPressLike, onPressJoin, id} = props;
   const {theme} = useContext(ThemeContext);
   return (
     <View style={[styles.container, {backgroundColor: theme.themeColor}]}>
       <View style={styles.mainContainer}>
-        <TouchableOpacity
+        <PrimaryButton
+          title="Join Now"
+          onPress={onPressJoin}
+          active={true}
+          icon="book"
           style={[
             styles.buttonContainer,
-            {backgroundColor: theme.backgroundSeeAllButton},
-          ]}>
-          <Feather name="bookmark" size={22} color={theme.primaryTextColor} />
-        </TouchableOpacity>
-        <Text style={[styles.textContainer, {color: theme.primaryTextColor}]}>
-          Bookmark
-        </Text>
-      </View>
-      <View style={styles.mainContainer}>
-        <TouchableOpacity
-          style={[
-            styles.buttonContainer,
-            {backgroundColor: theme.backgroundSeeAllButton},
-          ]}>
-          <Feather name="radio" size={22} color={theme.primaryTextColor} />
-        </TouchableOpacity>
-        <Text style={[styles.textContainer, {color: theme.primaryTextColor}]}>
-          Add to channel
-        </Text>
-      </View>
-      <View style={styles.mainContainer}>
-        <TouchableOpacity
-          style={[
-            styles.buttonContainer,
-            {backgroundColor: theme.backgroundSeeAllButton},
+            {backgroundColor: theme.primaryColor},
           ]}
-          onPress={() => onPressFavorite(id, checkFavorite)}>
-          <MaterialIcons
-            name={checkFavorite === -1 ? 'favorite-border' : 'favorite'}
-            size={22}
-            color={theme.primaryTextColor}
-          />
-        </TouchableOpacity>
-        <Text style={[styles.textContainer, {color: theme.primaryTextColor}]}>
-          {checkFavorite === -1 ? 'Like' : 'Liked'}
-        </Text>
+        />
+      </View>
+      <View style={styles.mainContainer}>
+        <PrimaryButton
+          title="Like"
+          onPress={onPressLike}
+          active={true}
+          icon="heart-o"
+          style={[styles.buttonContainer, {backgroundColor: theme.alertColor}]}
+        />
       </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     height: 100,
   },
   mainContainer: {
     flex: 1,
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   buttonContainer: {
-    height: 50,
-    width: 50,
-    justifyContent: 'center',
-    borderRadius: 25,
-    alignItems: 'center',
-  },
-  textContainer: {
-    marginTop: 10,
-    ...Typography.fontRegular,
+    ...Styles.center,
+    ...BoxModel.smallBorderRadius,
+    ...BoxModel.marginHorizontal,
+    ...BoxModel.smallMarginVertical,
+    height: Size.scaleSize(45),
+    width: Size.scaleSize(150),
+    borderRadius: Size.scaleSize(15),
   },
 });
 export default Feature;

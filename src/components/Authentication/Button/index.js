@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Text, TouchableHighlight} from 'react-native';
+import {View, Text, TouchableHighlight, StyleSheet} from 'react-native';
 import {Colors, Size, Typography, Styles, BoxModel} from '../../../styles';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const Button = (props) => {
   const {active} = props;
   return (
@@ -13,16 +14,27 @@ const Button = (props) => {
               props.onPress();
             }
           : undefined
-      }>
-      <Text
-        style={[
-          styles.text,
-          active
-            ? {color: Colors.primaryBackgroundColor}
-            : {color: Colors.grayColor},
-        ]}>
-        {props.title}
-      </Text>
+      }
+      {...props}>
+      <View style={Styles.rowCenter}>
+        {props.icon ? (
+          <FontAwesome
+            name={props.icon}
+            size={16}
+            color={Colors.primaryBackgroundColor}
+            style={styles.icon}
+          />
+        ) : undefined}
+        <Text
+          style={[
+            styles.text,
+            active
+              ? {color: Colors.primaryBackgroundColor}
+              : {color: Colors.grayColor},
+          ]}>
+          {props.title}
+        </Text>
+      </View>
     </TouchableHighlight>
   );
 };
@@ -51,5 +63,6 @@ const styles = StyleSheet.create({
     ...Typography.fontBold,
     fontSize: Typography.fontSize16,
   },
+  icon: {marginRight: 5},
 });
 export default Button;

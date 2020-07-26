@@ -5,46 +5,38 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Image,
 } from 'react-native';
 import {Colors, Typography} from '../../../../styles';
-import {instructorDetailAPI} from '../../../../services/Instructor';
 import {ThemeContext} from '../../../../Provider/Theme';
 import FastImage from 'react-native-fast-image';
 const Author = (props) => {
   const {onPress} = props;
   const {theme} = useContext(ThemeContext);
-  const [item, setItem] = useState({});
-  const fetchData = async () => {
-    try {
-      let response = await instructorDetailAPI(props.instructor);
-      setItem(response.data.payload);
-    } catch ({response}) {
-      console.log(response.data);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
   return (
     <View style={styles.container}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <TouchableOpacity
-          style={[
-            styles.skillContainer,
-            {backgroundColor: theme.backgroundSeeAllButton},
-          ]}
-          onPress={onPress}>
-          <FastImage
-            style={styles.image}
-            source={{
-              uri: item.avatar,
-            }}
-          />
+        {props.instructor ? (
+          <TouchableOpacity
+            style={[
+              styles.skillContainer,
+              {backgroundColor: theme.backgroundSeeAllButton},
+            ]}
+            onPress={onPress}>
+            <FastImage
+              style={styles.image}
+              source={{
+                uri: props.instructor.avatar,
+              }}
+            />
+            <Text style={[styles.text, {color: theme.primaryTextColor}]}>
+              {props.instructor.name || props.instructor.email}
+            </Text>
+          </TouchableOpacity>
+        ) : (
           <Text style={[styles.text, {color: theme.primaryTextColor}]}>
-            {item.name}
+            Author
           </Text>
-        </TouchableOpacity>
+        )}
       </ScrollView>
     </View>
   );

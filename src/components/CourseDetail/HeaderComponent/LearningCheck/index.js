@@ -18,7 +18,7 @@ const LearningCheck = (props) => {
         <Feather name="target" size={20} color={theme.primaryTextColor} />
         <View style={styles.textContainer}>
           <Text style={[styles.text, {color: theme.primaryTextColor}]}>
-            Take a learning check
+            Ratings
           </Text>
         </View>
       </View>

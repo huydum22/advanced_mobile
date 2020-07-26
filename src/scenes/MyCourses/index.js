@@ -1,18 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useContext, useEffect, useState} from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, FlatList} from 'react-native';
 import {getMyCoursesAPI} from '../../services/Courses';
 import {MyCourseVerticalItem} from '../../components/Course';
 import {Styles, Distance, BoxModel, Typography, Size} from '../../styles';
 import p from 'pretty-format';
 import separator from '../../components/Separator';
+
 import {
   CourseDetailScreenName,
   CourseDetailScreenStack,
