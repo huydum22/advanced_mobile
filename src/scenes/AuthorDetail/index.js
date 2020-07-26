@@ -13,17 +13,19 @@ const AuthorDetail = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
   const [data, setData] = useState({});
-  const fetchInstructorDetail = async () => {
-    try {
-      let response = await instructorDetailAPI(route.params.id);
-      setData(response.data.payload);
-    } catch ({response}) {
-      console.log(response);
-    }
-  };
+  const [authorID, setAuthorID] = useState(route.params.id);
+  console.log(route);
   useEffect(() => {
+    const fetchInstructorDetail = async () => {
+      try {
+        let response = await instructorDetailAPI(authorID);
+        setData(response.data.payload);
+      } catch ({response}) {
+        console.log(response);
+      }
+    };
     fetchInstructorDetail();
-  }, []);
+  }, [authorID]);
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenStack, {
       screen: CourseDetailScreenName,

@@ -64,7 +64,7 @@ const ProfileAuthor = (props) => {
       ) : undefined}
       <PrimaryButton
         title="View Profile"
-        onPress={onPress}
+        onPress={() => onPress(data)}
         active={true}
         icon="user"
         style={[styles.buttonContainer, {backgroundColor: theme.primaryColor}]}

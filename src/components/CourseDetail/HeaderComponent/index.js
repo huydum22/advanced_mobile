@@ -8,6 +8,7 @@ import Relate from './Relate';
 import LearningCheck from './LearningCheck';
 import SegmentControl from './SegmentControl';
 import WhatLearn from './WhatLearn';
+import StudentFeedBack from './StudentFeedback';
 import ProfileAuthor from './ProfileAuthor';
 import {AuthorDetailScreenName} from '../../../Constants/ScreenName';
 import {FavoriteContext} from '../../../Provider/Favorite';
@@ -37,18 +38,23 @@ const Header = (props) => {
     checkExistFavorite();
   }, [favorite, item.id]);
 
-  const onPressAuthor = () => {
+  const onPressAuthor = (itemAuthor) => {
     navigation.navigate(AuthorDetailScreenName, {
-      name: item.name,
+      name: itemAuthor.name,
+      id: item.instructorId,
     });
   };
 
   const onPressJoin = async (id, index) => {};
   const onPressLike = async (id, index) => {};
+  const onPressStudentFeedback = (ratings) => {};
   return (
     <View style={{backgroundColor: theme.themeColor}}>
       <Title name={item.title} subtitle={item.subtitle} />
-      <Author instructor={item.instructor} onPress={onPressAuthor} />
+      <Author
+        instructor={item.instructor}
+        onPress={() => onPressAuthor(item.instructor)}
+      />
       <InfoCourse
         videoNumber={item.videoNumber}
         timeToStart={item.createdAt}
@@ -71,8 +77,20 @@ const Header = (props) => {
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
         The same topic
       </Text>
-      <ListCourseHorizontal data={item.coursesLikeCategory} />
-      <ProfileAuthor data={item.instructor} onPress={onPressAuthor} />
+      <ListCourseHorizontal
+        data={item.coursesLikeCategory}
+        navigation={navigation}
+        route={route}
+      />
+      <ProfileAuthor
+        data={item.instructor}
+        onPress={() => onPressAuthor(item.instructor)}
+      />
+      <StudentFeedBack
+        averagePoint={item.averagePoint}
+        ratings={item.ratings}
+        onPress={() => onPressStudentFeedback(item.ratings)}
+      />
       {/* <LearningCheck /> */}
       <SegmentControl />
     </View>

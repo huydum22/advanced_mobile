@@ -11,7 +11,7 @@ import {
 const SectionCourses = (props) => {
   const {navigation, data, route, title} = props;
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenStack, {
+    navigation.push(CourseDetailScreenStack, {
       screen: CourseDetailScreenName,
       params: {id: item.id},
     });

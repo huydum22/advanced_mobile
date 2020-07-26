@@ -21,7 +21,7 @@ const Author = (props) => {
               styles.skillContainer,
               {backgroundColor: theme.backgroundSeeAllButton},
             ]}
-            onPress={onPress}>
+            onPress={() => onPress(props.instructor)}>
             <FastImage
               style={styles.image}
               source={{

@@ -8,6 +8,7 @@ export const UPDATE_PASSWORD = '/user/change-password';
 export const UPDATE_PROFILE = '/user/update-profile';
 export const MY_COURSE = '/user/get-process-courses';
 export const ALL_CATEGORY = '/category/all';
+
 export const INSTRUCTOR = '/instructor';
 export const INSTRUCTOR_DETAIL = '/instructor/detail/';
 
