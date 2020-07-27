@@ -27,6 +27,9 @@ const CourseDetail = (props) => {
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);
   const [item, setItem] = useState({});
+  const [link, setLink] = useState('');
+  const [paused, setPaused] = useState(true);
+
   const insets = useSafeArea();
   console.log(p(item.promoVidUrl));
   useEffect(() => {
