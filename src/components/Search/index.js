@@ -18,17 +18,14 @@ import {
   CourseDetailScreenName,
   PathDetailScreenName,
   AuthorDetailScreenName,
-  CourseDetailScreenStack,
+  LessonCourseScreenStack,
 } from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 const Search = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenStack, {
-      screen: CourseDetailScreenName,
-      params: {id: item.id},
-    });
+    navigation.navigate(CourseDetailScreenName, {id: item.id});
   };
   const onPressPathItem = (item) => {
     navigation.navigate(PathDetailScreenName, {

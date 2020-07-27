@@ -21,6 +21,7 @@ import ForgotPassword from './ForgotPassword';
 import SplashScreen from './SplashScreen';
 import UpdateProfile from './UpdateProfile';
 import PlayReview from './PlayReview';
+import LessonCourse from './LessonCourse';
 export {
   AuthorDetail,
   Browse,
@@ -45,4 +46,5 @@ export {
   SplashScreen,
   UpdateProfile,
   PlayReview,
+  LessonCourse,
 };

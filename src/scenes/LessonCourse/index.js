@@ -7,10 +7,12 @@ import {
   Text,
   SectionList,
   TouchableHighlight,
+  Share,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import Feather from 'react-native-vector-icons/Feather';
 import Collapsible from 'react-native-collapsible';
+import FastImage from 'react-native-fast-image';
 import {getCourseDetailAPI} from '../../services/Courses';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {useSafeArea} from 'react-native-safe-area-context';
@@ -19,15 +21,15 @@ import * as screenName from '../../Constants/ScreenName';
 import Header from '../../components/CourseDetail/HeaderComponent';
 import {ThemeContext} from '../../Provider/Theme';
 import p from 'pretty-format';
-const CourseDetail = (props) => {
+
+const LessonCourse = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);
   const [item, setItem] = useState({});
   const [collapsibleItems, setCollapsibleItems] = useState([]);
+  console.log(route);
   const insets = useSafeArea();
-  // console.log(item);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -97,7 +99,6 @@ const CourseDetail = (props) => {
   };
 
   const renderListItem = (itemLesson) => {
-    // console.log(itemLesson);
     return (
       <Collapsible collapsed={collapsibleItems.includes(itemLesson.sectionId)}>
         <TouchableHighlight
@@ -124,19 +125,91 @@ const CourseDetail = (props) => {
       </Collapsible>
     );
   };
-
+  const dismiss = () => {
+    navigation.goBack();
+  };
+  const onPressPlayVideo = () => {
+    if (item.promoVidUrl) {
+      navigation.navigate(screenName.PlayVideoScreenName, {
+        urlVideo: item.promoVidUrl,
+      });
+    }
+  };
   const onPressPreviewLesson = (itemLesson) => {
     if (itemLesson.videoUrl) {
       navigation.navigate(screenName.PlayVideoScreenName, {
         urlVideo: itemLesson.videoUrl,
-        typeUploadVideoLesson: item.typeUploadVideoLesson,
       });
     }
   };
-
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        title: 'Share image',
+        message: 'This image so beautiful ',
+        url: 'https://reactjs.org/logo-og.png',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <SafeAreaView>
       <View style={[styles.container, {backgroundColor: theme.themeColor}]}>
+        <FastImage
+          style={[
+            styles.videoContainer,
+            Styles.fillRow,
+            {backgroundColor: theme.backgroundColor},
+          ]}
+          source={{uri: item.imageUrl}}>
+          <View
+            style={{
+              ...Styles.fillRowBetween,
+              backgroundColor: theme.blackWith05OpacityColor,
+            }}>
+            <TouchableHighlight
+              onPress={dismiss}
+              underlayColor={theme.overlayColor}>
+              <MaterialIcons
+                name="cancel"
+                size={30}
+                color={theme.whiteWith07OpacityColor}
+                style={styles.cancelButton}
+              />
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={onPressPlayVideo}
+              underlayColor={theme.overlayColor}
+              style={Styles.center}>
+              <MaterialIcons
+                name="play-arrow"
+                size={150}
+                color={theme.whiteWith07OpacityColor}
+                style={Styles.center}
+              />
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={onShare}
+              underlayColor={theme.overlayColor}>
+              <Feather
+                name="share"
+                size={25}
+                color={theme.whiteWith07OpacityColor}
+                style={styles.shareButton}
+              />
+            </TouchableHighlight>
+          </View>
+        </FastImage>
         <View
           style={[styles.mainContainer, {backgroundColor: theme.themeColor}]}>
           <SectionList
@@ -183,6 +256,9 @@ const styles = StyleSheet.create({
   container: {
     height: Size.HEIGHT,
   },
+  videoContainer: {
+    flex: 1,
+  },
 
   mainContainer: {
     flex: 2,
@@ -226,6 +302,14 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: 'cover',
   },
+  cancelButton: {
+    top: 15,
+    left: 15,
+  },
+  shareButton: {
+    top: 15,
+    right: 15,
+  },
   previewContainer: {
     borderWidth: 1,
     ...BoxModel.tinyPadding,
@@ -237,4 +321,4 @@ const styles = StyleSheet.create({
     fontSize: Typography.fontSize14,
   },
 });
-export default CourseDetail;
+export default LessonCourse;

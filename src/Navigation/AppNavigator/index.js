@@ -27,23 +27,37 @@ const homeIcon = ({color}) => (
 const MyCourseIcon = ({color}) => (
   <FontAwesome5 name="tasks" size={22} color={color} />
 );
-const configHomeTab = {
+function getTabBarVisible(route) {
+  const routeName = route.state
+    ? route.state.routes[route.state.index].name
+    : route.params?.screen || 'home';
+
+  if (routeName === 'courseDetail') {
+    return false;
+  }
+  return true;
+}
+const configHomeTab = ({route}) => ({
+  tabBarVisible: getTabBarVisible(route),
   tabBarLabel: 'Home',
   tabBarIcon: homeIcon,
-};
+});
 
-const configBrowseTab = {
+const configBrowseTab = ({route}) => ({
   tabBarLabel: 'Browse',
   tabBarIcon: browseIcon,
-};
-const configMyCourseTab = {
+  tabBarVisible: getTabBarVisible(route),
+});
+const configMyCourseTab = ({route}) => ({
   tabBarLabel: 'My Course',
   tabBarIcon: MyCourseIcon,
-};
-const configSearchTab = {
+  tabBarVisible: getTabBarVisible(route),
+});
+const configSearchTab = ({route}) => ({
   tabBarLabel: 'Search',
   tabBarIcon: searchIcon,
-};
+  tabBarVisible: getTabBarVisible(route),
+});
 const configLabel = {
   ...Typography.fontRegular,
   fontSize: Typography.fontSize14,

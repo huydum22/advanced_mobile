@@ -8,6 +8,8 @@ import * as screenName from '../../../Constants/ScreenName';
 import {Size, Typography, Distance, Styles} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 import {AuthenticationContext} from '../../../Provider/Authentication';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const HomeStack = createStackNavigator();
 
 const HomeNavigatorStack = () => {
@@ -31,17 +33,27 @@ const HomeNavigatorStack = () => {
     ),
     [state.userInfo],
   );
+
   return (
     <HomeStack.Navigator
       screenOptions={{
         headerStyle: {
           backgroundColor: theme.themeColor,
         },
+
         headerTintColor: theme.primaryTextColor,
         headerTitleStyle: {
           ...Typography.fontBold,
           fontSize: Typography.fontSize20,
         },
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <Ionicons
+            name="chevron-back-outline"
+            size={36}
+            color={theme.primaryColor}
+          />
+        ),
       }}>
       <HomeStack.Screen
         name={screenName.HomeScreenName}
@@ -106,6 +118,11 @@ const HomeNavigatorStack = () => {
         name={screenName.OtherSettingScreenName}
         component={scenes.OtherSetting}
         options={{title: 'Other Settings'}}
+      />
+      <HomeStack.Screen
+        name={screenName.CourseDetailScreenName}
+        component={scenes.CourseDetail}
+        options={{headerShown: false}}
       />
     </HomeStack.Navigator>
   );

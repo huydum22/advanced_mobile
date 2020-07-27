@@ -17,7 +17,7 @@ import SeeAllBtn from '../../components/common/see-all-button';
 import p from 'pretty-format';
 import {
   CourseDetailScreenName,
-  CourseDetailScreenStack,
+  LessonCourseScreenStack,
   ShowListCourseScreenName,
   ShowListPathScreenName,
 } from '../../Constants/ScreenName';
@@ -52,10 +52,7 @@ const PopularSkill = (props) => {
   }, []);
 
   const onPressCourseItem = (item) => {
-    navigation.navigate(CourseDetailScreenStack, {
-      screen: CourseDetailScreenName,
-      params: {id: item.id},
-    });
+    navigation.navigate(CourseDetailScreenName, {id: item.id});
   };
   const renderHeader = (title, indexItem) => {
     return (

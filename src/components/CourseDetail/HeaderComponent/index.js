@@ -1,19 +1,21 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableHighlight, Share} from 'react-native';
 import Title from './TitleItem';
 import Author from './AuthorItem';
 import InfoCourse from './InfoCourse';
 import Feature from './SomeFeature';
-import Relate from './Relate';
-import LearningCheck from './LearningCheck';
-import SegmentControl from './SegmentControl';
+import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
+import FastImage from 'react-native-fast-image';
 import WhatLearn from './WhatLearn';
 import StudentFeedBack from './StudentFeedback';
 import ProfileAuthor from './ProfileAuthor';
-import {AuthorDetailScreenName} from '../../../Constants/ScreenName';
+import * as screenName from '../../../Constants/ScreenName';
 import {FavoriteContext} from '../../../Provider/Favorite';
 import {ListCourseHorizontal} from '../../Course';
-import {Typography, BoxModel} from '../../../styles';
+import {Typography, BoxModel, Styles, Size} from '../../../styles';
 import {
   findExistFavoriteCourse,
   findIndexFavoriteCourse,
@@ -39,7 +41,7 @@ const Header = (props) => {
   }, [favorite, item.id]);
 
   const onPressAuthor = (itemAuthor) => {
-    navigation.navigate(AuthorDetailScreenName, {
+    navigation.navigate(screenName.AuthorDetailScreenName, {
       name: itemAuthor.name,
       id: item.instructorId,
     });
@@ -48,8 +50,82 @@ const Header = (props) => {
   const onPressJoin = async (id, index) => {};
   const onPressLike = async (id, index) => {};
   const onPressStudentFeedback = (ratings) => {};
+  const dismiss = () => {
+    navigation.goBack();
+  };
+  const onPressPlayVideo = () => {
+    if (item.promoVidUrl) {
+      navigation.navigate(screenName.PlayVideoScreenName, {
+        urlVideo: item.promoVidUrl,
+        typeUploadVideoLesson: 1,
+      });
+    }
+  };
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        title: 'Share image',
+        message: 'This image so beautiful ',
+        url: 'https://reactjs.org/logo-og.png',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <View style={{backgroundColor: theme.themeColor}}>
+      <FastImage
+        style={[
+          styles.videoContainer,
+          Styles.fillRow,
+          {backgroundColor: theme.backgroundColor},
+        ]}
+        source={{uri: item.imageUrl}}>
+        <View
+          style={{
+            ...Styles.fillRowBetween,
+            backgroundColor: theme.blackWith05OpacityColor,
+          }}>
+          <TouchableHighlight
+            onPress={dismiss}
+            underlayColor={theme.overlayColor}>
+            <Ionicons
+              name="chevron-back-outline"
+              size={35}
+              color={theme.whiteWith07OpacityColor}
+            />
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={onPressPlayVideo}
+            underlayColor={theme.overlayColor}
+            style={Styles.center}>
+            <MaterialIcons
+              name="play-arrow"
+              size={150}
+              color={theme.whiteWith07OpacityColor}
+              style={Styles.center}
+            />
+          </TouchableHighlight>
+          <TouchableHighlight
+            onPress={onShare}
+            underlayColor={theme.overlayColor}>
+            <Feather
+              name="share"
+              size={30}
+              color={theme.whiteWith07OpacityColor}
+            />
+          </TouchableHighlight>
+        </View>
+      </FastImage>
       <Title name={item.title} subtitle={item.subtitle} />
       <Author
         instructor={item.instructor}
@@ -104,6 +180,10 @@ const styles = StyleSheet.create({
     ...Typography.fontBold,
     fontSize: Typography.fontSize20,
     ...BoxModel.margin,
+  },
+  videoContainer: {
+    width: Size.WIDTH,
+    height: Size.HEIGHT / 2 - Size.scaleSize(100),
   },
 });
 export default Header;

@@ -9,7 +9,7 @@ import separator from '../../components/Separator';
 
 import {
   CourseDetailScreenName,
-  CourseDetailScreenStack,
+  LessonCourseScreenStack,
 } from '../../Constants/ScreenName';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {ThemeContext} from '../../Provider/Theme';
@@ -31,10 +31,7 @@ const ListCourse = (props) => {
     fetchData();
   }, []);
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenStack, {
-      screen: CourseDetailScreenName,
-      params: {id: item.id},
-    });
+    navigation.navigate(CourseDetailScreenName, {id: item.id});
   };
 
   return (

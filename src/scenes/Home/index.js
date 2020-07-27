@@ -74,10 +74,7 @@ const Home = (props) => {
 
   const onPressBanner = () => {};
   const onPressItem = (item) => {
-    navigation.navigate(screenName.CourseDetailScreenStack, {
-      screen: screenName.CourseDetailScreenName,
-      params: {id: item.id},
-    });
+    navigation.navigate(screenName.CourseDetailScreenName, {id: item.id});
   };
 
   const showListCourse = (id, title) => {

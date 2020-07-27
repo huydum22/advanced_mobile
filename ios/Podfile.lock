@@ -256,6 +256,8 @@ PODS:
     - react-native-video/Video (= 4.4.5)
   - react-native-video/Video (4.4.5):
     - React
+  - react-native-webview (10.3.2):
+    - React
   - React-RCTActionSheet (0.63.0):
     - React-Core/RCTActionSheetHeaders (= 0.63.0)
   - React-RCTAnimation (0.63.0):
@@ -385,6 +387,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-video (from `../node_modules/react-native-video`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -462,6 +465,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-video:
     :path: "../node_modules/react-native-video"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -533,6 +538,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: 3d3f85baabca60a00b75fb8facc1376db7bbdafa
   react-native-safe-area-context: 9d9640a9085014864052e38496fc1dfde0b93974
   react-native-video: eee541262ada11bc7ffe8ec5508e6a877937c462
+  react-native-webview: 679b6f400176e2ea8a785acf7ae16cf282e7d1eb
   React-RCTActionSheet: aadd91a1d6cbfae50dd41f140004f816e9e47ade
   React-RCTAnimation: 7fa2ef6c0ef1e3f0b7d2261c827ec94412deb5e6
   React-RCTBlob: ccbbc70295aee3a76a70323b48f63fb7a7fcffd6

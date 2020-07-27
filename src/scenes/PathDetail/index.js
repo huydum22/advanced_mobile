@@ -13,17 +13,14 @@ import {Styles, Typography} from '../../styles';
 import {Header} from '../../components/PathDetail';
 import {
   CourseDetailScreenName,
-  CourseDetailScreenStack,
+  LessonCourseScreenStack,
 } from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 const PathDetail = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenStack, {
-      screen: CourseDetailScreenName,
-      params: {id: item.id},
-    });
+    navigation.navigate(CourseDetailScreenName, {id: item.id});
   };
   const flatListSeparator = () => {
     return (

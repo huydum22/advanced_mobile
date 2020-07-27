@@ -20,11 +20,7 @@ const Header = (props) => {
     if (data.skills) {
       return data.skills.map((item) => (
         <View style={styles.link} key={item.toString()}>
-          <MaterialIcons
-            name="check"
-            size={22}
-            color={theme.primaryTextColor}
-          />
+          <MaterialIcons name="check" size={22} color={theme.primaryColor} />
           <Text style={[styles.linkText, {color: theme.primaryTextColor}]}>
             {item}
           </Text>

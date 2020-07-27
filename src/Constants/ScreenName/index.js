@@ -11,7 +11,8 @@ export const BrowseScreenName = 'browse';
 export const MyCourseScreenName = 'myCourse';
 export const ProfileScreenName = 'profile';
 export const CourseDetailScreenName = 'courseDetail';
-export const CourseDetailScreenStack = 'courseDetailStack';
+export const LessonCourseScreenStack = 'lessonCourseStack';
+export const LessonCourseScreenName = 'lessonCourse';
 
 export const ShowListCourseScreenName = 'listCourse';
 export const SearchScreenName = 'search';

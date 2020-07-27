@@ -6,17 +6,14 @@ import Item from '../CourseItem';
 import separator from '../../../Separator';
 import {
   CourseDetailScreenName,
-  CourseDetailScreenStack,
+  LessonCourseScreenStack,
 } from '../../../../Constants/ScreenName';
 import {ThemeContext} from '../../../../Provider/Theme';
 const ListCourse = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenStack, {
-      screen: CourseDetailScreenName,
-      params: {id: item.id},
-    });
+    navigation.navigate(CourseDetailScreenName, {id: item.id});
   };
   return (
     <View style={{backgroundColor: theme.backgroundColor}}>

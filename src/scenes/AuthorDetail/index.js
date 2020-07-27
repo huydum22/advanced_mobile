@@ -6,7 +6,7 @@ import {Header} from '../../components/AuthorDetail';
 import {instructorDetailAPI} from '../../services/Instructor';
 import {
   CourseDetailScreenName,
-  CourseDetailScreenStack,
+  LessonCourseScreenStack,
 } from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 const AuthorDetail = (props) => {
@@ -27,10 +27,7 @@ const AuthorDetail = (props) => {
     fetchInstructorDetail();
   }, [authorID]);
   const onPressItem = (item) => {
-    navigation.navigate(CourseDetailScreenStack, {
-      screen: CourseDetailScreenName,
-      params: {id: item.id},
-    });
+    navigation.navigate(CourseDetailScreenName, {id: item.id});
   };
   const flatListSeparator = () => {
     return (

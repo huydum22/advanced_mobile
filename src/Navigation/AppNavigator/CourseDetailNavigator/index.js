@@ -4,11 +4,11 @@ import * as scenes from '../../../scenes';
 import * as screenName from '../../../Constants/ScreenName';
 import {Typography} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
-const CourseDetailStack = createStackNavigator();
-const CourseDetailNavigatorStack = () => {
+const LessonCourseStack = createStackNavigator();
+const LessonCourseNavigatorStack = () => {
   const {theme} = useContext(ThemeContext);
   return (
-    <CourseDetailStack.Navigator
+    <LessonCourseStack.Navigator
       headerMode="screen"
       screenOptions={{
         headerShown: true,
@@ -21,24 +21,19 @@ const CourseDetailNavigatorStack = () => {
           fontSize: Typography.fontSize20,
         },
       }}
-      initialRouteName={screenName.CourseDetailScreenStack}>
-      <CourseDetailStack.Screen
-        name={screenName.CourseDetailScreenName}
-        component={scenes.CourseDetail}
+      initialRouteName={screenName.LessonCourseScreenStack}>
+      <LessonCourseStack.Screen
+        name={screenName.LessonCourseScreenName}
+        component={scenes.LessonCourse}
         options={{headerShown: false}}
         initialParams={{id: 1}}
       />
-      <CourseDetailStack.Screen
+      <LessonCourseStack.Screen
         name={screenName.AuthorDetailScreenName}
         component={scenes.AuthorDetail}
         options={{title: 'Author'}}
       />
-      <CourseDetailStack.Screen
-        name={screenName.PlayVideoScreenName}
-        component={scenes.PlayReview}
-        options={{headerShown: false}}
-      />
-    </CourseDetailStack.Navigator>
+    </LessonCourseStack.Navigator>
   );
 };
-export default CourseDetailNavigatorStack;
+export default LessonCourseNavigatorStack;

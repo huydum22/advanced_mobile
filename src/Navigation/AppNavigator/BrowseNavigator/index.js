@@ -4,7 +4,7 @@ import {Typography} from '../../../styles';
 import * as screenName from '../../../Constants/ScreenName';
 import * as scenes from '../../../scenes';
 import {ThemeContext} from '../../../Provider/Theme';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const BrowseStack = createStackNavigator();
 
 const BrowseNavigatorStack = () => {
@@ -20,6 +20,15 @@ const BrowseNavigatorStack = () => {
           ...Typography.fontBold,
           fontSize: Typography.fontSize20,
         },
+        headerBackTitle: '',
+        headerBackTitleVisible: false,
+        headerBackImage: () => (
+          <Ionicons
+            name="chevron-back-outline"
+            size={36}
+            color={theme.primaryColor}
+          />
+        ),
       }}
       headerMode="screen">
       <BrowseStack.Screen
@@ -58,6 +67,11 @@ const BrowseNavigatorStack = () => {
         name={screenName.RelateSkillScreenName}
         component={scenes.RelateSkill}
         options={{title: 'Skill'}}
+      />
+      <BrowseStack.Screen
+        name={screenName.CourseDetailScreenName}
+        component={scenes.CourseDetail}
+        options={{headerShown: false}}
       />
     </BrowseStack.Navigator>
   );

@@ -10,6 +10,7 @@ import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
 import CourseDetailNavigator from './AppNavigator/CourseDetailNavigator';
 import SplashScreen from '../scenes/SplashScreen';
+import PlayReview from '../scenes/PlayReview';
 import {AuthenticationContext} from '../Provider/Authentication';
 import {CoursesProvider} from '../Provider/Course';
 import {FavoriteProvider} from '../Provider/Favorite';
@@ -35,9 +36,14 @@ const RootScreen = () => {
         component={AuthNavigator}
       />
       <RootStack.Screen
-        name={screenName.CourseDetailScreenStack}
+        name={screenName.LessonCourseScreenStack}
         component={CourseDetailNavigator}
         options={{animationEnabled: true}}
+      />
+      <RootStack.Screen
+        name={screenName.PlayVideoScreenName}
+        component={PlayReview}
+        options={{headerShown: false}}
       />
     </RootStack.Navigator>
   );
