@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Collapsible from 'react-native-collapsible';
 import FastImage from 'react-native-fast-image';
 import {getCourseDetailAPI} from '../../services/Courses';
 import {AuthenticationContext} from '../../Provider/Authentication';
@@ -27,11 +27,9 @@ const CourseDetail = (props) => {
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);
   const [item, setItem] = useState({});
-  const [link, setLink] = useState('');
-  const [paused, setPaused] = useState(true);
+  const [collapsibleItems, setCollapsibleItems] = useState([]);
 
   const insets = useSafeArea();
-  console.log(p(item.promoVidUrl));
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -53,17 +51,26 @@ const CourseDetail = (props) => {
       />
     );
   };
-  const onPressHeader = () => {
+  const onPressHeader = (section) => {
+    const newIds = [...collapsibleItems];
+    const index = newIds.indexOf(section.data[0].sectionId);
+    if (index > -1) {
+      newIds.splice(index, 1);
+    } else {
+      newIds.push(section.data[0].sectionId);
+    }
+    setCollapsibleItems(newIds);
     // setExpand(!isExpand);
   };
-  const renderHeader = (title, index) => {
+  const renderHeader = (section) => {
+    const {title} = section;
     return (
       <TouchableHighlight
         style={[
           styles.headerTouchable,
           {backgroundColor: theme.backgroundSeeAllButton},
         ]}
-        onPress={onPressHeader}
+        onPress={() => onPressHeader(section)}
         underlayColor={theme.backgroundSeeAllButton}>
         <View
           style={[
@@ -71,10 +78,21 @@ const CourseDetail = (props) => {
             {backgroundColor: theme.backgroundSeeAllButton},
           ]}>
           <Text style={[styles.textHeader, {color: theme.primaryTextColor}]}>
-            {index}
             {title}
           </Text>
-          <Ionicons name="ios-arrow-down" size={15} />
+          {collapsibleItems.includes(section.data[0].sectionId) ? (
+            <MaterialIcons
+              name="expand-less"
+              size={15}
+              color={theme.primaryTextColor}
+            />
+          ) : (
+            <MaterialIcons
+              name="expand-more"
+              size={15}
+              color={theme.primaryTextColor}
+            />
+          )}
         </View>
       </TouchableHighlight>
     );
@@ -82,30 +100,29 @@ const CourseDetail = (props) => {
 
   const renderListItem = (itemLesson) => {
     return (
-      <TouchableHighlight
-        onPress={() => onPressPreviewLesson(itemLesson)}
-        underlayColor={theme.overlayColor}>
-        <View
-          style={[
-            styles.textContainer,
-            {backgroundColor: theme.primaryBackgroundColor},
-          ]}>
-          <Text style={[styles.textContent, {color: theme.primaryTextColor}]}>
-            {itemLesson.name}
-          </Text>
-          {itemLesson.isPreview ? (
-            <View
-              style={[
-                styles.previewContainer,
-                {borderColor: theme.primaryColor},
-              ]}>
-              <Text style={[styles.previewText, {color: theme.primaryColor}]}>
-                Preview
-              </Text>
-            </View>
-          ) : undefined}
-        </View>
-      </TouchableHighlight>
+      <Collapsible collapsed={collapsibleItems.includes(itemLesson.sectionId)}>
+        <TouchableHighlight
+          onPress={() => onPressPreviewLesson(itemLesson)}
+          underlayColor={theme.overlayColor}>
+          <View
+            style={[styles.textContainer, {backgroundColor: theme.themeColor}]}>
+            <Text style={[styles.textContent, {color: theme.primaryTextColor}]}>
+              {itemLesson.name}
+            </Text>
+            {itemLesson.isPreview ? (
+              <View
+                style={[
+                  styles.previewContainer,
+                  {borderColor: theme.primaryColor},
+                ]}>
+                <Text style={[styles.previewText, {color: theme.primaryColor}]}>
+                  Preview
+                </Text>
+              </View>
+            ) : undefined}
+          </View>
+        </TouchableHighlight>
+      </Collapsible>
     );
   };
   const dismiss = () => {
@@ -147,8 +164,7 @@ const CourseDetail = (props) => {
   };
   return (
     <SafeAreaView>
-      <View
-        style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
+      <View style={[styles.container, {backgroundColor: theme.themeColor}]}>
         <FastImage
           style={[
             styles.videoContainer,
@@ -195,10 +211,7 @@ const CourseDetail = (props) => {
           </View>
         </FastImage>
         <View
-          style={[
-            styles.mainContainer,
-            {backgroundColor: theme.primaryBackgroundColor},
-          ]}>
+          style={[styles.mainContainer, {backgroundColor: theme.themeColor}]}>
           <SectionList
             ItemSeparatorComponent={flatListSeparator}
             sections={
@@ -213,9 +226,7 @@ const CourseDetail = (props) => {
             }
             keyExtractor={(itemLesson, index) => itemLesson + index}
             renderItem={({item}) => renderListItem(item)}
-            renderSectionHeader={({section: {title}, index}) =>
-              renderHeader(title, index)
-            }
+            renderSectionHeader={({section}) => renderHeader(section)}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={() => {
               return (
@@ -224,7 +235,15 @@ const CourseDetail = (props) => {
             }}
             ListFooterComponent={() => {
               return (
-                <View style={[styles.footer, {marginBottom: insets.bottom}]} />
+                <View
+                  style={[
+                    styles.footer,
+                    {
+                      marginBottom: insets.bottom,
+                      backgroundColor: theme.themeColor,
+                    },
+                  ]}
+                />
               );
             }}
           />
