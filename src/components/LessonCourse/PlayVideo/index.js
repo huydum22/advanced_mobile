@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from 'react';
+import React, {useEffect, useContext, useRef} from 'react';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import Video from 'react-native-video';
 import {Styles} from '../../../styles';
@@ -6,6 +6,8 @@ import {ThemeContext} from '../../../Provider/Theme';
 const PLayVideo = (props) => {
   const {urlVideo} = props;
   const {theme} = useContext(ThemeContext);
+  const playerRef = useRef(null);
+
   return (
     <View style={styles.videoContainer}>
       {urlVideo === '' ? (
@@ -14,9 +16,7 @@ const PLayVideo = (props) => {
         <Video
           controls={true}
           source={{uri: urlVideo}}
-          ref={(ref) => {
-            this.player = ref;
-          }}
+          ref={playerRef}
           style={styles.videoContainer}
           onBuffer={this.onBuffer}
           onError={this.videoError}
