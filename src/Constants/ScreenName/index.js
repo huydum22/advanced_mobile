@@ -41,3 +41,8 @@ export const TopRating = 'TopRating';
 export const YourFavorite = 'YourFavorite';
 export const RecommendCourse = 'RecommendCourse';
 export const searchCourseScreen = 'searchScreen';
+
+export const LectureTab = 'lectureTab';
+export const MoreTab = 'moreTab';
+export const QuestionTab = 'questionTab';
+export const NoteTab = 'noteTab';

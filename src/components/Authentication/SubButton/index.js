@@ -24,7 +24,6 @@ const Button = (props) => {
       onPress={props.onPress}
       underlayColor={Colors.primaryBackgroundColor}>
       <Text style={[styles.text, {color: Colors.primaryColor}]}>
-        {' '}
         {props.title}
       </Text>
     </TouchableHighlight>

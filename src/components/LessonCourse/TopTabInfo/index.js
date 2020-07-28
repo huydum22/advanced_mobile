@@ -1,42 +1,51 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {
-  SearchAllScreenName,
-  SearchCourseScreenName,
-  SearchAuthorScreenName,
-  SearchPathScreenName,
-} from '../../config/ScreenName';
+import * as screenName from '../../../Constants/ScreenName';
+import LessonList from '../LessonList';
+import QuestionView from '../Question';
+import NoteView from '../Note';
+import MoreView from '../More';
 
-import searchAll from '../../components/Search';
-import {ListCourseVertical} from '../../components/ListCourseVertical';
-import {Colors, Typography, Size} from '../../styles';
+import {Typography, Size} from '../../../styles';
+import {ThemeContext} from '../../../Provider/Theme';
 const Tab = createMaterialTopTabNavigator();
 const LessonCourseNavigator = (props) => {
+  const {theme} = useContext(ThemeContext);
   return (
     <Tab.Navigator
-      initialRouteName={SearchAllScreenName}
+      initialRouteName={screenName.LectureTab}
       tabBarOptions={{
-        activeTintColor: Colors.whiteColor,
-        inactiveTintColor: Colors.grayDarkColor,
-        labelStyle: {...Typography.fontBold, fontSize: Typography.fontSize14},
+        activeTintColor: theme.primaryColor,
+        inactiveTintColor: theme.grayDarkColor,
+        labelStyle: {...Typography.fontBold, fontSize: Typography.fontSize12},
         tabStyle: {
-          height: Size.scaleSize(40),
-          backgroundColor: Colors.primaryColor,
+          // height: Size.scaleSize(40),
+          backgroundColor: theme.themeColor,
         },
         indicatorStyle: {
-          backgroundColor: Colors.whiteColor,
+          backgroundColor: theme.primaryColor,
         },
       }}
       animationEnabled={true}>
       <Tab.Screen
-        name={SearchAllScreenName}
-        component={searchAll}
-        options={{tabBarLabel: 'All'}}
+        name={screenName.LectureTab}
+        component={LessonList}
+        options={{tabBarLabel: 'Lecture'}}
       />
       <Tab.Screen
-        name={SearchCourseScreenName}
-        component={ListCourseVertical}
-        options={{tabBarLabel: 'Course'}}
+        name={screenName.MoreTab}
+        component={QuestionView}
+        options={{tabBarLabel: 'Question'}}
+      />
+      <Tab.Screen
+        name={screenName.QuestionTab}
+        component={NoteView}
+        options={{tabBarLabel: 'Note'}}
+      />
+      <Tab.Screen
+        name={screenName.NoteTab}
+        component={MoreView}
+        options={{tabBarLabel: 'More'}}
       />
     </Tab.Navigator>
   );

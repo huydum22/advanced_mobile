@@ -5,7 +5,7 @@ import {ThemeContext} from '../../../../Provider/Theme';
 const Title = (props) => {
   const {theme} = useContext(ThemeContext);
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       <Text style={[styles.textContainer, {color: theme.primaryTextColor}]}>
         {props.name}
       </Text>

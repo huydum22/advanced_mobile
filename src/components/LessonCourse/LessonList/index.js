@@ -7,6 +7,8 @@ import {
   Text,
 } from 'react-native';
 import {ThemeContext} from '../../../Provider/Theme';
+import {LessonContext} from '../../../Provider/LessonCourse';
+
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Title from '../../CourseDetail/HeaderComponent/TitleItem';
 import Collapsible from 'react-native-collapsible';
@@ -14,7 +16,7 @@ import {useSafeArea} from 'react-native-safe-area-context';
 import {Size, Styles, Typography} from '../../../styles';
 const LessonList = (props) => {
   const {theme} = useContext(ThemeContext);
-  const {itemCourse, onPressPreviewLesson, itemLesson, onPressHeader} = props;
+  const {itemCourse, itemLesson, setItemLesson} = useContext(LessonContext);
   const [collapsibleItems, setCollapsibleItems] = useState([]);
   const insets = useSafeArea();
 
@@ -53,6 +55,19 @@ const LessonList = (props) => {
         </TouchableHighlight>
       </Collapsible>
     );
+  };
+  const onPressHeader = (section) => {
+    const newIds = [...collapsibleItems];
+    const index = newIds.indexOf(section.data[0].sectionId);
+    if (index > -1) {
+      newIds.splice(index, 1);
+    } else {
+      newIds.push(section.data[0].sectionId);
+    }
+    setCollapsibleItems(newIds);
+  };
+  const onPressPreviewLesson = (ItemLesson) => {
+    setItemLesson(ItemLesson);
   };
   const renderHeader = (section) => {
     const {title} = section;
@@ -124,6 +139,7 @@ const LessonList = (props) => {
           />
         );
       }}
+      style={{backgroundColor: theme.themeColor}}
     />
   );
 };
