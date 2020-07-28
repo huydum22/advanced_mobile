@@ -113,7 +113,7 @@ const PLayVideo = (props) => {
             ref={playerRef}
             height={300}
             width={Size.WIDTH}
-            videoId={getYouTubeID(route.params.urlVideo)} 
+            videoId={getYouTubeID(route.params.urlVideo)}
             play={!paused}
             onChangeState={(event) => console.log(event)}
             onReady={() => console.log('ready')}

@@ -9,9 +9,11 @@ const Title = (props) => {
       <Text style={[styles.textContainer, {color: theme.primaryTextColor}]}>
         {props.name}
       </Text>
-      <Text style={[styles.subtitleContainer, {color: theme.primaryTextColor}]}>
-        {props.subtitle}
-      </Text>
+      {props.subtitle ? (
+        <Text style={[styles.subtitleContainer, {color: theme.grayColor}]}>
+          {props.subtitle}
+        </Text>
+      ) : undefined}
     </View>
   );
 };
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
   },
   subtitleContainer: {
     ...BoxModel.smallMarginVertical,
-    fontSize: Typography.fontSize20,
+    fontSize: Typography.fontSize18,
     ...Typography.fontRegular,
   },
 });

@@ -124,6 +124,11 @@ const HomeNavigatorStack = () => {
         component={scenes.CourseDetail}
         options={{headerShown: false}}
       />
+      <HomeStack.Screen
+        name={screenName.AuthorDetailScreenName}
+        component={scenes.AuthorDetail}
+        options={{title: 'Author'}}
+      />
     </HomeStack.Navigator>
   );
 };

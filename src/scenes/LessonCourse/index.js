@@ -1,5 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {findCourseProvider} from '../../services/Courses';
+import React, {useState, useEffect, useContext, useMemo} from 'react';
 import {
   SafeAreaView,
   View,
@@ -12,13 +11,19 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import Collapsible from 'react-native-collapsible';
-import FastImage from 'react-native-fast-image';
-import {getCourseDetailAPI} from '../../services/Courses';
+import {
+  getCourseDetailWithLessonAPI,
+  getProcessCourseAPI,
+} from '../../services/Courses';
+import * as Lesson from '../../services/Lesson';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {useSafeArea} from 'react-native-safe-area-context';
 import {Size, Colors, Typography, Styles, BoxModel} from '../../styles';
-import * as screenName from '../../Constants/ScreenName';
-import Header from '../../components/CourseDetail/HeaderComponent';
+import BackgroundVideo from '../../components/LessonCourse/BackgroundVideo';
+import Video from '../../components/LessonCourse/PlayVideo';
+import YouTube from '../../components/LessonCourse/PLayYoutube';
+
+import Title from '../../components/CourseDetail/HeaderComponent/TitleItem';
 import {ThemeContext} from '../../Provider/Theme';
 import p from 'pretty-format';
 
@@ -26,21 +31,54 @@ const LessonCourse = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);
-  const [item, setItem] = useState({});
+  const [itemCourse, setItemCourse] = useState({});
+  const [itemLesson, setItemLesson] = useState({});
+
+  const [videoUrl, setVideoUrl] = useState('');
+
   const [collapsibleItems, setCollapsibleItems] = useState([]);
-  console.log(route);
   const insets = useSafeArea();
+
+  const fetchProcessCourse = async () => {
+    try {
+      let response = await getProcessCourseAPI(state.token, route.params.id);
+      console.log(response.data.payload);
+    } catch ({response}) {
+      console.log(response);
+    }
+  };
+  const fetchVideoLesson = async (lessonID) => {
+    try {
+      let response = await Lesson.getLessonVideoAPI(
+        state.token,
+        itemCourse.id,
+        lessonID,
+      );
+      setVideoUrl(response.data.payload.videoUrl);
+    } catch ({response}) {
+      console.log(response);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
+    fetchVideoLesson(itemLesson.id);
+  }, [itemLesson.id]);
+
+  useEffect(() => {
+    const fetchCourseDetailWithLesson = async () => {
       try {
-        let response = await getCourseDetailAPI(route.params.id);
-        setItem(response.data.payload);
+        let response = await getCourseDetailWithLessonAPI(
+          state.token,
+          route.params.id,
+        );
+        setItemCourse(response.data.payload);
+        setItemLesson(response.data.payload.section[0].lesson[0]);
       } catch ({response}) {
-        console.log(p(response.data));
+        console.log(response);
       }
     };
-    fetchData();
-  }, [route.params.id]);
+    fetchCourseDetailWithLesson();
+  }, [route.params.id, state.token]);
+
   const flatListSeparator = () => {
     return (
       <View
@@ -98,28 +136,17 @@ const LessonCourse = (props) => {
     );
   };
 
-  const renderListItem = (itemLesson) => {
+  const renderListItem = (ItemLesson) => {
     return (
-      <Collapsible collapsed={collapsibleItems.includes(itemLesson.sectionId)}>
+      <Collapsible collapsed={collapsibleItems.includes(ItemLesson.sectionId)}>
         <TouchableHighlight
-          onPress={() => onPressPreviewLesson(itemLesson)}
+          onPress={() => onPressPreviewLesson(ItemLesson)}
           underlayColor={theme.overlayColor}>
           <View
             style={[styles.textContainer, {backgroundColor: theme.themeColor}]}>
             <Text style={[styles.textContent, {color: theme.primaryTextColor}]}>
-              {itemLesson.name}
+              {ItemLesson.name}
             </Text>
-            {itemLesson.isPreview ? (
-              <View
-                style={[
-                  styles.previewContainer,
-                  {borderColor: theme.primaryColor},
-                ]}>
-                <Text style={[styles.previewText, {color: theme.primaryColor}]}>
-                  Preview
-                </Text>
-              </View>
-            ) : undefined}
           </View>
         </TouchableHighlight>
       </Collapsible>
@@ -128,20 +155,21 @@ const LessonCourse = (props) => {
   const dismiss = () => {
     navigation.goBack();
   };
-  const onPressPlayVideo = () => {
-    if (item.promoVidUrl) {
-      navigation.navigate(screenName.PlayVideoScreenName, {
-        urlVideo: item.promoVidUrl,
-      });
-    }
+  // const onPressPlayVideo = () => {
+  //   fetchFirstLesson(item.section[0].lesson[0].id);
+  // };
+  const onPressPreviewLesson = (ItemLesson) => {
+    setVideoUrl('');
+    setItemLesson(ItemLesson);
   };
-  const onPressPreviewLesson = (itemLesson) => {
-    if (itemLesson.videoUrl) {
-      navigation.navigate(screenName.PlayVideoScreenName, {
-        urlVideo: itemLesson.videoUrl,
-      });
-    }
-  };
+
+  console.log(videoUrl);
+  const renderVideo = useMemo(() => {
+    return <Video urlVideo={videoUrl} />;
+  }, [videoUrl]);
+  const renderYouTube = useMemo(() => {
+    return <YouTube urlVideo={videoUrl} />;
+  }, [videoUrl]);
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -165,58 +193,25 @@ const LessonCourse = (props) => {
   return (
     <SafeAreaView>
       <View style={[styles.container, {backgroundColor: theme.themeColor}]}>
-        <FastImage
-          style={[
-            styles.videoContainer,
-            Styles.fillRow,
-            {backgroundColor: theme.backgroundColor},
-          ]}
-          source={{uri: item.imageUrl}}>
-          <View
-            style={{
-              ...Styles.fillRowBetween,
-              backgroundColor: theme.blackWith05OpacityColor,
-            }}>
-            <TouchableHighlight
-              onPress={dismiss}
-              underlayColor={theme.overlayColor}>
-              <MaterialIcons
-                name="cancel"
-                size={30}
-                color={theme.whiteWith07OpacityColor}
-                style={styles.cancelButton}
-              />
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={onPressPlayVideo}
-              underlayColor={theme.overlayColor}
-              style={Styles.center}>
-              <MaterialIcons
-                name="play-arrow"
-                size={150}
-                color={theme.whiteWith07OpacityColor}
-                style={Styles.center}
-              />
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={onShare}
-              underlayColor={theme.overlayColor}>
-              <Feather
-                name="share"
-                size={25}
-                color={theme.whiteWith07OpacityColor}
-                style={styles.shareButton}
-              />
-            </TouchableHighlight>
-          </View>
-        </FastImage>
+        {/* {videoUrl === '' ? (
+          <BackgroundVideo
+            imageUrl={item.imageUrl}
+            dismiss={dismiss}
+            onPressPlayVideo={onPressPlayVideo}
+            onShare={onShare}
+          />
+        ) : ()} */}
+        {/* <Video urlVideo={videoUrl} /> */}
+        {videoUrl.includes('https://youtube.com/embed')
+          ? renderYouTube
+          : renderVideo}
         <View
           style={[styles.mainContainer, {backgroundColor: theme.themeColor}]}>
           <SectionList
             ItemSeparatorComponent={flatListSeparator}
             sections={
-              item.section
-                ? item.section.map((data) => {
+              itemCourse.section
+                ? itemCourse.section.map((data) => {
                     return {
                       title: data.name,
                       data: data.lesson,
@@ -224,13 +219,16 @@ const LessonCourse = (props) => {
                   })
                 : []
             }
-            keyExtractor={(itemLesson, index) => itemLesson + index}
+            keyExtractor={(ItemLessonID, index) => ItemLessonID + index}
             renderItem={({item}) => renderListItem(item)}
             renderSectionHeader={({section}) => renderHeader(section)}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={() => {
               return (
-                <Header navigation={navigation} route={route} item={item} />
+                <Title
+                  name={itemCourse.title}
+                  subtitle={itemCourse.instructorName}
+                />
               );
             }}
             ListFooterComponent={() => {
@@ -302,14 +300,7 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: 'cover',
   },
-  cancelButton: {
-    top: 15,
-    left: 15,
-  },
-  shareButton: {
-    top: 15,
-    right: 15,
-  },
+
   previewContainer: {
     borderWidth: 1,
     ...BoxModel.tinyPadding,

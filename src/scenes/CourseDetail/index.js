@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {findCourseProvider} from '../../services/Courses';
 import {
   SafeAreaView,
   View,
@@ -126,7 +125,7 @@ const CourseDetail = (props) => {
   };
 
   const onPressPreviewLesson = (itemLesson) => {
-    if (itemLesson.videoUrl) {
+    if (itemLesson.videoUrl && itemLesson.isPreview) {
       navigation.navigate(screenName.PlayVideoScreenName, {
         urlVideo: itemLesson.videoUrl,
         typeUploadVideoLesson: item.typeUploadVideoLesson,
