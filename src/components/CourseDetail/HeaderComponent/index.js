@@ -20,26 +20,30 @@ import {
   findExistFavoriteCourse,
   findIndexFavoriteCourse,
 } from '../../../services/Favorite';
+import {AuthenticationContext} from '../../../Provider/Authentication';
+import {
+  registerCourseAPI,
+  getCheckOwnCourseAPI,
+} from '../../../services/Courses';
 import {ThemeContext} from '../../../Provider/Theme';
 const Header = (props) => {
   const {item, navigation, route} = props;
   const {theme} = useContext(ThemeContext);
   const {favorite, setFavorite} = useContext(FavoriteContext);
   const [indexFavorite, setIndexFavorite] = useState();
-
+  const {state} = useContext(AuthenticationContext);
+  const [isOwn, setIsOwn] = useState({});
   useEffect(() => {
-    const checkExistFavorite = async () => {
+    const checkOwnCourse = async () => {
       try {
-        const response = findExistFavoriteCourse(favorite, item.id);
-        const newIndex = findIndexFavoriteCourse(favorite, response);
-        setIndexFavorite(newIndex);
-      } catch (err) {
-        console.log(err);
+        let response = await getCheckOwnCourseAPI(state.token, item.id);
+        setIsOwn(response.data.payload);
+      } catch ({response}) {
+        console.log(response);
       }
     };
-    checkExistFavorite();
-  }, [favorite, item.id]);
-
+    checkOwnCourse();
+  }, [item, state, setIsOwn]);
   const onPressAuthor = (itemAuthor) => {
     navigation.navigate(screenName.AuthorDetailScreenName, {
       name: itemAuthor.name,
@@ -47,7 +51,26 @@ const Header = (props) => {
     });
   };
 
-  const onPressJoin = async (id, index) => {};
+  const onPressJoin = async (id, index) => {
+    if (isOwn.isUserOwnCourse) {
+      navigation.navigate(screenName.LessonCourseScreenStack, {
+        screen: screenName.LessonCourseScreenName,
+        params: {id: item.id},
+      });
+    } else {
+      try {
+        let response = await registerCourseAPI(state.token, item.id);
+        if (response.status === 200) {
+          navigation.navigate(screenName.LessonCourseScreenStack, {
+            screen: screenName.LessonCourseScreenName,
+            params: {id: item.id},
+          });
+        }
+      } catch ({response}) {
+        console.log(response.data);
+      }
+    }
+  };
   const onPressLike = async (id, index) => {};
   const onPressStudentFeedback = (ratings) => {};
   const dismiss = () => {
@@ -141,6 +164,7 @@ const Header = (props) => {
         updatedAt={item.updatedAt}
       />
       <Feature
+        isOwnCourse={isOwn}
         onPressLike={onPressLike}
         onPressJoin={onPressJoin}
         id={item.id}

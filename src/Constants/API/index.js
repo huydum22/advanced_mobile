@@ -8,7 +8,7 @@ export const UPDATE_PASSWORD = '/user/change-password';
 export const UPDATE_PROFILE = '/user/update-profile';
 export const MY_COURSE = '/user/get-process-courses';
 export const ALL_CATEGORY = '/category/all';
-
+export const CHECK_OWN_COURSE = '/user/check-own-course';
 export const INSTRUCTOR = '/instructor';
 export const INSTRUCTOR_DETAIL = '/instructor/detail/';
 
@@ -31,3 +31,5 @@ export const LESSON_SUBTITLE_URL = '/lesson/subtitle-url';
 export const LESSON_UPDATE_STATUS = '/lesson/update-status';
 export const LESSON_UPDATE_CURRENT_TIME =
   '/lesson/update-current-time-learn-video';
+
+export const GET_FREE_COURSE = '/payment/get-free-courses';

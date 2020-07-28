@@ -5,13 +5,20 @@ import {ThemeContext} from '../../../../Provider/Theme';
 import {PrimaryButton} from '../../../Authentication';
 
 const Feature = (props) => {
-  const {onPressLike, onPressJoin, id} = props;
+  const {onPressLike, onPressJoin, isOwnCourse} = props;
   const {theme} = useContext(ThemeContext);
+  const titlePrimary = () => {
+    if (isOwnCourse) {
+      return 'Continue';
+    } else {
+      return 'Join Now';
+    }
+  };
   return (
     <View style={[styles.container, {backgroundColor: theme.themeColor}]}>
       <View style={styles.mainContainer}>
         <PrimaryButton
-          title="Join Now"
+          title={titlePrimary()}
           onPress={onPressJoin}
           active={true}
           icon="book"

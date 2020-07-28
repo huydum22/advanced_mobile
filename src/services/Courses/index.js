@@ -11,6 +11,8 @@ import {
   COURSE_DETAIL,
   PROCESS_COURSE,
   COURSE_DETAIL_WITH_LESSON,
+  GET_FREE_COURSE,
+  CHECK_OWN_COURSE,
 } from '../../Constants/API';
 
 export const topRateCourseAPI = async () => {
@@ -82,6 +84,26 @@ export const getProcessCourseAPI = async (token, id) => {
   const Authorization = `Bearer ${token}`;
 
   return await REQUEST(`${PROCESS_COURSE}/${id}`, {
+    headers: {Authorization},
+  });
+};
+
+export const registerCourseAPI = async (token, courseID) => {
+  const Authorization = `Bearer ${token}`;
+
+  return await REQUEST.post(
+    GET_FREE_COURSE,
+    {courseId: courseID},
+    {
+      headers: {Authorization},
+    },
+  );
+};
+
+export const getCheckOwnCourseAPI = async (token, courseID) => {
+  const Authorization = `Bearer ${token}`;
+
+  return await REQUEST(`${CHECK_OWN_COURSE}/${courseID}`, {
     headers: {Authorization},
   });
 };
