@@ -136,6 +136,12 @@ const LessonCourse = (props) => {
     );
   };
 
+  const changeColorItemLesson = (lesson) => {
+    if (lesson.id === itemLesson.id) {
+      return theme.primaryColor;
+    }
+    return theme.primaryTextColor;
+  };
   const renderListItem = (ItemLesson) => {
     return (
       <Collapsible collapsed={collapsibleItems.includes(ItemLesson.sectionId)}>
@@ -144,7 +150,11 @@ const LessonCourse = (props) => {
           underlayColor={theme.overlayColor}>
           <View
             style={[styles.textContainer, {backgroundColor: theme.themeColor}]}>
-            <Text style={[styles.textContent, {color: theme.primaryTextColor}]}>
+            <Text
+              style={[
+                styles.textContent,
+                {color: changeColorItemLesson(ItemLesson)},
+              ]}>
               {ItemLesson.name}
             </Text>
           </View>
