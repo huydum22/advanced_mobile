@@ -1,4 +1,5 @@
-import {ProfileAPI} from '../../services/Authentication';
+import {API} from '../../services';
+import {PROFILE} from '../../Constants/API';
 import {actionTypes} from '../Login';
 const userRequest = () => ({
   type: actionTypes.USER_REQUEST,
@@ -21,8 +22,8 @@ const userToken = (response) => ({
 export const userAction = (dispatch) => async (token) => {
   dispatch(userRequest());
   try {
-    const response = await ProfileAPI(token);
-    if (response.status === 200) {
+    const response = await API.get(PROFILE, token);
+    if (response.isSuccess) {
       dispatch(userSuccess(response.data));
     }
   } catch ({response}) {

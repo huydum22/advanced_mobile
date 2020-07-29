@@ -6,7 +6,7 @@ import {
   UPDATE_PASSWORD,
   UPDATE_PROFILE,
 } from '../../Constants/API';
-import REQUEST from '../HttpClient';
+import {REQUEST} from '../index';
 export const LogoutProvider = () => {
   return {
     status: 200,

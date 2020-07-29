@@ -1,4 +1,5 @@
-import {LoginAPI} from '../../services/Authentication';
+import {API} from '../../services';
+import {LOGIN} from '../../Constants/API';
 import {useAsyncStorage} from '@react-native-community/async-storage';
 
 export const actionTypes = {
@@ -28,8 +29,12 @@ const logoutRequest = () => ({
 export const loginAction = (dispatch) => async (email, password) => {
   dispatch(loginRequest());
   try {
-    const response = await LoginAPI(email, password);
-    if (response.status === 200) {
+    const data = {
+      email: email,
+      password: password,
+    };
+    const response = await API.post(LOGIN, data);
+    if (response.isSuccess) {
       dispatch(loginSuccess(response.data));
     }
   } catch ({response}) {

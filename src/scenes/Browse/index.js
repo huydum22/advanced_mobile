@@ -12,7 +12,9 @@ import {Styles, Typography, Distance, BoxModel, Size} from '../../styles';
 import {background1, background2} from '../../Constants/Image';
 import {AuthorHorizontalItem} from '../../components/Author';
 import {PopularSkillItem, RelateSkillItem} from '../../components/Skill';
-import {listInstructorAPI} from '../../services/Instructor';
+import {INSTRUCTOR} from '../../Constants/API';
+import {API} from '../../services';
+
 import Banner from '../../components/Banner';
 import * as screenName from '../../Constants/ScreenName';
 import {CategoryContext} from '../../Provider/Category';
@@ -50,8 +52,12 @@ const Browse = (props) => {
   };
   const getInstructor = async () => {
     try {
-      const response = await listInstructorAPI();
-      setLIstInstructor(response.data.payload);
+      const response = await API.get(INSTRUCTOR);
+
+      // const response = await listInstructorAPI();]
+      if (response.isSuccess) {
+        setLIstInstructor(response.data.payload);
+      }
     } catch ({response}) {
       console.log(response);
     }

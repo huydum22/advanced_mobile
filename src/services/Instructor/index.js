@@ -1,4 +1,4 @@
-import REQUEST from '../HttpClient';
+import {REQUEST} from '../index';
 import {INSTRUCTOR, INSTRUCTOR_DETAIL} from '../../Constants/API';
 
 export const listInstructorAPI = async () => {

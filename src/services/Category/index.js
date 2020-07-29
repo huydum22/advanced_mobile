@@ -1,4 +1,4 @@
-import REQUEST from '../HttpClient';
+import {REQUEST} from '../index';
 import {SEARCH, ALL_CATEGORY} from '../../Constants/API';
 
 export const SearchAllCategoryAPI = async () => {

@@ -6,7 +6,9 @@ import {CategoryContext} from '../../Provider/Category';
 import logo from '../../assets/image/logoItEdu.png';
 import name from '../../assets/image/nameItEdu.png';
 import {useAsyncStorage} from '@react-native-community/async-storage';
-import {SearchAllCategoryAPI} from '../../services/Category';
+import {ALL_CATEGORY} from '../../Constants/API';
+import {API} from '../../services';
+
 const SplashScreen = (props) => {
   const {navigation} = props;
   const {getItem} = useAsyncStorage('@userToken');
@@ -35,8 +37,10 @@ const SplashScreen = (props) => {
   };
   const fetchCategory = async () => {
     try {
-      let response = await SearchAllCategoryAPI();
-      setListCategory(response.data.payload);
+      let response = await API.get(ALL_CATEGORY);
+      if (response.isSuccess) {
+        setListCategory(response.data.payload);
+      }
     } catch ({response}) {
       console.log(response);
     }

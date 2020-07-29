@@ -5,9 +5,10 @@ import {FormInput, PrimaryButton} from '../../components/Authentication';
 import {Styles, Colors, Typography, Platform} from '../../styles';
 import {CheckBox} from 'react-native-elements';
 import {useAsyncStorage} from '@react-native-community/async-storage';
-import {updatePasswordAPI} from '../../services/Authentication';
+import {UPDATE_PASSWORD} from '../../Constants/API';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
+import {API} from '../../services';
 const ChangePassword = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
@@ -45,21 +46,26 @@ const ChangePassword = (props) => {
     if (item !== null) {
       try {
         const jsonValue = JSON.parse(item);
-        let response = await updatePasswordAPI(
+
+        let response = await API.post(
+          UPDATE_PASSWORD,
+          {
+            id: state.userInfo.id,
+            oldPass: oldPass,
+            newPass: newPass,
+          },
           state.token,
-          state.userInfo.id,
-          oldPass,
-          newPass,
         );
-        if (response.status === 200) {
+        if (response.isSuccess) {
           Alert.alert(response.data.message);
 
           let value = {email: jsonValue.email, password: newPass};
           storeData(value);
+        } else {
+          Alert.alert(response.data.message);
         }
-      } catch ({response}) {
-        console.log(response);
-        Alert.alert(response.data.message);
+      } catch (err) {
+        console.log(err);
       }
     }
   };

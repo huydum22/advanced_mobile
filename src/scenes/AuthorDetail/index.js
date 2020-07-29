@@ -3,7 +3,9 @@ import {StyleSheet, View, FlatList, SafeAreaView} from 'react-native';
 import {Size} from '../../styles';
 import {CourseVerticalItem} from '../../components/Course';
 import {Header} from '../../components/AuthorDetail';
-import {instructorDetailAPI} from '../../services/Instructor';
+import {INSTRUCTOR_DETAIL} from '../../Constants/API';
+import {API} from '../../services';
+
 import {
   CourseDetailScreenName,
   LessonCourseScreenStack,
@@ -13,19 +15,18 @@ const AuthorDetail = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
   const [data, setData] = useState({});
-  const [authorID, setAuthorID] = useState(route.params.id);
   console.log(route);
   useEffect(() => {
     const fetchInstructorDetail = async () => {
       try {
-        let response = await instructorDetailAPI(authorID);
+        let response = await API.get(`${INSTRUCTOR_DETAIL}${route.params.id}`);
         setData(response.data.payload);
       } catch ({response}) {
         console.log(response);
       }
     };
     fetchInstructorDetail();
-  }, [authorID]);
+  }, [route.params.id]);
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenName, {id: item.id});
   };

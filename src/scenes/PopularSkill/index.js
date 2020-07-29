@@ -10,10 +10,10 @@ import {
 } from 'react-native';
 import {CourseHorizontalItem} from '../../components/Course';
 import {Distance, Styles, Typography, Size, BoxModel} from '../../styles';
-import {SearchCourseByPrice} from '../../services/Search';
+import {SEARCH} from '../../Constants/API';
+import {API} from '../../services';
+
 import SeeAllBtn from '../../components/common/see-all-button';
-// import dataCourse from '../../ExampleData/course';
-// import dataPath from '../../ExampleData/path';
 import p from 'pretty-format';
 import {
   CourseDetailScreenName,
@@ -40,7 +40,13 @@ const PopularSkill = (props) => {
 
   const fetchData = async () => {
     try {
-      let response = await SearchCourseByPrice(route.params.item.price);
+      let response = await API.post(SEARCH, {
+        keyword: '',
+        opt: {price: [route.params.item.price]},
+        limit: 12,
+        offset: 0,
+      });
+      // let response = await SearchCourseByPrice(route.params.item.price);
       setData(response.data.payload.rows);
     } catch ({response}) {
       console.log(response);

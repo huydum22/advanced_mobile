@@ -18,7 +18,6 @@ import {
 import {useAsyncStorage} from '@react-native-community/async-storage';
 import FastImage from 'react-native-fast-image';
 import ImagePicker from 'react-native-image-picker';
-import {updateProfileAPI} from '../../services/Authentication';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
 const UpdateProfile = (props) => {

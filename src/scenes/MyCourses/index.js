@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useContext, useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, FlatList} from 'react-native';
-import {getMyCoursesAPI} from '../../services/Courses';
+import {MY_COURSE} from '../../Constants/API';
+import {API} from '../../services';
 import {MyCourseVerticalItem} from '../../components/Course';
 import {Styles, Distance, BoxModel, Typography, Size} from '../../styles';
 import p from 'pretty-format';
@@ -20,9 +21,11 @@ const ListCourse = (props) => {
   const [data, setData] = useState([]);
   const fetchData = async () => {
     try {
-      let response = await getMyCoursesAPI(state.token);
+      let response = await API.get(MY_COURSE, state.token);
 
-      setData(response.data.payload);
+      if (response.isSuccess) {
+        setData(response.data.payload);
+      }
     } catch ({response}) {
       console.log(p(response.data));
     }

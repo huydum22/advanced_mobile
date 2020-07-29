@@ -1,4 +1,4 @@
-import REQUEST from '../HttpClient';
+import {REQUEST} from '../index';
 import {
   TOP_NEW,
   TOP_RATE,

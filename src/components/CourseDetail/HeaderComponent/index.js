@@ -16,15 +16,9 @@ import * as screenName from '../../../Constants/ScreenName';
 import {FavoriteContext} from '../../../Provider/Favorite';
 import {ListCourseHorizontal} from '../../Course';
 import {Typography, BoxModel, Styles, Size} from '../../../styles';
-import {
-  findExistFavoriteCourse,
-  findIndexFavoriteCourse,
-} from '../../../services/Favorite';
+import {CHECK_OWN_COURSE, GET_FREE_COURSE} from '../../../Constants/API';
+import {API} from '../../../services';
 import {AuthenticationContext} from '../../../Provider/Authentication';
-import {
-  registerCourseAPI,
-  getCheckOwnCourseAPI,
-} from '../../../services/Courses';
 import {ThemeContext} from '../../../Provider/Theme';
 const Header = (props) => {
   const {item, navigation, route} = props;
@@ -36,10 +30,15 @@ const Header = (props) => {
   useEffect(() => {
     const checkOwnCourse = async () => {
       try {
-        let response = await getCheckOwnCourseAPI(state.token, item.id);
-        setIsOwn(response.data.payload);
-      } catch ({response}) {
-        console.log(response);
+        let response = await API.get(
+          `${CHECK_OWN_COURSE}/${item.id}`,
+          state.token,
+        );
+        if (response.isSuccess) {
+          setIsOwn(response.data.payload);
+        }
+      } catch (data) {
+        console.log(data);
       }
     };
     checkOwnCourse();
@@ -59,7 +58,11 @@ const Header = (props) => {
       });
     } else {
       try {
-        let response = await registerCourseAPI(state.token, item.id);
+        let response = await API.post(
+          GET_FREE_COURSE,
+          {courseId: item.id},
+          state.token,
+        );
         if (response.status === 200) {
           navigation.navigate(screenName.LessonCourseScreenStack, {
             screen: screenName.LessonCourseScreenName,

@@ -10,7 +10,8 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import Collapsible from 'react-native-collapsible';
-import {getCourseDetailAPI} from '../../services/Courses';
+import {API} from '../../services';
+import {COURSE_DETAIL} from '../../Constants/API';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {useSafeArea} from 'react-native-safe-area-context';
 import {Size, Colors, Typography, Styles, BoxModel} from '../../styles';
@@ -30,8 +31,12 @@ const CourseDetail = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let response = await getCourseDetailAPI(route.params.id);
-        setItem(response.data.payload);
+        let response = await API.get(
+          `${COURSE_DETAIL}/${route.params.id}/null`,
+        );
+        if (response.isSuccess) {
+          setItem(response.data.payload);
+        }
       } catch ({response}) {
         console.log(p(response.data));
       }

@@ -1,13 +1,14 @@
 import React, {useContext, useState, useEffect, useMemo} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {useSafeArea} from 'react-native-safe-area-context';
-import {} from '../../services/Category';
 import {Typography, Size, Styles} from '../../styles';
 import {ThemeContext} from '../../Provider/Theme';
 import p from 'pretty-format';
 import {CourseVerticalItem} from '../../components/Course';
 import * as screenName from '../../Constants/ScreenName';
-import {SearchByKeywordAPI} from '../../services/Search';
+import {SEARCH} from '../../Constants/API';
+import {API} from '../../services';
+
 import {SearchBar} from 'react-native-elements';
 
 const SearchNavigator = (props) => {
@@ -21,8 +22,15 @@ const SearchNavigator = (props) => {
   useEffect(() => {
     const fetchDataByKeyword = async () => {
       try {
-        let response = await SearchByKeywordAPI(keyword);
-        setData(response.data.payload.rows);
+        let response = await API.post(SEARCH, {
+          keyword: keyword,
+          opt: {category: null},
+          limit: 12,
+          offset: 0,
+        });
+        if (response.isSuccess) {
+          setData(response.data.payload.rows);
+        }
       } catch ({response}) {
         console.log(response);
       }

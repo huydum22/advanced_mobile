@@ -2,7 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {KeyboardAvoidingView, StyleSheet, Alert} from 'react-native';
 import {Platform} from '../../styles';
 import {FormInput, PrimaryButton} from '../../components/Authentication';
-import {ForgotPasswordAPI} from '../../services/Authentication';
+import {FORGOT_PASSWORD} from '../../Constants/API';
+import {API} from '../../services';
+
 import * as screenName from '../../Constants/ScreenName';
 const ForgotPassword = (props) => {
   const {navigation} = props;
@@ -24,8 +26,9 @@ const ForgotPassword = (props) => {
 
   const handleForgotPassWord = async () => {
     try {
-      const response = await ForgotPasswordAPI(email);
-      if (response.status === 200) {
+      const response = await API.post(FORGOT_PASSWORD, {email: email});
+
+      if (response.isSuccess) {
         navigation.navigate(screenName.LoginScreenName);
       }
     } catch ({response}) {

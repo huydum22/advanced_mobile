@@ -1,4 +1,4 @@
-import REQUEST from '../HttpClient';
+import {REQUEST} from '../index';
 import {
   LESSON_DETAIL,
   LESSON_VIDEO,

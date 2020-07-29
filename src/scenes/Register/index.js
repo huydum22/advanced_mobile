@@ -17,7 +17,9 @@ import {
 } from '../../styles';
 import {FormInput, PrimaryButton} from '../../components/Authentication';
 import {CheckBox} from 'react-native-elements';
-import {RegisterAPI} from '../../services/Authentication';
+import {REGISTER} from '../../Constants/API';
+import {API} from '../../services';
+
 import * as screenName from '../../Constants/ScreenName';
 import userImage from '../../assets/image/user.jpg';
 
@@ -47,7 +49,13 @@ const SignUp = (props) => {
   };
   const handleRegister = async () => {
     try {
-      const response = await RegisterAPI(name, phoneNumber, email, password);
+      // const response = await RegisterAPI(name, phoneNumber, email, password);
+      let response = await API.post(REGISTER, {
+        username: name,
+        phone: phoneNumber,
+        email: email,
+        password: password,
+      });
       if (response.status === 200) {
         navigation.navigate(screenName.LoginScreenName);
       }

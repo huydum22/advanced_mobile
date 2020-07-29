@@ -1,5 +1,6 @@
-import {updateProfileAPI} from '../../services/Authentication';
+import {API} from '../../services';
 import {useAsyncStorage} from '@react-native-community/async-storage';
+import {UPDATE_PROFILE} from '../../Constants/API';
 
 export const actionTypes = {
   UPDATE_PROFILE_REQUEST: 'UPDATE_PROFILE_REQUEST',
@@ -28,8 +29,13 @@ export const updateProfileAction = (dispatch) => async (
 ) => {
   dispatch(updateProfileRequest());
   try {
-    const response = await updateProfileAPI(token, name, avatar, phone);
-    if (response.status === 200) {
+    const data = {
+      name: name,
+      avatar: avatar,
+      phone: phone,
+    };
+    const response = await API.put(UPDATE_PROFILE, data, token);
+    if (response.isSuccess) {
       dispatch(updateProfileSuccess(response.data));
     }
   } catch ({response}) {

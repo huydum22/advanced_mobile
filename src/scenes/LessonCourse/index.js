@@ -1,13 +1,13 @@
 import React, {useState, useEffect, useContext, useMemo} from 'react';
-import {SafeAreaView, View, StyleSheet, ScrollView} from 'react-native';
-import {
-  getCourseDetailWithLessonAPI,
-  getProcessCourseAPI,
-} from '../../services/Courses';
-import Title from '../../components/CourseDetail/HeaderComponent/TitleItem';
-import LessonTab from '../../components/LessonCourse/TopTabInfo';
+import {SafeAreaView, View, StyleSheet} from 'react-native';
 
-import * as Lesson from '../../services/Lesson';
+import LessonTab from '../../components/LessonCourse/TopTabInfo';
+import {API} from '../../services';
+import {
+  PROCESS_COURSE,
+  COURSE_DETAIL_WITH_LESSON,
+  LESSON_VIDEO,
+} from '../../Constants/API';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {Size, Typography, BoxModel} from '../../styles';
 import Video from '../../components/LessonCourse/PlayVideo';
@@ -34,7 +34,12 @@ const LessonCourse = (props) => {
 
   const fetchProcessCourse = async () => {
     try {
-      let response = await getProcessCourseAPI(state.token, route.params.id);
+      // let response = await getProcessCourseAPI(state.token, route.params.id);
+      let response = await API.get(
+        `${PROCESS_COURSE}/${route.params.id}`,
+        state.token,
+      );
+
       console.log(response.data.payload);
     } catch ({response}) {
       console.log(response);
@@ -44,10 +49,9 @@ const LessonCourse = (props) => {
   useEffect(() => {
     const fetchVideoLesson = async (lessonID) => {
       try {
-        let response = await Lesson.getLessonVideoAPI(
+        let response = await API.get(
+          `${LESSON_VIDEO}/${itemCourse.id}/${lessonID}`,
           state.token,
-          itemCourse.id,
-          lessonID,
         );
         setVideoUrl(response.data.payload.videoUrl);
       } catch ({response}) {
@@ -60,9 +64,9 @@ const LessonCourse = (props) => {
   useEffect(() => {
     const fetchCourseDetailWithLesson = async () => {
       try {
-        let response = await getCourseDetailWithLessonAPI(
+        let response = await API.get(
+          `${COURSE_DETAIL_WITH_LESSON}/${route.params.id}`,
           state.token,
-          route.params.id,
         );
         setItemCourse(response.data.payload);
         setItemLesson(response.data.payload.section[0].lesson[0]);
