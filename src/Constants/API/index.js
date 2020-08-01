@@ -40,3 +40,5 @@ export const NOTE_UPDATE = 'user-note-lesson/update';
 export const NOTE_DELETE = 'user-note-lesson/delete';
 
 export const GET_FREE_COURSE = 'payment/get-free-courses';
+
+export const FORUM_QUESTION = 'forum/question/all';

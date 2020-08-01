@@ -35,7 +35,7 @@ const LessonCourseNavigator = (props) => {
       <Tab.Screen
         name={screenName.MoreTab}
         component={QuestionView}
-        options={{tabBarLabel: 'Question'}}
+        options={{tabBarLabel: 'Q&A'}}
       />
       <Tab.Screen
         name={screenName.QuestionTab}

@@ -19,11 +19,7 @@ const HomeNavigatorStack = () => {
   const avatarHomeBar = useMemo(
     () => (
       <FastImage
-        style={{
-          width: Size.scaleSize(25),
-          height: Size.scaleSize(25),
-          borderRadius: Size.scaleSize(12.5),
-        }}
+        style={Styles.avatarIcon}
         source={{
           uri: state.userInfo
             ? state.userInfo.avatar

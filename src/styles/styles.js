@@ -19,6 +19,11 @@ import {
   fontSize16,
 } from './typography';
 import {spacing_14} from './distance';
+export const avatarIcon = {
+  width: scaleSize(30),
+  height: scaleSize(30),
+  borderRadius: scaleSize(15),
+};
 export const titleInList = {
   color: BLACK,
   fontWeight: '600',

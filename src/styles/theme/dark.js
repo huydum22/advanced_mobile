@@ -20,7 +20,7 @@ const darkTheme = {
 
   // ACTIONS
   successColor: '#3adb76',
-  warningColor: '#3a539b',
+  warningColor: '#FFCC00',
   alertColor: '#cc4b37',
 
   overlayColor: 'rgba(0,0,0,0)',

@@ -22,7 +22,8 @@ const Button = (props) => {
         },
       ]}
       onPress={props.onPress}
-      underlayColor={Colors.primaryBackgroundColor}>
+      underlayColor={Colors.primaryBackgroundColor}
+      {...props}>
       <Text style={[styles.text, {color: Colors.primaryColor}]}>
         {props.title}
       </Text>
@@ -33,7 +34,6 @@ const Button = (props) => {
 const styles = StyleSheet.create({
   container: {
     ...Styles.center,
-    ...Styles.width100,
     ...BoxModel.smallBorderRadius,
     height: Size.scaleSize(40),
     borderWidth: Distance.superSmall,
