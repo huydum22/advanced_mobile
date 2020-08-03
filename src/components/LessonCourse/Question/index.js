@@ -1,13 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {PrimaryButton, SubPrimaryButton} from '../../Authentication';
 import {ThemeContext} from '../../../Provider/Theme';
-import {Size, Distance, Styles, BoxModel, Typography} from '../../../styles';
+import {Size, Distance, Styles, BoxModel} from '../../../styles';
 import {FORUM_QUESTION} from '../../../Constants/API';
 import {LessonContext} from '../../../Provider/LessonCourse';
 import {API} from '../../../services';
+import * as screenName from '../../../Constants/ScreenName';
 import {AuthenticationContext} from '../../../Provider/Authentication';
-import FastImage from 'react-native-fast-image';
+import QuestionComponent from '../QuestionComponent';
 const onPressAddQuestion = () => {};
 const onPressForumQuestion = () => {};
 
@@ -16,12 +17,12 @@ const QuestionView = (props) => {
   const {itemCourse} = useContext(LessonContext);
   const {state} = useContext(AuthenticationContext);
   const [question, setQuestion] = useState({});
-
+  const {navigation} = props;
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
         let page = 1;
-        let pageSize = 5;
+        let pageSize = 6;
         let response = await API.get(
           `${FORUM_QUESTION}/?page=${page}&pageSize=${pageSize}&courseId=${itemCourse.id}`,
           state.token,
@@ -36,80 +37,17 @@ const QuestionView = (props) => {
     fetchQuestion();
   }, [itemCourse, state]);
 
-  const getThemeUser = (title) => {
-    switch (title) {
-      case 'INSTRUCTOR':
-        return theme.warningColor;
-      case 'STUDENT':
-        return theme.successColor;
-      default:
-        return theme.primaryColor;
-    }
+  const onPressResponse = (itemQuestion) => {
+    navigation.navigate(screenName.ForumQuestion, {itemQuestion: itemQuestion});
   };
   const questionContent = () => {
     if (question.questions) {
       return question.questions.map((itemQuestion) => (
-        <View key={itemQuestion.id} style={Styles.fillColumn}>
-          <View style={Styles.fillRowStart}>
-            <View
-              style={[
-                Styles.columnCross,
-                styles.avatarContainer,
-                BoxModel.tinyMargin,
-              ]}>
-              <FastImage
-                style={[Styles.avatarIcon, BoxModel.tinyMarginVertical]}
-                source={{
-                  uri: itemQuestion.user.avatar,
-                }}
-              />
-
-              <View
-                style={[
-                  Styles.center,
-                  styles.avatarContainer,
-                  BoxModel.tinyPaddingVertical,
-                  {backgroundColor: getThemeUser(itemQuestion.user.type)},
-                ]}>
-                <Text
-                  style={[
-                    Typography.fontBold,
-                    {color: theme.whiteColor, fontSize: Typography.fontSize14},
-                  ]}>
-                  {itemQuestion.user.type.toLowerCase()}
-                </Text>
-              </View>
-            </View>
-            <View
-              style={[Styles.fillColumnStart, BoxModel.smallMarginHorizontal]}>
-              <Text
-                style={[
-                  styles.textHeader,
-                  BoxModel.tinyMarginVertical,
-                  {color: theme.primaryColor},
-                ]}>
-                {itemQuestion.title}
-              </Text>
-              <Text
-                style={[
-                  Typography.fontRegular,
-                  {color: theme.primaryTextColor},
-                ]}>
-                {itemQuestion.content}
-              </Text>
-              <Text
-                style={[
-                  Typography.fontRegular,
-                  styles.authorContainer,
-                  BoxModel.tinyMarginVertical,
-                  {color: theme.grayColor},
-                ]}>
-                {itemQuestion.user.name}
-              </Text>
-            </View>
-          </View>
-          <View style={[styles.divide, {backgroundColor: theme.DialogColor}]} />
-        </View>
+        <QuestionComponent
+          itemQuestion={itemQuestion}
+          onPressResponse={onPressResponse}
+          key={itemQuestion.id}
+        />
       ));
     }
   };
@@ -133,6 +71,7 @@ const QuestionView = (props) => {
           {borderColor: theme.primaryColor},
         ]}
       />
+      <View style={styles.footer} />
     </ScrollView>
   );
 };
@@ -152,18 +91,9 @@ const styles = StyleSheet.create({
     borderWidth: Distance.superSmall,
   },
   container: {flex: 1},
-  avatarContainer: {
-    width: Size.scaleSize(70),
-  },
-  textHeader: {
-    fontSize: Typography.fontSize14,
-    ...Typography.fontBold,
-  },
-  authorContainer: {
-    alignSelf: 'flex-end',
-  },
-  divide: {
-    height: 1,
+
+  footer: {
+    height: Size.scaleSize(50),
   },
 });
 export default QuestionView;

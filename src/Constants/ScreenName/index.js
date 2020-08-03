@@ -46,3 +46,6 @@ export const LectureTab = 'lectureTab';
 export const MoreTab = 'moreTab';
 export const QuestionTab = 'questionTab';
 export const NoteTab = 'noteTab';
+
+export const ForumQuestion = 'ForumQuestion';
+export const ForumQuestionStack = 'ForumQuestionStack';

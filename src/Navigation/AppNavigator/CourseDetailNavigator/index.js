@@ -1,17 +1,20 @@
 import React, {useContext} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import * as scenes from '../../../scenes';
 import * as screenName from '../../../Constants/ScreenName';
 import {Typography} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 import {LessonProvider} from '../../../Provider/LessonCourse';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const LessonCourseStack = createStackNavigator();
-const LessonCourseNavigatorStack = () => {
+const LessonCourseNavigatorStack = (props) => {
+  const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
   return (
     <LessonProvider>
       <LessonCourseStack.Navigator
         headerMode="screen"
+        mode="modal"
         screenOptions={{
           headerShown: true,
           headerStyle: {
@@ -22,6 +25,17 @@ const LessonCourseNavigatorStack = () => {
             ...Typography.fontBold,
             fontSize: Typography.fontSize20,
           },
+          headerBackTitleVisible: false,
+          headerBackImage: () => (
+            <MaterialIcons name="close" size={35} color={theme.primaryColor} />
+          ),
+          gestureEnabled: true,
+          cardOverlayEnabled: true,
+          headerStatusBarHeight:
+            navigation.dangerouslyGetState().routes.indexOf(route) > 0
+              ? 10
+              : undefined,
+          ...TransitionPresets.ModalPresentationIOS,
         }}
         initialRouteName={screenName.LessonCourseScreenStack}>
         <LessonCourseStack.Screen
@@ -34,6 +48,14 @@ const LessonCourseNavigatorStack = () => {
           name={screenName.AuthorDetailScreenName}
           component={scenes.AuthorDetail}
           options={{title: 'Author'}}
+        />
+        <LessonCourseStack.Screen
+          name={screenName.ForumQuestion}
+          component={scenes.ForumQuestion}
+          initialParams={{itemQuestion: 1}}
+          options={{
+            title: 'Q&A',
+          }}
         />
       </LessonCourseStack.Navigator>
     </LessonProvider>

@@ -22,6 +22,7 @@ import SplashScreen from './SplashScreen';
 import UpdateProfile from './UpdateProfile';
 import PlayReview from './PlayReview';
 import LessonCourse from './LessonCourse';
+import ForumQuestion from './ForumQuestion';
 export {
   AuthorDetail,
   Browse,
@@ -47,4 +48,5 @@ export {
   UpdateProfile,
   PlayReview,
   LessonCourse,
+  ForumQuestion,
 };

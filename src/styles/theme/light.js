@@ -22,8 +22,9 @@ const lightTheme = {
   blackSubTextColor: 'rgba(0,0,0,0.5)',
 
   // ACTIONS
+  StudentColor: '#9b59b6',
   successColor: '#3adb76',
-  warningColor: '#FFCC00',
+  warningColor: '#f1c40f',
   alertColor: '#cc4b37',
 
   // GRAYSCALE
