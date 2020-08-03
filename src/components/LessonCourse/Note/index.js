@@ -118,7 +118,6 @@ const NoteView = (props) => {
                 {
                   color: theme.grayColor,
                   fontSize: Typography.fontSize14,
-                  alignSelf: 'flex-end',
                 },
               ]}>
               {Moment(note.updatedAt).format(' h:mm:ss')},{' '}

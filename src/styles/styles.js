@@ -24,6 +24,9 @@ export const avatarIcon = {
   height: scaleSize(30),
   borderRadius: scaleSize(15),
 };
+export const divide = {
+  height: 1,
+};
 export const titleInList = {
   color: BLACK,
   fontWeight: '600',
