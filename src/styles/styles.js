@@ -150,6 +150,7 @@ export const fillCenter = {
   flex: 1,
   justifyContent: 'center',
 };
+
 export const fillRowBetween = {
   flex: 1,
   flexDirection: 'row',

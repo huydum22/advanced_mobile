@@ -7,7 +7,6 @@ import {
   StatusBar,
   SafeAreaView,
 } from 'react-native';
-import courseData from '../../ExampleData/course';
 import {CourseVerticalItem} from '../../components/Course';
 import {Styles, Typography} from '../../styles';
 import {Header} from '../../components/PathDetail';
@@ -17,7 +16,7 @@ import {
 } from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 const PathDetail = (props) => {
-  const {navigation, route} = props;
+  const {navigation, route, courseData} = props;
   const {theme} = useContext(ThemeContext);
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenName, {id: item.id});

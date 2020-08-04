@@ -18,8 +18,6 @@ import {API} from '../../services';
 import Banner from '../../components/Banner';
 import * as screenName from '../../Constants/ScreenName';
 import {CategoryContext} from '../../Provider/Category';
-import SeeAllBtn from '../../components/common/see-all-button';
-import dataSkill from '../../ExampleData/skill';
 import {ThemeContext} from '../../Provider/Theme';
 const titleItem = (id) => {
   if (id === 0) {
@@ -40,7 +38,7 @@ const titleItem = (id) => {
   return '>2.000.000đ';
 };
 const Browse = (props) => {
-  const {navigation, route} = props;
+  const {navigation, route, dataSkill} = props;
   const {theme} = useContext(ThemeContext);
   const {listCategory} = useContext(CategoryContext);
   const [listInstructor, setLIstInstructor] = useState([]);

@@ -21,10 +21,7 @@ import {
   BoxModel,
   Size,
 } from '../../styles';
-import dataCourse from '../../ExampleData/course';
-import dataSkill from '../../ExampleData/skill';
-import dataAuthor from '../../ExampleData/author';
-import dataPath from '../../ExampleData/path';
+
 import {
   PopularSkillScreenName,
   PathDetailScreenName,
@@ -36,7 +33,14 @@ import {
 } from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 const RelateSkill = (props) => {
-  const {navigation, route} = props;
+  const {
+    navigation,
+    route,
+    dataCourse,
+    dataSkill,
+    dataAuthor,
+    dataPath,
+  } = props;
   const {theme} = useContext(ThemeContext);
   const showListCourse = (index, title) => {
     if (index === 1) {

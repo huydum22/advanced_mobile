@@ -1,6 +1,5 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
-import data from '../../../../ExampleData/path';
 import {Colors, Size} from '../../../../styles';
 import Item from '../PathItem';
 import {PathDetailScreenName} from '../../../../Constants/ScreenName';
@@ -8,7 +7,7 @@ import {ThemeContext} from '../../../../Provider/Theme';
 
 const Paths = (props) => {
   const {theme} = useContext(ThemeContext);
-  const {navigation, route} = props;
+  const {navigation, route, data} = props;
   const onPressItem = (item) => {
     navigation.navigate(PathDetailScreenName, {
       name: item.name,

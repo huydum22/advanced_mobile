@@ -1,14 +1,13 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import {Size} from '../../../../styles';
-import data from '../../../../ExampleData/author';
 import Item from '../AuthorItem';
 import {AuthorDetailScreenName} from '../../../../Constants/ScreenName';
 import {ThemeContext} from '../../../../Provider/Theme';
 
 const Authors = (props) => {
   const {theme} = useContext(ThemeContext);
-  const {navigation, route} = props;
+  const {navigation, route, data} = props;
   const onPressItem = (item) => {
     navigation.navigate(AuthorDetailScreenName, {
       name: item.name,

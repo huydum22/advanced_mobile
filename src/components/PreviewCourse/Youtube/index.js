@@ -5,12 +5,12 @@ import {Size, Styles} from '../../../styles';
 const getYouTubeID = (str) => {
   return str.substring(str.lastIndexOf('/') + 1, str.length);
 };
-const PLayYouTube = (props) => {
-  const {urlVideo} = props;
+const YoutubeFrame = (props) => {
+  const {urlVideo, paused} = props;
   const [widthVid, setWidth] = useState(0);
   const [heightVid, setHeight] = useState(0);
-  const playerRef = useRef();
 
+  var playerRef = useRef();
   useEffect(() => {
     const fetchYoutubeMetadata = async () => {
       try {
@@ -26,30 +26,29 @@ const PLayYouTube = (props) => {
     fetchYoutubeMetadata();
   }, [urlVideo]);
   return (
-    <View style={styles.backgroundVideo}>
+    <View style={[styles.container, Styles.fillCenter]}>
       <YoutubePlayer
-        ref={playerRef}
+        ref={(ref) => {
+          playerRef = ref;
+        }}
         height={heightVid}
         width={Size.WIDTH}
         videoId={getYouTubeID(urlVideo)}
-        play={true}
-        onChangeState={(event) => console.log(event)}
-        onReady={() => console.log('ready')}
-        onError={(e) => console.log(e)}
-        onPlaybackQualityChange={(q) => console.log(q)}
+        play={!paused}
         volume={50}
         playbackRate={1}
         initialPlayerParams={{
           cc_lang_pref: 'us',
+          controls: true,
         }}
       />
     </View>
   );
 };
 const styles = StyleSheet.create({
-  backgroundVideo: {
+  container: {
     flex: 1,
     backgroundColor: 'black',
   },
 });
-export default PLayYouTube;
+export default YoutubeFrame;

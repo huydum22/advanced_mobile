@@ -10,15 +10,13 @@ import {
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import data from '../../../ExampleData/courseDetail';
-import contentData from '../../../ExampleData/contents';
 import {Size, Typography, Styles} from '../../../styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Header from '../HeaderComponent';
 import {ThemeContext} from '../../../Provider/Theme';
 
 const CourseDetail = (props) => {
-  const {navigation, route, item} = props;
+  const {navigation, route, item, data, contentData} = props;
   const {theme} = useContext(ThemeContext);
 
   const flatListSeparator = () => {

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useMemo} from 'react';
-import {SafeAreaView, View, StyleSheet} from 'react-native';
-
+import {SafeAreaView, View, StyleSheet, TouchableHighlight} from 'react-native';
+import {useSafeArea} from 'react-native-safe-area-context';
 import LessonTab from '../../components/LessonCourse/TopTabInfo';
 import {API} from '../../services';
 import {
@@ -9,10 +9,10 @@ import {
   LESSON_VIDEO,
 } from '../../Constants/API';
 import {AuthenticationContext} from '../../Provider/Authentication';
-import {Size, Typography, BoxModel} from '../../styles';
+import {Typography, BoxModel, Size} from '../../styles';
 import Video from '../../components/LessonCourse/PlayVideo';
 import YouTube from '../../components/LessonCourse/PLayYoutube';
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {ThemeContext} from '../../Provider/Theme';
 import {LessonContext} from '../../Provider/LessonCourse';
 import p from 'pretty-format';
@@ -21,6 +21,8 @@ const LessonCourse = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);
+  const insets = useSafeArea();
+
   const {
     itemCourse,
     setItemCourse,
@@ -29,8 +31,6 @@ const LessonCourse = (props) => {
     videoUrl,
     setVideoUrl,
   } = useContext(LessonContext);
-
-  const [collapsibleItems, setCollapsibleItems] = useState([]);
 
   const fetchProcessCourse = async () => {
     try {
@@ -77,18 +77,6 @@ const LessonCourse = (props) => {
     fetchCourseDetailWithLesson();
   }, [route.params.id, state.token, setItemCourse, setItemLesson]);
 
-  const onPressHeader = (section) => {
-    const newIds = [...collapsibleItems];
-    const index = newIds.indexOf(section.data[0].sectionId);
-    if (index > -1) {
-      newIds.splice(index, 1);
-    } else {
-      newIds.push(section.data[0].sectionId);
-    }
-    setCollapsibleItems(newIds);
-    // setExpand(!isExpand);insets
-  };
-
   const dismiss = () => {
     navigation.goBack();
   };
@@ -99,9 +87,8 @@ const LessonCourse = (props) => {
   const renderYouTube = useMemo(() => {
     return <YouTube urlVideo={videoUrl} />;
   }, [videoUrl]);
-
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <View style={[styles.container, {backgroundColor: theme.themeColor}]}>
         {videoUrl.includes('https://youtube.com/embed')
           ? renderYouTube
@@ -111,14 +98,26 @@ const LessonCourse = (props) => {
           <LessonTab />
         </View>
       </View>
+      <TouchableHighlight
+        style={[
+          styles.buttonDismiss,
+          {
+            bottom: Size.HEIGHT - insets.top - Size.scaleSize(50),
+          },
+        ]}
+        onPress={dismiss}
+        underlayColor={theme.overlayColor}>
+        <MaterialIcons
+          name="expand-more"
+          size={50}
+          color={theme.whiteWith07OpacityColor}
+        />
+      </TouchableHighlight>
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    height: Size.HEIGHT,
-  },
-  videoContainer: {
     flex: 1,
   },
 
@@ -151,6 +150,12 @@ const styles = StyleSheet.create({
   previewText: {
     ...Typography.fontRegular,
     fontSize: Typography.fontSize14,
+  },
+  buttonDismiss: {
+    position: 'absolute',
+    height: 50,
+    left: 0,
+    width: 50,
   },
 });
 export default LessonCourse;

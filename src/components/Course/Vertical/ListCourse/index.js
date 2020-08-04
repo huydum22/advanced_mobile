@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import {View, FlatList} from 'react-native';
 import {Colors, Size} from '../../../../styles';
-import data from '../../../../ExampleData/course';
 import Item from '../CourseItem';
 import separator from '../../../Separator';
 import {
@@ -10,7 +9,7 @@ import {
 } from '../../../../Constants/ScreenName';
 import {ThemeContext} from '../../../../Provider/Theme';
 const ListCourse = (props) => {
-  const {navigation, route} = props;
+  const {navigation, route, data} = props;
   const {theme} = useContext(ThemeContext);
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenName, {id: item.id});

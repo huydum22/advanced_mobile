@@ -1,10 +1,6 @@
 import React, {useContext} from 'react';
 import {StyleSheet, View, SectionList, Text, StatusBar} from 'react-native';
 
-import courseData from '../../ExampleData/course';
-import pathData from '../../ExampleData/path';
-import authorData from '../../ExampleData/author';
-
 import {CourseVerticalItem} from '../Course';
 import {PathItemVertical} from '../Path';
 import {AuthorVerticalItem} from '../Author';
@@ -23,7 +19,7 @@ import {
 import {ThemeContext} from '../../Provider/Theme';
 const Search = (props) => {
   const {theme} = useContext(ThemeContext);
-  const {navigation, route} = props;
+  const {navigation, route, courseData, pathData, authorData} = props;
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenName, {id: item.id});
   };
