@@ -1,4 +1,4 @@
-import React, {useContext, useState, useRef} from 'react';
+import React, {useContext, useState, useRef, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -6,54 +6,92 @@ import {
   SafeAreaView,
   Text,
 } from 'react-native';
+import {Slider} from 'react-native-elements';
+
 import Video from 'react-native-video';
 import {Styles, Size, BoxModel, Typography, Distance} from '../../styles';
 import {ThemeContext} from '../../Provider/Theme';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {Slider} from 'react-native-elements';
+import {useSafeArea} from 'react-native-safe-area-context';
+
 import Moment from 'moment';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
 const PLayVideo = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
-  const [value, setValue] = useState(0);
+  const [valueSlider, setValueSlider] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [isHide, setHide] = useState(true);
+  const [onChangeYoutube, setChangeYoutube] = useState(false);
+
   const [time, setTime] = useState('');
+  const [timeRemaining, setTimeRemaining] = useState('');
+  const insets = useSafeArea();
   const [totalTime, setTotalTime] = useState(0);
   const playerRef = useRef(null);
 
-  console.log(route);
   const dismiss = () => {
     navigation.goBack();
   };
+
+  useEffect(() => {
+    if (isHide === false) {
+      setTimeout(() => {
+        setHide(true);
+      }, 3000);
+    }
+  }, [isHide]);
   const onPressPlayVideo = () => {
     setPaused(!paused);
+    if (paused) {
+      setHide(true);
+    } else {
+      setHide(false);
+    }
   };
   const onProgress = (data) => {
-    // console.log(data);
-    // setTime(Moment(Moment.duration(3500)._data).format('mm:ss'));
     setTotalTime(data.seekableDuration);
-    setValue(data.currentTime / data.seekableDuration);
+    setValueSlider(data.currentTime / data.seekableDuration);
     setTime(
       Moment('1900-01-01 00:00:00')
         .add(data.currentTime, 'seconds')
         .format('mm:ss'),
     );
+    setTimeRemaining(
+      Moment('1900-01-01 00:00:00')
+        .add(data.seekableDuration - data.currentTime, 'seconds')
+        .format('mm:ss'),
+    );
   };
-  const onSeek = (data) => {
-    // console.log(data);
-    this.player.seek(0);
-  };
+
   const onChangeValue = (value) => {
-    // console.log(this.player._onLoad.currentTime);
-    // console.log();
     this.player.seek(value * totalTime);
+  };
+
+  const onForward10s = () => {
+    this.player.seek((valueSlider + 10 / totalTime) * totalTime);
+  };
+  const onReplay10s = () => {
+    this.player.seek((valueSlider - 10 / totalTime) * totalTime);
   };
   //   console.log(props);
   const getYouTubeID = (str) => {
     return str.substring(str.lastIndexOf('/') + 1, str.length);
   };
+
+  const getOnTouch = () => {
+    if (isHide) {
+      return theme.overlayColor;
+    } else {
+      return theme.blackWith05OpacityColor;
+    }
+  };
+
+  const onPressHide = () => {
+    setHide(!isHide);
+  };
+
   return (
     <SafeAreaView style={styles.backgroundVideo}>
       <TouchableHighlight onPress={dismiss} underlayColor={theme.overlayColor}>
@@ -77,35 +115,117 @@ const PLayVideo = (props) => {
             onBuffer={this.onBuffer}
             onError={this.videoError}
           />
-          <View style={[Styles.fillRowCenter, BoxModel.marginHorizontal]}>
-            <TouchableHighlight
-              onPress={onPressPlayVideo}
-              underlayColor={theme.overlayColor}
-              style={Styles.center}>
-              {paused ? (
+
+          <TouchableHighlight
+            onPress={onPressHide}
+            underlayColor={theme.overlayColor}
+            style={[styles.container, {backgroundColor: getOnTouch()}]}>
+            <View>
+              <View
+                style={[
+                  styles.controlContainer,
+                  BoxModel.marginHorizontal,
+                  {
+                    height:
+                      Size.HEIGHT -
+                      insets.top -
+                      insets.bottom -
+                      Size.scaleSize(50),
+                  },
+                ]}>
+                <TouchableHighlight
+                  underlayColor={theme.overlayColor}
+                  style={Styles.center}>
+                  <MaterialIcons
+                    name="library-books"
+                    size={20}
+                    color={theme.whiteWith07OpacityColor}
+                    style={Styles.center}
+                  />
+                </TouchableHighlight>
+                <Text
+                  style={[styles.timeContainer, BoxModel.tinyMarginHorizontal]}>
+                  {time}
+                </Text>
+                <Slider
+                  value={valueSlider}
+                  onSlidingComplete={onChangeValue}
+                  // onValueChange={onChangeValue}
+                  thumbTintColor={theme.whiteColor}
+                  style={styles.sliderContainer}
+                  minimumTrackTintColor={theme.primaryColor}
+                />
+                <Text
+                  style={[styles.timeContainer, BoxModel.tinyMarginHorizontal]}>
+                  {timeRemaining}
+                </Text>
+                <TouchableHighlight
+                  onPress={onPressPlayVideo}
+                  underlayColor={theme.overlayColor}
+                  style={Styles.center}>
+                  <MaterialIcons
+                    name="fullscreen"
+                    size={25}
+                    color={theme.whiteWith07OpacityColor}
+                    style={Styles.center}
+                  />
+                </TouchableHighlight>
+              </View>
+            </View>
+          </TouchableHighlight>
+          {isHide ? undefined : (
+            <View
+              style={[
+                styles.control,
+                {
+                  bottom: Size.HEIGHT / 2 - Size.scaleSize(30) - insets.top,
+                },
+              ]}>
+              <TouchableHighlight
+                onPress={onReplay10s}
+                underlayColor={theme.overlayColor}
+                style={Styles.center}>
                 <MaterialIcons
-                  name="play-arrow"
-                  size={30}
-                  color={theme.whiteWith07OpacityColor}
+                  name="replay-10"
+                  size={50}
+                  color={theme.whiteColor}
                   style={Styles.center}
                 />
-              ) : (
+              </TouchableHighlight>
+
+              <TouchableHighlight
+                onPress={onPressPlayVideo}
+                underlayColor={theme.overlayColor}
+                style={Styles.center}>
+                {paused ? (
+                  <MaterialIcons
+                    name="play-arrow"
+                    size={70}
+                    color={theme.whiteColor}
+                    style={Styles.center}
+                  />
+                ) : (
+                  <MaterialIcons
+                    name="pause"
+                    size={70}
+                    color={theme.whiteColor}
+                    style={Styles.center}
+                  />
+                )}
+              </TouchableHighlight>
+              <TouchableHighlight
+                onPress={onForward10s}
+                underlayColor={theme.overlayColor}
+                style={Styles.center}>
                 <MaterialIcons
-                  name="pause"
-                  size={30}
-                  color={theme.whiteWith07OpacityColor}
+                  name="forward-10"
+                  size={50}
+                  color={theme.whiteColor}
                   style={Styles.center}
                 />
-              )}
-            </TouchableHighlight>
-            <Slider
-              value={value}
-              onValueChange={onChangeValue}
-              thumbTintColor={theme.primaryColor}
-              style={styles.sliderContainer}
-            />
-            <Text style={styles.timeContainer}>{time}</Text>
-          </View>
+              </TouchableHighlight>
+            </View>
+          )}
         </View>
       ) : (
         <View style={[styles.backgroundVideo, Styles.fillCenter]}>
@@ -115,15 +235,13 @@ const PLayVideo = (props) => {
             width={Size.WIDTH}
             videoId={getYouTubeID(route.params.urlVideo)}
             play={!paused}
-            onChangeState={(event) => console.log(event)}
-            onReady={() => console.log('ready')}
-            onError={(e) => console.log(e)}
             onPlaybackQualityChange={(q) => console.log(q)}
             volume={50}
             playbackRate={1}
             initialPlayerParams={{
               cc_lang_pref: 'us',
               showClosedCaptions: true,
+              controls: true,
             }}
           />
         </View>
@@ -142,7 +260,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   cancelButton: {
-    // top: 15,
     left: 15,
   },
   sliderContainer: {
@@ -153,6 +270,27 @@ const styles = StyleSheet.create({
     ...Typography.fontRegular,
     fontSize: Typography.fontSize16,
     color: 'white',
+  },
+  control: {
+    height: 100,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  container: {
+    position: 'absolute',
+    height: Size.HEIGHT,
+    width: '100%',
+  },
+  controlContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });
 export default PLayVideo;

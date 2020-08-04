@@ -14,7 +14,7 @@ const PLayVideo = (props) => {
         <ActivityIndicator color={theme.primaryColor} />
       ) : (
         <Video
-          controls={true}
+          controls={false}
           source={{uri: urlVideo}}
           ref={playerRef}
           style={styles.videoContainer}

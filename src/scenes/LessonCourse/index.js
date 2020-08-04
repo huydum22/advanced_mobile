@@ -92,9 +92,6 @@ const LessonCourse = (props) => {
   const dismiss = () => {
     navigation.goBack();
   };
-  // const onPressPlayVideo = () => {
-  //   fetchFirstLesson(item.section[0].lesson[0].id);setCollapsibleItems
-  // };
 
   const renderVideo = useMemo(() => {
     return <Video urlVideo={videoUrl} />;
@@ -111,15 +108,7 @@ const LessonCourse = (props) => {
           : renderVideo}
         <View
           style={[styles.mainContainer, {backgroundColor: theme.themeColor}]}>
-          {/* <ScrollView> */}
           <LessonTab />
-          {/* </ScrollView> */}
-          {/* <LessonList
-            itemCourse={itemCourse}
-            onPressPreviewLesson={onPressPreviewLesson}
-            itemLesson={itemLesson}
-            onPressHeader={onPressHeader}
-          /> */}
         </View>
       </View>
     </SafeAreaView>

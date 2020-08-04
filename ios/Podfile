@@ -11,6 +11,8 @@ target 'advanced_mobile' do
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   pod 'RNFastImage', :path => '../node_modules/react-native-fast-image'
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
   target 'advanced_mobileTests' do
     inherit! :complete
     # Pods for testing
