@@ -3,20 +3,27 @@ import {View, StyleSheet, TouchableHighlight, Text} from 'react-native';
 import Video from 'react-native-video';
 import {Styles, Size, BoxModel, Typography, Distance} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
+import {LessonContext} from '../../../Provider/LessonCourse';
+
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Slider} from 'react-native-elements';
 import Moment from 'moment';
 const PLayVideo = (props) => {
   const {urlVideo} = props;
   const {theme} = useContext(ThemeContext);
+  const {itemLesson} = useContext(LessonContext);
   const [paused, setPaused] = useState(false);
   const [onDragSlider, setDragSlider] = useState(false);
   const [isHide, setHide] = useState(true);
   const [valueSlider, setValueSlider] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
-  const [time, setTime] = useState('00:00');
-  const [timeRemaining, setTimeRemaining] = useState('00:00');
+  const [time, setTime] = useState(0);
   var playerRef = useRef();
+  useEffect(() => {
+    if (itemLesson) {
+      setTotalTime(itemLesson.hours * 3600);
+    }
+  }, [itemLesson]);
   const onPressPlayVideo = () => {
     setPaused(!paused);
   };
@@ -55,18 +62,13 @@ const PLayVideo = (props) => {
     }, 1000);
   };
   const onProgress = (data) => {
-    setTotalTime(data.seekableDuration);
     setValueSlider(data.currentTime / data.seekableDuration);
-    setTime(
-      Moment('1900-01-01 00:00:00')
-        .add(data.currentTime, 'seconds')
-        .format('mm:ss'),
-    );
-    setTimeRemaining(
-      Moment('1900-01-01 00:00:00')
-        .add(data.seekableDuration - data.currentTime, 'seconds')
-        .format('mm:ss'),
-    );
+    setTime(data.currentTime);
+    // setTime(
+    //   Moment('1900-01-01 00:00:00')
+    //     .add(data.currentTime, 'seconds')
+    //     .format('mm:ss'),
+    // );
   };
   return (
     <View style={styles.videoContainer}>
@@ -107,7 +109,9 @@ const PLayVideo = (props) => {
               />
             </TouchableHighlight>
             <Text style={[styles.timeContainer, BoxModel.tinyMarginHorizontal]}>
-              {time}
+              {Moment('1900-01-01 00:00:00')
+                .add(time, 'seconds')
+                .format('mm:ss')}
             </Text>
             <Slider
               onValueChange={onSeekSlider}
@@ -118,7 +122,9 @@ const PLayVideo = (props) => {
               minimumTrackTintColor={theme.primaryColor}
             />
             <Text style={[styles.timeContainer, BoxModel.tinyMarginHorizontal]}>
-              {timeRemaining}
+              {Moment('1900-01-01 00:00:00')
+                .add(totalTime - time, 'seconds')
+                .format('mm:ss')}
             </Text>
             <TouchableHighlight
               onPress={onPressPlayVideo}
