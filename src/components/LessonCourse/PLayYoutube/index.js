@@ -13,6 +13,7 @@ import {ThemeContext} from '../../../Provider/Theme';
 import {LessonContext} from '../../../Provider/LessonCourse';
 import {Slider} from 'react-native-elements';
 import Moment from 'moment';
+import YoutubePlayer, {getYoutubeMeta} from 'react-native-youtube-iframe';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const getYouTubeID = (str) => {
@@ -28,26 +29,49 @@ const PLayYouTube = (props) => {
   const [valueSlider, setValueSlider] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const [time, setTime] = useState(0);
-
+  const [widthVid, setWidth] = useState(0);
+  const [heightVid, setHeight] = useState(0);
   useEffect(() => {
     if (Platform.android) {
       if (totalTime) {
-        const fetchDataAndroid = async () => {
-          try {
-            let response = await playerRef.current.getCurrentTime();
-            setValueSlider(response / totalTime);
-            setTime(response);
-            console.log(response);
-          } catch (err) {
-            console.log(err);
+        if (!paused) {
+          if (!isHide) {
+            setTimeout(() => {
+              fetchDataAndroid();
+            }, 500);
           }
-        };
-        setTimeout(() => {
-          fetchDataAndroid();
-        }, 500);
+        }
       }
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalTime, valueSlider, time, paused, isHide]);
+  const fetchDataAndroid = async () => {
+    try {
+      let response = await playerRef.current.getCurrentTime();
+      setValueSlider(response / totalTime);
+      setTime(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    const fetchYoutubeMetadata = async () => {
+      try {
+        let response = await getYoutubeMeta(getYouTubeID(urlVideo));
+        setWidth(response.width);
+        setHeight(response.height);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchYoutubeMetadata();
+  }, [urlVideo]);
+  const getHeightVid = () => {
+    if (heightVid && widthVid) {
+      return (heightVid * Size.WIDTH) / widthVid;
+    }
+    return 300;
+  };
   useEffect(() => {
     if (itemLesson) {
       setTotalTime(itemLesson.hours * 3600);
@@ -55,12 +79,21 @@ const PLayYouTube = (props) => {
   }, [itemLesson]);
   const onPressPlayVideo = () => {
     setPaused(!paused);
+    if (Platform.android) {
+      fetchDataAndroid();
+    }
   };
   const onForward10s = () => {
     playerRef.current.seekTo((valueSlider + 10 / totalTime) * totalTime);
+    if (Platform.android) {
+      fetchDataAndroid();
+    }
   };
   const onReplay10s = () => {
     playerRef.current.seekTo((valueSlider - 10 / totalTime) * totalTime);
+    if (Platform.android) {
+      fetchDataAndroid();
+    }
   };
   const onPressHide = () => {
     setHide(!isHide);
@@ -83,17 +116,36 @@ const PLayYouTube = (props) => {
   };
   return (
     <View style={styles.backgroundVideo}>
-      <YouTube
-        apiKey="AIzaSyAy_jBdA-GWmf6dVmMstMXe8DSKWdPI69k"
-        ref={playerRef}
-        videoId={getYouTubeID(urlVideo)}
-        play={!paused}
-        fullscreen={false}
-        loop={false}
-        controls={0}
-        style={styles.videoYoutube}
-        onProgress={onProgress}
-      />
+      {Platform.ios ? (
+        <YouTube
+          apiKey="AIzaSyAy_jBdA-GWmf6dVmMstMXe8DSKWdPI69k"
+          ref={playerRef}
+          videoId={getYouTubeID(urlVideo)}
+          play={!paused}
+          fullscreen={false}
+          loop={false}
+          controls={0}
+          style={styles.videoYoutube}
+          onProgress={onProgress}
+          resumePlayAndroid={false}
+        />
+      ) : (
+        <YoutubePlayer
+          ref={playerRef}
+          height={getHeightVid()}
+          width={Size.WIDTH}
+          videoId={getYouTubeID(urlVideo)}
+          play={!paused}
+          volume={50}
+          playbackRate={1}
+          webViewStyle={styles.videoYoutube}
+          onProgress={onProgress}
+          initialPlayerParams={{
+            cc_lang_pref: 'us',
+            controls: false,
+          }}
+        />
+      )}
       <TouchableHighlight
         onPress={onPressHide}
         underlayColor={theme.overlayColor}

@@ -75,14 +75,13 @@ const PLayVideo = (props) => {
       <Video
         onProgress={onProgress}
         controls={false}
+        resizeMode="contain"
         source={{uri: urlVideo}}
         ref={(ref) => {
           playerRef = ref;
         }}
         paused={paused}
-        style={styles.videoContainer}
-        onBuffer={this.onBuffer}
-        onError={this.videoError}
+        style={styles.videoYoutube}
       />
       <TouchableHighlight
         onPress={onPressHide}
@@ -195,6 +194,12 @@ const PLayVideo = (props) => {
   );
 };
 const styles = StyleSheet.create({
+  videoYoutube: {
+    alignSelf: 'stretch',
+    flex: 1,
+    resizeMode: 'contain',
+  },
+
   videoContainer: {
     flex: 1,
     backgroundColor: 'black',
