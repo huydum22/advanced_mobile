@@ -16,6 +16,7 @@ import {
   Distance,
 } from '../../styles';
 import * as screen from '../../Constants/ScreenName';
+import {urlAvatarDefault} from '../../Constants/Image';
 import {Item} from '../../components/AccountManagement';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
@@ -49,7 +50,7 @@ const Account = (props) => {
               borderRadius: Size.scaleSize(75),
             }}
             source={{
-              uri: state.userInfo.avatar,
+              uri: state.userInfo ? state.userInfo.avatar : urlAvatarDefault,
             }}
           />
           <Text style={[styles.headerText, {color: theme.primaryTextColor}]}>

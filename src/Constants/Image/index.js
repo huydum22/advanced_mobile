@@ -15,3 +15,6 @@ export const categoryImage = [
   'https://pluralsight.imgix.net/course-images/audience/software-development.jpg',
   'https://pluralsight.imgix.net/course-images/android-application-basics-understanding-v1.jpg',
 ];
+
+export const urlAvatarDefault =
+  'https://c7.uihere.com/files/592/884/975/programmer-computer-programming-computer-software-computer-icons-programming-language-avatar.jpg';

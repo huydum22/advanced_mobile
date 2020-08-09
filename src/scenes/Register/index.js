@@ -1,12 +1,5 @@
 import React, {useState, useEffect, useContext, useReducer} from 'react';
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  Alert,
-  Text,
-  View,
-  Image,
-} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Alert, Text} from 'react-native';
 import {
   Platform,
   Styles,
@@ -26,10 +19,12 @@ import userImage from '../../assets/image/user.jpg';
 const SignUp = (props) => {
   const {navigation} = props;
   const [showPass, setShowPass] = useState(false);
-  const [email, setEmail] = useState('testitedu@gmail.com');
-  const [phoneNumber, setPhoneNumber] = useState('0931270721');
-  const [password, setPassword] = useState('12345678');
-  const [name, setName] = useState('testaccount');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [name, setName] = useState('');
   const [activeBtn, setActiveBtn] = useState(false);
 
   const onChangeEmail = (txtEmail) => {
@@ -44,43 +39,60 @@ const SignUp = (props) => {
   const onChangePassword = (pass) => {
     setPassword(pass);
   };
+  const onChangeConfirmPassword = (pass) => {
+    setConfirmPassword(pass);
+  };
   const onPressShowPass = () => {
     setShowPass(!showPass);
   };
   const handleRegister = async () => {
-    try {
-      // const response = await RegisterAPI(name, phoneNumber, email, password);
-      let response = await API.post(REGISTER, {
-        username: name,
-        phone: phoneNumber,
-        email: email,
-        password: password,
-      });
-      if (response.status === 200) {
-        navigation.navigate(screenName.LoginScreenName);
+    if (password !== confirmPassword) {
+      Alert.alert('Passwords do not match');
+    } else {
+      if (password.length < 8 || password.length > 20) {
+      } else {
+        try {
+          let response = await API.post(REGISTER, {
+            username: name,
+            phone: phoneNumber,
+            email: email,
+            password: password,
+          });
+          if (response.isSuccess) {
+            Alert.alert('Register success, confirm your email');
+            navigation.navigate(screenName.LoginScreenName, {
+              email: email,
+              password: password,
+            });
+          } else {
+            Alert.alert(response.data.message);
+          }
+        } catch (response) {
+          Alert.alert(response);
+        }
       }
-    } catch ({response}) {
-      Alert.alert(response.data.message);
-      console.log(response);
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (email !== '' && password !== '' && name !== '' && phoneNumber !== '') {
+    if (
+      email !== '' &&
+      password !== '' &&
+      name !== '' &&
+      phoneNumber !== '' &&
+      confirmPassword !== ''
+    ) {
       setActiveBtn(true);
     } else {
       setActiveBtn(false);
     }
-  }, [email, password, name, phoneNumber]);
+  }, [email, password, name, phoneNumber, confirmPassword]);
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.Ios ? 'padding' : 'height'}>
       <Text style={styles.headerText}>Please complete the form to sign up</Text>
-      <View style={styles.imageContainer}>
-        <Image source={userImage} style={styles.image} />
-      </View>
+
       <FormInput
         placeholder="Your Name"
         value={name}
@@ -93,6 +105,7 @@ const SignUp = (props) => {
         value={phoneNumber}
         onChangeText={onChangePhoneNumber}
         autoCorrect={false}
+        keyboardType="phone-pad"
         returnKeyType={'next'}
       />
       <FormInput
@@ -107,6 +120,14 @@ const SignUp = (props) => {
         placeholder="Password"
         value={password}
         onChangeText={onChangePassword}
+        autoCorrect={false}
+        secureTextEntry={!showPass}
+        returnKeyType={'next'}
+      />
+      <FormInput
+        placeholder="Confirm Password"
+        value={confirmPassword}
+        onChangeText={onChangeConfirmPassword}
         autoCorrect={false}
         secureTextEntry={!showPass}
         returnKeyType={'done'}

@@ -23,11 +23,11 @@ import {FormInput, PrimaryButton} from '../../components/Authentication';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const Login = (props) => {
-  const {navigation} = props;
+  const {navigation, route} = props;
   const {state, loginProvider} = useContext(AuthenticationContext);
   const {setItem} = useAsyncStorage('@userToken');
-  const [email, setEmail] = useState('testitedu@gmail.com');
-  const [password, setPassword] = useState('12345678');
+  const [email, setEmail] = useState(route.params.email);
+  const [password, setPassword] = useState(route.params.password);
   const [formState, setFormState] = useState({
     showPass: false,
     activeBtn: false,
@@ -56,6 +56,7 @@ const Login = (props) => {
       Alert.alert(state.message);
     }
   });
+  console.log(route.params);
 
   useEffect(() => {
     if (email !== '' && password !== '') {

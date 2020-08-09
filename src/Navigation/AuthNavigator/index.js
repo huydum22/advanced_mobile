@@ -28,6 +28,7 @@ const AuthNavigator = () => (
     <Stack.Screen
       name={LoginScreenName}
       component={Login}
+      initialParams={{email: '', password: ''}}
       options={{title: 'Sign In', headerTitleStyle: {...Typography.fontBold}}}
     />
     <Stack.Screen
