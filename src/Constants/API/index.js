@@ -2,6 +2,7 @@ export const API_URL = 'https://api.itedu.me';
 
 export const LOGIN = 'user/login';
 export const REGISTER = 'user/register';
+export const SEND_EMAIL_ACTIVE = 'user/send-activate-email';
 export const FORGOT_PASSWORD = 'user/forget-pass/send-email';
 export const PROFILE = 'user/me';
 export const UPDATE_PASSWORD = 'user/change-password';

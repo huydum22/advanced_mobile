@@ -36,6 +36,8 @@ export const loginAction = (dispatch) => async (email, password) => {
     const response = await API.post(LOGIN, data);
     if (response.isSuccess) {
       dispatch(loginSuccess(response.data));
+    } else {
+      dispatch(loginError(response.data));
     }
   } catch ({response}) {
     dispatch(loginError(response.data));

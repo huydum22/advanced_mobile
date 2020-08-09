@@ -22,6 +22,7 @@ import {TouchableHighlight} from 'react-native-gesture-handler';
 import {FormInput, PrimaryButton} from '../../components/Authentication';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {GoogleSignin, statusCodes} from 'react-native-google-signin';
 const Login = (props) => {
   const {navigation, route} = props;
   const {state, loginProvider} = useContext(AuthenticationContext);
@@ -35,28 +36,25 @@ const Login = (props) => {
     isLoading: false,
   });
 
-  useEffect(() => {
-    const storeData = async (value) => {
-      try {
-        const jsonValue = JSON.stringify(value);
-        await setItem(jsonValue);
-      } catch (e) {
-        // saving error
+  const gg_signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const {accessToken, idToken} = await GoogleSignin.signIn();
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+        Alert.alert('Cancel');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        Alert.alert('Signin in progress');
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        Alert.alert('PLAY_SERVICES_NOT_AVAILABLE');
+        // play services not available or outdated
+      } else {
+        // some other error happened
       }
-    };
-    if (state.token) {
-      let value = {email: email, password: password};
-      storeData(value);
-      // userProvider(setToken);
-      navigation.replace(screenName.AppTab, {
-        screen: screenName.HomeScreenName,
-      });
     }
-    if (state.token === null && state.message !== '') {
-      Alert.alert(state.message);
-    }
-  });
-  console.log(route.params);
+  };
 
   useEffect(() => {
     if (email !== '' && password !== '') {
@@ -72,6 +70,12 @@ const Login = (props) => {
     }
   }, [email, password]);
 
+  const onPressShowPass = () => {
+    setFormState(() => ({
+      ...formState,
+      showPass: !formState.showPass,
+    }));
+  };
   const onChangeEmail = (txtEmail) => {
     setEmail(txtEmail);
   };
@@ -81,13 +85,26 @@ const Login = (props) => {
   };
 
   const handleLogin = async () => {
-    return await loginProvider(email, password);
-  };
-  const onPressShowPass = () => {
-    setFormState(() => ({
-      ...formState,
-      showPass: !formState.showPass,
-    }));
+    const storeData = async (value) => {
+      try {
+        const jsonValue = JSON.stringify(value);
+        await setItem(jsonValue);
+      } catch (e) {
+        // saving error
+      }
+    };
+    loginProvider(email, password);
+    if (state.token) {
+      let value = {email: email, password: password};
+      storeData(value);
+      // userProvider(setToken);
+      navigation.replace(screenName.AppTab, {
+        screen: screenName.HomeScreenName,
+      });
+    }
+    if (state.token === null && state.message !== '') {
+      Alert.alert(state.message);
+    }
   };
 
   const onPressForgotPassWord = () => {
@@ -101,7 +118,8 @@ const Login = (props) => {
         style={[
           styles.socialSignInContainer,
           {backgroundColor: Colors.googleBackground},
-        ]}>
+        ]}
+        onPress={gg_signIn}>
         <View style={Styles.rowCenter}>
           <Ionicons name="logo-google" size={35} color={Colors.whiteColor} />
           <Text style={[styles.textSocialSignIn, {color: Colors.whiteColor}]}>
@@ -109,7 +127,7 @@ const Login = (props) => {
           </Text>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight
+      {/* <TouchableHighlight
         style={[
           styles.socialSignInContainer,
           {backgroundColor: Colors.facebookBackground},
@@ -120,7 +138,7 @@ const Login = (props) => {
             sign in with Facebook
           </Text>
         </View>
-      </TouchableHighlight>
+      </TouchableHighlight> */}
       <FormInput
         placeholder=" Email Address"
         value={email}

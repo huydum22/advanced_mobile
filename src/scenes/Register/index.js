@@ -53,10 +53,11 @@ const SignUp = (props) => {
       } else {
         try {
           let response = await API.post(REGISTER, {
-            username: name,
+            name: name,
             phone: phoneNumber,
             email: email,
             password: password,
+            confirm: confirmPassword,
           });
           if (response.isSuccess) {
             Alert.alert('Register success, confirm your email');

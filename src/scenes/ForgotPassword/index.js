@@ -29,6 +29,7 @@ const ForgotPassword = (props) => {
       const response = await API.post(FORGOT_PASSWORD, {email: email});
 
       if (response.isSuccess) {
+        Alert.alert(response.data.message);
         navigation.navigate(screenName.LoginScreenName);
       }
     } catch ({response}) {
