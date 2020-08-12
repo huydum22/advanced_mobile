@@ -2,22 +2,44 @@ import React, {useContext, useState, useMemo} from 'react';
 import {useSafeArea} from 'react-native-safe-area-context';
 import {SectionList, StyleSheet, View, Text} from 'react-native';
 import {ThemeContext} from '../../Provider/Theme';
-import {RecentSearchContext} from '../../Provider/RecentSearch';
 import {Styles, Typography, BoxModel, Size, Distance} from '../../styles';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {SearchResultScreenName} from '../../Constants/ScreenName';
 import {SearchBar} from 'react-native-elements';
-
+import {SEARCH_HISTORY, DELETE_SEARCH_HISTORY} from '../../Constants/API';
+import {API} from '../../services';
 import p from 'pretty-format';
-
+import {useEffect} from 'react';
+import {AuthenticationContext} from '../../Provider/Authentication';
 const Search = (props) => {
   const insets = useSafeArea();
-
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
-  const {keyword, setKeyword} = useContext(RecentSearchContext);
+  const [keyword, setKeyword] = useState([]);
+  const [isDeleted, setDeleted] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const {state} = useContext(AuthenticationContext);
+
+  useEffect(() => {
+    if (!isDeleted) {
+      const fetchKeyword = async () => {
+        try {
+          let response = await API.get(SEARCH_HISTORY, state.token);
+          if (response.isSuccess) {
+            setDeleted(true);
+            setKeyword(response.data.payload.data);
+          } else {
+            console.log(response.data);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchKeyword();
+    }
+  }, [state, isDeleted]);
 
   const updateSearch = (text) => {
     setSearchText(text);
@@ -27,27 +49,57 @@ const Search = (props) => {
   };
   const onPressItem = (item) => {
     navigation.navigate(SearchResultScreenName, {
-      keyword: item,
+      keyword: item.content,
     });
+  };
+  const onPressDeleteSearch = async (item) => {
+    try {
+      let response = await API.delete(
+        `${DELETE_SEARCH_HISTORY}/${item.id}`,
+        undefined,
+        state.token,
+      );
+      if (response.isSuccess) {
+        setDeleted(false);
+        console.log(response.data);
+      } else {
+        console.log(response.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const renderListItem = (item) => {
-    return (
-      <TouchableHighlight
-        onPress={() => onPressItem(item)}
-        underlayColor={theme.backgroundColor}>
-        <View style={styles.itemContainer}>
-          <Ionicons name="ios-search" size={20} color={theme.grayColor} />
-          <Text
-            style={[
-              BoxModel.smallPaddingHorizontal,
-              {color: theme.primaryTextColor},
-            ]}>
-            {item}
-          </Text>
+    if (item) {
+      return (
+        <View style={[Styles.fillRowBetween]}>
+          <TouchableHighlight
+            onPress={() => onPressItem(item)}
+            underlayColor={theme.backgroundColor}
+            style={styles.titleContainer}>
+            <View style={[styles.itemContainer]}>
+              <Ionicons name="ios-search" size={20} color={theme.grayColor} />
+              <Text
+                style={[
+                  BoxModel.smallPaddingHorizontal,
+                  {color: theme.primaryTextColor},
+                ]}>
+                {item.content}
+              </Text>
+            </View>
+          </TouchableHighlight>
+          <MaterialIcons.Button
+            name="cancel"
+            backgroundColor={theme.backgroundColor}
+            color={theme.grayColor}
+            underlayColor={theme.overlayColor}
+            size={20}
+            onPress={() => onPressDeleteSearch(item)}
+          />
         </View>
-      </TouchableHighlight>
-    );
+      );
+    }
   };
   const renderHeader = (title) => {
     return (
@@ -64,15 +116,6 @@ const Search = (props) => {
           ]}>
           {title}
         </Text>
-        <TouchableHighlight>
-          <Text
-            style={[
-              Typography.fontBold,
-              {color: theme.primaryColor, fontSize: Typography.fontSize14},
-            ]}>
-            Clear
-          </Text>
-        </TouchableHighlight>
       </View>
     );
   };
@@ -81,12 +124,14 @@ const Search = (props) => {
       <View style={[styles.separator, {backgroundColor: theme.DialogColor}]} />
     );
   };
-  const onSubmitEditing = () => {
-    navigation.navigate(SearchResultScreenName, {
-      keyword: searchText,
-    });
-  };
+
   const SearchBarHeader = useMemo(() => {
+    setDeleted(false);
+    const onSubmitEditing = () => {
+      navigation.navigate(SearchResultScreenName, {
+        keyword: searchText,
+      });
+    };
     return (
       <SearchBar
         placeholder="Search here..."
@@ -117,7 +162,7 @@ const Search = (props) => {
         round={true}
       />
     );
-  }, [searchText, insets, theme]);
+  }, [searchText, insets, theme, navigation]);
   return (
     <View style={styles.container}>
       {SearchBarHeader}
@@ -129,7 +174,6 @@ const Search = (props) => {
         renderSectionHeader={({section: {title}}) => renderHeader(title)}
         renderItem={({item}) => renderListItem(item)}
         ItemSeparatorComponent={flatListSeparator}
-        // ListHeaderComponent={searchBar}
         stickySectionHeadersEnabled={false}
       />
     </View>
@@ -155,6 +199,9 @@ const styles = StyleSheet.create({
   },
   searchBarContainer: {
     height: Size.scaleSize(40),
+  },
+  titleContainer: {
+    flex: 1,
   },
 });
 export default Search;

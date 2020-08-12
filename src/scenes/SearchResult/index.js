@@ -10,6 +10,7 @@ import {SEARCH} from '../../Constants/API';
 import {API} from '../../services';
 
 import {SearchBar} from 'react-native-elements';
+import {AuthenticationContext} from '../../Provider/Authentication';
 
 const SearchNavigator = (props) => {
   const {navigation, route} = props;
@@ -17,26 +18,29 @@ const SearchNavigator = (props) => {
   const [keyword, setKeyword] = useState(route.params.keyword);
   const [searchText, setSearchText] = useState(route.params.keyword);
   const {theme} = useContext(ThemeContext);
+  const {state} = useContext(AuthenticationContext);
   const insets = useSafeArea();
 
   useEffect(() => {
     const fetchDataByKeyword = async () => {
       try {
         let response = await API.post(SEARCH, {
+          token: state.token,
           keyword: keyword,
           opt: {category: null},
           limit: 12,
           offset: 0,
         });
         if (response.isSuccess) {
-          setData(response.data.payload.rows);
+          console.log(response.data);
+          setData(response.data.payload.courses.data);
         }
       } catch ({response}) {
         console.log(response);
       }
     };
     fetchDataByKeyword();
-  }, [keyword]);
+  }, [keyword, state]);
   const onPressItem = (item) => {
     navigation.navigate(screenName.CourseDetailScreenName, {id: item.id});
   };

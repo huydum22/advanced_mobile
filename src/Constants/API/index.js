@@ -13,7 +13,6 @@ export const CHECK_OWN_COURSE = 'user/check-own-course';
 export const INSTRUCTOR = 'instructor';
 export const INSTRUCTOR_DETAIL = 'instructor/detail/';
 
-export const SEARCH = 'course/search';
 export const TOP_SELL = 'course/top-sell';
 export const TOP_NEW = 'course/top-new';
 export const TOP_RATE = 'course/top-rate';
@@ -43,3 +42,7 @@ export const NOTE_DELETE = 'user-note-lesson/delete';
 export const GET_FREE_COURSE = 'payment/get-free-courses';
 
 export const FORUM_QUESTION = 'forum/question/all';
+
+export const SEARCH = 'course/searchV2';
+export const SEARCH_HISTORY = 'course/search-history';
+export const DELETE_SEARCH_HISTORY = 'course/delete-search-history';
