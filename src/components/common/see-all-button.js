@@ -27,7 +27,7 @@ const SeeAllButton = (props) => {
           Typography.fontRegular,
           {color: theme.primaryTextColor},
         ]}>
-        See all
+        {props.title || 'See all'}
       </Text>
     </TouchableOpacity>
   );

@@ -17,14 +17,11 @@ const LessonCourseNavigator = (props) => {
       tabBarOptions={{
         activeTintColor: theme.primaryColor,
         inactiveTintColor: theme.grayDarkColor,
-        labelStyle: {...Typography.fontBold, fontSize: Typography.fontSize12},
-        tabStyle: {
-          // height: Size.scaleSize(40),
-          backgroundColor: theme.themeColor,
-        },
+        labelStyle: {...Typography.fontBold, fontSize: Typography.fontSize14},
         indicatorStyle: {
           backgroundColor: theme.primaryColor,
         },
+        style: {backgroundColor: theme.backgroundColor},
       }}
       animationEnabled={true}>
       <Tab.Screen

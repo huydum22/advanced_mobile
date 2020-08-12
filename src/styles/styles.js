@@ -109,6 +109,9 @@ export const columnCenter = {
   alignItems: 'center',
   justifyContent: 'center',
 };
+export const maxHeight = {
+  height: '100%',
+};
 export const columnCross = {
   flexDirection: 'column',
   alignItems: 'center',

@@ -8,19 +8,18 @@ import {CourseVerticalItem} from '../../components/Course';
 import * as screenName from '../../Constants/ScreenName';
 import {SEARCH} from '../../Constants/API';
 import {API} from '../../services';
-
+import SearchResultComponent from '../../components/SearchResult';
 import {SearchBar} from 'react-native-elements';
 import {AuthenticationContext} from '../../Provider/Authentication';
-
+import {SearchContext} from '../../Provider/Search';
 const SearchNavigator = (props) => {
   const {navigation, route} = props;
-  const [data, setData] = useState([]);
+  const {searchData, setSearchData} = useContext(SearchContext);
   const [keyword, setKeyword] = useState(route.params.keyword);
   const [searchText, setSearchText] = useState(route.params.keyword);
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
   const insets = useSafeArea();
-
   useEffect(() => {
     const fetchDataByKeyword = async () => {
       try {
@@ -32,18 +31,15 @@ const SearchNavigator = (props) => {
           offset: 0,
         });
         if (response.isSuccess) {
-          console.log(response.data);
-          setData(response.data.payload.courses.data);
+          setSearchData(response.data.payload);
         }
       } catch ({response}) {
         console.log(response);
       }
     };
     fetchDataByKeyword();
-  }, [keyword, state]);
-  const onPressItem = (item) => {
-    navigation.navigate(screenName.CourseDetailScreenName, {id: item.id});
-  };
+  }, [keyword, state, setSearchData]);
+
   const onSubmitEditing = () => {
     setKeyword(searchText);
   };
@@ -85,32 +81,10 @@ const SearchNavigator = (props) => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText, insets, theme]);
-  const flatListSeparator = () => {
-    return (
-      <View style={[Styles.separator, {backgroundColor: theme.DialogColor}]} />
-    );
-  };
   return (
     <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
       {SearchBarHeader}
-      <FlatList
-        data={data}
-        image
-        ItemSeparatorComponent={flatListSeparator}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item}) => (
-          <CourseVerticalItem
-            onPressItem={() => onPressItem(item)}
-            item={item}
-          />
-        )}
-        keyExtractor={(item, index) => item + index}
-        getItemLayout={(data, index) => ({
-          length: Size.scaleSize(100),
-          offset: Size.scaleSize(100) * index,
-          index,
-        })}
-      />
+      {searchData ? <SearchResultComponent /> : undefined}
     </View>
   );
 };

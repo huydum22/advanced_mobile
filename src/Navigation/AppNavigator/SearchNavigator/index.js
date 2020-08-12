@@ -4,7 +4,7 @@ import * as scenes from '../../../scenes';
 import * as screenName from '../../../Constants/ScreenName';
 import {Typography, Size} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
-import {RecentSearchProvider} from '../../../Provider/RecentSearch';
+import {SearchProvider} from '../../../Provider/Search';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const SearchStack = createStackNavigator();
@@ -30,7 +30,7 @@ const SearchNavigatorStack = () => {
     ),
   };
   return (
-    <RecentSearchProvider>
+    <SearchProvider>
       <SearchStack.Navigator
         initialRouteName={screenName.SearchScreenName}
         headerMode="screen"
@@ -39,11 +39,6 @@ const SearchNavigatorStack = () => {
           name={screenName.SearchScreenName}
           component={scenes.Search}
           options={{headerShown: false}}
-        />
-        <SearchStack.Screen
-          name={screenName.PathDetailScreenName}
-          component={scenes.PathDetail}
-          options={{title: 'Path'}}
         />
         <SearchStack.Screen
           name={screenName.AuthorDetailScreenName}
@@ -61,7 +56,7 @@ const SearchNavigatorStack = () => {
           options={{headerShown: false}}
         />
       </SearchStack.Navigator>
-    </RecentSearchProvider>
+    </SearchProvider>
   );
 };
 

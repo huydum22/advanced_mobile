@@ -1,6 +1,8 @@
 import React, {useContext} from 'react';
 import {StyleSheet, Image, Text, View, TouchableHighlight} from 'react-native';
-import {Colors, Styles, Size, Distance, BoxModel} from '../../../../styles';
+import {Styles, Size, Distance, BoxModel} from '../../../../styles';
+import FastImage from 'react-native-fast-image';
+
 import {ThemeContext} from '../../../../Provider/Theme';
 const Item = (props) => {
   const {item, onPressItem} = props;
@@ -19,7 +21,13 @@ const Item = (props) => {
         underlayColor={theme.primaryBackgroundColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
-            <Image source={item.image} style={styles.image} />
+            {/* <Image source={item.image} style={styles.image} /> */}
+            <FastImage
+              style={styles.image}
+              source={{
+                uri: item['user.avatar'] || item.avatar,
+              }}
+            />
           </View>
           <View style={styles.textContainer}>
             <Text
@@ -34,7 +42,7 @@ const Item = (props) => {
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item.numberOfCourse}
+              {item.numcourses} course
             </Text>
           </View>
         </View>
