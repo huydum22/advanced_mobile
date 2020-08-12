@@ -5,12 +5,8 @@ import Item from '../AuthorItem';
 import {AuthorDetailScreenName} from '../../../../Constants/ScreenName';
 
 const TopAuthor = (props) => {
-  const {navigation, route, data} = props;
-  const onPress = (item) => {
-    navigation.navigate(AuthorDetailScreenName, {
-      name: item.name,
-    });
-  };
+  const {onPress, data} = props;
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>

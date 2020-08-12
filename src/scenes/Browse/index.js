@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import {Styles, Typography, Distance, BoxModel, Size} from '../../styles';
 import {background1, background2} from '../../Constants/Image';
-import {AuthorHorizontalItem} from '../../components/Author';
+import {ListAuthorHorizontal} from '../../components/Author';
 import {PopularSkillItem, RelateSkillItem} from '../../components/Skill';
 import {INSTRUCTOR} from '../../Constants/API';
 import {API} from '../../services';
-
+import ListCategoryComponent from '../../components/category';
 import Banner from '../../components/Banner';
 import * as screenName from '../../Constants/ScreenName';
 import {CategoryContext} from '../../Provider/Category';
@@ -82,7 +82,6 @@ const Browse = (props) => {
       title: item.name,
       id: item.id,
     });
-    // navigation.navigate(screenName.RelateSkillScreenName);
   };
 
   const renderHeader = (title, data) => {
@@ -139,52 +138,14 @@ const Browse = (props) => {
       );
     }
     if (data === 1) {
-      return (
-        <ScrollView
-          horizontal={true}
-          style={styles.container}
-          showsHorizontalScrollIndicator={false}>
-          <FlatList
-            nestedScrollEnabled={true}
-            contentContainerStyle={styles.contentContainer}
-            numColumns={JSON.parse(JSON.stringify(listCategory)).length / 2}
-            alwaysBounceVertical={false}
-            data={JSON.parse(JSON.stringify(listCategory))}
-            keyExtractor={(item, index) => item.id}
-            renderItem={({item}) => (
-              <RelateSkillItem item={item} onPress={onPressRelateSkill} />
-            )}
-            getItemLayout={(data, index) => ({
-              length: Size.scaleSize(150),
-              offset: Size.scaleSize(150) * index,
-              index,
-            })}
-          />
-        </ScrollView>
-      );
+      return <ListCategoryComponent onPress={onPressRelateSkill} />;
     }
 
     if (data === 2) {
       return (
-        <FlatList
-          data={listInstructor.slice(0, 10)}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => (
-            <AuthorHorizontalItem
-              item={item}
-              key={item.id}
-              onPress={onPressAuthor}
-            />
-          )}
-          ListFooterComponent={() => {
-            return <View style={Styles.footer} />;
-          }}
-          getItemLayout={(data, index) => ({
-            length: Size.scaleSize(160),
-            offset: Size.scaleSize(160) * index,
-            index,
-          })}
+        <ListAuthorHorizontal
+          data={listInstructor.slice(0, 7)}
+          onPress={onPressAuthor}
         />
       );
     }

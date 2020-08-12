@@ -10,11 +10,19 @@ const Item = (props) => {
   const {theme} = useContext(ThemeContext);
   const {onPress, item} = props;
 
+  const findIMage = () => {
+    const result = categoryImage.find(({id}) => id === item.id);
+    if (result.image) {
+      return result.image;
+    } else {
+      return 'https://pluralsight.imgix.net/course-images/audience/software-development.jpg';
+    }
+  };
   return (
     <FastImage
       style={styles.container}
       source={{
-        uri: categoryImage[Math.floor(Math.random() * categoryImage.length)],
+        uri: findIMage(),
       }}>
       <TouchableOpacity
         style={[

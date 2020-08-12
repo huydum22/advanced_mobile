@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {
   Styles,
   Colors,
@@ -12,7 +12,7 @@ import {
 import {ThemeContext} from '../../Provider/Theme';
 const Empty = (props) => {
   const {theme} = useContext(ThemeContext);
-  const {title, icon, message} = props;
+  const {title} = props;
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -36,9 +36,13 @@ const Empty = (props) => {
             styles.contentContainer,
             {backgroundColor: theme.themeColor},
           ]}>
-          <Feather name={icon} size={50} color={theme.primaryTextColor} />
+          <MaterialIcons
+            name="find-in-page"
+            size={50}
+            color={theme.primaryTextColor}
+          />
           <Text style={[styles.text, {color: theme.grayDarkColor}]}>
-            {message}
+            No Result Found
           </Text>
         </View>
       </TouchableHighlight>
@@ -62,8 +66,8 @@ const styles = StyleSheet.create({
   },
   text: {
     ...BoxModel.mediumMarginHorizontal,
-    ...Typography.fontRegular,
     ...Typography.textCenter,
+    ...Typography.fontBold,
   },
 });
 export default Empty;

@@ -8,14 +8,16 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import {FavoriteContext} from '../../../../Provider/Favorite';
-import {Size, Styles, Distance} from '../../../../styles';
+import {Size, Styles, Distance, Typography} from '../../../../styles';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ActionSheet from 'react-native-actionsheet';
 import {ThemeContext} from '../../../../Provider/Theme';
 import StarRating from 'react-native-star-rating';
 import FastImage from 'react-native-fast-image';
 import Moment from 'moment';
-import p from 'pretty-format';
+const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
 const Item = (props) => {
   const {onPressItem, item} = props;
   const {theme} = useContext(ThemeContext);
@@ -106,6 +108,15 @@ const Item = (props) => {
                 ({item.ratedNumber})
               </Text>
             </View>
+            {item.price === 0 ? (
+              <Text style={[styles.price, {color: theme.primaryColor}]}>
+                Free
+              </Text>
+            ) : (
+              <Text style={[styles.price, {color: theme.primaryColor}]}>
+                {numberWithCommas(item.price)} VND
+              </Text>
+            )}
           </View>
         </View>
       </TouchableHighlight>
@@ -182,6 +193,11 @@ const styles = StyleSheet.create({
   more: {
     ...Styles.fillCenter,
     marginRight: 5,
+  },
+  price: {
+    flex: 1,
+    ...Typography.fontBold,
+    fontSize: Typography.fontSize18,
   },
 });
 export default Item;

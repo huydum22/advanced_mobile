@@ -10,7 +10,7 @@ const baseWidth = 375;
 export const scaleSize = (size) => (width / baseWidth) * size;
 
 export const scaleFont = (size) => size * PixelRatio.getFontScale();
-export const ratingSize = scaleSize(15);
+export const ratingSize = scaleSize(20);
 export const itemHeight = scaleSize(100);
 export const bannerHeight = scaleSize(120);
 export const bannerWidth = WIDTH - scaleSize(30);

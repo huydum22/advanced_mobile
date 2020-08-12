@@ -1,15 +1,19 @@
-import React from 'react';
-import {View, StyleSheet, Text, FlatList} from 'react-native';
+import React, {useContext} from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  FlatList,
+  TouchableHighlight,
+} from 'react-native';
 import Item from '../CourseItem';
 import SeeAllBtn from '../../../common/see-all-button';
 import {Styles, Distance, Typography, BoxModel, Size} from '../../../../styles';
-import {
-  ShowListCourseScreenName,
-  CourseDetailScreenName,
-  LessonCourseScreenStack,
-} from '../../../../Constants/ScreenName';
+import {CourseDetailScreenName} from '../../../../Constants/ScreenName';
+import {ThemeContext} from '../../../../Provider/Theme';
 const SectionCourses = (props) => {
-  const {navigation, data, route, title} = props;
+  const {navigation, data, route, onPress} = props;
+  const {theme} = useContext(ThemeContext);
   const onPressItem = (item) => {
     navigation.push(CourseDetailScreenName, {id: item.id});
   };
@@ -29,6 +33,31 @@ const SectionCourses = (props) => {
           offset: Size.scaleSize(200) * index,
           index,
         })}
+        ListFooterComponent={() => {
+          return (
+            <TouchableHighlight
+              style={[
+                Styles.center,
+                {
+                  height: Size.scaleSize(200),
+                  width: Size.scaleSize(150),
+                },
+              ]}
+              onPress={onPress}
+              underlayColor={theme.overlayColor}>
+              <Text
+                style={[
+                  Typography.fontBold,
+                  {
+                    fontSize: Typography.fontSize25,
+                    color: theme.primaryColor,
+                  },
+                ]}>
+                See all
+              </Text>
+            </TouchableHighlight>
+          );
+        }}
       />
     </View>
   );

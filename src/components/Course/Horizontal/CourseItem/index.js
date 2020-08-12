@@ -6,9 +6,9 @@ import {ThemeContext} from '../../../../Provider/Theme';
 import StarRating from 'react-native-star-rating';
 import Moment from 'moment';
 import p from 'pretty-format';
-function numberWithCommas(x) {
+const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
+};
 const Item = (props) => {
   const {item, onPress} = props;
   const {theme} = useContext(ThemeContext);
@@ -49,7 +49,7 @@ const Item = (props) => {
                 Styles.subTitleInHorizontalList,
                 {color: theme.grayColor},
               ]}>
-              {item['instructor.user.name'] || item.name}
+              {item['instructor.user.name'] || item.instructorName || item.name}
             </Text>
           </View>
           <View style={[Styles.fillRow]}>
@@ -74,6 +74,8 @@ const Item = (props) => {
                 }
                 fullStarColor={'#f1c40f'}
               />
+            </View>
+            <View style={styles.ratingText}>
               <Text style={[styles.subRating, {color: theme.grayColor}]}>
                 ({item.ratedNumber})
               </Text>
@@ -109,6 +111,13 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   rating: {flex: 1},
+  ratingText: {
+    flex: 1,
+    alignItems: 'flex-end',
+    ...Typography.fontRegular,
+    paddingRight: 2,
+  },
+
   price: {
     flex: 1,
     ...Typography.fontBold,
