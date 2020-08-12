@@ -6,6 +6,8 @@ export const fontFamilyBold = 'Arial';
 
 // FONT WEIGHT
 export const fontWeightRegular = '400';
+export const fontWeightNormal = '400';
+
 export const fontWeightBold = 'bold';
 
 // FONT SIZE

@@ -43,6 +43,8 @@ export const GET_FREE_COURSE = 'payment/get-free-courses';
 
 export const FORUM_QUESTION = 'forum/question/all';
 
-export const SEARCH = 'course/searchV2';
+export const SEARCH = 'course/search';
+export const SEARCHV2 = 'course/searchV2';
+
 export const SEARCH_HISTORY = 'course/search-history';
 export const DELETE_SEARCH_HISTORY = 'course/delete-search-history';

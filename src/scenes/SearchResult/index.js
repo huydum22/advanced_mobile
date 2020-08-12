@@ -6,7 +6,7 @@ import {ThemeContext} from '../../Provider/Theme';
 import p from 'pretty-format';
 import {CourseVerticalItem} from '../../components/Course';
 import * as screenName from '../../Constants/ScreenName';
-import {SEARCH} from '../../Constants/API';
+import {SEARCHV2} from '../../Constants/API';
 import {API} from '../../services';
 import SearchResultComponent from '../../components/SearchResult';
 import {SearchBar} from 'react-native-elements';
@@ -23,7 +23,7 @@ const SearchNavigator = (props) => {
   useEffect(() => {
     const fetchDataByKeyword = async () => {
       try {
-        let response = await API.post(SEARCH, {
+        let response = await API.post(SEARCHV2, {
           token: state.token,
           keyword: keyword,
           opt: {category: null},

@@ -92,7 +92,7 @@ const Header = (props) => {
       const result = await Share.share({
         title: 'Share image',
         message: 'This image so beautiful ',
-        url: 'https://reactjs.org/logo-og.png',
+        url: `https://itedu.me/course-detail/${item.id}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
