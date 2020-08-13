@@ -1,182 +1,91 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {
-  ScrollView,
-  SafeAreaView,
-  SectionList,
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-} from 'react-native';
-import {Styles, Typography, Distance, BoxModel, Size} from '../../styles';
-import {background1, background2} from '../../Constants/Image';
-import {ListAuthorHorizontal} from '../../components/Author';
-import {PopularSkillItem, RelateSkillItem} from '../../components/Skill';
-import {INSTRUCTOR} from '../../Constants/API';
+import React, {useState, useEffect, useContext} from 'react';
+import {View, FlatList, Text} from 'react-native';
+import {ListCourseVertical} from '../../components/Course';
+import {TOP_FAVORITE_COURSE} from '../../Constants/API';
 import {API} from '../../services';
-import ListCategoryComponent from '../../components/category';
-import Banner from '../../components/Banner';
-import * as screenName from '../../Constants/ScreenName';
-import {CategoryContext} from '../../Provider/Category';
+import {AuthenticationContext} from '../../Provider/Authentication';
+import {Styles, Typography, Size, BoxModel} from '../../styles';
 import {ThemeContext} from '../../Provider/Theme';
-const titleItem = (id) => {
-  if (id === 0) {
-    return 'Free';
-  }
-  if (id === 1) {
-    return '<200.000đ';
-  }
-  if (id === 2) {
-    return '200.000đ - 500.000đ';
-  }
-  if (id === 3) {
-    return '500.000đ - 1.000.000đ';
-  }
-  if (id === 4) {
-    return '1.000.000đ - 2.000.000đ ';
-  }
-  return '>2.000.000đ';
-};
-const Browse = (props) => {
-  const {navigation, route, dataSkill} = props;
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import * as screenName from '../../Constants/ScreenName';
+import {CourseVerticalItem} from '../../components/Course';
+const FavoriteList = (props) => {
+  const {navigation} = props;
+  const [data, setData] = useState([]);
+  const {state} = useContext(AuthenticationContext);
   const {theme} = useContext(ThemeContext);
-  const {listCategory} = useContext(CategoryContext);
-  const [listInstructor, setLIstInstructor] = useState([]);
-  const onPressBanner = (id, title) => {
-    navigation.navigate(screenName.ShowListCourseScreenName, {
-      title: title,
-      id: id,
-    });
-  };
-  const getInstructor = async () => {
-    try {
-      const response = await API.get(INSTRUCTOR);
-
-      // const response = await listInstructorAPI();]
-      if (response.isSuccess) {
-        setLIstInstructor(response.data.payload);
-      }
-    } catch ({response}) {
-      console.log(response);
-    }
-  };
   useEffect(() => {
-    getInstructor();
-  }, []);
-
-  const onPressPopularSkill = (item) => {
-    navigation.navigate(screenName.ShowListCourseScreenName, {
-      title: titleItem(item.id),
-      id: screenName.searchCourseScreen,
-      keyword: item,
-    });
-  };
-
-  const onPressAuthor = (item) => {
-    navigation.navigate(screenName.AuthorDetailScreenName, {
-      id: item.id,
-    });
-  };
-  const onPressRelateSkill = (item) => {
-    navigation.navigate(screenName.ShowListCourseScreenName, {
-      title: item.name,
-      id: item.id,
-    });
-  };
-
-  const renderHeader = (title, data) => {
+    const fetchData = async () => {
+      try {
+        let response = await API.get(TOP_FAVORITE_COURSE, state.token);
+        if (response.isSuccess) {
+          console.log(response.data.payload);
+          setData(response.data.payload);
+        } else {
+          console.log(response.data.message);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [state]);
+  const flatListSeparator = () => {
     return (
-      <View style={styles.titleContainer}>
-        <Text
-          style={[
-            Styles.titleRow,
-            Typography.fontBold,
-            {color: theme.primaryTextColor},
-          ]}>
-          {title}{' '}
-        </Text>
-      </View>
+      <View style={[Styles.separator, {backgroundColor: theme.DialogColor}]} />
     );
   };
-
-  const Header = () => {
-    return (
-      <View>
-        <Banner
-          key="new releases"
-          backgroundImage={background1}
-          name="new releases"
-          onPress={() => onPressBanner(screenName.NewRelease, 'New Releases')}
-        />
-        <Banner
-          key="recommended for you"
-          backgroundImage={background2}
-          name="recommended for you"
-          onPress={() =>
-            onPressBanner(screenName.RecommendCourse, 'Recommended For You')
-          }
-        />
-      </View>
-    );
+  const onPressItem = (item) => {
+    navigation.navigate(screenName.CourseDetailScreenName, {id: item.id});
   };
-  const renderListItem = (data) => {
-    if (data === 0) {
+  const renderItem = () => {
+    if (data.length === 0) {
+      return (
+        <View style={[Styles.columnCenter, Styles.maxHeight]}>
+          <FontAwesome5 name="link" size={70} color={theme.primaryColor} />
+          <Text
+            style={[
+              Typography.fontBold,
+              BoxModel.marginVertical,
+              {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
+            ]}>
+            No Matching Courses{' '}
+          </Text>
+          <Text
+            style={[
+              Typography.fontRegular,
+              {fontSize: Typography.fontSize18, color: theme.grayColor},
+            ]}>
+            Try another one
+          </Text>
+        </View>
+      );
+    } else {
       return (
         <FlatList
-          data={dataSkill}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => item.id}
+          data={data}
+          ItemSeparatorComponent={flatListSeparator}
+          showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
-            <PopularSkillItem
-              key={item.id}
+            <CourseVerticalItem
+              onPressItem={() => onPressItem(item)}
               item={item}
-              onPress={() => onPressPopularSkill(item)}
             />
           )}
-        />
-      );
-    }
-    if (data === 1) {
-      return <ListCategoryComponent onPress={onPressRelateSkill} />;
-    }
-
-    if (data === 2) {
-      return (
-        <ListAuthorHorizontal
-          data={listInstructor.slice(0, 7)}
-          onPress={onPressAuthor}
+          keyExtractor={(item, index) => item + index}
+          getItemLayout={(data, index) => ({
+            length: Size.scaleSize(100),
+            offset: Size.scaleSize(100) * index,
+            index,
+          })}
         />
       );
     }
   };
   return (
-    <SafeAreaView
-      style={(styles.container, {backgroundColor: theme.backgroundColor})}>
-      <SectionList
-        sections={[
-          {title: 'Price', data: [0]},
-          {title: '', data: [1]},
-          {title: 'Top Author', data: [2]},
-        ]}
-        keyExtractor={(item, index) => item + index}
-        renderSectionHeader={({section: {title, data}}) =>
-          renderHeader(title, data)
-        }
-        ListHeaderComponent={Header}
-        stickySectionHeadersEnabled={false}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item}) => renderListItem(item)}
-      />
-    </SafeAreaView>
+    <View style={[Styles.maxHeight, {backgroundColor: theme.backgroundColor}]}>
+      {data ? renderItem() : undefined}
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    ...BoxModel.marginHorizontal,
-    ...Styles.rowBetween,
-    height: Distance.medium,
-  },
-});
-export default Browse;
+export default FavoriteList;

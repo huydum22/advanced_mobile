@@ -62,7 +62,7 @@ const ListOfCourse = (props) => {
           break;
         case screenName.RecommendCourse:
           let recommendCourse = await API.get(
-            `${RECOMMEND_COURSE}${state.userInfo.id}/10/1`,
+            `${RECOMMEND_COURSE}/${state.userInfo.id}/10/0`,
           );
           if (recommendCourse.isSuccess) {
             setData(recommendCourse.data.payload);

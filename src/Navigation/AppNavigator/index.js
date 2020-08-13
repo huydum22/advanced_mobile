@@ -19,7 +19,7 @@ const searchIcon = ({color}) => (
   <FontAwesome name="search" size={22} color={color} />
 );
 const browseIcon = ({color}) => (
-  <MaterialIcons name="folder-special" size={22} color={color} />
+  <FontAwesome name="star-o" size={22} color={color} />
 );
 const homeIcon = ({color}) => (
   <MaterialIcons name="home" size={22} color={color} />
@@ -44,7 +44,7 @@ const configHomeTab = ({route}) => ({
 });
 
 const configBrowseTab = ({route}) => ({
-  tabBarLabel: 'Browse',
+  tabBarLabel: 'Favorite',
   tabBarIcon: browseIcon,
   tabBarVisible: getTabBarVisible(route),
 });

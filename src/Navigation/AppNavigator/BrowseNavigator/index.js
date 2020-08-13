@@ -20,7 +20,7 @@ const BrowseNavigatorStack = () => {
           ...Typography.fontBold,
           fontSize: Typography.fontSize20,
         },
-        headerBackTitle: '',
+        headerBackTitle: '', 
         headerBackTitleVisible: false,
         headerBackImage: () => (
           <Ionicons
@@ -34,7 +34,7 @@ const BrowseNavigatorStack = () => {
       <BrowseStack.Screen
         name={screenName.BrowseScreenName}
         component={scenes.Browse}
-        options={{title: 'Browse'}}
+        options={{title: 'Favorite'}}
       />
       <BrowseStack.Screen
         name={screenName.ShowListCourseScreenName}
@@ -48,15 +48,6 @@ const BrowseNavigatorStack = () => {
         name={screenName.AuthorDetailScreenName}
         component={scenes.AuthorDetail}
         options={{title: 'Author'}}
-      />
-      <BrowseStack.Screen
-        name={screenName.PathDetailScreenName}
-        component={scenes.PathDetail}
-      />
-      <BrowseStack.Screen
-        name={screenName.ShowListPathScreenName}
-        component={scenes.ListOfPath}
-        options={{title: 'Path'}}
       />
       <BrowseStack.Screen
         name={screenName.PopularSkillScreenName}

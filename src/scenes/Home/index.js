@@ -25,6 +25,7 @@ import {
   TOP_SELL,
   TOP_RATE,
   TOP_USER_FAVORITE,
+  RECOMMEND_COURSE,
   INSTRUCTOR,
 } from '../../Constants/API';
 import p from 'pretty-format';
@@ -38,7 +39,6 @@ const Home = (props) => {
   // const {listCategory, setListCategory} = useContext(CategoryContext);
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
-  const [state0, setState0] = useState([]);
   const [state1, setState1] = useState([]);
   const [state2, setState2] = useState([]);
   const [state3, setState3] = useState([]);
@@ -90,8 +90,13 @@ const Home = (props) => {
   useEffect(() => {
     const fetchDataState4 = async () => {
       try {
-        const body1 = {userId: state.userInfo.id};
-        let response = await API.post(TOP_USER_FAVORITE, body1);
+        const limit = 6;
+        const offset = 0;
+
+        let response = await API.get(
+          `${RECOMMEND_COURSE}/${state.userInfo.id}/${limit}/${offset}`,
+        );
+
         if (response.isSuccess) {
           setState4(response.data.payload);
         }
@@ -104,7 +109,7 @@ const Home = (props) => {
     fetchDataState2();
     fetchDataState3();
     fetchDataState4();
-  }, [state, setState4, setState3, setState2, setState1, setState0]);
+  }, [state, setState4, setState3, setState2, setState1]);
 
   const onPressBanner = () => {};
   const onPressItem = (item) => {
@@ -167,7 +172,7 @@ const Home = (props) => {
         />
 
         {renderItem('Recommended For You', state4.slice(0, 7), () =>
-          showListCourse(screenName.YourFavorite, 'Your Favorite'),
+          showListCourse(screenName.RecommendCourse, 'Recommended For you'),
         )}
         <View style={styles.titleContainer}>
           <Text

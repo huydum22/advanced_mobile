@@ -108,13 +108,13 @@ const Item = (props) => {
                 ({item.ratedNumber})
               </Text>
             </View>
-            {item.price === 0 ? (
+            {item.price === 0 || item.coursePrice === 0 ? (
               <Text style={[styles.price, {color: theme.primaryColor}]}>
                 Free
               </Text>
             ) : (
               <Text style={[styles.price, {color: theme.primaryColor}]}>
-                {numberWithCommas(item.price)} VND
+                {numberWithCommas(item.price || item.coursePrice)} VND
               </Text>
             )}
           </View>
