@@ -30,7 +30,7 @@ const Button = (props) => {
             styles.text,
             active
               ? {color: Colors.primaryBackgroundColor}
-              : {color: Colors.grayColor},
+              : {color: Colors.primaryColor},
           ]}>
           {props.title}
         </Text>
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     ...BoxModel.smallMarginVertical,
     height: Size.scaleSize(45),
     backgroundColor: Colors.primaryColor,
+    borderColor: Colors.alertColor,
   },
   unActiveContainer: {
     ...Styles.center,

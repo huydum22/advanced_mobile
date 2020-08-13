@@ -8,7 +8,6 @@ import {
   Distance,
   Platform,
 } from '../../../styles';
-import YouTube from 'react-native-youtube';
 import {ThemeContext} from '../../../Provider/Theme';
 import {LessonContext} from '../../../Provider/LessonCourse';
 import {Slider} from 'react-native-elements';
@@ -23,23 +22,20 @@ const PLayYouTube = (props) => {
   const {urlVideo} = props;
   const playerRef = useRef();
   const {theme} = useContext(ThemeContext);
-  const {itemLesson} = useContext(LessonContext);
+  const {itemLesson, time, setTime} = useContext(LessonContext);
   const [paused, setPaused] = useState(false);
   const [isHide, setHide] = useState(true);
   const [valueSlider, setValueSlider] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
-  const [time, setTime] = useState(0);
   const [widthVid, setWidth] = useState(0);
   const [heightVid, setHeight] = useState(0);
   useEffect(() => {
-    if (Platform.android) {
-      if (totalTime) {
-        if (!paused) {
-          if (!isHide) {
-            setTimeout(() => {
-              fetchDataAndroid();
-            }, 500);
-          }
+    if (totalTime) {
+      if (!paused) {
+        if (!isHide) {
+          setTimeout(() => {
+            fetchDataAndroid();
+          }, 500);
         }
       }
     }
@@ -79,21 +75,15 @@ const PLayYouTube = (props) => {
   }, [itemLesson]);
   const onPressPlayVideo = () => {
     setPaused(!paused);
-    if (Platform.android) {
-      fetchDataAndroid();
-    }
+    fetchDataAndroid();
   };
   const onForward10s = () => {
     playerRef.current.seekTo((valueSlider + 10 / totalTime) * totalTime);
-    if (Platform.android) {
-      fetchDataAndroid();
-    }
+    fetchDataAndroid();
   };
   const onReplay10s = () => {
     playerRef.current.seekTo((valueSlider - 10 / totalTime) * totalTime);
-    if (Platform.android) {
-      fetchDataAndroid();
-    }
+    fetchDataAndroid();
   };
   const onPressHide = () => {
     setHide(!isHide);
@@ -110,42 +100,30 @@ const PLayYouTube = (props) => {
     setTime(value * totalTime);
   };
 
-  const onProgress = (data) => {
-    setValueSlider(data.currentTime / totalTime);
-    setTime(data.currentTime);
+  const readyPLayVideo = () => {
+    if (itemLesson.currentTime) {
+      playerRef.current.seekTo(itemLesson.currentTime);
+      setTime(itemLesson.currentTime);
+    }
   };
+
   return (
     <View style={styles.backgroundVideo}>
-      {Platform.ios ? (
-        <YouTube
-          apiKey="AIzaSyAy_jBdA-GWmf6dVmMstMXe8DSKWdPI69k"
-          ref={playerRef}
-          videoId={getYouTubeID(urlVideo)}
-          play={!paused}
-          fullscreen={false}
-          loop={false}
-          controls={0}
-          style={styles.videoYoutube}
-          onProgress={onProgress}
-          resumePlayAndroid={false}
-        />
-      ) : (
-        <YoutubePlayer
-          ref={playerRef}
-          height={getHeightVid()}
-          width={Size.WIDTH}
-          videoId={getYouTubeID(urlVideo)}
-          play={!paused}
-          volume={50}
-          playbackRate={1}
-          webViewStyle={styles.videoYoutube}
-          onProgress={onProgress}
-          initialPlayerParams={{
-            cc_lang_pref: 'us',
-            controls: false,
-          }}
-        />
-      )}
+      <YoutubePlayer
+        ref={playerRef}
+        height={getHeightVid()}
+        width={Size.WIDTH}
+        videoId={getYouTubeID(urlVideo)}
+        play={!paused}
+        volume={50}
+        playbackRate={1}
+        webViewStyle={styles.videoYoutube}
+        onReady={readyPLayVideo}
+        initialPlayerParams={{
+          cc_lang_pref: 'us',
+          controls: false,
+        }}
+      />
       <TouchableHighlight
         onPress={onPressHide}
         underlayColor={theme.overlayColor}

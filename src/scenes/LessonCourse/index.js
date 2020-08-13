@@ -1,5 +1,11 @@
 import React, {useState, useEffect, useContext, useMemo} from 'react';
-import {SafeAreaView, View, StyleSheet, TouchableHighlight} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  Alert,
+} from 'react-native';
 import {useSafeArea} from 'react-native-safe-area-context';
 import LessonTab from '../../components/LessonCourse/TopTabInfo';
 import {API} from '../../services';
@@ -7,6 +13,9 @@ import {
   PROCESS_COURSE,
   COURSE_DETAIL_WITH_LESSON,
   LESSON_VIDEO,
+  LESSON_UPDATE_CURRENT_TIME,
+  LAST_WATCHED_LESSON,
+  LESSON_DETAIL,
 } from '../../Constants/API';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {Typography, BoxModel, Size} from '../../styles';
@@ -23,14 +32,32 @@ const LessonCourse = (props) => {
   const {state} = useContext(AuthenticationContext);
   const insets = useSafeArea();
 
-  const {
-    itemCourse,
-    setItemCourse,
-    itemLesson,
-    setItemLesson,
-    videoUrl,
-    setVideoUrl,
-  } = useContext(LessonContext);
+  const {setItemCourse, itemLesson, setItemLesson, time} = useContext(
+    LessonContext,
+  );
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', async () => {
+      try {
+        let response = await API.put(
+          LESSON_UPDATE_CURRENT_TIME,
+          {
+            lessonId: itemLesson.id,
+            currentTime: time,
+          },
+          state.token,
+        );
+        if (response.isSuccess) {
+          console.log(response.data.message);
+        } else {
+          console.log(response.data.message);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation, time, state, itemLesson]);
 
   const fetchProcessCourse = async () => {
     try {
@@ -47,52 +74,66 @@ const LessonCourse = (props) => {
   };
 
   useEffect(() => {
-    const fetchVideoLesson = async (lessonID) => {
-      try {
-        let response = await API.get(
-          `${LESSON_VIDEO}/${itemCourse.id}/${lessonID}`,
-          state.token,
-        );
-        setVideoUrl(response.data.payload.videoUrl);
-      } catch ({response}) {
-        console.log(response);
-      }
-    };
-    fetchVideoLesson(itemLesson.id);
-  }, [itemCourse.id, state.token, itemLesson.id, setVideoUrl]);
-
-  useEffect(() => {
     const fetchCourseDetailWithLesson = async () => {
       try {
         let response = await API.get(
           `${COURSE_DETAIL_WITH_LESSON}/${route.params.id}`,
           state.token,
         );
-        setItemCourse(response.data.payload);
-        setItemLesson(response.data.payload.section[0].lesson[0]);
+        let response1 = await API.get(
+          `${LAST_WATCHED_LESSON}/${route.params.id}`,
+          state.token,
+        );
+        if (response.isSuccess) {
+          setItemCourse(response.data.payload);
+          if (response1.isSuccess) {
+            const resultSection = response.data.payload.section.find(
+              ({lesson}) => {
+                return lesson.find(
+                  ({id}) => id === response1.data.payload.lessonId,
+                );
+              },
+            );
+            const result = resultSection.lesson.find(
+              ({id}) => id === response1.data.payload.lessonId,
+            );
+            setItemLesson({
+              ...result,
+              videoUrl: response1.data.payload.videoUrl,
+              currentTime: response1.data.payload.currentTime,
+            });
+          }
+        }
       } catch ({response}) {
         console.log(response);
       }
     };
     fetchCourseDetailWithLesson();
-  }, [route.params.id, state.token, setItemCourse, setItemLesson]);
-
+  }, [route, state, setItemCourse, setItemLesson]);
   const dismiss = () => {
     navigation.goBack();
   };
 
   const renderVideo = useMemo(() => {
-    return <Video urlVideo={videoUrl} />;
-  }, [videoUrl]);
+    return <Video urlVideo={itemLesson.videoUrl || ''} />;
+  }, [itemLesson]);
   const renderYouTube = useMemo(() => {
-    return <YouTube urlVideo={videoUrl} />;
-  }, [videoUrl]);
+    return <YouTube urlVideo={itemLesson.videoUrl || ''} />;
+  }, [itemLesson]);
+
+  const renderVideoComponent = () => {
+    if (itemLesson.videoUrl) {
+      if (itemLesson.videoUrl.includes('https://youtube.com/embed')) {
+        return renderYouTube;
+      } else {
+        return renderVideo;
+      }
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.container, {backgroundColor: theme.themeColor}]}>
-        {videoUrl.includes('https://youtube.com/embed')
-          ? renderYouTube
-          : renderVideo}
+        {renderVideoComponent()}
         <View
           style={[styles.mainContainer, {backgroundColor: theme.themeColor}]}>
           <LessonTab />

@@ -1,14 +1,36 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {View, ScrollView, TouchableHighlight, Share} from 'react-native';
 import {Text} from 'react-native-elements';
 import {ThemeContext} from '../../../Provider/Theme';
 import {LessonContext} from '../../../Provider/LessonCourse';
 import {Styles, BoxModel, Typography, Size} from '../../../styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {color} from 'react-native-reanimated';
+import {API} from '../../../services';
+import {LIKE_STATUS, LIKE_COURSE} from '../../../Constants/API';
+import {AuthenticationContext} from '../../../Provider/Authentication';
 const MoreView = (props) => {
   const {theme} = useContext(ThemeContext);
   const {itemCourse} = useContext(LessonContext);
+  const {state} = useContext(AuthenticationContext);
+  const [isLike, setLike] = useState(false);
+  useEffect(() => {
+    const checkLikeStatus = async () => {
+      try {
+        let response = await API.get(
+          `${LIKE_STATUS}/${itemCourse.id}`,
+          state.token,
+        );
+        if (response.isSuccess) {
+          setLike(response.data.likeStatus);
+        } else {
+          console.log(response.data.message);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    checkLikeStatus();
+  }, [itemCourse, state]);
   const onPressShareCourse = async () => {
     try {
       const result = await Share.share({
@@ -29,10 +51,31 @@ const MoreView = (props) => {
       alert(error.message);
     }
   };
-  const renderRow = (title, iconName, onPress) => {
+  const onPressLike = async () => {
+    try {
+      let response = await API.post(
+        LIKE_COURSE,
+        {courseId: itemCourse.id},
+        state.token,
+      );
+      console.log(response);
+
+      if (response.isSuccess) {
+        setLike(response.data.likeStatus);
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const renderRow = (title, iconName, onPress, likeStatus = false) => {
     return (
       <View>
-        <TouchableHighlight onPress={onPress} style={Styles.fillRowCenter}>
+        <TouchableHighlight
+          onPress={onPress}
+          style={Styles.fillRowCenter}
+          underlayColor={theme.overlayColor}>
           <View
             style={[
               Styles.fillRowCenter,
@@ -42,7 +85,7 @@ const MoreView = (props) => {
             <MaterialIcons
               name={iconName}
               size={Size.scaleSize(30)}
-              color={theme.grayDarkColor}
+              color={likeStatus ? theme.warningColor : theme.grayDarkColor}
             />
             <Text
               style={[
@@ -68,7 +111,12 @@ const MoreView = (props) => {
       {renderRow('Share this course', 'share', onPressShareCourse)}
       {renderRow('Notes', 'library-books')}
       {renderRow('Resources', 'dns')}
-      {renderRow('Add course to favorites', 'star-border')}
+      {renderRow(
+        isLike ? 'Remove course From favorites' : 'Add course to favorites',
+        'star-border',
+        onPressLike,
+        isLike,
+      )}
     </ScrollView>
   );
 };

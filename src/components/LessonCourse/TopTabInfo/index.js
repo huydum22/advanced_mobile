@@ -17,7 +17,7 @@ const LessonCourseNavigator = (props) => {
       tabBarOptions={{
         activeTintColor: theme.primaryColor,
         inactiveTintColor: theme.grayDarkColor,
-        labelStyle: {...Typography.fontBold, fontSize: Typography.fontSize14},
+        labelStyle: {...Typography.fontBold, fontSize: Typography.fontSize12},
         indicatorStyle: {
           backgroundColor: theme.primaryColor,
         },

@@ -16,17 +16,22 @@ import * as screenName from '../../../Constants/ScreenName';
 import {FavoriteContext} from '../../../Provider/Favorite';
 import {ListCourseHorizontal} from '../../Course';
 import {Typography, BoxModel, Styles, Size} from '../../../styles';
-import {CHECK_OWN_COURSE, GET_FREE_COURSE} from '../../../Constants/API';
+import {
+  CHECK_OWN_COURSE,
+  GET_FREE_COURSE,
+  LIKE_STATUS,
+  LIKE_COURSE,
+} from '../../../Constants/API';
 import {API} from '../../../services';
 import {AuthenticationContext} from '../../../Provider/Authentication';
 import {ThemeContext} from '../../../Provider/Theme';
 const Header = (props) => {
   const {item, navigation, route} = props;
   const {theme} = useContext(ThemeContext);
-  const {favorite, setFavorite} = useContext(FavoriteContext);
-  const [indexFavorite, setIndexFavorite] = useState();
   const {state} = useContext(AuthenticationContext);
   const [isOwn, setIsOwn] = useState({});
+  const [isLike, setLike] = useState(false);
+
   useEffect(() => {
     const checkOwnCourse = async () => {
       try {
@@ -37,12 +42,25 @@ const Header = (props) => {
         if (response.isSuccess) {
           setIsOwn(response.data.payload);
         }
-      } catch (data) {
-        console.log(data);
+      } catch (err) {
+        console.log(err);
       }
     };
+    const checkLikeStatus = async () => {
+      try {
+        let response = await API.get(`${LIKE_STATUS}/${item.id}`, state.token);
+        if (response.isSuccess) {
+          setLike(response.data.likeStatus);
+        } else {
+          console.log(response.data.message);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    checkLikeStatus();
     checkOwnCourse();
-  }, [item, state, setIsOwn]);
+  }, [item, state]);
   const onPressAuthor = (itemAuthor) => {
     navigation.navigate(screenName.AuthorDetailScreenName, {
       name: itemAuthor.name,
@@ -63,7 +81,7 @@ const Header = (props) => {
           {courseId: item.id},
           state.token,
         );
-        if (response.status === 200) {
+        if (response.isSuccess) {
           navigation.navigate(screenName.LessonCourseScreenStack, {
             screen: screenName.LessonCourseScreenName,
             params: {id: item.id},
@@ -74,7 +92,24 @@ const Header = (props) => {
       }
     }
   };
-  const onPressLike = async (id, index) => {};
+  const onPressLike = async () => {
+    try {
+      let response = await API.post(
+        LIKE_COURSE,
+        {courseId: item.id},
+        state.token,
+      );
+      console.log(response);
+
+      if (response.isSuccess) {
+        setLike(response.data.likeStatus);
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const onPressStudentFeedback = (ratings) => {};
   const dismiss = () => {
     navigation.goBack();
@@ -167,6 +202,7 @@ const Header = (props) => {
         updatedAt={item.updatedAt}
       />
       <Feature
+        isLike={isLike}
         isOwnCourse={isOwn}
         onPressLike={onPressLike}
         onPressJoin={onPressJoin}

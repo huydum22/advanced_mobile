@@ -5,10 +5,10 @@ import {ThemeContext} from '../../../../Provider/Theme';
 import {PrimaryButton} from '../../../Authentication';
 
 const Feature = (props) => {
-  const {onPressLike, onPressJoin, isOwnCourse} = props;
+  const {onPressLike, onPressJoin, isOwnCourse, isLike} = props;
   const {theme} = useContext(ThemeContext);
   const titlePrimary = () => {
-    if (isOwnCourse) {
+    if (isOwnCourse.isUserOwnCourse) {
       return 'Continue';
     } else {
       return 'Join Now';
@@ -24,13 +24,17 @@ const Feature = (props) => {
           icon="book"
           style={[
             styles.buttonContainer,
-            {backgroundColor: theme.primaryColor},
+            {
+              backgroundColor: isOwnCourse.isUserOwnCourse
+                ? theme.subPrimaryColor
+                : theme.primaryColor,
+            },
           ]}
         />
       </View>
       <View style={styles.mainContainer}>
         <PrimaryButton
-          title="Like"
+          title={isLike ? 'Liked' : 'Like'}
           onPress={onPressLike}
           active={true}
           icon="heart-o"

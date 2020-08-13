@@ -43,6 +43,9 @@ const LessonCourseNavigatorStack = (props) => {
           component={scenes.LessonCourse}
           options={{headerShown: false}}
           initialParams={{id: 1}}
+          onDismiss={() => {
+            console.log('dismisssssss');
+          }}
         />
         <LessonCourseStack.Screen
           name={screenName.AuthorDetailScreenName}

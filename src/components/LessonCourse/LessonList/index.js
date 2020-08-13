@@ -8,22 +8,29 @@ import {
 } from 'react-native';
 import {ThemeContext} from '../../../Provider/Theme';
 import {LessonContext} from '../../../Provider/LessonCourse';
-
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Title from '../../CourseDetail/HeaderComponent/TitleItem';
 import Collapsible from 'react-native-collapsible';
 import {useSafeArea} from 'react-native-safe-area-context';
-import {Size, Styles, Typography} from '../../../styles';
+import {Size, Styles, Typography, BoxModel} from '../../../styles';
+import {API} from '../../../services';
+import {LESSON_VIDEO} from '../../../Constants/API';
+import {AuthenticationContext} from '../../../Provider/Authentication';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const LessonList = (props) => {
   const {theme} = useContext(ThemeContext);
   const {itemCourse, itemLesson, setItemLesson} = useContext(LessonContext);
   const [collapsibleItems, setCollapsibleItems] = useState([]);
+  const {state} = useContext(AuthenticationContext);
   const insets = useSafeArea();
 
   const changeColorItemLesson = (lesson) => {
-    if (lesson.id === itemLesson.id) {
-      return theme.primaryColor;
+    if (itemLesson) {
+      if (lesson.id === itemLesson.id) {
+        return theme.primaryColor;
+      }
     }
+
     return theme.primaryTextColor;
   };
   const flatListSeparator = () => {
@@ -43,7 +50,11 @@ const LessonList = (props) => {
           onPress={() => onPressPreviewLesson(ItemLesson)}
           underlayColor={theme.overlayColor}>
           <View
-            style={[styles.textContainer, {backgroundColor: theme.themeColor}]}>
+            style={[
+              styles.textContainer,
+              BoxModel.smallMarginHorizontal,
+              {backgroundColor: theme.themeColor},
+            ]}>
             <Text
               style={[
                 styles.textContent,
@@ -51,6 +62,13 @@ const LessonList = (props) => {
               ]}>
               {ItemLesson.name}
             </Text>
+            {ItemLesson.isFinish ? (
+              <FontAwesome
+                name="check-circle"
+                size={20}
+                color={theme.successColor}
+              />
+            ) : undefined}
           </View>
         </TouchableHighlight>
       </Collapsible>
@@ -66,8 +84,30 @@ const LessonList = (props) => {
     }
     setCollapsibleItems(newIds);
   };
-  const onPressPreviewLesson = (ItemLesson) => {
-    setItemLesson(ItemLesson);
+  const onPressPreviewLesson = async (ItemLesson) => {
+    try {
+      let response1 = await API.get(
+        `${LESSON_VIDEO}/${itemCourse.id}/${ItemLesson.id}`,
+        state.token,
+      );
+
+      if (response1.isSuccess) {
+        const resultSection = itemCourse.section.find(({lesson}) => {
+          return lesson.find(({id}) => id === ItemLesson.id);
+        });
+        const result = resultSection.lesson.find(
+          ({id}) => id === ItemLesson.id,
+        );
+        setItemLesson({
+          ...result,
+          videoUrl: response1.data.payload.videoUrl,
+          currentTime: response1.data.payload.currentTime,
+        });
+        console.log(result);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   const renderHeader = (section) => {
     const {title} = section;
@@ -153,7 +193,6 @@ const styles = StyleSheet.create({
     ...Styles.rowBetween,
   },
   textContent: {
-    marginHorizontal: 20,
     ...Typography.fontRegular,
   },
   headerTouchable: {

@@ -5,6 +5,8 @@ export const REGISTER = 'user/register';
 export const SEND_EMAIL_ACTIVE = 'user/send-activate-email';
 export const FORGOT_PASSWORD = 'user/forget-pass/send-email';
 export const PROFILE = 'user/me';
+export const LIKE_STATUS = 'user/get-course-like-status';
+export const LIKE_COURSE = 'user/like-course';
 export const UPDATE_PASSWORD = 'user/change-password';
 export const UPDATE_PROFILE = 'user/update-profile';
 export const MY_COURSE = 'user/get-process-courses';
@@ -30,7 +32,7 @@ export const LESSON_SUBTITLE_URL = 'lesson/subtitle-url';
 export const LESSON_UPDATE_STATUS = 'lesson/update-status';
 export const LESSON_UPDATE_CURRENT_TIME =
   'lesson/update-current-time-learn-video';
-
+export const LAST_WATCHED_LESSON = 'course/last-watched-lesson';
 export const NOTE_ALL_LESSON = 'user-note-lesson/get-by-course';
 export const NOTE_SEARCH = 'user-note-lesson/search';
 export const NOTE_LESSON = 'user-note-lesson/get';

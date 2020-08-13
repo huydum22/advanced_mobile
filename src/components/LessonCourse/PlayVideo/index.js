@@ -11,13 +11,12 @@ import Moment from 'moment';
 const PLayVideo = (props) => {
   const {urlVideo} = props;
   const {theme} = useContext(ThemeContext);
-  const {itemLesson} = useContext(LessonContext);
+  const {itemLesson, time, setTime} = useContext(LessonContext);
   const [paused, setPaused] = useState(false);
   const [onDragSlider, setDragSlider] = useState(false);
   const [isHide, setHide] = useState(true);
   const [valueSlider, setValueSlider] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
-  const [time, setTime] = useState(0);
   var playerRef = useRef();
   useEffect(() => {
     if (itemLesson) {
@@ -64,11 +63,15 @@ const PLayVideo = (props) => {
   const onProgress = (data) => {
     setValueSlider(data.currentTime / data.seekableDuration);
     setTime(data.currentTime);
-    // setTime(
-    //   Moment('1900-01-01 00:00:00')
-    //     .add(data.currentTime, 'seconds')
-    //     .format('mm:ss'),
-    // );
+  };
+  const readyPLayVideo = () => {
+    if (itemLesson.currentTime) {
+      playerRef.seek(itemLesson.currentTime);
+      setTime(itemLesson.currentTime);
+    }
+  };
+  const onCompleteVideo = () => {
+    
   };
   return (
     <View style={styles.videoContainer}>
@@ -80,6 +83,8 @@ const PLayVideo = (props) => {
         ref={(ref) => {
           playerRef = ref;
         }}
+        onEnd={onCompleteVideo}
+        onReadyForDisplay={readyPLayVideo}
         paused={paused}
         style={styles.videoYoutube}
       />

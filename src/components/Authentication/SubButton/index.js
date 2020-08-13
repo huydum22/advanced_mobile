@@ -11,22 +11,21 @@ import {
 import {ThemeContext} from '../../../Provider/Theme';
 // import LinearGradient from 'react-native-linear-gradient';
 const Button = (props) => {
+  const {title, onPress} = props;
   const {theme} = useContext(ThemeContext);
   return (
     <TouchableHighlight
       style={[
         styles.container,
         {
-          backgroundColor: Colors.primaryBackgroundColor,
+          backgroundColor: Colors.primaryColor,
           borderColor: Colors.primaryColor,
         },
       ]}
-      onPress={props.onPress}
+      onPress={onPress}
       underlayColor={Colors.primaryBackgroundColor}
       {...props}>
-      <Text style={[styles.text, {color: Colors.primaryColor}]}>
-        {props.title}
-      </Text>
+      <Text style={[styles.text, {color: Colors.primaryColor}]}>{title}</Text>
     </TouchableHighlight>
   );
 };
