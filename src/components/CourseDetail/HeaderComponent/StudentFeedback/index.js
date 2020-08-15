@@ -5,7 +5,7 @@ import {ThemeContext} from '../../../../Provider/Theme';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {PrimaryButton} from '../../../Authentication';
 import {Bar} from 'react-native-progress';
-
+import RatingComponent from '../RatingComponent';
 import StarRating from 'react-native-star-rating';
 
 const StudentFeedback = (props) => {
@@ -22,115 +22,7 @@ const StudentFeedback = (props) => {
           {Number(averagePoint)} average rating
         </Text>
       ) : undefined}
-      {ratings ? (
-        <View style={[Styles.fillColumnStart, BoxModel.marginHorizontal]}>
-          <View style={[Styles.fillRowStart, BoxModel.tinyMarginVertical]}>
-            <Bar
-              progress={ratings.stars[4] / 100}
-              color={theme.primaryColor}
-              width={Size.WIDTH - Size.scaleSize(150)}
-              unfilledColor={theme.DialogColor}
-              borderColor={theme.DialogColor}
-              height={15}
-            />
-            <StarRating
-              disabled={false}
-              maxStars={5}
-              starSize={15}
-              rating={5}
-              fullStarColor={'#f1c40f'}
-              containerStyle={styles.rating}
-            />
-            <Text style={[styles.linkText, {color: theme.grayColor}]}>
-              {ratings.stars[4]}%
-            </Text>
-          </View>
-          <View style={[Styles.fillRowStart, BoxModel.tinyMarginVertical]}>
-            <Bar
-              progress={ratings.stars[3] / 100}
-              color={theme.primaryColor}
-              width={Size.WIDTH - Size.scaleSize(150)}
-              unfilledColor={theme.DialogColor}
-              borderColor={theme.DialogColor}
-              height={15}
-            />
-            <StarRating
-              disabled={false}
-              maxStars={5}
-              starSize={15}
-              rating={4}
-              fullStarColor={'#f1c40f'}
-              containerStyle={styles.rating}
-            />
-            <Text style={[styles.linkText, {color: theme.grayColor}]}>
-              {ratings.stars[3]}%
-            </Text>
-          </View>
-          <View style={[Styles.fillRowStart, BoxModel.tinyMarginVertical]}>
-            <Bar
-              progress={ratings.stars[2] / 100}
-              color={theme.primaryColor}
-              width={Size.WIDTH - Size.scaleSize(150)}
-              unfilledColor={theme.DialogColor}
-              borderColor={theme.DialogColor}
-              height={15}
-            />
-            <StarRating
-              disabled={false}
-              maxStars={5}
-              starSize={15}
-              rating={3}
-              fullStarColor={'#f1c40f'}
-              containerStyle={styles.rating}
-            />
-            <Text style={[styles.linkText, {color: theme.grayColor}]}>
-              {ratings.stars[2]}%
-            </Text>
-          </View>
-          <View style={[Styles.fillRowStart, BoxModel.tinyMarginVertical]}>
-            <Bar
-              progress={ratings.stars[1] / 100}
-              color={theme.primaryColor}
-              width={Size.WIDTH - Size.scaleSize(150)}
-              unfilledColor={theme.DialogColor}
-              borderColor={theme.DialogColor}
-              height={15}
-            />
-            <StarRating
-              disabled={false}
-              maxStars={5}
-              starSize={15}
-              rating={2}
-              fullStarColor={'#f1c40f'}
-              containerStyle={styles.rating}
-            />
-            <Text style={[styles.linkText, {color: theme.grayColor}]}>
-              {ratings.stars[1]}%
-            </Text>
-          </View>
-          <View style={[Styles.fillRowStart, BoxModel.tinyMarginVertical]}>
-            <Bar
-              progress={ratings.stars[0] / 100}
-              color={theme.primaryColor}
-              width={Size.WIDTH - Size.scaleSize(150)}
-              unfilledColor={theme.DialogColor}
-              borderColor={theme.DialogColor}
-              height={15}
-            />
-            <StarRating
-              disabled={false}
-              maxStars={5}
-              starSize={15}
-              rating={1}
-              fullStarColor={'#f1c40f'}
-              containerStyle={styles.rating}
-            />
-            <Text style={[styles.linkText, {color: theme.grayColor}]}>
-              {ratings.stars[0]}%
-            </Text>
-          </View>
-        </View>
-      ) : undefined}
+      {ratings ? <RatingComponent ratings={ratings} /> : undefined}
       <PrimaryButton
         title="See All Feedback"
         onPress={() => onPress(ratings)}

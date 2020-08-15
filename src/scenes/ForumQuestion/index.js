@@ -38,7 +38,6 @@ const ForumQuestion = (props) => {
     // or alternatively
     // return text.replace(urlRegex, '<a href="$1">$1</a>')
   }
-  console.log(urlify(itemQuestion.forumAnswers[0].content));
   return (
     <ScrollView style={{backgroundColor: theme.themeColor}}>
       <QuestionComponent

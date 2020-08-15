@@ -37,6 +37,8 @@ export const updateProfileAction = (dispatch) => async (
     const response = await API.put(UPDATE_PROFILE, data, token);
     if (response.isSuccess) {
       dispatch(updateProfileSuccess(response.data));
+    } else {
+      dispatch(updateProfileError(response.data));
     }
   } catch ({response}) {
     dispatch(updateProfileError(response.data));

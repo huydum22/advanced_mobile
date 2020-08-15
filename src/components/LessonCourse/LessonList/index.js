@@ -103,7 +103,6 @@ const LessonList = (props) => {
           videoUrl: response1.data.payload.videoUrl,
           currentTime: response1.data.payload.currentTime,
         });
-        console.log(result);
       }
     } catch (err) {
       console.log(err);

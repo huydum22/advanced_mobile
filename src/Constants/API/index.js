@@ -32,6 +32,7 @@ export const LESSON_SUBTITLE_URL = 'lesson/subtitle-url';
 export const LESSON_UPDATE_STATUS = 'lesson/update-status';
 export const LESSON_UPDATE_CURRENT_TIME =
   'lesson/update-current-time-learn-video';
+
 export const LAST_WATCHED_LESSON = 'course/last-watched-lesson';
 export const NOTE_ALL_LESSON = 'user-note-lesson/get-by-course';
 export const NOTE_SEARCH = 'user-note-lesson/search';

@@ -16,7 +16,9 @@ import StarRating from 'react-native-star-rating';
 import FastImage from 'react-native-fast-image';
 import Moment from 'moment';
 const numberWithCommas = (x) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  if (x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
 };
 const Item = (props) => {
   const {onPressItem, item} = props;

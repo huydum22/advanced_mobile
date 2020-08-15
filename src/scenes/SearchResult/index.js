@@ -31,6 +31,7 @@ const SearchNavigator = (props) => {
           offset: 0,
         });
         if (response.isSuccess) {
+          console.log(response.data.payload.instructors);
           setSearchData(response.data.payload);
         }
       } catch ({response}) {

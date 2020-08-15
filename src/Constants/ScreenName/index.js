@@ -49,3 +49,7 @@ export const NoteTab = 'noteTab';
 
 export const ForumQuestion = 'ForumQuestion';
 export const ForumQuestionStack = 'ForumQuestionStack';
+
+export const FeedBackStack = 'FeedBackStack';
+export const FeedBackScreen = 'FeedBackScreen';
+export const WriteFeedBackScreen = 'WriteFeedBackScreen';

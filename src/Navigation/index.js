@@ -9,6 +9,7 @@ import * as screenName from '../Constants/ScreenName';
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
 import CourseDetailNavigator from './AppNavigator/CourseDetailNavigator';
+
 import SplashScreen from '../scenes/SplashScreen';
 import PlayReview from '../scenes/PlayReview';
 import {AuthenticationContext} from '../Provider/Authentication';
@@ -40,6 +41,7 @@ const RootScreen = () => {
         component={CourseDetailNavigator}
         options={{animationEnabled: true}}
       />
+
       <RootStack.Screen
         name={screenName.PlayVideoScreenName}
         component={PlayReview}

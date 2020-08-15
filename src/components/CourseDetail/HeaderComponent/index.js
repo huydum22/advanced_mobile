@@ -31,6 +31,7 @@ const Header = (props) => {
   const {state} = useContext(AuthenticationContext);
   const [isOwn, setIsOwn] = useState({});
   const [isLike, setLike] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const checkOwnCourse = async () => {
@@ -110,7 +111,24 @@ const Header = (props) => {
       console.log(err);
     }
   };
-  const onPressStudentFeedback = (ratings) => {};
+  const onPressStudentFeedback = (
+    ratings,
+    averagePoint,
+    contentPoint,
+    presentationPoint,
+    formalityPoint,
+  ) => {
+    navigation.navigate(screenName.FeedBackStack, {
+      screen: screenName.FeedBackStack,
+      params: {
+        item: ratings,
+        averagePoint: averagePoint,
+        contentPoint: contentPoint,
+        presentationPoint: presentationPoint,
+        formalityPoint: formalityPoint,
+      },
+    });
+  };
   const dismiss = () => {
     navigation.goBack();
   };
@@ -225,10 +243,19 @@ const Header = (props) => {
         data={item.instructor}
         onPress={() => onPressAuthor(item.instructor)}
       />
+
       <StudentFeedBack
         averagePoint={item.averagePoint}
         ratings={item.ratings}
-        onPress={() => onPressStudentFeedback(item.ratings)}
+        onPress={() =>
+          onPressStudentFeedback(
+            item.ratings,
+            item.averagePoint,
+            item.contentPoint,
+            item.presentationPoint,
+            item.formalityPoint,
+          )
+        }
       />
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
         Curriculum

@@ -23,33 +23,9 @@ const PLayYouTube = (props) => {
   const playerRef = useRef();
   const {theme} = useContext(ThemeContext);
   const {itemLesson, time, setTime} = useContext(LessonContext);
-  const [paused, setPaused] = useState(false);
-  const [isHide, setHide] = useState(true);
-  const [valueSlider, setValueSlider] = useState(0);
-  const [totalTime, setTotalTime] = useState(0);
   const [widthVid, setWidth] = useState(0);
   const [heightVid, setHeight] = useState(0);
-  useEffect(() => {
-    if (totalTime) {
-      if (!paused) {
-        if (!isHide) {
-          setTimeout(() => {
-            fetchDataAndroid();
-          }, 500);
-        }
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalTime, valueSlider, time, paused, isHide]);
-  const fetchDataAndroid = async () => {
-    try {
-      let response = await playerRef.current.getCurrentTime();
-      setValueSlider(response / totalTime);
-      setTime(response);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
   useEffect(() => {
     const fetchYoutubeMetadata = async () => {
       try {
@@ -68,37 +44,6 @@ const PLayYouTube = (props) => {
     }
     return 300;
   };
-  useEffect(() => {
-    if (itemLesson) {
-      setTotalTime(itemLesson.hours * 3600);
-    }
-  }, [itemLesson]);
-  const onPressPlayVideo = () => {
-    setPaused(!paused);
-    fetchDataAndroid();
-  };
-  const onForward10s = () => {
-    playerRef.current.seekTo((valueSlider + 10 / totalTime) * totalTime);
-    fetchDataAndroid();
-  };
-  const onReplay10s = () => {
-    playerRef.current.seekTo((valueSlider - 10 / totalTime) * totalTime);
-    fetchDataAndroid();
-  };
-  const onPressHide = () => {
-    setHide(!isHide);
-  };
-  const getOnTouch = () => {
-    if (isHide) {
-      return theme.overlayColor;
-    } else {
-      return theme.blackWith05OpacityColor;
-    }
-  };
-  const onCompleteSeek = (value) => {
-    playerRef.current.seekTo(value * totalTime);
-    setTime(value * totalTime);
-  };
 
   const readyPLayVideo = () => {
     if (itemLesson.currentTime) {
@@ -114,122 +59,16 @@ const PLayYouTube = (props) => {
         height={getHeightVid()}
         width={Size.WIDTH}
         videoId={getYouTubeID(urlVideo)}
-        play={!paused}
+        play={true}
         volume={50}
         playbackRate={1}
         webViewStyle={styles.videoYoutube}
         onReady={readyPLayVideo}
         initialPlayerParams={{
           cc_lang_pref: 'us',
-          controls: false,
+          controls: true,
         }}
       />
-      <TouchableHighlight
-        onPress={onPressHide}
-        underlayColor={theme.overlayColor}
-        style={[styles.container, {backgroundColor: getOnTouch()}]}>
-        <View />
-      </TouchableHighlight>
-      {isHide ? undefined : (
-        <View>
-          <View
-            style={[
-              styles.controlContainer,
-              BoxModel.marginHorizontal,
-              {height: Size.scaleSize(50)},
-            ]}>
-            <TouchableHighlight
-              underlayColor={theme.overlayColor}
-              style={Styles.center}>
-              <MaterialIcons
-                name="library-books"
-                size={20}
-                color={theme.whiteWith07OpacityColor}
-                style={Styles.center}
-              />
-            </TouchableHighlight>
-            <Text style={[styles.timeContainer, BoxModel.tinyMarginHorizontal]}>
-              {Moment('1900-01-01 00:00:00')
-                .add(time, 'seconds')
-                .format('mm:ss')}
-            </Text>
-            <Slider
-              value={valueSlider}
-              onSlidingComplete={onCompleteSeek}
-              thumbTintColor={theme.whiteColor}
-              style={styles.sliderContainer}
-              minimumTrackTintColor={theme.primaryColor}
-            />
-            <Text style={[styles.timeContainer, BoxModel.tinyMarginHorizontal]}>
-              {Moment('1900-01-01 00:00:00')
-                .add(totalTime - time, 'seconds')
-                .format('mm:ss')}
-            </Text>
-            <TouchableHighlight
-              onPress={onPressPlayVideo}
-              underlayColor={theme.overlayColor}
-              style={Styles.center}>
-              <MaterialIcons
-                name="fullscreen"
-                size={25}
-                color={theme.whiteWith07OpacityColor}
-                style={Styles.center}
-              />
-            </TouchableHighlight>
-          </View>
-          <View
-            style={[
-              styles.control,
-              {
-                bottom: Size.HEIGHT / 10,
-              },
-            ]}>
-            <TouchableHighlight
-              onPress={onReplay10s}
-              underlayColor={theme.overlayColor}
-              style={Styles.center}>
-              <MaterialIcons
-                name="replay-10"
-                size={30}
-                color={theme.whiteColor}
-                style={Styles.center}
-              />
-            </TouchableHighlight>
-
-            <TouchableHighlight
-              onPress={onPressPlayVideo}
-              underlayColor={theme.overlayColor}
-              style={Styles.center}>
-              {paused ? (
-                <MaterialIcons
-                  name="play-arrow"
-                  size={70}
-                  color={theme.whiteColor}
-                  style={Styles.center}
-                />
-              ) : (
-                <MaterialIcons
-                  name="pause"
-                  size={50}
-                  color={theme.whiteColor}
-                  style={Styles.center}
-                />
-              )}
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={onForward10s}
-              underlayColor={theme.overlayColor}
-              style={Styles.center}>
-              <MaterialIcons
-                name="forward-10"
-                size={30}
-                color={theme.whiteColor}
-                style={Styles.center}
-              />
-            </TouchableHighlight>
-          </View>
-        </View>
-      )}
     </View>
   );
 };

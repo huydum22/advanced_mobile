@@ -30,7 +30,6 @@ const ListCourse = (props) => {
       console.log(p(response.data));
     }
   };
-  console.log(data);
   useEffect(() => {
     fetchData();
   }, []);

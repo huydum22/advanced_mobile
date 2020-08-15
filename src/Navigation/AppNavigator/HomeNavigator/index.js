@@ -9,7 +9,6 @@ import {Size, Typography, Distance, Styles} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 import {AuthenticationContext} from '../../../Provider/Authentication';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 const HomeStack = createStackNavigator();
 
 const HomeNavigatorStack = () => {
@@ -119,6 +118,23 @@ const HomeNavigatorStack = () => {
         name={screenName.CourseDetailScreenName}
         component={scenes.CourseDetail}
         options={{headerShown: false}}
+      />
+      <HomeStack.Screen
+        name={screenName.FeedBackStack}
+        component={scenes.SeeFeedBack}
+        options={{title: 'Feedback'}}
+        initialParams={{
+          item: 'item',
+          averagePoint: 0,
+          contentPoint: 0,
+          presentationPoint: 0,
+          formalityPoint: 0,
+        }}
+      />
+      <HomeStack.Screen
+        name={screenName.WriteFeedBackScreen}
+        component={scenes.WriteFeedBack}
+        options={{title: 'Write your feedback'}}
       />
       <HomeStack.Screen
         name={screenName.AuthorDetailScreenName}

@@ -23,6 +23,8 @@ import UpdateProfile from './UpdateProfile';
 import PlayReview from './PlayReview';
 import LessonCourse from './LessonCourse';
 import ForumQuestion from './ForumQuestion';
+import SeeFeedBack from './SeeFeedback';
+import WriteFeedBack from './WriteFeedBack';
 export {
   AuthorDetail,
   Browse,
@@ -49,4 +51,6 @@ export {
   PlayReview,
   LessonCourse,
   ForumQuestion,
+  SeeFeedBack,
+  WriteFeedBack,
 };

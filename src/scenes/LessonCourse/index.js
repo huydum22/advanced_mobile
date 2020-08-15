@@ -16,6 +16,7 @@ import {
   LESSON_UPDATE_CURRENT_TIME,
   LAST_WATCHED_LESSON,
   LESSON_DETAIL,
+  LESSON_UPDATE_STATUS,
 } from '../../Constants/API';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {Typography, BoxModel, Size} from '../../styles';
@@ -30,6 +31,7 @@ const LessonCourse = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);
+  const [nextLessonID, setNextLessonID] = useState('');
   const insets = useSafeArea();
 
   const {setItemCourse, itemLesson, setItemLesson, time} = useContext(
@@ -72,7 +74,37 @@ const LessonCourse = (props) => {
       console.log(response);
     }
   };
-
+  const fetchDetail = async () => {
+    try {
+      let response = await API.get(
+        `${LESSON_DETAIL}/${route.params.id}/${itemLesson.id}`,
+        state.token,
+      );
+      if (response.isSuccess) {
+        console.log(response.data.payload.nextLessonId);
+        setNextLessonID(response.data.payload.nextLessonId);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [route, state, itemLesson]);
+  const fetchCourseDetailLesson = async () => {
+    try {
+      let response = await API.get(
+        `${COURSE_DETAIL_WITH_LESSON}/${route.params.id}`,
+        state.token,
+      );
+      if (response.isSuccess) {
+        setItemCourse(response.data.payload);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     const fetchCourseDetailWithLesson = async () => {
       try {
@@ -109,14 +141,37 @@ const LessonCourse = (props) => {
       }
     };
     fetchCourseDetailWithLesson();
-  }, [route, state, setItemCourse, setItemLesson]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [route, state]);
   const dismiss = () => {
     navigation.goBack();
   };
 
   const renderVideo = useMemo(() => {
-    return <Video urlVideo={itemLesson.videoUrl || ''} />;
-  }, [itemLesson]);
+    const onCompleteVideo = async () => {
+      try {
+        let response = await API.post(
+          LESSON_UPDATE_STATUS,
+          {lessonId: itemLesson.id},
+          state.token,
+        );
+        if (response.isSuccess) {
+          console.log(response.data.message);
+        } else {
+          console.log(response.data.message);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    return (
+      <Video
+        urlVideo={itemLesson.videoUrl || ''}
+        onCompleteVideo={onCompleteVideo}
+      />
+    );
+  }, [itemLesson, state]);
   const renderYouTube = useMemo(() => {
     return <YouTube urlVideo={itemLesson.videoUrl || ''} />;
   }, [itemLesson]);
@@ -143,14 +198,14 @@ const LessonCourse = (props) => {
         style={[
           styles.buttonDismiss,
           {
-            bottom: Size.HEIGHT - insets.top - Size.scaleSize(50),
+            bottom: Size.HEIGHT - insets.top - Size.scaleSize(40),
           },
         ]}
         onPress={dismiss}
         underlayColor={theme.overlayColor}>
         <MaterialIcons
           name="expand-more"
-          size={50}
+          size={40}
           color={theme.whiteWith07OpacityColor}
         />
       </TouchableHighlight>
@@ -194,9 +249,9 @@ const styles = StyleSheet.create({
   },
   buttonDismiss: {
     position: 'absolute',
-    height: 50,
-    left: 0,
-    width: 50,
+    height: Size.scaleSize(50),
+    left: Size.scaleSize(50),
+    width: Size.scaleSize(50),
   },
 });
 export default LessonCourse;
