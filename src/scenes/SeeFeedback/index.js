@@ -27,7 +27,9 @@ const SeeFeedBack = (props) => {
     }
   };
   const writeFeedBack = () => {
-    navigation.navigate(WriteFeedBackScreen);
+    navigation.navigate(WriteFeedBackScreen, {
+      courseId: route.params.params.courseId,
+    });
   };
   return (
     <ScrollView style={{backgroundColor: theme.themeColor}}>

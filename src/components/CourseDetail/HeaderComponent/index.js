@@ -117,6 +117,7 @@ const Header = (props) => {
     contentPoint,
     presentationPoint,
     formalityPoint,
+    courseId,
   ) => {
     navigation.navigate(screenName.FeedBackStack, {
       screen: screenName.FeedBackStack,
@@ -126,6 +127,7 @@ const Header = (props) => {
         contentPoint: contentPoint,
         presentationPoint: presentationPoint,
         formalityPoint: formalityPoint,
+        courseId: courseId,
       },
     });
   };
@@ -254,6 +256,7 @@ const Header = (props) => {
             item.contentPoint,
             item.presentationPoint,
             item.formalityPoint,
+            item.id,
           )
         }
       />
