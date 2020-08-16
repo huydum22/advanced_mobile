@@ -12,11 +12,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Title from '../../CourseDetail/HeaderComponent/TitleItem';
 import Collapsible from 'react-native-collapsible';
 import {useSafeArea} from 'react-native-safe-area-context';
-import {Size, Styles, Typography, BoxModel} from '../../../styles';
-import {API} from '../../../services';
+import {Size, Styles, Typography, BoxModel, Distance} from '../../../styles';
+import {API, DownloadLessonVideo} from '../../../services';
 import {LESSON_VIDEO} from '../../../Constants/API';
 import {AuthenticationContext} from '../../../Provider/Authentication';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Moment from 'moment';
+
 const LessonList = (props) => {
   const {theme} = useContext(ThemeContext);
   const {itemCourse, itemLesson, setItemLesson} = useContext(LessonContext);
@@ -33,6 +35,19 @@ const LessonList = (props) => {
 
     return theme.primaryTextColor;
   };
+
+  const DownloadLesson = async () => {
+    try {
+      return await DownloadLessonVideo(itemLesson.videoUrl, {
+        responseType: 'arraybuffer',
+        onDownloadProgress: (progressEvent) => {
+          console.log(progressEvent);
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const flatListSeparator = () => {
     return (
       <View
@@ -44,33 +59,90 @@ const LessonList = (props) => {
     );
   };
   const renderListItem = (ItemLesson) => {
+    const renderDownloadItem = () => {
+      if (ItemLesson.isFinish) {
+        return (
+          <MaterialIcons.Button
+            name="file-download"
+            size={20}
+            color={theme.successColor}
+            onPress={DownloadLesson}
+            backgroundColor={theme.themeColor}
+          />
+        );
+      } else {
+        return (
+          <MaterialIcons.Button
+            name="file-download"
+            size={20}
+            color={theme.grayColor}
+            onPress={DownloadLesson}
+            backgroundColor={theme.themeColor}
+          />
+        );
+      }
+    };
     return (
       <Collapsible collapsed={collapsibleItems.includes(ItemLesson.sectionId)}>
+        {/* <View style={Styles.fillRow}> */}
         <TouchableHighlight
           onPress={() => onPressPreviewLesson(ItemLesson)}
-          underlayColor={theme.overlayColor}>
-          <View
-            style={[
-              styles.textContainer,
-              BoxModel.smallMarginHorizontal,
-              {backgroundColor: theme.themeColor},
-            ]}>
-            <Text
+          underlayColor={theme.overlayColor}
+          style={[styles.fill, BoxModel.smallMarginVertical]}>
+          <View style={Styles.fillRowStart}>
+            <View style={[Styles.center, {width: Size.scaleSize(30)}]}>
+              <Text
+                style={[
+                  Typography.fontRegular,
+                  {color: changeColorItemLesson(ItemLesson)},
+                ]}>
+                {ItemLesson.numberOrder}
+              </Text>
+            </View>
+            <View
               style={[
-                styles.textContent,
-                {color: changeColorItemLesson(ItemLesson)},
+                Styles.fillColumnStart,
+                BoxModel.smallMarginHorizontal,
+                {backgroundColor: theme.themeColor},
               ]}>
-              {ItemLesson.name}
-            </Text>
-            {ItemLesson.isFinish ? (
-              <FontAwesome
-                name="check-circle"
-                size={20}
-                color={theme.successColor}
-              />
-            ) : undefined}
+              <View style={[Styles.fillRow, {marginRight: Distance.medium}]}>
+                {ItemLesson.isFinish ? (
+                  <FontAwesome
+                    name="check-circle"
+                    size={20}
+                    color={theme.primaryColor}
+                    style={{marginRight: Distance.small}}
+                  />
+                ) : (
+                  <FontAwesome
+                    name="circle-thin"
+                    size={20}
+                    color={theme.primaryColor}
+                    style={{marginRight: Distance.small}}
+                  />
+                )}
+                <Text
+                  style={[
+                    Typography.fontRegular,
+                    {color: changeColorItemLesson(ItemLesson)},
+                  ]}>
+                  {ItemLesson.name}
+                </Text>
+              </View>
+              <Text style={[Typography.fontRegular, {color: theme.grayColor}]}>
+                {' '}
+                Video -{' '}
+                {Moment('1900-01-01 00:00:00')
+                  .add(ItemLesson.hours * 3600, 'seconds')
+                  .format('mm:ss')}
+              </Text>
+            </View>
           </View>
         </TouchableHighlight>
+        {/* <View style={[Styles.center, {width: Size.scaleSize(50)}]}>
+            {renderDownloadItem()}
+          </View> */}
+        {/* </View> */}
       </Collapsible>
     );
   };
@@ -110,6 +182,7 @@ const LessonList = (props) => {
   };
   const renderHeader = (section) => {
     const {title} = section;
+
     return (
       <TouchableHighlight
         style={[
@@ -187,13 +260,14 @@ const styles = StyleSheet.create({
   separator: {
     height: 1,
   },
+  fill: {
+    flex: 1,
+  },
   textContainer: {
     height: Size.scaleSize(50),
     ...Styles.rowBetween,
   },
-  textContent: {
-    ...Typography.fontRegular,
-  },
+
   headerTouchable: {
     height: 50,
   },

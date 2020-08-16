@@ -52,6 +52,7 @@ class BaseAPI {
   patch = (pathName, body = undefined, token = undefined) =>
     this.BaseMethod(METHOD.PATCH, pathName, body, token);
 }
-
+const DownloadLessonVideo = async (urlVideo, config) =>
+  await axios.get(urlVideo, config);
 const API = new BaseAPI();
-export {REQUEST, API};
+export {REQUEST, API, DownloadLessonVideo};

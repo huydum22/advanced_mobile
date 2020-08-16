@@ -53,23 +53,24 @@ const PLayYouTube = (props) => {
   };
 
   return (
-    <View style={styles.backgroundVideo}>
-      <YoutubePlayer
-        ref={playerRef}
-        height={getHeightVid()}
-        width={Size.WIDTH}
-        videoId={getYouTubeID(urlVideo)}
-        play={true}
-        volume={50}
-        playbackRate={1}
-        webViewStyle={styles.videoYoutube}
-        onReady={readyPLayVideo}
-        initialPlayerParams={{
-          cc_lang_pref: 'us',
-          controls: true,
-        }}
-      />
-    </View>
+    // <View style={styles.backgroundVideo}>
+    <YoutubePlayer
+      ref={playerRef}
+      height={getHeightVid()}
+      width={Size.WIDTH}
+      videoId={getYouTubeID(urlVideo)}
+      play={true}
+      volume={50}
+      playbackRate={1}
+      webViewStyle={styles.videoYoutube}
+      onReady={readyPLayVideo}
+      initialPlayerParams={{
+        cc_lang_pref: 'us',
+        controls: true,
+        showClosedCaptions: true,
+      }}
+    />
+    // </View>
   );
 };
 const styles = StyleSheet.create({
@@ -77,11 +78,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
   },
-  videoYoutube: {alignSelf: 'stretch', flex: 1},
+  videoYoutube: {
+    // alignSelf: 'stretch',
+    // position: 'absolute',
+    backgroundColor: 'black',
+    flex: 1,
+  },
   container: {
     position: 'absolute',
     width: '100%',
     height: '100%',
+    backgroundColor: 'black',
   },
   control: {
     height: 100,

@@ -37,6 +37,7 @@ const LessonCourse = (props) => {
   const {setItemCourse, itemLesson, setItemLesson, time} = useContext(
     LessonContext,
   );
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async () => {
       try {
@@ -185,6 +186,31 @@ const LessonCourse = (props) => {
       }
     }
   };
+  const renderDismiss = () => {
+    if (itemLesson.videoUrl) {
+      if (itemLesson.videoUrl.includes('https://youtube.com/embed')) {
+        return (
+          <TouchableHighlight
+            style={[
+              styles.buttonDismiss,
+              {
+                bottom: Size.HEIGHT - insets.top - Size.scaleSize(40),
+              },
+            ]}
+            onPress={dismiss}
+            underlayColor={theme.overlayColor}>
+            <MaterialIcons
+              name="expand-more"
+              size={40}
+              color={theme.whiteWith07OpacityColor}
+            />
+          </TouchableHighlight>
+        );
+      } else {
+        return undefined;
+      }
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.container, {backgroundColor: theme.themeColor}]}>
@@ -194,21 +220,7 @@ const LessonCourse = (props) => {
           <LessonTab />
         </View>
       </View>
-      <TouchableHighlight
-        style={[
-          styles.buttonDismiss,
-          {
-            bottom: Size.HEIGHT - insets.top - Size.scaleSize(40),
-          },
-        ]}
-        onPress={dismiss}
-        underlayColor={theme.overlayColor}>
-        <MaterialIcons
-          name="expand-more"
-          size={40}
-          color={theme.whiteWith07OpacityColor}
-        />
-      </TouchableHighlight>
+      {renderDismiss()}
     </SafeAreaView>
   );
 };
@@ -250,7 +262,7 @@ const styles = StyleSheet.create({
   buttonDismiss: {
     position: 'absolute',
     height: Size.scaleSize(50),
-    left: Size.scaleSize(50),
+    left: 0,
     width: Size.scaleSize(50),
   },
 });
