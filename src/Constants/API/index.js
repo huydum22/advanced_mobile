@@ -53,3 +53,5 @@ export const SEARCHV2 = 'course/searchV2';
 
 export const SEARCH_HISTORY = 'course/search-history';
 export const DELETE_SEARCH_HISTORY = 'course/delete-search-history';
+
+export const LIST_EXERCISE = 'exercise/student/list-exercise-lesson';

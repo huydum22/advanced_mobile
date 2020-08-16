@@ -5,6 +5,7 @@ import LessonList from '../LessonList';
 import QuestionView from '../Question';
 import NoteView from '../Note';
 import MoreView from '../More';
+import ExerciseView from '../Exercise';
 
 import {Typography, Size} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
@@ -17,7 +18,7 @@ const LessonCourseNavigator = (props) => {
       tabBarOptions={{
         activeTintColor: theme.primaryColor,
         inactiveTintColor: theme.grayDarkColor,
-        labelStyle: {...Typography.fontBold, fontSize: Typography.fontSize12},
+        labelStyle: {...Typography.fontBold, fontSize: Typography.fontSize10},
         indicatorStyle: {
           backgroundColor: theme.primaryColor,
         },
@@ -38,6 +39,11 @@ const LessonCourseNavigator = (props) => {
         name={screenName.QuestionTab}
         component={NoteView}
         options={{tabBarLabel: 'Note'}}
+      />
+      <Tab.Screen
+        name={screenName.ExerciseTab}
+        component={ExerciseView}
+        options={{tabBarLabel: 'Exercise'}}
       />
       <Tab.Screen
         name={screenName.NoteTab}

@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useRef, useState} from 'react';
-import {View, StyleSheet, TouchableHighlight, Text} from 'react-native';
+import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import Video from 'react-native-video';
 import {Styles, Size, BoxModel, Typography, Distance} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
@@ -23,19 +23,25 @@ const PLayVideo = (props) => {
 
   return (
     <View style={styles.videoContainer}>
-      <Video
-        onProgress={onProgress}
-        controls={true}
-        resizeMode="contain"
-        source={{uri: urlVideo}}
-        ref={(ref) => {
-          playerRef = ref;
-        }}
-        onEnd={onCompleteVideo}
-        onReadyForDisplay={readyPLayVideo}
-        paused={false}
-        style={styles.videoYoutube}
-      />
+      {urlVideo ? (
+        <Video
+          onProgress={onProgress}
+          controls={true}
+          source={{uri: urlVideo}}
+          ref={(ref) => {
+            playerRef = ref;
+          }}
+          onEnd={onCompleteVideo}
+          onReadyForDisplay={readyPLayVideo}
+          paused={false}
+          style={styles.videoYoutube}
+        />
+      ) : (
+        <View style={[styles.videoContainer, Styles.center]}>
+          {' '}
+          <ActivityIndicator size="large" />
+        </View>
+      )}
     </View>
   );
 };

@@ -1,11 +1,18 @@
 import React, {useContext} from 'react';
-import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
+import {View, Text, StyleSheet, TouchableHighlight, Switch} from 'react-native';
 import {Colors, Styles, BoxModel, Typography, Distance} from '../../../styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {ThemeContext} from '../../../Provider/Theme';
 
-const Item = ({icon, name, onPress}) => {
+const Item = ({
+  icon,
+  name,
+  onPress,
+  isSwitch,
+  isEnabledSwitch,
+  toggleSwitch,
+}) => {
   const {theme} = useContext(ThemeContext);
   const isLogout = (icon) => {
     if (icon) {
@@ -27,15 +34,10 @@ const Item = ({icon, name, onPress}) => {
       underlayColor={theme.primaryBackgroundColor}
       onPress={onPress}>
       <View style={{flex: 1}}>
+        <View style={[styles.separator, {backgroundColor: theme.itemColor}]} />
         <View
-          style={[styles.separator, {backgroundColor: theme.DialogColor}]}
-        />
-        <View
-          style={[
-            styles.itemContainer,
-            {backgroundColor: theme.primaryBackgroundColor},
-          ]}>
-          <MaterialIcons name={icon} size={20} color={theme.primaryTextColor} />
+          style={[styles.itemContainer, {backgroundColor: theme.DialogColor}]}>
+          <MaterialIcons name={icon} size={20} color={theme.primaryColor} />
           <Text
             style={[
               icon
@@ -45,7 +47,20 @@ const Item = ({icon, name, onPress}) => {
             ]}>
             {name}
           </Text>
-          {isLogout(icon)}
+          {isSwitch ? (
+            <Switch
+              trackColor={{
+                false: theme.grayLightColor,
+                true: theme.primaryColor,
+              }}
+              thumbColor={theme.whiteColor}
+              ios_backgroundColor={theme.grayLightColor}
+              onValueChange={toggleSwitch}
+              value={isEnabledSwitch}
+            />
+          ) : (
+            isLogout(icon)
+          )}
         </View>
       </View>
     </TouchableHighlight>

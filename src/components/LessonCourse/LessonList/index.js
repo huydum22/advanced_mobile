@@ -18,14 +18,20 @@ import {LESSON_VIDEO} from '../../../Constants/API';
 import {AuthenticationContext} from '../../../Provider/Authentication';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Moment from 'moment';
+import HeaderTitle from '../../CourseDetail/HeaderComponent';
 
 const LessonList = (props) => {
+  const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
   const {itemCourse, itemLesson, setItemLesson} = useContext(LessonContext);
   const [collapsibleItems, setCollapsibleItems] = useState([]);
   const {state} = useContext(AuthenticationContext);
   const insets = useSafeArea();
+  const [isPreview, setPreview] = useState(false);
 
+  const showPreviewTitle = () => {
+    setPreview(!isPreview);
+  };
   const changeColorItemLesson = (lesson) => {
     if (itemLesson) {
       if (lesson.id === itemLesson.id) {
@@ -157,6 +163,11 @@ const LessonList = (props) => {
     setCollapsibleItems(newIds);
   };
   const onPressPreviewLesson = async (ItemLesson) => {
+    setItemLesson({
+      ...ItemLesson,
+      videoUrl: '',
+      currentTime: 0,
+    });
     try {
       let response1 = await API.get(
         `${LESSON_VIDEO}/${itemCourse.id}/${ItemLesson.id}`,
@@ -235,7 +246,28 @@ const LessonList = (props) => {
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={() => {
         return (
-          <Title name={itemCourse.title} subtitle={itemCourse.instructorName} />
+          <View>
+            {isPreview ? (
+              <HeaderTitle
+                navigation={navigation}
+                route={route}
+                item={itemCourse}
+                showPreview={false}
+                showPreviewTitle={showPreviewTitle}
+                courseID={itemCourse.id}
+              />
+            ) : (
+              <MaterialIcons.Button
+                name="expand-less"
+                size={20}
+                backgroundColor={theme.themeColor}
+                onPress={showPreviewTitle}
+                style={styles.previewButton}
+                color={theme.primaryTextColor}>
+                <Title name={itemCourse.title} />
+              </MaterialIcons.Button>
+            )}
+          </View>
         );
       }}
       ListFooterComponent={() => {
@@ -280,6 +312,18 @@ const styles = StyleSheet.create({
   textHeader: {
     fontSize: Typography.fontSize14,
     ...Typography.fontBold,
+  },
+  previewButton: {
+    // position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    // width: 100,
+    // height: 500,
   },
 });
 export default LessonList;

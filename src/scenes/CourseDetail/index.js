@@ -161,7 +161,12 @@ const CourseDetail = (props) => {
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={() => {
               return (
-                <Header navigation={navigation} route={route} item={item} />
+                <Header
+                  navigation={navigation}
+                  route={route}
+                  item={item}
+                  showPreview={true}
+                />
               );
             }}
             ListFooterComponent={() => {

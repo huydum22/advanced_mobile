@@ -20,6 +20,7 @@ const lightTheme = {
   DialogColor: '#DFE2E8',
   overlayColor: 'rgba(0,0,0,0)',
   blackSubTextColor: 'rgba(0,0,0,0.5)',
+  itemColor: '#FFFFFF',
 
   // ACTIONS
   StudentColor: '#9b59b6',

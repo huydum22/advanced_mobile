@@ -21,18 +21,43 @@ import {
   GET_FREE_COURSE,
   LIKE_STATUS,
   LIKE_COURSE,
+  COURSE_DETAIL,
 } from '../../../Constants/API';
 import {API} from '../../../services';
+
 import {AuthenticationContext} from '../../../Provider/Authentication';
 import {ThemeContext} from '../../../Provider/Theme';
 const Header = (props) => {
-  const {item, navigation, route} = props;
+  const {
+    item,
+    navigation,
+    route,
+    showPreview,
+    showPreviewTitle,
+    courseID,
+  } = props;
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
   const [isOwn, setIsOwn] = useState({});
   const [isLike, setLike] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [itemCourse, setItemCourse] = useState({});
 
+  useEffect(() => {
+    if (!showPreview) {
+      const fetchData = async () => {
+        try {
+          let response = await API.get(`${COURSE_DETAIL}/${courseID}/null`);
+          if (response.isSuccess) {
+            setItemCourse(response.data.payload);
+          }
+        } catch (response) {
+          console.log(response);
+        }
+      };
+      fetchData();
+    }
+  }, [courseID, showPreview]);
   useEffect(() => {
     const checkOwnCourse = async () => {
       try {
@@ -164,86 +189,102 @@ const Header = (props) => {
   };
   return (
     <View style={{backgroundColor: theme.themeColor}}>
-      <FastImage
-        style={[
-          styles.videoContainer,
-          Styles.fillRow,
-          {backgroundColor: theme.backgroundColor},
-        ]}
-        source={{uri: item.imageUrl}}>
-        <View
-          style={{
-            ...Styles.fillRowBetween,
-            backgroundColor: theme.blackWith05OpacityColor,
-          }}>
-          <TouchableHighlight
-            onPress={dismiss}
-            underlayColor={theme.overlayColor}>
-            <Ionicons
-              name="chevron-back-outline"
-              size={35}
-              color={theme.whiteWith07OpacityColor}
-            />
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={onPressPlayVideo}
-            underlayColor={theme.overlayColor}
-            style={Styles.center}>
-            <MaterialIcons
-              name="play-arrow"
-              size={150}
-              color={theme.whiteWith07OpacityColor}
-              style={Styles.center}
-            />
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={onShare}
-            underlayColor={theme.overlayColor}>
-            <Feather
-              name="share"
-              size={30}
-              color={theme.whiteWith07OpacityColor}
-            />
-          </TouchableHighlight>
-        </View>
-      </FastImage>
-      <Title name={item.title} subtitle={item.subtitle} />
+      {showPreview ? (
+        <FastImage
+          style={[
+            styles.videoContainer,
+            Styles.fillRow,
+            {backgroundColor: theme.backgroundColor},
+          ]}
+          source={{uri: item.imageUrl}}>
+          <View
+            style={{
+              ...Styles.fillRowBetween,
+              backgroundColor: theme.blackWith05OpacityColor,
+            }}>
+            <TouchableHighlight
+              onPress={dismiss}
+              underlayColor={theme.overlayColor}>
+              <Ionicons
+                name="chevron-back-outline"
+                size={35}
+                color={theme.whiteWith07OpacityColor}
+              />
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={onPressPlayVideo}
+              underlayColor={theme.overlayColor}
+              style={Styles.center}>
+              <MaterialIcons
+                name="play-arrow"
+                size={150}
+                color={theme.whiteWith07OpacityColor}
+                style={Styles.center}
+              />
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={onShare}
+              underlayColor={theme.overlayColor}>
+              <Feather
+                name="share"
+                size={30}
+                color={theme.whiteWith07OpacityColor}
+              />
+            </TouchableHighlight>
+          </View>
+        </FastImage>
+      ) : undefined}
+      {showPreview ? (
+        <Title name={item.title} subtitle={item.subtitle} />
+      ) : (
+        <MaterialIcons.Button
+          name="expand-more"
+          size={20}
+          backgroundColor={theme.themeColor}
+          onPress={showPreviewTitle}
+          style={styles.previewButton}
+          color={theme.primaryTextColor}>
+          <Title name={item.title} subtitle={item.subtitle} />
+        </MaterialIcons.Button>
+      )}
       <Author
-        instructor={item.instructor}
-        onPress={() => onPressAuthor(item.instructor)}
+        instructor={item.instructor || itemCourse.instructor}
+        onPress={() => onPressAuthor(item.instructor || itemCourse.instructor)}
       />
       <InfoCourse
-        videoNumber={item.videoNumber}
-        timeToStart={item.createdAt}
-        totalHour={item.totalHours}
-        totalRate={item.ratedNumber}
-        rate={Number(item.averagePoint)}
-        soldNumber={item.soldNumber}
-        updatedAt={item.updatedAt}
+        videoNumber={item.videoNumber || itemCourse.videoNumber}
+        timeToStart={item.createdAt || itemCourse.createdAt}
+        totalHour={item.totalHours || itemCourse.totalHours}
+        totalRate={item.ratedNumber || itemCourse.ratedNumber}
+        rate={Number(item.averagePoint || itemCourse.averagePoint)}
+        soldNumber={item.soldNumber || itemCourse.soldNumber}
+        updatedAt={item.updatedAt || itemCourse.updatedAt}
       />
-      <Feature
-        isLike={isLike}
-        isOwnCourse={isOwn}
-        onPressLike={onPressLike}
-        onPressJoin={onPressJoin}
-        id={item.id}
-      />
+      {showPreview ? (
+        <Feature
+          isLike={isLike}
+          isOwnCourse={isOwn}
+          onPressLike={onPressLike}
+          onPressJoin={onPressJoin}
+          id={item.id || itemCourse.id}
+        />
+      ) : undefined}
       <WhatLearn
-        WhatLearnItem={item.learnWhat}
-        requireItem={item.requirement}
-        description={item.description}
+        WhatLearnItem={item.learnWhat || itemCourse.learnWhat}
+        requireItem={item.requirement || itemCourse.requirement}
+        description={item.description || itemCourse.description}
       />
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
         The same topic
       </Text>
       <ListCourseHorizontal
-        data={item.coursesLikeCategory}
+        data={item.coursesLikeCategory || itemCourse.coursesLikeCategory}
         navigation={navigation}
         route={route}
       />
       <ProfileAuthor
-        data={item.instructor}
-        onPress={() => onPressAuthor(item.instructor)}
+        data={item.instructor || itemCourse.instructor}
+        onPress={() => onPressAuthor(item.instructor || itemCourse.instructor)}
       />
 
       <StudentFeedBack
@@ -251,20 +292,20 @@ const Header = (props) => {
         ratings={item.ratings}
         onPress={() =>
           onPressStudentFeedback(
-            item.ratings,
-            item.averagePoint,
-            item.contentPoint,
-            item.presentationPoint,
-            item.formalityPoint,
-            item.id,
+            item.ratings || itemCourse.ratings,
+            item.averagePoint || itemCourse.averagePoint,
+            item.contentPoint || itemCourse.contentPoint,
+            item.presentationPoint || itemCourse.presentationPoint,
+            item.formalityPoint || itemCourse.formalityPoint,
+            item.id || itemCourse.id,
           )
         }
       />
-      <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-        Curriculum
-      </Text>
-      {/* <LearningCheck /> */}
-      {/* <SegmentControl /> */}
+      {showPreview ? (
+        <Text style={[styles.title, {color: theme.primaryTextColor}]}>
+          Curriculum
+        </Text>
+      ) : undefined}
     </View>
   );
 };

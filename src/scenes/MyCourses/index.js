@@ -42,7 +42,7 @@ const ListCourse = (props) => {
 
   return (
     <SafeAreaView
-      style={[styles.safeAreaView, {backgroundColor: theme.backgroundColor}]}>
+      style={[styles.safeAreaView, {backgroundColor: theme.themeColor}]}>
       <FlatList
         data={data}
         image

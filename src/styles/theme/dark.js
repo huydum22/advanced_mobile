@@ -17,6 +17,7 @@ const darkTheme = {
   backgroundSeeAllButton: '#34353E',
   whiteColor: '#FFFFFF',
   DialogColor: '#363741',
+  itemColor: '#363741',
 
   // ACTIONS
   StudentColor: '#9b59b6',
