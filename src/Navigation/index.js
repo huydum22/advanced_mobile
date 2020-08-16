@@ -52,7 +52,7 @@ const RootScreen = () => {
 };
 const Navigation = () => {
   const {theme} = useContext(ThemeContext);
-  const {loginProvider} = useContext(AuthenticationContext);
+  const {loginProvider, loginGGProvider} = useContext(AuthenticationContext);
 
   const {getItem} = useAsyncStorage('@userToken');
 
@@ -60,10 +60,18 @@ const Navigation = () => {
     const item = await getItem();
     const jsonValue = JSON.parse(item);
     if (item !== null) {
-      try {
-        return await loginProvider(jsonValue.email, jsonValue.password);
-      } catch ({response}) {
-        console.log(response);
+      if (jsonValue.id) {
+        try {
+          return await loginGGProvider(jsonValue.email, jsonValue.id);
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        try {
+          return await loginProvider(jsonValue.email, jsonValue.password);
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
   };

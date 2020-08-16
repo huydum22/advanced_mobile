@@ -1,5 +1,5 @@
 import {API} from '../../services';
-import {LOGIN} from '../../Constants/API';
+import {LOGIN, LOGIN_GOOGLE} from '../../Constants/API';
 import {useAsyncStorage} from '@react-native-community/async-storage';
 
 export const actionTypes = {
@@ -41,6 +41,25 @@ export const loginAction = (dispatch) => async (email, password) => {
     }
   } catch ({response}) {
     dispatch(loginError(response.data));
+  }
+};
+export const loginGGAction = (dispatch) => async (email, id) => {
+  dispatch(loginRequest());
+  try {
+    const data = {
+      user: {
+        email: email,
+        id: id,
+      },
+    };
+    const response = await API.post(LOGIN_GOOGLE, data);
+    if (response.isSuccess) {
+      dispatch(loginSuccess(response.data));
+    } else {
+      dispatch(loginError(response.data));
+    }
+  } catch (err) {
+    dispatch(loginError(err));
   }
 };
 

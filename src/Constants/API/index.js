@@ -1,6 +1,7 @@
 export const API_URL = 'https://api.itedu.me';
 
 export const LOGIN = 'user/login';
+export const LOGIN_GOOGLE = 'user/login-google-mobile';
 export const REGISTER = 'user/register';
 export const SEND_EMAIL_ACTIVE = 'user/send-activate-email';
 export const FORGOT_PASSWORD = 'user/forget-pass/send-email';

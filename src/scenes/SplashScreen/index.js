@@ -15,6 +15,7 @@ const SplashScreen = (props) => {
   const {setListCategory} = useContext(CategoryContext);
   const getData = async () => {
     const item = await getItem();
+
     if (item !== null) {
       setTimeout(
         () =>
@@ -23,8 +24,6 @@ const SplashScreen = (props) => {
           }),
         2000,
       );
-
-      // value previously stored
     } else {
       setTimeout(
         () =>

@@ -25,7 +25,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {GoogleSignin, statusCodes} from 'react-native-google-signin';
 const Login = (props) => {
   const {navigation, route} = props;
-  const {state, loginProvider} = useContext(AuthenticationContext);
+  const {state, loginProvider, loginGGProvider} = useContext(
+    AuthenticationContext,
+  );
   const {setItem} = useAsyncStorage('@userToken');
   const [email, setEmail] = useState(route.params.email);
   const [password, setPassword] = useState(route.params.password);
@@ -35,23 +37,37 @@ const Login = (props) => {
     values: {},
     isLoading: false,
   });
-
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '975229274473-erin9kavni380rv8skf4ob2j8pko7rr3.apps.googleusercontent.com',
+    });
+  }, []);
+  useEffect(() => {
+    if (state.token) {
+      navigation.replace(screenName.AppTab, {
+        screen: screenName.HomeScreenName,
+      });
+    }
+    if (state.token === null && state.message !== '') {
+      Alert.alert(state.message);
+    }
+  }, [state, navigation]);
   const gg_signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const {accessToken, idToken} = await GoogleSignin.signIn();
+      const {user} = await GoogleSignin.signIn();
+      loginGGProvider(user.email, user.id);
+      let value = {email: user.email, id: user.id};
+      storeData(value);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-        Alert.alert('Cancel');
+        console.log('Cancel');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        Alert.alert('Signin in progress');
-        // operation (f.e. sign in) is in progress already
+        console.log('Signin in progress');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        Alert.alert('PLAY_SERVICES_NOT_AVAILABLE');
-        // play services not available or outdated
+        console.log('PLAY_SERVICES_NOT_AVAILABLE');
       } else {
-        // some other error happened
       }
     }
   };
@@ -83,28 +99,18 @@ const Login = (props) => {
   const onChangePassword = (pass) => {
     setPassword(pass);
   };
-
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await setItem(jsonValue);
+    } catch (e) {
+      // saving error
+    }
+  };
   const handleLogin = async () => {
-    const storeData = async (value) => {
-      try {
-        const jsonValue = JSON.stringify(value);
-        await setItem(jsonValue);
-      } catch (e) {
-        // saving error
-      }
-    };
     loginProvider(email, password);
-    if (state.token) {
-      let value = {email: email, password: password};
-      storeData(value);
-      // userProvider(setToken);
-      navigation.replace(screenName.AppTab, {
-        screen: screenName.HomeScreenName,
-      });
-    }
-    if (state.token === null && state.message !== '') {
-      Alert.alert(state.message);
-    }
+    let value = {email: email, password: password};
+    storeData(value);
   };
 
   const onPressForgotPassWord = () => {
@@ -114,31 +120,18 @@ const Login = (props) => {
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.Ios ? 'padding' : 'height'}>
-      <TouchableHighlight
+      <Ionicons.Button
+        name="logo-google"
+        color={Colors.whiteColor}
+        backgroundColor="white"
+        onPress={gg_signIn}
+        underlayColor="rgba(0,0,0,0)"
         style={[
           styles.socialSignInContainer,
           {backgroundColor: Colors.googleBackground},
-        ]}
-        onPress={gg_signIn}>
-        <View style={Styles.rowCenter}>
-          <Ionicons name="logo-google" size={35} color={Colors.whiteColor} />
-          <Text style={[styles.textSocialSignIn, {color: Colors.whiteColor}]}>
-            sign in with Google
-          </Text>
-        </View>
-      </TouchableHighlight>
-      {/* <TouchableHighlight
-        style={[
-          styles.socialSignInContainer,
-          {backgroundColor: Colors.facebookBackground},
         ]}>
-        <View style={Styles.rowCenter}>
-          <Ionicons name="logo-facebook" size={35} color={Colors.whiteColor} />
-          <Text style={[styles.textSocialSignIn, {color: Colors.whiteColor}]}>
-            sign in with Facebook
-          </Text>
-        </View>
-      </TouchableHighlight> */}
+        sign in with Google
+      </Ionicons.Button>
       <FormInput
         placeholder=" Email Address"
         value={email}
