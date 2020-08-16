@@ -5,17 +5,19 @@ import {ThemeContext} from '../../../../Provider/Theme';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FastImage from 'react-native-fast-image';
 import {PrimaryButton} from '../../../Authentication';
+import {LocalizeContext} from '../../../../Provider/Localize';
 
 const ProfileAuthor = (props) => {
   const {data, onPress} = props;
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   return (
     <View style={Styles.fillColumnStart}>
       <View style={[styles.divide, {backgroundColor: theme.DialogColor}]} />
       {data ? (
         <View>
           <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-            Created by {data.name || data.email}
+            {localize.detailCreated} {data.name || data.email}
           </Text>
           <View style={[Styles.fillRowStart, BoxModel.marginHorizontal]}>
             <FastImage
@@ -33,7 +35,7 @@ const ProfileAuthor = (props) => {
                 />
                 <Text
                   style={[styles.linkText, {color: theme.primaryTextColor}]}>
-                  {data.soldNumber} Students
+                  {data.soldNumber} {localize.student}
                 </Text>
               </View>
               <View style={styles.link}>
@@ -44,7 +46,7 @@ const ProfileAuthor = (props) => {
                 />
                 <Text
                   style={[styles.linkText, {color: theme.primaryTextColor}]}>
-                  {data.totalCourse} Courses
+                  {data.totalCourse} {localize.course}
                 </Text>
               </View>
               <View style={styles.link}>
@@ -55,7 +57,7 @@ const ProfileAuthor = (props) => {
                 />
                 <Text
                   style={[styles.linkText, {color: theme.primaryTextColor}]}>
-                  {data.averagePoint.toFixed(1)} Average Rating
+                  {data.averagePoint.toFixed(1)} {localize.detailAverage}
                 </Text>
               </View>
             </View>
@@ -63,7 +65,7 @@ const ProfileAuthor = (props) => {
         </View>
       ) : undefined}
       <PrimaryButton
-        title="View Profile"
+        title={localize.detailProfile}
         onPress={() => onPress(data)}
         active={true}
         icon="user"
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
     height: 1,
   },
   buttonContainer: {
-    width: Size.scaleSize(150),
+    width: Size.scaleSize(200),
     height: Size.scaleSize(40),
     alignSelf: 'center',
     justifyContent: 'center',

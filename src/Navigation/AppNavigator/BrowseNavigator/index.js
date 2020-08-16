@@ -5,10 +5,12 @@ import * as screenName from '../../../Constants/ScreenName';
 import * as scenes from '../../../scenes';
 import {ThemeContext} from '../../../Provider/Theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {LocalizeContext} from '../../../Provider/Localize';
 const BrowseStack = createStackNavigator();
 
 const BrowseNavigatorStack = () => {
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   return (
     <BrowseStack.Navigator
       screenOptions={{
@@ -20,7 +22,7 @@ const BrowseNavigatorStack = () => {
           ...Typography.fontBold,
           fontSize: Typography.fontSize20,
         },
-        headerBackTitle: '', 
+        headerBackTitle: '',
         headerBackTitleVisible: false,
         headerBackImage: () => (
           <Ionicons
@@ -34,30 +36,20 @@ const BrowseNavigatorStack = () => {
       <BrowseStack.Screen
         name={screenName.BrowseScreenName}
         component={scenes.Browse}
-        options={{title: 'Favorite'}}
+        options={{title: localize.favoriteTitle}}
       />
       <BrowseStack.Screen
         name={screenName.ShowListCourseScreenName}
         component={scenes.ListOfCourse}
         initialParams={{
-          title: 'Course',
+          title: localize.course,
         }}
         options={({route}) => ({title: route.params.title})}
       />
       <BrowseStack.Screen
         name={screenName.AuthorDetailScreenName}
         component={scenes.AuthorDetail}
-        options={{title: 'Author'}}
-      />
-      <BrowseStack.Screen
-        name={screenName.PopularSkillScreenName}
-        component={scenes.PopularSkill}
-        options={{title: 'Popular skill'}}
-      />
-      <BrowseStack.Screen
-        name={screenName.RelateSkillScreenName}
-        component={scenes.RelateSkill}
-        options={{title: 'Skill'}}
+        options={{title: localize.searchAuthor}}
       />
       <BrowseStack.Screen
         name={screenName.CourseDetailScreenName}

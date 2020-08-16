@@ -8,11 +8,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {API} from '../../../services';
 import {LIKE_STATUS, LIKE_COURSE} from '../../../Constants/API';
 import {AuthenticationContext} from '../../../Provider/Authentication';
+import {LocalizeContext} from '../../../Provider/Localize';
 const MoreView = (props) => {
   const {theme} = useContext(ThemeContext);
   const {itemCourse} = useContext(LessonContext);
   const {state} = useContext(AuthenticationContext);
   const [isLike, setLike] = useState(false);
+  const {localize} = useContext(LocalizeContext);
   useEffect(() => {
     const checkLikeStatus = async () => {
       try {
@@ -106,13 +108,12 @@ const MoreView = (props) => {
   };
   return (
     <ScrollView style={{backgroundColor: theme.themeColor}}>
-      {renderRow('Download course', 'file-download')}
-      {renderRow('About this course', 'info-outline')}
-      {renderRow('Share this course', 'share', onPressShareCourse)}
-      {renderRow('Notes', 'library-books')}
-      {renderRow('Resources', 'dns')}
+      {renderRow(localize.lessonDownload, 'file-download')}
+      {renderRow(localize.lessonShare, 'share', onPressShareCourse)}
+      {renderRow(localize.lessonNote, 'library-books')}
+      {renderRow(localize.lessonResource, 'dns')}
       {renderRow(
-        isLike ? 'Remove course From favorites' : 'Add course to favorites',
+        isLike ? localize.lessonReFav : localize.lessonAddFav,
         'star-border',
         onPressLike,
         isLike,

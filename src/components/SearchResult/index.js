@@ -7,10 +7,13 @@ import CourseResult from './Course';
 import AuthorResult from './Author';
 import * as screenName from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
+import {LocalizeContext} from '../../Provider/Localize';
 const Tab = createMaterialTopTabNavigator();
 
 const SearchResultTopTab = (props) => {
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
+  const {searchAll, searchCourse, searchAuthor} = localize;
   return (
     <Tab.Navigator
       initialRouteName={screenName.SearchAllScreenName}
@@ -28,17 +31,17 @@ const SearchResultTopTab = (props) => {
       <Tab.Screen
         name={screenName.SearchAllScreenName}
         component={AllResult}
-        options={{tabBarLabel: 'All'}}
+        options={{tabBarLabel: searchAll}}
       />
       <Tab.Screen
         name={screenName.SearchCourseScreenName}
         component={CourseResult}
-        options={{tabBarLabel: 'Course'}}
+        options={{tabBarLabel: searchCourse}}
       />
       <Tab.Screen
         name={screenName.SearchAuthorScreenName}
         component={AuthorResult}
-        options={{tabBarLabel: 'Author'}}
+        options={{tabBarLabel: searchAuthor}}
       />
     </Tab.Navigator>
   );

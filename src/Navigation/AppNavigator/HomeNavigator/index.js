@@ -9,12 +9,13 @@ import {Size, Typography, Distance, Styles} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 import {AuthenticationContext} from '../../../Provider/Authentication';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {LocalizeContext} from '../../../Provider/Localize';
 const HomeStack = createStackNavigator();
 
 const HomeNavigatorStack = () => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
-
+  const {localize} = useContext(LocalizeContext);
   const avatarHomeBar = useMemo(
     () => (
       <FastImage
@@ -54,7 +55,7 @@ const HomeNavigatorStack = () => {
         name={screenName.HomeScreenName}
         component={scenes.Home}
         options={({navigation}) => ({
-          title: 'Home',
+          title: localize.homeTitle,
           headerRight: () => (
             <TouchableHighlight
               onPress={() => {
@@ -85,34 +86,30 @@ const HomeNavigatorStack = () => {
         name={screenName.ShowListCourseScreenName}
         component={scenes.ListOfCourse}
         initialParams={{
-          title: 'Course',
+          title: localize.course,
         }}
         options={({route}) => ({title: route.params.title})}
       />
       <HomeStack.Screen
         name={screenName.ProfileScreenName}
         component={scenes.Profile}
-        options={{title: 'Profile'}}
+        options={{title: localize.profileTitle}}
       />
       <HomeStack.Screen
         name={screenName.ChangePasswordScreenName}
         component={scenes.ChangePassword}
-        options={{title: 'Change Password'}}
+        options={{title: localize.profilePassword}}
       />
       <HomeStack.Screen
         name={screenName.UpdateProfileScreenName}
         component={scenes.UpdateProfile}
-        options={{title: 'Update Profile'}}
+        options={{title: localize.profileUpdate}}
       />
-      <HomeStack.Screen
-        name={screenName.ThemeScreenName}
-        component={scenes.Theme}
-        options={{title: 'Theme'}}
-      />
+
       <HomeStack.Screen
         name={screenName.OtherSettingScreenName}
         component={scenes.OtherSetting}
-        options={{title: 'Other Settings'}}
+        options={{title: localize.profileOtherSetting}}
       />
       <HomeStack.Screen
         name={screenName.CourseDetailScreenName}
@@ -134,12 +131,12 @@ const HomeNavigatorStack = () => {
       <HomeStack.Screen
         name={screenName.WriteFeedBackScreen}
         component={scenes.WriteFeedBack}
-        options={{title: 'Write your feedback'}}
+        options={{title: localize.feedback}}
       />
       <HomeStack.Screen
         name={screenName.AuthorDetailScreenName}
         component={scenes.AuthorDetail}
-        options={{title: 'Author'}}
+        options={{title: localize.searchAuthor}}
       />
     </HomeStack.Navigator>
   );

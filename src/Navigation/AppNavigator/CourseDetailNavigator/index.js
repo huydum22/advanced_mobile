@@ -6,10 +6,12 @@ import {Typography} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 import {LessonProvider} from '../../../Provider/LessonCourse';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {LocalizeContext} from '../../../Provider/Localize';
 const LessonCourseStack = createStackNavigator();
 const LessonCourseNavigatorStack = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   return (
     <LessonProvider>
       <LessonCourseStack.Navigator
@@ -47,7 +49,7 @@ const LessonCourseNavigatorStack = (props) => {
         <LessonCourseStack.Screen
           name={screenName.AuthorDetailScreenName}
           component={scenes.AuthorDetail}
-          options={{title: 'Author'}}
+          options={{title: localize.searchAuthor}}
         />
         <LessonCourseStack.Screen
           name={screenName.ForumQuestion}

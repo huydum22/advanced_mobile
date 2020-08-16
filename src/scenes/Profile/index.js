@@ -21,10 +21,20 @@ import {Item} from '../../components/AccountManagement';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import FastImage from 'react-native-fast-image';
+import {LocalizeContext} from '../../Provider/Localize';
 const Account = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
   const {navigation, route} = props;
+  const {localize} = useContext(LocalizeContext);
+  const {
+    profileTitle,
+    profileSetting,
+    profileUpdate,
+    profilePassword,
+    profileCate,
+    profileOtherSetting,
+  } = localize;
   const onPressChangePassword = () => {
     navigation.navigate(screen.ChangePasswordScreenName);
   };
@@ -62,27 +72,27 @@ const Account = (props) => {
         </View>
 
         <Text style={[styles.headerTitleText, {color: theme.primaryTextColor}]}>
-          Account Settings
+          {profileSetting}
         </Text>
         <View style={styles.divider} />
         <Item
           icon="account-box"
-          name="Update Profile"
+          name={profileUpdate}
           onPress={onPressUpdateProfile}
         />
         <Item
           icon="lock"
-          name="Change Password"
+          name={profilePassword}
           onPress={onPressChangePassword}
         />
         <Item
           icon="favorite-border"
-          name="Update Your Favorite Categories"
+          name={profileCate}
           onPress={onPressLocation}
         />
         <Item
           icon="settings"
-          name="Other Settings"
+          name={profileOtherSetting}
           onPress={onPressOtherSetting}
         />
         <View style={styles.divider} />

@@ -9,12 +9,17 @@ import {useAsyncStorage} from '@react-native-community/async-storage';
 import {ALL_CATEGORY} from '../../Constants/API';
 import {API} from '../../services';
 import {ThemeContext} from '../../Provider/Theme';
+import {LocalizeContext} from '../../Provider/Localize';
+import {vn, en} from '../../Constants/localize';
 const SplashScreen = (props) => {
   const {navigation} = props;
   const {getItem} = useAsyncStorage('@userToken');
   const {setListCategory} = useContext(CategoryContext);
   const {setTheme} = useContext(ThemeContext);
+  const {localize, setLocalize} = useContext(LocalizeContext);
   const getDarkMode = useAsyncStorage('@setTheme');
+  const setLanguage = useAsyncStorage('@setLanguage');
+
   const getTheme = async () => {
     const item = await getDarkMode.getItem();
     const jsonValue = JSON.parse(item);
@@ -26,6 +31,20 @@ const SplashScreen = (props) => {
       }
     } else {
       setTheme(lightTheme);
+    }
+  };
+  const getEng = async () => {
+    const item = await setLanguage.getItem();
+    const jsonValue = JSON.parse(item);
+    console.log(jsonValue);
+    if (jsonValue) {
+      if (jsonValue.en) {
+        setLocalize(en);
+      } else {
+        setLocalize(vn);
+      }
+    } else {
+      setLocalize(vn);
     }
   };
   const getData = async () => {
@@ -63,6 +82,7 @@ const SplashScreen = (props) => {
     getData();
     fetchCategory();
     getTheme();
+    getEng();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

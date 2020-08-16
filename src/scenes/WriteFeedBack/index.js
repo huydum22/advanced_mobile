@@ -9,6 +9,7 @@ import {themeColor} from '../../styles/Color/color';
 import {PrimaryButton, FormInput} from '../../components/Authentication';
 import {API} from '../../services';
 import {RATE_COURSE} from '../../Constants/API';
+import {LocalizeContext} from '../../Provider/Localize';
 const WriteFeedBack = (props) => {
   const {route, navigation} = props;
   const [feedback, setFeedback] = useState('');
@@ -17,6 +18,7 @@ const WriteFeedBack = (props) => {
   const [formality, setFormality] = useState(3);
   const {state} = useContext(AuthenticationContext);
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   const onChangeFeedback = (text) => {
     setFeedback(text);
   };
@@ -43,7 +45,7 @@ const WriteFeedBack = (props) => {
   return (
     <ScrollView style={{backgroundColor: themeColor}}>
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-        Your Feedback
+        {localize.feedbackYour}
       </Text>
       <View style={[BoxModel.smallMarginHorizontal, Styles.fillRowBetween]}>
         <View style={[Styles.fillRowStart, Styles.center]}>
@@ -51,7 +53,7 @@ const WriteFeedBack = (props) => {
           <Text
             style={[Typography.fontRegular, {fontSize: Typography.fontSize20}]}>
             {' '}
-            Content
+            {localize.feedbackContent}
           </Text>
         </View>
         <StarRating
@@ -70,7 +72,7 @@ const WriteFeedBack = (props) => {
           <Text
             style={[Typography.fontRegular, {fontSize: Typography.fontSize20}]}>
             {' '}
-            Presentation
+            {localize.feedbackPresent}
           </Text>
         </View>
         <StarRating
@@ -89,7 +91,7 @@ const WriteFeedBack = (props) => {
           <Text
             style={[Typography.fontRegular, {fontSize: Typography.fontSize20}]}>
             {' '}
-            Formality
+            {localize.feedbackFormal}
           </Text>
         </View>
         <StarRating
@@ -103,14 +105,14 @@ const WriteFeedBack = (props) => {
         />
       </View>
       <FormInput
-        placeholder="Your feedback"
+        placeholder={localize.feedbackContent}
         value={feedback}
         onChangeText={onChangeFeedback}
         autoCorrect={false}
         returnKeyType={'done'}
       />
       <PrimaryButton
-        title="Submit"
+        title={localize.feedbackSubmit}
         onPress={writeFeedBack}
         active={true}
         icon="send"

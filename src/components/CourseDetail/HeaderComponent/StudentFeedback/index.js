@@ -7,24 +7,26 @@ import {PrimaryButton} from '../../../Authentication';
 import {Bar} from 'react-native-progress';
 import RatingComponent from '../RatingComponent';
 import StarRating from 'react-native-star-rating';
+import {LocalizeContext} from '../../../../Provider/Localize';
 
 const StudentFeedback = (props) => {
   const {ratings, onPress, averagePoint} = props;
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   return (
     <View style={[Styles.fillColumnStart, BoxModel.marginVertical]}>
       <View style={[styles.divide, {backgroundColor: theme.DialogColor}]} />
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-        Student feedback
+        {localize.detailStudent}
       </Text>
       {averagePoint ? (
         <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-          {Number(averagePoint)} average rating
+          {Number(averagePoint)} {localize.detailAverage}
         </Text>
       ) : undefined}
       {ratings ? <RatingComponent ratings={ratings} /> : undefined}
       <PrimaryButton
-        title="See All Feedback"
+        title={localize.detailAllFeed}
         onPress={() => onPress(ratings)}
         active={true}
         icon="star-o"

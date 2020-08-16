@@ -13,57 +13,60 @@ import {ThemeContext} from '../../Provider/Theme';
 import {BookmarkProvider} from '../../Provider/Bookmark';
 import {MyChannelProvider} from '../../Provider/MyChannel';
 import {MyPathProvider} from '../../Provider/MyPath';
+import {LocalizeContext} from '../../Provider/Localize';
 const Tab = createBottomTabNavigator();
 
-const searchIcon = ({color}) => (
-  <FontAwesome name="search" size={22} color={color} />
-);
-const browseIcon = ({color}) => (
-  <FontAwesome name="star-o" size={22} color={color} />
-);
-const homeIcon = ({color}) => (
-  <MaterialIcons name="home" size={22} color={color} />
-);
-const MyCourseIcon = ({color}) => (
-  <FontAwesome5 name="tasks" size={22} color={color} />
-);
-function getTabBarVisible(route) {
-  const routeName = route.state
-    ? route.state.routes[route.state.index].name
-    : route.params?.screen || 'home';
-
-  if (routeName === 'courseDetail') {
-    return false;
-  }
-  return true;
-}
-const configHomeTab = ({route}) => ({
-  tabBarVisible: getTabBarVisible(route),
-  tabBarLabel: 'Home',
-  tabBarIcon: homeIcon,
-});
-
-const configBrowseTab = ({route}) => ({
-  tabBarLabel: 'Favorite',
-  tabBarIcon: browseIcon,
-  tabBarVisible: getTabBarVisible(route),
-});
-const configMyCourseTab = ({route}) => ({
-  tabBarLabel: 'My Course',
-  tabBarIcon: MyCourseIcon,
-  tabBarVisible: getTabBarVisible(route),
-});
-const configSearchTab = ({route}) => ({
-  tabBarLabel: 'Search',
-  tabBarIcon: searchIcon,
-  tabBarVisible: getTabBarVisible(route),
-});
-const configLabel = {
-  ...Typography.fontRegular,
-  fontSize: Typography.fontSize14,
-};
 const AppNavigator = () => {
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
+
+  const searchIcon = ({color}) => (
+    <FontAwesome name="search" size={22} color={color} />
+  );
+  const browseIcon = ({color}) => (
+    <FontAwesome name="star-o" size={22} color={color} />
+  );
+  const homeIcon = ({color}) => (
+    <MaterialIcons name="home" size={22} color={color} />
+  );
+  const MyCourseIcon = ({color}) => (
+    <FontAwesome5 name="tasks" size={22} color={color} />
+  );
+  function getTabBarVisible(route) {
+    const routeName = route.state
+      ? route.state.routes[route.state.index].name
+      : route.params?.screen || 'home';
+
+    if (routeName === 'courseDetail') {
+      return false;
+    }
+    return true;
+  }
+  const configHomeTab = ({route}) => ({
+    tabBarVisible: getTabBarVisible(route),
+    tabBarLabel: localize.homeTitle,
+    tabBarIcon: homeIcon,
+  });
+
+  const configBrowseTab = ({route}) => ({
+    tabBarLabel: localize.favoriteTitle,
+    tabBarIcon: browseIcon,
+    tabBarVisible: getTabBarVisible(route),
+  });
+  const configMyCourseTab = ({route}) => ({
+    tabBarLabel: localize.course,
+    tabBarIcon: MyCourseIcon,
+    tabBarVisible: getTabBarVisible(route),
+  });
+  const configSearchTab = ({route}) => ({
+    tabBarLabel: localize.searchTitle,
+    tabBarIcon: searchIcon,
+    tabBarVisible: getTabBarVisible(route),
+  });
+  const configLabel = {
+    ...Typography.fontRegular,
+    fontSize: Typography.fontSize14,
+  };
   return (
     <BookmarkProvider>
       <MyChannelProvider>

@@ -3,8 +3,11 @@ import {View, Text, StyleSheet} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Styles, BoxModel, Distance, Typography} from '../../../../styles';
 import {ThemeContext} from '../../../../Provider/Theme';
+import {LocalizeContext} from '../../../../Provider/Localize';
+
 const WhatLearn = (props) => {
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   const skillComponent = () => {
     if (props.WhatLearnItem) {
       return props.WhatLearnItem.map((item) => (
@@ -17,7 +20,7 @@ const WhatLearn = (props) => {
       ));
     } else {
       <Text style={[styles.linkText, {color: theme.primaryTextColor}]}>
-        (Not required)
+        {localize.detailNotRequire}
       </Text>;
     }
   };
@@ -33,7 +36,7 @@ const WhatLearn = (props) => {
       ));
     } else {
       <Text style={[styles.linkText, {color: theme.primaryTextColor}]}>
-        (Not required)
+        {localize.detailNotRequire}
       </Text>;
     }
   };
@@ -41,17 +44,17 @@ const WhatLearn = (props) => {
     <View>
       <View style={[styles.divide, {backgroundColor: theme.DialogColor}]} />
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-        What will you learn?
+        {localize.detailWhatLearn}
       </Text>
       {skillComponent()}
       <View style={[styles.divide, {backgroundColor: theme.DialogColor}]} />
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-        Requirements
+        {localize.detailRequire}
       </Text>
       {requirementComponent()}
       <View style={[styles.divide, {backgroundColor: theme.DialogColor}]} />
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-        Description
+        {localize.detailDescription}
       </Text>
       <Text style={[styles.description, {color: theme.primaryTextColor}]}>
         {props.description ? props.description : 'Not found'}

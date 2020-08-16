@@ -5,14 +5,16 @@ import * as screenName from '../../../Constants/ScreenName';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as scenes from '../../../scenes';
 import {ThemeContext} from '../../../Provider/Theme';
+import {LocalizeContext} from '../../../Provider/Localize';
 const MyCourseStack = createStackNavigator();
 
 const MyCourseNavigator = () => {
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   return (
     <MyCourseStack.Navigator
       screenOptions={{
-        title: 'My Courses',
+        title: localize.mycourseTitle,
         headerStyle: {
           backgroundColor: theme.themeColor,
         },

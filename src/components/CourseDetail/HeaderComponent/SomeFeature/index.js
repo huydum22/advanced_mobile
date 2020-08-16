@@ -3,15 +3,17 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Colors, Typography, Styles, BoxModel, Size} from '../../../../styles';
 import {ThemeContext} from '../../../../Provider/Theme';
 import {PrimaryButton} from '../../../Authentication';
+import {LocalizeContext} from '../../../../Provider/Localize';
 
 const Feature = (props) => {
   const {onPressLike, onPressJoin, isOwnCourse, isLike} = props;
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   const titlePrimary = () => {
     if (isOwnCourse.isUserOwnCourse) {
-      return 'Continue';
+      return localize.detailContinue;
     } else {
-      return 'Join Now';
+      return localize.detailJohn;
     }
   };
   return (
@@ -34,7 +36,7 @@ const Feature = (props) => {
       </View>
       <View style={styles.mainContainer}>
         <PrimaryButton
-          title={isLike ? 'Liked' : 'Like'}
+          title={isLike ? localize.detailLiked : localize.detailLike}
           onPress={onPressLike}
           active={true}
           icon="heart-o"

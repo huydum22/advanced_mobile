@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useAsyncStorage} from '@react-native-community/async-storage';
 
 const ThemeContext = React.createContext();
-import {lightTheme, darkTheme} from '../../styles';
+import {lightTheme} from '../../styles';
 const ThemeProvider = (props) => {
   const [theme, setTheme] = useState(lightTheme);
   return (

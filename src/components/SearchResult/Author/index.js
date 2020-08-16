@@ -8,10 +8,12 @@ import {ThemeContext} from '../../../Provider/Theme';
 import {Styles, Typography, BoxModel, Size} from '../../../styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {AuthorVerticalItem} from '../../Author';
+import {LocalizeContext} from '../../../Provider/Localize';
 const AuthorResultTopTab = (props) => {
   const {navigation} = props;
   const {searchData} = useContext(SearchContext);
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   const onPressAuthor = (item) => {
     navigation.navigate(screenName.AuthorDetailScreenName, {
       id: item.id,
@@ -33,14 +35,14 @@ const AuthorResultTopTab = (props) => {
               BoxModel.marginVertical,
               {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
             ]}>
-            No Matching Courses{' '}
+            {localize.searchErr}
           </Text>
           <Text
             style={[
               Typography.fontRegular,
               {fontSize: Typography.fontSize18, color: theme.grayColor},
             ]}>
-            Try another one
+            {localize.searchTry}
           </Text>
         </View>
       );

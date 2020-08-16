@@ -9,6 +9,7 @@ import {API} from '../../../services';
 import * as screenName from '../../../Constants/ScreenName';
 import {AuthenticationContext} from '../../../Provider/Authentication';
 import QuestionComponent from '../QuestionComponent';
+import {LocalizeContext} from '../../../Provider/Localize';
 const onPressAddQuestion = () => {};
 const onPressForumQuestion = () => {};
 
@@ -18,6 +19,7 @@ const QuestionView = (props) => {
   const {state} = useContext(AuthenticationContext);
   const [question, setQuestion] = useState({});
   const {navigation} = props;
+  const {localize} = useContext(LocalizeContext);
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
@@ -55,14 +57,14 @@ const QuestionView = (props) => {
     <ScrollView style={{backgroundColor: theme.themeColor}}>
       {questionContent()}
       <PrimaryButton
-        title="Forum Question"
+        title={localize.lessonForum}
         onPress={onPressForumQuestion}
         active={true}
         icon="star-o"
         style={[styles.buttonContainer, {backgroundColor: theme.primaryColor}]}
       />
       <SubPrimaryButton
-        title="Add Question"
+        title={localize.lessonAddQues}
         onPress={onPressAddQuestion}
         active={true}
         style={[

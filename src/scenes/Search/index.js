@@ -13,6 +13,7 @@ import {API} from '../../services';
 import p from 'pretty-format';
 import {useEffect} from 'react';
 import {AuthenticationContext} from '../../Provider/Authentication';
+import {LocalizeContext} from '../../Provider/Localize';
 const Search = (props) => {
   const insets = useSafeArea();
   const {navigation, route} = props;
@@ -21,7 +22,8 @@ const Search = (props) => {
   const [isDeleted, setDeleted] = useState(false);
   const [searchText, setSearchText] = useState('');
   const {state} = useContext(AuthenticationContext);
-
+  const {localize} = useContext(LocalizeContext);
+  const {searchHear, searchRecent} = localize;
   useEffect(() => {
     if (!isDeleted) {
       const fetchKeyword = async () => {
@@ -134,7 +136,7 @@ const Search = (props) => {
     };
     return (
       <SearchBar
-        placeholder="Search here..."
+        placeholder={searchHear}
         onChangeText={(search) => updateSearch(search)}
         value={searchText}
         lightTheme={true}
@@ -168,7 +170,7 @@ const Search = (props) => {
       {SearchBarHeader}
       <SectionList
         style={[styles.container, {backgroundColor: theme.backgroundColor}]}
-        sections={[{title: 'Recent searches', data: keyword}]}
+        sections={[{title: searchRecent, data: keyword}]}
         keyExtractor={(item, index) => item + index}
         showsVerticalScrollIndicator={false}
         renderSectionHeader={({section: {title}}) => renderHeader(title)}

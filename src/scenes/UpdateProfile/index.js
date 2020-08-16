@@ -20,6 +20,7 @@ import FastImage from 'react-native-fast-image';
 import ImagePicker from 'react-native-image-picker';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
+import {LocalizeContext} from '../../Provider/Localize';
 const UpdateProfile = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state, updateProfileProvider} = useContext(AuthenticationContext);
@@ -27,6 +28,7 @@ const UpdateProfile = (props) => {
   const [name, setName] = useState(state.userInfo.name);
   const [phoneNumber, setPhoneNumber] = useState(state.userInfo.phone);
   const [avatar, setAvatar] = useState(state.userInfo.avatar);
+  const {localize} = useContext(LocalizeContext);
   //   const [showPass, setShowPass] = useState(false);
   const {getItem, setItem} = useAsyncStorage('@userToken');
   useEffect(() => {
@@ -82,37 +84,15 @@ const UpdateProfile = (props) => {
         {backgroundColor: theme.backgroundColor},
       ]}
       behavior={Platform.Ios ? 'padding' : 'height'}>
-      {/* <TouchableHighlight
-        style={[
-          Styles.center,
-          BoxModel.bottomMargin,
-          {
-            width: Size.WIDTH,
-            height: Size.scaleSize(150),
-          },
-        ]}
-        underlayColor={theme.primaryBackgroundColor}
-        onPress={onPressAvatar}>
-        <FastImage
-          style={{
-            width: Size.scaleSize(150),
-            height: Size.scaleSize(150),
-            borderRadius: Size.scaleSize(75),
-          }}
-          source={{
-            uri: avatar,
-          }}
-        />
-      </TouchableHighlight> */}
       <FormInput
-        placeholder="Name"
+        placeholder={localize.name}
         value={name}
         onChangeText={onChangeName}
         autoCorrect={false}
         returnKeyType={'next'}
       />
       <FormInput
-        placeholder="Phone Number"
+        placeholder={localize.phoneNumber}
         value={phoneNumber}
         onChangeText={onChangePhoneNumber}
         autoCorrect={false}
@@ -120,7 +100,7 @@ const UpdateProfile = (props) => {
       />
 
       <PrimaryButton
-        title="Update Profile"
+        title={localize.profileUpdate}
         onPress={handleUpdateProfile}
         active={activeBtn}
       />

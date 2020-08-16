@@ -5,11 +5,13 @@ import {ThemeContext} from '../../Provider/Theme';
 import {BoxModel, Styles, Typography, Size} from '../../styles';
 import Moment from 'moment';
 import FastImage from 'react-native-fast-image';
+import {LocalizeContext} from '../../Provider/Localize';
 const onPressResponse = () => {};
 const ForumQuestion = (props) => {
   const {route} = props;
   const [itemQuestion] = useState(route.params.itemQuestion);
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   const getCorrectAnswer = () => {
     if (itemQuestion.forumAnswers) {
       return itemQuestion.forumAnswers.map((answer) => (
@@ -64,7 +66,7 @@ const ForumQuestion = (props) => {
                   Typography.fontBold,
                   {color: theme.whiteColor, fontSize: Typography.fontSize18},
                 ]}>
-                Answer
+                {localize.lessonAns}
               </Text>
             </View>
             <Text
@@ -73,7 +75,7 @@ const ForumQuestion = (props) => {
                 BoxModel.tinyMarginVertical,
                 {color: theme.grayColor, fontSize: Typography.fontSize16},
               ]}>
-              Update at {''}
+              {localize.updated} {''}
               {Moment(itemQuestion.forumAnswers.updatedAt).format(
                 'MMM DD, yyyy',
               )}

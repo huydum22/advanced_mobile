@@ -6,15 +6,29 @@ import {Item} from '../../components/AccountManagement';
 import {Styles, Size, darkTheme, lightTheme} from '../../styles';
 import * as screenName from '../../Constants/ScreenName';
 import {useAsyncStorage} from '@react-native-community/async-storage';
-
+import {LocalizeContext} from '../../Provider/Localize';
+import {vn, en} from '../../Constants/localize';
 const OtherSetting = (props) => {
   const {navigation, route} = props;
   const setDarkMode = useAsyncStorage('@setTheme');
+  const setLanguage = useAsyncStorage('@setLanguage');
 
   const {theme, setTheme} = useContext(ThemeContext);
+  const {localize, setLocalize} = useContext(LocalizeContext);
   const {state, logoutProvider} = useContext(AuthenticationContext);
   const {getItem} = useAsyncStorage('@userToken');
   const [dark, setDark] = useState(false);
+  const [eng, setEng] = useState(false);
+
+  const {
+    settingDarkMode,
+    settingFeedBack,
+    settingLanguage,
+    settingContact,
+    settingVersion,
+    settingAbout,
+    settingLogout,
+  } = localize;
   const onPressTheme = () => {
     navigation.navigate(screenName.ThemeScreenName);
   };
@@ -53,6 +67,27 @@ const OtherSetting = (props) => {
     };
     getTheme();
   }, []);
+  useEffect(() => {
+    const getEn = async () => {
+      const item = await setLanguage.getItem();
+      const jsonValue = JSON.parse(item);
+      setDark(false);
+      if (jsonValue) {
+        if (jsonValue.en) {
+          setEng(true);
+        }
+      }
+    };
+    getEn();
+  }, []);
+  const storeDataEn = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await setLanguage.setItem(jsonValue);
+    } catch (e) {
+      // saving error
+    }
+  };
   const storeData = async (value) => {
     try {
       const jsonValue = JSON.stringify(value);
@@ -78,7 +113,31 @@ const OtherSetting = (props) => {
         setTheme(darkTheme);
       }
     } else {
+      let value = {dark: false};
+      storeData(value);
       setTheme(lightTheme);
+    }
+  };
+  const switchEn = async () => {
+    const item = await setLanguage.getItem();
+    const jsonValue = JSON.parse(item);
+    console.log(jsonValue);
+    setEng(!eng);
+
+    if (jsonValue) {
+      if (jsonValue.en) {
+        let value = {en: false};
+        storeDataEn(value);
+        setLocalize(vn);
+      } else {
+        let value = {en: true};
+        storeDataEn(value);
+        setLocalize(en);
+      }
+    } else {
+      let value = {en: false};
+      storeDataEn(value);
+      setLocalize(vn);
     }
   };
   return (
@@ -89,8 +148,7 @@ const OtherSetting = (props) => {
       <View style={styles.mainContainer}>
         <Item
           icon="lightbulb-outline"
-          name="Dark mode"
-          // onPress={onPressTheme}
+          name={settingDarkMode}
           isSwitch={true}
           isEnabledSwitch={dark}
           toggleSwitch={switchTheme}
@@ -98,12 +156,20 @@ const OtherSetting = (props) => {
         {/* <Item icon="cloud-download" name="Download options" />
         <Item icon="view-stream" name="Streaming options" />
         <Item icon="videocam" name="Video playback options" /> */}
-        <Item icon="send" name="Send feedback" />
-        <Item icon="contact-mail" name="Contact support" />
-        <Item icon="apps" name="App version" />
-        <Item icon="info-outline" name="About us" />
         <Item
-          name="Log out"
+          icon="language"
+          name={settingLanguage}
+          isSwitch={true}
+          isEnabledSwitch={eng}
+          toggleSwitch={switchEn}
+        />
+
+        <Item icon="send" name={settingFeedBack} />
+        <Item icon="contact-mail" name={settingContact} />
+        <Item icon="apps" name={settingVersion} />
+        <Item icon="info-outline" name={settingAbout} />
+        <Item
+          name={settingLogout}
           onPress={() => {
             logoutProvider();
           }}

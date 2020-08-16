@@ -12,6 +12,7 @@ import SearchResultComponent from '../../components/SearchResult';
 import {SearchBar} from 'react-native-elements';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {SearchContext} from '../../Provider/Search';
+import {LocalizeContext} from '../../Provider/Localize';
 const SearchNavigator = (props) => {
   const {navigation, route} = props;
   const {searchData, setSearchData} = useContext(SearchContext);
@@ -20,6 +21,8 @@ const SearchNavigator = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
   const insets = useSafeArea();
+  const {localize} = useContext(LocalizeContext);
+  const {searchHear} = localize;
   useEffect(() => {
     const fetchDataByKeyword = async () => {
       try {
@@ -53,7 +56,7 @@ const SearchNavigator = (props) => {
   const SearchBarHeader = useMemo(() => {
     return (
       <SearchBar
-        placeholder="Search here..."
+        placeholder={searchHear}
         onChangeText={(search) => updateSearch(search)}
         value={searchText}
         lightTheme={true}

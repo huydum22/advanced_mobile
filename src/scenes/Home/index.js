@@ -29,6 +29,7 @@ import {
   INSTRUCTOR,
 } from '../../Constants/API';
 import p from 'pretty-format';
+import {LocalizeContext} from '../../Provider/Localize';
 const body = {
   limit: 7,
   offset: 0,
@@ -44,7 +45,7 @@ const Home = (props) => {
   const [state3, setState3] = useState([]);
   const [state4, setState4] = useState([]);
   const [listInstructor, setLIstInstructor] = useState([]);
-
+  const {localize} = useContext(LocalizeContext);
   const fetchDataState1 = async () => {
     try {
       let response = await API.post(TOP_NEW, body);
@@ -171,8 +172,8 @@ const Home = (props) => {
           onPress={onPressBanner}
         />
 
-        {renderItem('Recommended For You', state4.slice(0, 7), () =>
-          showListCourse(screenName.RecommendCourse, 'Recommended For you'),
+        {renderItem(localize.homeRecommend, state4.slice(0, 7), () =>
+          showListCourse(screenName.RecommendCourse, localize.homeRecommend),
         )}
         <View style={styles.titleContainer}>
           <Text
@@ -181,18 +182,18 @@ const Home = (props) => {
               Typography.fontBold,
               {color: theme.primaryTextColor, fontSize: Typography.fontSize20},
             ]}>
-            Categories
+            {localize.homeCategories}
           </Text>
         </View>
         <ListCategoryComponent onPress={onPressCategory} />
-        {renderItem('Best Seller', state2.slice(0, 7), () =>
-          showListCourse(screenName.BestSeller, 'Best Seller'),
+        {renderItem(localize.homeBestSeller, state2.slice(0, 7), () =>
+          showListCourse(screenName.BestSeller, localize.homeBestSeller),
         )}
-        {renderItem('Top Rating', state3.slice(0, 7), () =>
-          showListCourse(screenName.TopRating, 'Top Rating'),
+        {renderItem(localize.homeRating, state3.slice(0, 7), () =>
+          showListCourse(screenName.TopRating, localize.homeRating),
         )}
-        {renderItem('New Releases', state1.slice(0, 7), () =>
-          showListCourse(screenName.NewRelease, 'New Release'),
+        {renderItem(localize.homeNewRelease, state1.slice(0, 7), () =>
+          showListCourse(screenName.NewRelease, localize.homeNewRelease),
         )}
         <ListAuthorHorizontal
           data={listInstructor.slice(0, 7)}

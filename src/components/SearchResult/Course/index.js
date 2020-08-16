@@ -6,10 +6,12 @@ import {ThemeContext} from '../../../Provider/Theme';
 import {SearchContext} from '../../../Provider/Search';
 import * as screenName from '../../../Constants/ScreenName';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {LocalizeContext} from '../../../Provider/Localize';
 const CourseResultTopTab = (props) => {
   const {navigation} = props;
   const {theme} = useContext(ThemeContext);
   const {searchData} = useContext(SearchContext);
+  const {localize} = useContext(LocalizeContext);
   const flatListSeparator = () => {
     return (
       <View style={[Styles.separator, {backgroundColor: theme.DialogColor}]} />
@@ -29,14 +31,14 @@ const CourseResultTopTab = (props) => {
               BoxModel.marginVertical,
               {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
             ]}>
-            No Matching Courses{' '}
+            {localize.searchErr}
           </Text>
           <Text
             style={[
               Typography.fontRegular,
               {fontSize: Typography.fontSize18, color: theme.grayColor},
             ]}>
-            Try another one
+            {localize.searchTry}
           </Text>
         </View>
       );

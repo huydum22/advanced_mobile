@@ -8,6 +8,7 @@ import RatingComponent from '../../components/CourseDetail/HeaderComponent/Ratin
 import FeedbackItemComponent from '../../components/FeedBackItem';
 import {PrimaryButton} from '../../components/Authentication';
 import {WriteFeedBackScreen} from '../../Constants/ScreenName';
+import {LocalizeContext} from '../../Provider/Localize';
 const SeeFeedBack = (props) => {
   const {navigation, route} = props;
   const [ratings] = useState(route.params.params.item);
@@ -16,6 +17,7 @@ const SeeFeedBack = (props) => {
   const [presentationPoint] = useState(route.params.params.presentationPoint);
   const [formalityPoint] = useState(route.params.params.formalityPoint);
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   const feedbackContent = () => {
     if (ratings.ratingList) {
       return ratings.ratingList.map((itemFeedBack) => (
@@ -35,7 +37,7 @@ const SeeFeedBack = (props) => {
     <ScrollView style={{backgroundColor: theme.themeColor}}>
       <RatingComponent ratings={ratings} />
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-        {Number(averagePoint)} average rating
+        {Number(averagePoint)} {localize.detailAverage}
       </Text>
 
       <View style={[Styles.fillRowBetween, BoxModel.smallMarginHorizontal]}>
@@ -45,7 +47,8 @@ const SeeFeedBack = (props) => {
               Typography.fontRegular,
               {color: theme.primaryTextColor, fontSize: Typography.fontSize14},
             ]}>
-            Content: {contentPoint ? contentPoint.toFixed(2) : 0}
+            {localize.feedbackContent}:{' '}
+            {contentPoint ? contentPoint.toFixed(2) : 0}
           </Text>
           <StarRating
             disabled={false}
@@ -62,7 +65,8 @@ const SeeFeedBack = (props) => {
               Typography.fontRegular,
               {color: theme.primaryTextColor, fontSize: Typography.fontSize14},
             ]}>
-            Presentation: {presentationPoint ? presentationPoint.toFixed(2) : 0}
+            {localize.feedbackPresent}:{' '}
+            {presentationPoint ? presentationPoint.toFixed(2) : 0}
           </Text>
           <StarRating
             disabled={false}
@@ -79,7 +83,8 @@ const SeeFeedBack = (props) => {
               Typography.fontRegular,
               {color: theme.primaryTextColor, fontSize: Typography.fontSize14},
             ]}>
-            Formality: {formalityPoint ? formalityPoint.toFixed(2) : 0}
+            {localize.feedbackFormal}:{' '}
+            {formalityPoint ? formalityPoint.toFixed(2) : 0}
           </Text>
           <StarRating
             disabled={false}
@@ -92,14 +97,14 @@ const SeeFeedBack = (props) => {
         </View>
       </View>
       <PrimaryButton
-        title="Write your Feedback"
+        title={localize.feedback}
         onPress={writeFeedBack}
         active={true}
         icon="star-o"
         style={[styles.buttonContainer, {backgroundColor: theme.primaryColor}]}
       />
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-        Student feedback
+        {localize.detailStudent}
       </Text>
       {feedbackContent()}
     </ScrollView>

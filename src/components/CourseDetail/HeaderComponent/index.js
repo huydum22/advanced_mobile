@@ -27,6 +27,7 @@ import {API} from '../../../services';
 
 import {AuthenticationContext} from '../../../Provider/Authentication';
 import {ThemeContext} from '../../../Provider/Theme';
+import {LocalizeContext} from '../../../Provider/Localize';
 const Header = (props) => {
   const {
     item,
@@ -37,6 +38,7 @@ const Header = (props) => {
     courseID,
   } = props;
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   const {state} = useContext(AuthenticationContext);
   const [isOwn, setIsOwn] = useState({});
   const [isLike, setLike] = useState(false);
@@ -275,7 +277,7 @@ const Header = (props) => {
         description={item.description || itemCourse.description}
       />
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-        The same topic
+        {localize.detailSame}
       </Text>
       <ListCourseHorizontal
         data={item.coursesLikeCategory || itemCourse.coursesLikeCategory}
@@ -303,7 +305,7 @@ const Header = (props) => {
       />
       {showPreview ? (
         <Text style={[styles.title, {color: theme.primaryTextColor}]}>
-          Curriculum
+          {localize.detailCurriculum}
         </Text>
       ) : undefined}
     </View>

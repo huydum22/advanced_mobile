@@ -15,12 +15,13 @@ import {NOTE_ALL_LESSON} from '../../../Constants/API';
 import Moment from 'moment';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
+import {LocalizeContext} from '../../../Provider/Localize';
 const NoteView = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
   const {itemCourse} = useContext(LessonContext);
   const [allNote, setAllNote] = useState([]);
-
+  const {localize} = useContext(LocalizeContext);
   useEffect(() => {
     const fetchNote = async () => {
       try {
@@ -90,7 +91,7 @@ const NoteView = (props) => {
                     fontSize: Typography.fontSize16,
                   },
                 ]}>
-                Lesson {note.lessonNumberOrder} - {note.lessonName}
+                {localize.lesson} {note.lessonNumberOrder} - {note.lessonName}
               </Text>
             </View>
             <View
@@ -148,14 +149,14 @@ const NoteView = (props) => {
               Typography.fontBold,
               {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
             ]}>
-            There's nothing here yet
+            {localize.searchErr}
           </Text>
           <Text
             style={[
               Typography.fontRegular,
               {fontSize: Typography.fontSize14, color: theme.grayColor},
             ]}>
-            Tap create note to make your first note
+            {localize.searchTry}
           </Text>
         </View>
       ) : (

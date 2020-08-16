@@ -7,9 +7,11 @@ import StarRating from 'react-native-star-rating';
 
 import {ThemeContext} from '../../../../Provider/Theme';
 import Moment from 'moment';
+import {LocalizeContext} from '../../../../Provider/Localize';
 
 const InfoCourse = (props) => {
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   return (
     <View>
       <View style={styles.container}>
@@ -40,7 +42,7 @@ const InfoCourse = (props) => {
             color={theme.grayColor}
           />
           <Text style={[styles.text, {color: theme.grayColor}]}>
-            {props.totalHour} hours
+            {props.totalHour} {localize.hour}
           </Text>
         </View>
         <View
@@ -75,7 +77,7 @@ const InfoCourse = (props) => {
             color={theme.grayColor}
           />
           <Text style={[styles.text, {color: theme.grayColor}]}>
-            {props.soldNumber} Enrolled
+            {props.soldNumber} {localize.student}
           </Text>
         </View>
         <View
@@ -90,7 +92,7 @@ const InfoCourse = (props) => {
             color={theme.grayColor}
           />
           <Text style={[styles.text, {color: theme.grayColor}]}>
-            Updated {Moment(props.updatedAt).format('MMM DD, yyyy')}
+            {localize.updated} {Moment(props.updatedAt).format('MMM DD, yyyy')}
           </Text>
         </View>
       </View>

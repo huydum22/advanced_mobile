@@ -4,10 +4,12 @@ import {Styles, BoxModel, Typography, Size} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 import FastImage from 'react-native-fast-image';
 import Moment from 'moment';
+import {LocalizeContext} from '../../../Provider/Localize';
 
 const QuestionComponent = (props) => {
   const {theme} = useContext(ThemeContext);
   const {itemQuestion, onPressResponse} = props;
+  const {localize} = useContext(LocalizeContext);
   const getThemeUser = (title) => {
     switch (title) {
       case 'INSTRUCTOR':
@@ -90,8 +92,10 @@ const QuestionComponent = (props) => {
             BoxModel.margin,
             {color: theme.primaryColor, fontSize: Typography.fontSize14},
           ]}>
-          {itemQuestion.repliedNumber === 0 ? 'No' : itemQuestion.repliedNumber}{' '}
-          responses
+          {itemQuestion.repliedNumber === 0
+            ? localize.lessonNoResponse
+            : itemQuestion.repliedNumber}{' '}
+          {localize.lessonResponse}
         </Text>
       </TouchableHighlight>
       <View style={[styles.divide, {backgroundColor: theme.DialogColor}]} />

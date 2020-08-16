@@ -9,6 +9,7 @@ import {UPDATE_PASSWORD} from '../../Constants/API';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {API} from '../../services';
+import {LocalizeContext} from '../../Provider/Localize';
 const ChangePassword = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
@@ -17,6 +18,7 @@ const ChangePassword = (props) => {
   const [newPass, setNewPass] = useState('123456789');
   const [showPass, setShowPass] = useState(false);
   const {getItem, setItem} = useAsyncStorage('@userToken');
+  const {localize} = useContext(LocalizeContext);
   useEffect(() => {
     if (oldPass !== '' && newPass !== '') {
       setActiveBtn(true);
@@ -78,7 +80,7 @@ const ChangePassword = (props) => {
       ]}
       behavior={Platform.Ios ? 'padding' : 'height'}>
       <FormInput
-        placeholder="Old Password"
+        placeholder={localize.oldPass}
         value={oldPass}
         onChangeText={onChangePassword}
         autoCorrect={false}
@@ -86,7 +88,7 @@ const ChangePassword = (props) => {
         returnKeyType={'next'}
       />
       <FormInput
-        placeholder="New Password"
+        placeholder={localize.newPass}
         value={newPass}
         onChangeText={onChangeNewPassword}
         autoCorrect={false}
@@ -94,7 +96,7 @@ const ChangePassword = (props) => {
         returnKeyType={'done'}
       />
       <CheckBox
-        title="Show Password"
+        title={localize.showPass}
         checked={showPass}
         // eslint-disable-next-line react-native/no-inline-styles
         containerStyle={{backgroundColor: Colors.overlayColor, borderWidth: 0}}
@@ -102,7 +104,7 @@ const ChangePassword = (props) => {
         onPress={onPressShowPass}
       />
       <PrimaryButton
-        title="Change Password"
+        title={localize.profilePassword}
         onPress={handleChangePassWord}
         active={activeBtn}
       />

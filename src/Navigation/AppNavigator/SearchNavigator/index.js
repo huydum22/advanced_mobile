@@ -6,11 +6,12 @@ import {Typography, Size} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 import {SearchProvider} from '../../../Provider/Search';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {LocalizeContext} from '../../../Provider/Localize';
 
 const SearchStack = createStackNavigator();
 const SearchNavigatorStack = () => {
   const {theme} = useContext(ThemeContext);
-
+  const {localize} = useContext(LocalizeContext);
   const configNavigator = {
     headerStyle: {
       backgroundColor: theme.themeColor,
@@ -43,7 +44,7 @@ const SearchNavigatorStack = () => {
         <SearchStack.Screen
           name={screenName.AuthorDetailScreenName}
           component={scenes.AuthorDetail}
-          options={{title: 'Author'}}
+          options={{title: localize.searchAuthor}}
         />
         <SearchStack.Screen
           name={screenName.SearchResultScreenName}

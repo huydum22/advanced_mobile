@@ -15,12 +15,13 @@ import {LIST_EXERCISE} from '../../../Constants/API';
 import Moment from 'moment';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
+import {LocalizeContext} from '../../../Provider/Localize';
 const ExerciseView = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
   const {itemLesson} = useContext(LessonContext);
   const [allExercise, setAllExercise] = useState([]);
-
+  const {localize} = useContext(LocalizeContext);
   useEffect(() => {
     const fetchNote = async () => {
       try {
@@ -45,7 +46,6 @@ const ExerciseView = (props) => {
   };
   const renderNoteItem = () => {
     if (allExercise) {
-
       return allExercise.map((note) => (
         <View key={note.id} style={Styles.fillRowCenter}>
           <View
@@ -70,7 +70,7 @@ const ExerciseView = (props) => {
                     fontSize: Typography.fontSize16,
                   },
                 ]}>
-                Exercise : {note.title}
+                {localize.lessonExercise} : {note.title}
               </Text>
               <Text
                 style={[
@@ -100,14 +100,14 @@ const ExerciseView = (props) => {
               Typography.fontBold,
               {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
             ]}>
-            There's nothing here yet
+            {localize.searchErr}
           </Text>
           <Text
             style={[
               Typography.fontRegular,
               {fontSize: Typography.fontSize14, color: theme.grayColor},
             ]}>
-            Tap create note to make your first note
+            {localize.searchTry}
           </Text>
         </View>
       ) : (

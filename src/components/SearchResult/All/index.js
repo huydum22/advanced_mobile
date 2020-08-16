@@ -13,10 +13,19 @@ import {
 import {CourseVerticalItem} from '../../Course';
 import {AuthorVerticalItem} from '../../Author';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {LocalizeContext} from '../../../Provider/Localize';
 const AllResultTopTab = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation} = props;
   const {searchData} = useContext(SearchContext);
+  const {localize} = useContext(LocalizeContext);
+  const {
+    searchTry,
+    searchErr,
+    searchCourse,
+    searchAuthor,
+    searchResult,
+  } = localize;
   const flatListSeparator = () => {
     return (
       <View style={[Styles.separator, {backgroundColor: theme.DialogColor}]} />
@@ -31,18 +40,18 @@ const AllResultTopTab = (props) => {
     navigation.navigate(CourseDetailScreenName, {id: item.id});
   };
   const showAll = (e) => {
-    if (e === 'Courses') {
+    if (e === searchCourse) {
       navigation.jumpTo(SearchCourseScreenName);
     }
-    if (e === 'Authors') {
+    if (e === searchAuthor) {
       navigation.jumpTo(SearchAuthorScreenName);
     }
   };
   const renderResultNumber = (title) => {
-    if (title === 'Courses') {
-      return `${searchData.courses.total} results`;
+    if (title === searchCourse) {
+      return `${searchData.courses.total} ${searchResult}`;
     } else {
-      return `${searchData.instructors.total} results`;
+      return `${searchData.instructors.total} ${searchResult}`;
     }
   };
   const renderHeader = (title) => {
@@ -94,14 +103,14 @@ const AllResultTopTab = (props) => {
               BoxModel.marginVertical,
               {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
             ]}>
-            No Matching Courses{' '}
+            {searchErr}
           </Text>
           <Text
             style={[
               Typography.fontRegular,
               {fontSize: Typography.fontSize18, color: theme.grayColor},
             ]}>
-            Try another one
+            {searchTry}
           </Text>
         </View>
       );
@@ -110,9 +119,9 @@ const AllResultTopTab = (props) => {
         <SectionList
           ItemSeparatorComponent={flatListSeparator}
           sections={[
-            {title: 'Courses', data: searchData.courses.data},
+            {title: searchCourse, data: searchData.courses.data},
             {
-              title: 'Authors',
+              title: searchAuthor,
               data: searchData.instructors.data,
             },
           ]}
