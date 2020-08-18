@@ -55,31 +55,32 @@ const OtherSetting = (props) => {
   });
 
   useEffect(() => {
-    const getTheme = async () => {
-      const item = await setDarkMode.getItem();
-      const jsonValue = JSON.parse(item);
-      setDark(false);
-      if (jsonValue) {
-        if (jsonValue.dark) {
-          setDark(true);
+    const unsubscribe = navigation.addListener('focus', async () => {
+      try {
+        const item = await setDarkMode.getItem();
+        const jsonValue = JSON.parse(item);
+        setDark(false);
+        if (jsonValue) {
+          if (jsonValue.dark) {
+            setDark(true);
+          }
         }
-      }
-    };
-    getTheme();
-  }, []);
-  useEffect(() => {
-    const getEn = async () => {
-      const item = await setLanguage.getItem();
-      const jsonValue = JSON.parse(item);
-      setDark(false);
-      if (jsonValue) {
-        if (jsonValue.en) {
-          setEng(true);
+        const itemEnd = await setLanguage.getItem();
+        const jsonValueEnd = JSON.parse(itemEnd);
+        setEng(false);
+        if (jsonValueEnd) {
+          if (jsonValueEnd.en) {
+            setEng(true);
+          }
         }
+      } catch (err) {
+        console.log(err);
       }
-    };
-    getEn();
-  }, []);
+    });
+
+    return unsubscribe;
+  }, [navigation, setDarkMode, setLanguage]);
+
   const storeDataEn = async (value) => {
     try {
       const jsonValue = JSON.stringify(value);
@@ -92,52 +93,34 @@ const OtherSetting = (props) => {
     try {
       const jsonValue = JSON.stringify(value);
       await setDarkMode.setItem(jsonValue);
-    } catch (e) {
-      // saving error
-    }
+    } catch (e) {}
   };
 
   const switchTheme = async () => {
-    const item = await setDarkMode.getItem();
-    const jsonValue = JSON.parse(item);
-    setDark(!dark);
-
-    if (jsonValue) {
-      if (jsonValue.dark) {
-        let value = {dark: false};
-        storeData(value);
-        setTheme(lightTheme);
-      } else {
-        let value = {dark: true};
-        storeData(value);
-        setTheme(darkTheme);
-      }
-    } else {
+    if (dark) {
       let value = {dark: false};
+      setDark(false);
       storeData(value);
       setTheme(lightTheme);
+    } else {
+      let value = {dark: true};
+      setDark(true);
+
+      storeData(value);
+      setTheme(darkTheme);
     }
   };
   const switchEn = async () => {
-    const item = await setLanguage.getItem();
-    const jsonValue = JSON.parse(item);
-    console.log(jsonValue);
-    setEng(!eng);
-
-    if (jsonValue) {
-      if (jsonValue.en) {
-        let value = {en: false};
-        storeDataEn(value);
-        setLocalize(vn);
-      } else {
-        let value = {en: true};
-        storeDataEn(value);
-        setLocalize(en);
-      }
-    } else {
+    if (eng) {
       let value = {en: false};
+      setEng(false);
       storeDataEn(value);
       setLocalize(vn);
+    } else {
+      let value = {en: true};
+      setEng(true);
+      storeDataEn(value);
+      setLocalize(en);
     }
   };
   return (

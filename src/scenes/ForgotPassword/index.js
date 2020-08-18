@@ -31,6 +31,8 @@ const ForgotPassword = (props) => {
       if (response.isSuccess) {
         Alert.alert(response.data.message);
         navigation.navigate(screenName.LoginScreenName);
+      } else {
+        Alert.alert(response.data.message);
       }
     } catch ({response}) {
       Alert.alert(response.data.message);
