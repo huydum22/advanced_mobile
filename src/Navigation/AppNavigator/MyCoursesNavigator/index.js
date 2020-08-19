@@ -14,7 +14,7 @@ const MyCourseNavigator = () => {
   return (
     <MyCourseStack.Navigator
       screenOptions={{
-        title: localize.mycourseTitle,
+        title: localize.myCourseTitle,
         headerStyle: {
           backgroundColor: theme.themeColor,
         },

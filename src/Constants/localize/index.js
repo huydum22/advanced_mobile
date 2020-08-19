@@ -9,6 +9,7 @@ const vn = {
   updated: 'Cập nhật',
   course: 'Khoá học',
   lesson: 'Bài học',
+  free: 'Miễn phí',
 
   homeTitle: 'Trang Chủ',
   homeRecommend: 'Gợi ý cho bạn',
@@ -18,9 +19,9 @@ const vn = {
   homeNewRelease: 'Mới phát hành',
   homeTopAuthor: 'Tác giả hàng đầu',
 
-  mycourseTitle: 'Khoá học của tôi',
-  mycourseStart: 'Bắt đầu Khoá học',
-  mycourseComplete: 'Hoàn thành',
+  myCourseTitle: 'Khoá học của tôi',
+  myCourseStart: 'Bắt đầu Khoá học',
+  myCourseComplete: 'Hoàn thành',
 
   favoriteTitle: 'Yêu thích',
 
@@ -99,9 +100,9 @@ const en = {
   homeNewRelease: 'New Releases',
   homeTopAuthor: 'Top Authors',
 
-  mycourseTitle: 'My Courses',
-  mycourseStart: 'Start Course',
-  mycourseComplete: 'Completed',
+  myCourseTitle: 'My Courses',
+  myCourseStart: 'Start Course',
+  myCourseComplete: 'Completed',
 
   favoriteTitle: 'Favorite',
 
@@ -136,6 +137,7 @@ const en = {
   updated: 'Updated',
   course: 'Course',
   lesson: 'Lesson',
+  free: 'Free',
 
   profileTitle: 'Profile',
   profileSetting: 'Account Settings',

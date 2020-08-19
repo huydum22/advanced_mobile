@@ -136,9 +136,6 @@ const OtherSetting = (props) => {
           isEnabledSwitch={dark}
           toggleSwitch={switchTheme}
         />
-        {/* <Item icon="cloud-download" name="Download options" />
-        <Item icon="view-stream" name="Streaming options" />
-        <Item icon="videocam" name="Video playback options" /> */}
         <Item
           icon="language"
           name={settingLanguage}

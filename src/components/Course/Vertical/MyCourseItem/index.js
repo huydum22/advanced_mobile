@@ -5,10 +5,12 @@ import {ThemeContext} from '../../../../Provider/Theme';
 import FastImage from 'react-native-fast-image';
 import p from 'pretty-format';
 import {Bar} from 'react-native-progress';
+import {LocalizeContext} from '../../../../Provider/Localize';
 
 const MyCourseItem = (props) => {
   const {onPressItem, item} = props;
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   return (
     <View style={[styles.container, {backgroundColor: theme.itemColor}]}>
       <TouchableHighlight
@@ -59,7 +61,7 @@ const MyCourseItem = (props) => {
                     BoxModel.tinyPaddingVertical,
                     {color: theme.grayColor},
                   ]}>
-                  {Math.floor(item.process)}% completed
+                  {Math.floor(item.process)}% {localize.myCourseComplete}
                 </Text>
               </View>
             ) : (
@@ -69,7 +71,7 @@ const MyCourseItem = (props) => {
                     styles.startCourseContainer,
                     {color: theme.primaryColor},
                   ]}>
-                  START COURSE
+                  {localize.myCourseStart.toUpperCase()}
                 </Text>
               </View>
             )}

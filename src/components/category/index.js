@@ -1,11 +1,9 @@
 import React, {useContext} from 'react';
 import {ScrollView, FlatList, StyleSheet} from 'react-native';
 import {Size} from '../../styles';
-import {CategoryContext} from '../../Provider/Category';
 import {RelateSkillItem} from '../Skill';
 const ListCategory = (props) => {
-  const {listCategory} = useContext(CategoryContext);
-  const {onPress} = props;
+  const {onPress, listCategory} = props;
   return (
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
       <FlatList

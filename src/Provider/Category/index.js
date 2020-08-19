@@ -1,14 +1,20 @@
-import React, {useState} from 'react';
-
+import React, {useReducer} from 'react';
+import {categoryReducer} from '../../Reducers/Category';
+import {getCategoryAction} from '../../Actions/Category';
 const CategoryContext = React.createContext();
-
+const initialState = {
+  isLoading: true,
+  listCategory: null,
+  message: '',
+};
 const CategoryProvider = (props) => {
-  const [listCategory, setListCategory] = useState([]);
+  const [category, dispatch] = useReducer(categoryReducer, initialState);
+
   return (
     <CategoryContext.Provider
       value={{
-        listCategory,
-        setListCategory,
+        category,
+        categoryProvider: getCategoryAction(dispatch),
       }}>
       {props.children}
     </CategoryContext.Provider>

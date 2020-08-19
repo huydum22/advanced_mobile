@@ -16,6 +16,7 @@ import {background3} from '../../Constants/Image';
 import SeeAllBtn from '../../components/common/see-all-button';
 import * as screenName from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
+import {CategoryContext} from '../../Provider/Category';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import ListCategoryComponent from '../../components/category';
 
@@ -24,7 +25,6 @@ import {
   TOP_NEW,
   TOP_SELL,
   TOP_RATE,
-  TOP_USER_FAVORITE,
   RECOMMEND_COURSE,
   INSTRUCTOR,
 } from '../../Constants/API';
@@ -37,7 +37,7 @@ const body = {
 
 const Home = (props) => {
   const {navigation, route} = props;
-  // const {listCategory, setListCategory} = useContext(CategoryContext);
+  const {category} = useContext(CategoryContext);
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
   const [state1, setState1] = useState([]);
@@ -185,7 +185,10 @@ const Home = (props) => {
             {localize.homeCategories}
           </Text>
         </View>
-        <ListCategoryComponent onPress={onPressCategory} />
+        <ListCategoryComponent
+          onPress={onPressCategory}
+          listCategory={category.listCategory}
+        />
         {renderItem(localize.homeBestSeller, state2.slice(0, 7), () =>
           showListCourse(screenName.BestSeller, localize.homeBestSeller),
         )}

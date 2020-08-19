@@ -6,6 +6,7 @@ import {ThemeContext} from '../../../../Provider/Theme';
 import StarRating from 'react-native-star-rating';
 import Moment from 'moment';
 import p from 'pretty-format';
+import {LocalizeContext} from '../../../../Provider/Localize';
 const numberWithCommas = (x) => {
   if (x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -14,6 +15,7 @@ const numberWithCommas = (x) => {
 const Item = (props) => {
   const {item, onPress} = props;
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   return (
     <TouchableHighlight
       style={[
@@ -95,7 +97,7 @@ const Item = (props) => {
           <View style={Styles.fillRowCenter}>
             {item.price === 0 ? (
               <Text style={[styles.price, {color: theme.primaryColor}]}>
-                Free
+                {localize.free}
               </Text>
             ) : (
               <Text style={[styles.price, {color: theme.primaryColor}]}>
