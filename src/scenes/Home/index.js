@@ -1,116 +1,49 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  FlatList,
-} from 'react-native';
+import React, {useContext, useEffect, useState, useReducer} from 'react';
+import {StyleSheet, View, SafeAreaView, ScrollView, Text} from 'react-native';
 import {ListCourseHorizontal} from '../../components/Course';
 import {ListAuthorHorizontal} from '../../components/Author';
 import EmptyComponent from '../../components/EmptyComponent';
-import {Distance, Styles, Typography, BoxModel, Size} from '../../styles';
+import {Distance, Styles, Typography, BoxModel} from '../../styles';
 import Banner from '../../components/Banner';
 import {background3} from '../../Constants/Image';
-import SeeAllBtn from '../../components/common/see-all-button';
 import * as screenName from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 import {CategoryContext} from '../../Provider/Category';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import ListCategoryComponent from '../../components/category';
-
-import {API} from '../../services';
-import {
-  TOP_NEW,
-  TOP_SELL,
-  TOP_RATE,
-  RECOMMEND_COURSE,
-  INSTRUCTOR,
-} from '../../Constants/API';
-import p from 'pretty-format';
+import {fetchHomeDataAction} from '../../Actions/Home';
+import {homeReducer} from '../../Reducers/Home';
 import {LocalizeContext} from '../../Provider/Localize';
-const body = {
-  limit: 7,
-  offset: 0,
-};
+import {MyCourseContext} from '../../Provider/MyCourse';
+import Spinner from 'react-native-loading-spinner-overlay';
 
+const initialState = {
+  isLoading: true,
+  listTopNew: [],
+  listTopSell: [],
+  listTopRate: [],
+  listRecommended: [],
+  listInstructor: [],
+};
 const Home = (props) => {
   const {navigation, route} = props;
+  const [homeData, dispatch] = useReducer(homeReducer, initialState);
   const {category} = useContext(CategoryContext);
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
-  const [state1, setState1] = useState([]);
-  const [state2, setState2] = useState([]);
-  const [state3, setState3] = useState([]);
-  const [state4, setState4] = useState([]);
-  const [listInstructor, setLIstInstructor] = useState([]);
   const {localize} = useContext(LocalizeContext);
-  const fetchDataState1 = async () => {
-    try {
-      let response = await API.post(TOP_NEW, body);
-      if (response.isSuccess) {
-        setState1(response.data.payload);
-      }
-    } catch (response) {
-      console.log(p(response));
-    }
-  };
-  const fetchDataState2 = async () => {
-    try {
-      let response = await API.post(TOP_SELL, body);
-      if (response.isSuccess) {
-        setState2(response.data.payload);
-      }
-    } catch (response) {
-      console.log(p(response));
-    }
-  };
-  const fetchDataState3 = async () => {
-    try {
-      let response = await API.post(TOP_RATE, body);
-      if (response.isSuccess) {
-        setState3(response.data.payload);
-      }
-    } catch (response) {
-      console.log(p(response));
-    }
-  };
-  const getInstructor = async () => {
-    try {
-      const response = await API.get(INSTRUCTOR);
-
-      // const response = await listInstructorAPI();]
-      if (response.isSuccess) {
-        setLIstInstructor(response.data.payload);
-      }
-    } catch ({response}) {
-      console.log(response);
-    }
-  };
+  const {myCoursesProvider} = useContext(MyCourseContext);
   useEffect(() => {
-    const fetchDataState4 = async () => {
-      try {
-        const limit = 6;
-        const offset = 0;
+    const unsubscribe = navigation.addListener('focus', async () => {
+      myCoursesProvider(state.token);
+    });
 
-        let response = await API.get(
-          `${RECOMMEND_COURSE}/${state.userInfo.id}/${limit}/${offset}`,
-        );
+    return unsubscribe;
+  }, [myCoursesProvider, navigation, state.token]);
 
-        if (response.isSuccess) {
-          setState4(response.data.payload);
-        }
-      } catch (response) {
-        console.log(p(response));
-      }
-    };
-    getInstructor();
-    fetchDataState1();
-    fetchDataState2();
-    fetchDataState3();
-    fetchDataState4();
-  }, [state, setState4, setState3, setState2, setState1]);
+  useEffect(() => {
+    fetchHomeDataAction(dispatch)(state.userInfo.id);
+  }, [state]);
 
   const onPressBanner = () => {};
   const onPressItem = (item) => {
@@ -172,7 +105,7 @@ const Home = (props) => {
           onPress={onPressBanner}
         />
 
-        {renderItem(localize.homeRecommend, state4.slice(0, 7), () =>
+        {renderItem(localize.homeRecommend, homeData.listRecommended, () =>
           showListCourse(screenName.RecommendCourse, localize.homeRecommend),
         )}
         <View style={styles.titleContainer}>
@@ -180,7 +113,10 @@ const Home = (props) => {
             style={[
               Styles.titleRow,
               Typography.fontBold,
-              {color: theme.primaryTextColor, fontSize: Typography.fontSize20},
+              {
+                color: theme.primaryTextColor,
+                fontSize: Typography.fontSize20,
+              },
             ]}>
             {localize.homeCategories}
           </Text>
@@ -189,26 +125,34 @@ const Home = (props) => {
           onPress={onPressCategory}
           listCategory={category.listCategory}
         />
-        {renderItem(localize.homeBestSeller, state2.slice(0, 7), () =>
+        {renderItem(localize.homeBestSeller, homeData.listTopSell, () =>
           showListCourse(screenName.BestSeller, localize.homeBestSeller),
         )}
-        {renderItem(localize.homeRating, state3.slice(0, 7), () =>
+        {renderItem(localize.homeRating, homeData.listTopRate, () =>
           showListCourse(screenName.TopRating, localize.homeRating),
         )}
-        {renderItem(localize.homeNewRelease, state1.slice(0, 7), () =>
+        {renderItem(localize.homeNewRelease, homeData.listTopNew, () =>
           showListCourse(screenName.NewRelease, localize.homeNewRelease),
         )}
         <ListAuthorHorizontal
-          data={listInstructor.slice(0, 7)}
+          data={homeData.listInstructor}
           onPress={onPressAuthor}
         />
         <View style={styles.footer} />
       </ScrollView>
+      <Spinner
+        visible={homeData.isLoading}
+        textContent={'Loading...'}
+        textStyle={styles.spinnerTextStyle}
+      />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: '#FFF',
+  },
   footer: {height: Distance.spacing_20},
   titleContainer: {
     ...BoxModel.marginHorizontal,

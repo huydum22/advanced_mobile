@@ -10,10 +10,8 @@ import BrowseNavigator from './BrowseNavigator';
 import MyCoursesNavigator from './MyCoursesNavigator';
 import SearchNavigator from './SearchNavigator';
 import {ThemeContext} from '../../Provider/Theme';
-import {BookmarkProvider} from '../../Provider/Bookmark';
-import {MyChannelProvider} from '../../Provider/MyChannel';
-import {MyPathProvider} from '../../Provider/MyPath';
 import {LocalizeContext} from '../../Provider/Localize';
+
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
@@ -68,46 +66,40 @@ const AppNavigator = () => {
     fontSize: Typography.fontSize14,
   };
   return (
-    <BookmarkProvider>
-      <MyChannelProvider>
-        <MyPathProvider>
-          <Tab.Navigator
-            initialRouteName={screenName.HomeScreenName}
-            tabBarOptions={{
-              labelStyle: configLabel,
-              activeTintColor: theme.primaryColor,
-              inactiveTintColor: theme.grayMediumColor,
-              style: {
-                backgroundColor: theme.themeColor,
-                elevation: 0,
-                shadowOpacity: 0,
-                borderTopWidth: 0,
-              },
-            }}>
-            <Tab.Screen
-              name={screenName.HomeScreenName}
-              component={HomeNavigator}
-              options={configHomeTab}
-            />
-            <Tab.Screen
-              name={screenName.MyCourseScreenName}
-              component={MyCoursesNavigator}
-              options={configMyCourseTab}
-            />
-            <Tab.Screen
-              name={screenName.BrowseScreenName}
-              component={BrowseNavigator}
-              options={configBrowseTab}
-            />
-            <Tab.Screen
-              name={screenName.SearchScreenName}
-              component={SearchNavigator}
-              options={configSearchTab}
-            />
-          </Tab.Navigator>
-        </MyPathProvider>
-      </MyChannelProvider>
-    </BookmarkProvider>
+    <Tab.Navigator
+      initialRouteName={screenName.HomeScreenName}
+      tabBarOptions={{
+        labelStyle: configLabel,
+        activeTintColor: theme.primaryColor,
+        inactiveTintColor: theme.grayMediumColor,
+        style: {
+          backgroundColor: theme.themeColor,
+          elevation: 0,
+          shadowOpacity: 0,
+          borderTopWidth: 0,
+        },
+      }}>
+      <Tab.Screen
+        name={screenName.HomeScreenName}
+        component={HomeNavigator}
+        options={configHomeTab}
+      />
+      <Tab.Screen
+        name={screenName.MyCourseScreenName}
+        component={MyCoursesNavigator}
+        options={configMyCourseTab}
+      />
+      <Tab.Screen
+        name={screenName.BrowseScreenName}
+        component={BrowseNavigator}
+        options={configBrowseTab}
+      />
+      <Tab.Screen
+        name={screenName.SearchScreenName}
+        component={SearchNavigator}
+        options={configSearchTab}
+      />
+    </Tab.Navigator>
   );
 };
 export default AppNavigator;

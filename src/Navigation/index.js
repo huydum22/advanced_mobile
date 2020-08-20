@@ -13,11 +13,10 @@ import CourseDetailNavigator from './AppNavigator/CourseDetailNavigator';
 import SplashScreen from '../scenes/SplashScreen';
 import PlayReview from '../scenes/PlayReview';
 import {AuthenticationContext} from '../Provider/Authentication';
-import {CoursesProvider} from '../Provider/Course';
-import {FavoriteProvider} from '../Provider/Favorite';
 import {ThemeContext} from '../Provider/Theme';
 import {darkTheme} from '../styles';
 import {CategoryProvider} from '../Provider/Category';
+import {MyCourseProvider} from '../Provider/MyCourse';
 
 const RootStack = createStackNavigator();
 
@@ -87,13 +86,11 @@ const Navigation = () => {
         <StatusBar translucent barStyle="dark-content" />
       )}
       <CategoryProvider>
-        <CoursesProvider>
-          <FavoriteProvider>
-            <NavigationContainer>
-              <RootScreen />
-            </NavigationContainer>
-          </FavoriteProvider>
-        </CoursesProvider>
+        <MyCourseProvider>
+          <NavigationContainer>
+            <RootScreen />
+          </NavigationContainer>
+        </MyCourseProvider>
       </CategoryProvider>
     </SafeAreaProvider>
   );

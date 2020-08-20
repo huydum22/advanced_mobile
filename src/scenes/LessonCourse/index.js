@@ -50,7 +50,7 @@ const LessonCourse = (props) => {
           state.token,
         );
         if (response.isSuccess) {
-          console.log(response.data.message);
+          // console.log(response.data.message);
         } else {
           console.log(response.data.message);
         }
@@ -69,8 +69,6 @@ const LessonCourse = (props) => {
         `${PROCESS_COURSE}/${route.params.id}`,
         state.token,
       );
-
-      console.log(response.data.payload);
     } catch ({response}) {
       console.log(response);
     }

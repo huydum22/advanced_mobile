@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useContext, useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, FlatList} from 'react-native';
-import {MY_COURSE} from '../../Constants/API';
-import {API} from '../../services';
 import {MyCourseVerticalItem} from '../../components/Course';
 import {Styles, Distance, BoxModel, Typography, Size} from '../../styles';
 import p from 'pretty-format';
@@ -14,25 +12,11 @@ import {
 } from '../../Constants/ScreenName';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {ThemeContext} from '../../Provider/Theme';
+import {MyCourseContext} from '../../Provider/MyCourse';
 const ListCourse = (props) => {
   const {theme} = useContext(ThemeContext);
-  const {state} = useContext(AuthenticationContext);
   const {navigation, route} = props;
-  const [data, setData] = useState([]);
-  const fetchData = async () => {
-    try {
-      let response = await API.get(MY_COURSE, state.token);
-
-      if (response.isSuccess) {
-        setData(response.data.payload);
-      }
-    } catch ({response}) {
-      console.log(p(response.data));
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const {myCourses} = useContext(MyCourseContext);
   const onPressItem = (item) => {
     navigation.navigate(LessonCourseScreenStack, {
       screen: LessonCourseScreenName,
@@ -44,7 +28,7 @@ const ListCourse = (props) => {
     <SafeAreaView
       style={[styles.safeAreaView, {backgroundColor: theme.themeColor}]}>
       <FlatList
-        data={data}
+        data={myCourses.listMyCourse}
         image
         ItemSeparatorComponent={separator}
         showsVerticalScrollIndicator={false}

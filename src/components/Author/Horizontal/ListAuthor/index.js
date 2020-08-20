@@ -1,16 +1,24 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {Styles, Typography, BoxModel, Distance, Size} from '../../../../styles';
 import Item from '../AuthorItem';
 import {AuthorDetailScreenName} from '../../../../Constants/ScreenName';
+import {ThemeContext} from '../../../../Provider/Theme';
 
 const TopAuthor = (props) => {
   const {onPress, data} = props;
-
+  const {theme} = useContext(ThemeContext);
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={[Styles.titleRow, Typography.fontBold]}>Top Authors</Text>
+        <Text
+          style={[
+            Styles.titleRow,
+            Typography.fontBold,
+            {color: theme.primaryTextColor},
+          ]}>
+          Top Authors
+        </Text>
       </View>
       <FlatList
         data={data.slice(0, 5)}

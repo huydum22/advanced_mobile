@@ -1,5 +1,4 @@
 import {API} from '../../services';
-import {useAsyncStorage} from '@react-native-community/async-storage';
 import {UPDATE_PROFILE} from '../../Constants/API';
 
 export const actionTypes = {

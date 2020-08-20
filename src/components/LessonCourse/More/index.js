@@ -60,7 +60,6 @@ const MoreView = (props) => {
         {courseId: itemCourse.id},
         state.token,
       );
-      console.log(response);
 
       if (response.isSuccess) {
         setLike(response.data.likeStatus);

@@ -63,7 +63,6 @@ const Search = (props) => {
       );
       if (response.isSuccess) {
         setDeleted(false);
-        console.log(response.data);
       } else {
         console.log(response.data);
       }

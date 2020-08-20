@@ -3,6 +3,8 @@ import {View, Image, StyleSheet} from 'react-native';
 import * as screenName from '../../Constants/ScreenName';
 import {Styles, Size, darkTheme, lightTheme} from '../../styles';
 import {CategoryContext} from '../../Provider/Category';
+import {MyCourseContext} from '../../Provider/MyCourse';
+
 import logo from '../../assets/image/logoItEdu.png';
 import name from '../../assets/image/nameItEdu.png';
 import {useAsyncStorage} from '@react-native-community/async-storage';
@@ -10,10 +12,13 @@ import {ThemeContext} from '../../Provider/Theme';
 import {LocalizeContext} from '../../Provider/Localize';
 import {vn, en} from '../../Constants/localize';
 import {useState} from 'react';
+import {AuthenticationContext} from '../../Provider/Authentication';
 const SplashScreen = (props) => {
   const {navigation} = props;
   const {getItem} = useAsyncStorage('@userToken');
   const {categoryProvider, category} = useContext(CategoryContext);
+  const {myCoursesProvider} = useContext(MyCourseContext);
+  const {state} = useContext(AuthenticationContext);
   const {setTheme} = useContext(ThemeContext);
   const [getThemeSuccess, setThemeSuccess] = useState(false);
   const [getLanguageSuccess, setLanguageSuccess] = useState(false);
@@ -75,17 +80,12 @@ const SplashScreen = (props) => {
       }
     };
     getData();
-  }, [
-    getThemeSuccess,
-    getLanguageSuccess,
-    category.isLoading,
-    navigation,
-    getItem,
-  ]);
+  }, [getThemeSuccess, getLanguageSuccess, category.isLoading]);
   useEffect(() => {
     categoryProvider();
     getTheme();
     getEng();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

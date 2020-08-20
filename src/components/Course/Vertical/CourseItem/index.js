@@ -1,16 +1,6 @@
 import React, {useContext} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  TouchableHighlight,
-} from 'react-native';
-import {FavoriteContext} from '../../../../Provider/Favorite';
+import {StyleSheet, View, Text, TouchableHighlight} from 'react-native';
 import {Size, Styles, Distance, Typography} from '../../../../styles';
-import Entypo from 'react-native-vector-icons/Entypo';
-import ActionSheet from 'react-native-actionsheet';
 import {ThemeContext} from '../../../../Provider/Theme';
 import StarRating from 'react-native-star-rating';
 import FastImage from 'react-native-fast-image';
@@ -23,11 +13,7 @@ const numberWithCommas = (x) => {
 const Item = (props) => {
   const {onPressItem, item} = props;
   const {theme} = useContext(ThemeContext);
-  const {favorite, setFavorite} = useContext(FavoriteContext);
-  const onPressMore = (itemShow) => {
-    this.ActionSheet.context = itemShow;
-    this.ActionSheet.show();
-  };
+
   return (
     <View
       style={[
@@ -122,33 +108,6 @@ const Item = (props) => {
           </View>
         </View>
       </TouchableHighlight>
-      <View style={styles.subContainer}>
-        <TouchableOpacity
-          style={styles.more}
-          onPress={() => {
-            onPressMore(item);
-          }}>
-          <Entypo
-            name="dots-three-vertical"
-            size={25}
-            color={theme.primaryTextColor}
-          />
-        </TouchableOpacity>
-        <ActionSheet
-          ref={(o) => (this.ActionSheet = o)}
-          options={['Bookmark', 'Add to channel', 'Download', 'cancel']}
-          cancelButtonIndex={3}
-          onPress={(index) => {
-            if (index === 2) {
-              setFavorite((favorite) => [
-                ...favorite,
-                this.ActionSheet.context,
-              ]);
-            }
-            /* do something */
-          }}
-        />
-      </View>
     </View>
   );
 };
@@ -179,10 +138,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginLeft: 5,
   },
-  subContainer: {
-    flex: 1,
-    ...Styles.center,
-  },
   levelContainer: {
     ...Styles.fillRowBetween,
     marginTop: 5,
@@ -190,7 +145,6 @@ const styles = StyleSheet.create({
   ratingContainer: {
     flex: 1.5,
     ...Styles.fillRowStart,
-    // marginTop: -Size.scaleSize(20),
   },
   more: {
     ...Styles.fillCenter,

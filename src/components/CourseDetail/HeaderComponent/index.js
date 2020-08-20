@@ -13,7 +13,6 @@ import WhatLearn from './WhatLearn';
 import StudentFeedBack from './StudentFeedback';
 import ProfileAuthor from './ProfileAuthor';
 import * as screenName from '../../../Constants/ScreenName';
-import {FavoriteContext} from '../../../Provider/Favorite';
 import {ListCourseHorizontal} from '../../Course';
 import {Typography, BoxModel, Styles, Size} from '../../../styles';
 import {
@@ -42,7 +41,6 @@ const Header = (props) => {
   const {state} = useContext(AuthenticationContext);
   const [isOwn, setIsOwn] = useState({});
   const [isLike, setLike] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
   const [itemCourse, setItemCourse] = useState({});
 
   useEffect(() => {
@@ -115,7 +113,7 @@ const Header = (props) => {
             params: {id: item.id},
           });
         }
-      } catch ({response}) {
+      } catch (response) {
         console.log(response.data);
       }
     }
