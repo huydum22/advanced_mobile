@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState, useReducer} from 'react';
+import React, {useContext, useEffect, useReducer} from 'react';
 import {StyleSheet, View, SafeAreaView, ScrollView, Text} from 'react-native';
 import {ListCourseHorizontal} from '../../components/Course';
 import {ListAuthorHorizontal} from '../../components/Author';
@@ -16,6 +16,7 @@ import {homeReducer} from '../../Reducers/Home';
 import {LocalizeContext} from '../../Provider/Localize';
 import {MyCourseContext} from '../../Provider/MyCourse';
 import Spinner from 'react-native-loading-spinner-overlay';
+import {FavoriteContext} from '../../Provider/Favorite';
 
 const initialState = {
   isLoading: true,
@@ -33,17 +34,22 @@ const Home = (props) => {
   const {state} = useContext(AuthenticationContext);
   const {localize} = useContext(LocalizeContext);
   const {myCoursesProvider} = useContext(MyCourseContext);
+  const {favoriteProvider} = useContext(FavoriteContext);
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       myCoursesProvider(state.token);
+      favoriteProvider(state.token);
     });
 
     return unsubscribe;
-  }, [myCoursesProvider, navigation, state.token]);
-
+  }, [myCoursesProvider, navigation, state.token, favoriteProvider]);
   useEffect(() => {
-    fetchHomeDataAction(dispatch)(state.userInfo.id);
-  }, [state]);
+    const unsubscribe = navigation.addListener('focus', async () => {
+      fetchHomeDataAction(dispatch)(state.userInfo.id);
+    });
+
+    return unsubscribe;
+  }, [navigation, state.userInfo.id]);
 
   const onPressBanner = () => {};
   const onPressItem = (item) => {
@@ -143,7 +149,9 @@ const Home = (props) => {
       <Spinner
         visible={homeData.isLoading}
         textContent={'Loading...'}
-        textStyle={styles.spinnerTextStyle}
+        color={theme.whiteColor}
+        textStyle={{color: theme.whiteColor}}
+        overlayColor={theme.blackWith05OpacityColor}
       />
     </SafeAreaView>
   );

@@ -1,10 +1,5 @@
 import {actionTypes} from '../../Actions/Home';
 export const homeReducer = (prevState, action) => {
-  // requestTopNew,
-  // requestTopSell,
-  // requestTopRate,
-  // requestRecommend,
-  // requestInstructor,
   switch (action.type) {
     case actionTypes.HOME_REQUEST:
       return {...prevState};

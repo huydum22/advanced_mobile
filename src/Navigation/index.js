@@ -4,18 +4,17 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {StatusBar} from 'react-native';
 import {useAsyncStorage} from '@react-native-community/async-storage';
-
 import * as screenName from '../Constants/ScreenName';
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
 import CourseDetailNavigator from './AppNavigator/CourseDetailNavigator';
-
 import SplashScreen from '../scenes/SplashScreen';
 import PlayReview from '../scenes/PlayReview';
 import {AuthenticationContext} from '../Provider/Authentication';
 import {ThemeContext} from '../Provider/Theme';
 import {darkTheme} from '../styles';
 import {CategoryProvider} from '../Provider/Category';
+import {FavoriteProvider} from '../Provider/Favorite';
 import {MyCourseProvider} from '../Provider/MyCourse';
 
 const RootStack = createStackNavigator();
@@ -86,11 +85,13 @@ const Navigation = () => {
         <StatusBar translucent barStyle="dark-content" />
       )}
       <CategoryProvider>
-        <MyCourseProvider>
-          <NavigationContainer>
-            <RootScreen />
-          </NavigationContainer>
-        </MyCourseProvider>
+        <FavoriteProvider>
+          <MyCourseProvider>
+            <NavigationContainer>
+              <RootScreen />
+            </NavigationContainer>
+          </MyCourseProvider>
+        </FavoriteProvider>
       </CategoryProvider>
     </SafeAreaProvider>
   );

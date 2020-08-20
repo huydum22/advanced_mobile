@@ -1,35 +1,26 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {View, FlatList, Text} from 'react-native';
-import {ListCourseVertical} from '../../components/Course';
-import {TOP_FAVORITE_COURSE} from '../../Constants/API';
-import {API} from '../../services';
+import React, {useEffect, useContext} from 'react';
+import {View, FlatList} from 'react-native';
 import {AuthenticationContext} from '../../Provider/Authentication';
-import {Styles, Typography, Size, BoxModel} from '../../styles';
+import {Styles, Size} from '../../styles';
 import {ThemeContext} from '../../Provider/Theme';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import * as screenName from '../../Constants/ScreenName';
 import {CourseVerticalItem} from '../../components/Course';
+import EmptyCourse from '../../components/EmptyCourse';
+import {FavoriteContext} from '../../Provider/Favorite';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 const FavoriteList = (props) => {
   const {navigation} = props;
-  const [data, setData] = useState([]);
   const {state} = useContext(AuthenticationContext);
   const {theme} = useContext(ThemeContext);
+  const {favorite, favoriteProvider} = useContext(FavoriteContext);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let response = await API.get(TOP_FAVORITE_COURSE, state.token);
-        if (response.isSuccess) {
-          console.log(response.data.payload);
-          setData(response.data.payload);
-        } else {
-          console.log(response.data.message);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, [state]);
+    const unsubscribe = navigation.addListener('focus', async () => {
+      favoriteProvider(state.token);
+    });
+
+    return unsubscribe;
+  }, [navigation, state.token, favoriteProvider]);
   const flatListSeparator = () => {
     return (
       <View style={[Styles.separator, {backgroundColor: theme.DialogColor}]} />
@@ -39,31 +30,12 @@ const FavoriteList = (props) => {
     navigation.navigate(screenName.CourseDetailScreenName, {id: item.id});
   };
   const renderItem = () => {
-    if (data.length === 0) {
-      return (
-        <View style={[Styles.columnCenter, Styles.maxHeight]}>
-          <FontAwesome5 name="link" size={70} color={theme.primaryColor} />
-          <Text
-            style={[
-              Typography.fontBold,
-              BoxModel.marginVertical,
-              {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
-            ]}>
-            No Matching Courses{' '}
-          </Text>
-          <Text
-            style={[
-              Typography.fontRegular,
-              {fontSize: Typography.fontSize18, color: theme.grayColor},
-            ]}>
-            Try another one
-          </Text>
-        </View>
-      );
+    if (favorite.listFavorite.length === 0) {
+      return <EmptyCourse />;
     } else {
       return (
         <FlatList
-          data={data}
+          data={favorite.listFavorite}
           ItemSeparatorComponent={flatListSeparator}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
@@ -84,7 +56,17 @@ const FavoriteList = (props) => {
   };
   return (
     <View style={[Styles.maxHeight, {backgroundColor: theme.backgroundColor}]}>
-      {data ? renderItem() : undefined}
+      {favorite.isLoading ? (
+        <Spinner
+          visible={favorite.isLoading}
+          textContent={'Loading...'}
+          color={theme.whiteColor}
+          textStyle={{color: theme.whiteColor}}
+          overlayColor={theme.blackWith05OpacityColor}
+        />
+      ) : (
+        renderItem()
+      )}
     </View>
   );
 };
