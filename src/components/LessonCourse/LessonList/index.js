@@ -145,10 +145,6 @@ const LessonList = (props) => {
             </View>
           </View>
         </TouchableHighlight>
-        {/* <View style={[Styles.center, {width: Size.scaleSize(50)}]}>
-            {renderDownloadItem()}
-          </View> */}
-        {/* </View> */}
       </Collapsible>
     );
   };

@@ -1,8 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, StyleSheet, TouchableHighlight, Text} from 'react-native';
 import {Styles, BoxModel, Size, Typography, Distance} from '../../../../styles';
 import FastImage from 'react-native-fast-image';
 import {ThemeContext} from '../../../../Provider/Theme';
+import {MyCourseContext} from '../../../../Provider/MyCourse';
 import StarRating from 'react-native-star-rating';
 import Moment from 'moment';
 import p from 'pretty-format';
@@ -16,6 +17,31 @@ const Item = (props) => {
   const {item, onPress} = props;
   const {theme} = useContext(ThemeContext);
   const {localize} = useContext(LocalizeContext);
+  const {myCourses} = useContext(MyCourseContext);
+  console.log(myCourses.listMyCourse.length);
+  const checkEnrolled = () => {
+    const result = myCourses.listMyCourse.find(({id}) => id === item.id);
+    if (result) {
+      return (
+        <Text style={[styles.price, {color: theme.primaryColor}]}>
+          {localize.enrolled}
+        </Text>
+      );
+    } else if (item.price === 0) {
+      return (
+        <Text style={[styles.price, {color: theme.primaryColor}]}>
+          {localize.free}
+        </Text>
+      );
+    } else {
+      return (
+        <Text style={[styles.price, {color: theme.primaryColor}]}>
+          {numberWithCommas(item.price)} VND
+        </Text>
+      );
+    }
+  };
+
   return (
     <TouchableHighlight
       style={[
@@ -90,21 +116,11 @@ const Item = (props) => {
                   Styles.subTitleInHorizontalList,
                   {color: theme.grayColor},
                 ]}>
-                {item.soldNumber} students
+                {item.soldNumber} {localize.student}
               </Text>
             </View>
           </View>
-          <View style={Styles.fillRowCenter}>
-            {item.price === 0 ? (
-              <Text style={[styles.price, {color: theme.primaryColor}]}>
-                {localize.free}
-              </Text>
-            ) : (
-              <Text style={[styles.price, {color: theme.primaryColor}]}>
-                {numberWithCommas(item.price)} VND
-              </Text>
-            )}
-          </View>
+          <View style={Styles.fillRowCenter}>{checkEnrolled()}</View>
         </View>
       </View>
     </TouchableHighlight>

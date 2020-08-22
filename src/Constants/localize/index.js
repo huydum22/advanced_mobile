@@ -5,7 +5,7 @@ const vn = {
   newPass: 'Mật khẩu mới',
   showPass: 'Hiện mật khẩu',
   hour: 'giờ',
-  enrolled: 'học viên',
+  enrolled: 'Đã tham gia',
   updated: 'Cập nhật',
   course: 'Khoá học',
   lesson: 'Bài học',

@@ -8,17 +8,19 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 import Collapsible from 'react-native-collapsible';
 import {API} from '../../services';
 import {COURSE_DETAIL} from '../../Constants/API';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {useSafeArea} from 'react-native-safe-area-context';
-import {Size, Colors, Typography, Styles, BoxModel} from '../../styles';
+import {Size, Distance, Typography, Styles, BoxModel} from '../../styles';
 import * as screenName from '../../Constants/ScreenName';
 import Header from '../../components/CourseDetail/HeaderComponent';
 import {ThemeContext} from '../../Provider/Theme';
 import p from 'pretty-format';
+import Moment from 'moment';
+import separator from '../../components/Separator';
+
 const CourseDetail = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
@@ -26,7 +28,6 @@ const CourseDetail = (props) => {
   const [item, setItem] = useState({});
   const [collapsibleItems, setCollapsibleItems] = useState([]);
   const insets = useSafeArea();
-  // console.log(item);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,16 +44,6 @@ const CourseDetail = (props) => {
     };
     fetchData();
   }, [route.params.id]);
-  const flatListSeparator = () => {
-    return (
-      <View
-        style={[
-          styles.separator,
-          {backgroundColor: theme.backgroundSeeAllButton},
-        ]}
-      />
-    );
-  };
   const onPressHeader = (section) => {
     const newIds = [...collapsibleItems];
     const index = newIds.indexOf(section.data[0].sectionId);
@@ -64,14 +55,15 @@ const CourseDetail = (props) => {
     setCollapsibleItems(newIds);
     // setExpand(!isExpand);
   };
+
   const renderHeader = (section) => {
     const {title} = section;
     return (
       <TouchableHighlight
-        style={[
-          styles.headerTouchable,
-          {backgroundColor: theme.backgroundSeeAllButton},
-        ]}
+        style={{
+          backgroundColor: theme.backgroundSeeAllButton,
+          height: Size.scaleSize(50),
+        }}
         onPress={() => onPressHeader(section)}
         underlayColor={theme.backgroundSeeAllButton}>
         <View
@@ -79,7 +71,11 @@ const CourseDetail = (props) => {
             styles.headerContainer,
             {backgroundColor: theme.backgroundSeeAllButton},
           ]}>
-          <Text style={[styles.textHeader, {color: theme.primaryTextColor}]}>
+          <Text
+            style={[
+              Typography.fontBold,
+              {color: theme.primaryTextColor, fontSize: Typography.fontSize14},
+            ]}>
             {title}
           </Text>
           {collapsibleItems.includes(section.data[0].sectionId) ? (
@@ -101,28 +97,67 @@ const CourseDetail = (props) => {
   };
 
   const renderListItem = (itemLesson) => {
-    // console.log(itemLesson);
     return (
       <Collapsible collapsed={collapsibleItems.includes(itemLesson.sectionId)}>
         <TouchableHighlight
           onPress={() => onPressPreviewLesson(itemLesson)}
-          underlayColor={theme.overlayColor}>
-          <View
-            style={[styles.textContainer, {backgroundColor: theme.themeColor}]}>
-            <Text style={[styles.textContent, {color: theme.primaryTextColor}]}>
-              {itemLesson.name}
-            </Text>
-            {itemLesson.isPreview ? (
-              <View
+          underlayColor={theme.overlayColor}
+          style={[styles.fill, BoxModel.smallMarginVertical]}>
+          <View style={Styles.fillRowStart}>
+            <View style={[Styles.center, {width: Size.scaleSize(30)}]}>
+              <Text
                 style={[
-                  styles.previewContainer,
-                  {borderColor: theme.primaryColor},
+                  Typography.fontRegular,
+                  {color: theme.primaryTextColor},
                 ]}>
-                <Text style={[styles.previewText, {color: theme.primaryColor}]}>
-                  Preview
+                {itemLesson.numberOrder}
+              </Text>
+            </View>
+            <View
+              style={[
+                Styles.fillColumnStart,
+                BoxModel.smallMarginHorizontal,
+                {backgroundColor: theme.themeColor},
+              ]}>
+              <View style={[Styles.rowBetween, {marginRight: Distance.medium}]}>
+                <Text
+                  style={[
+                    Typography.fontRegular,
+                    {color: theme.primaryTextColor},
+                  ]}>
+                  {itemLesson.name}
                 </Text>
+                {itemLesson.isPreview ? (
+                  <View
+                    style={[
+                      BoxModel.marginHorizontal,
+                      BoxModel.tinyPadding,
+                      {
+                        borderColor: theme.primaryColor,
+                        borderWidth: Size.scaleSize(1),
+                      },
+                    ]}>
+                    <Text
+                      style={[
+                        Typography.fontRegular,
+                        {
+                          color: theme.primaryColor,
+                          fontSize: Typography.fontSize14,
+                        },
+                      ]}>
+                      Preview
+                    </Text>
+                  </View>
+                ) : undefined}
               </View>
-            ) : undefined}
+              <Text style={[Typography.fontRegular, {color: theme.grayColor}]}>
+                {' '}
+                Video -{' '}
+                {Moment('1900-01-01 00:00:00')
+                  .add(itemLesson.hours * 3600, 'seconds')
+                  .format('mm:ss')}
+              </Text>
+            </View>
           </View>
         </TouchableHighlight>
       </Collapsible>
@@ -140,11 +175,11 @@ const CourseDetail = (props) => {
 
   return (
     <SafeAreaView>
-      <View style={[styles.container, {backgroundColor: theme.themeColor}]}>
+      <View style={{backgroundColor: theme.themeColor, height: Size.HEIGHT}}>
         <View
           style={[styles.mainContainer, {backgroundColor: theme.themeColor}]}>
           <SectionList
-            ItemSeparatorComponent={flatListSeparator}
+            ItemSeparatorComponent={separator}
             sections={
               item.section
                 ? item.section.map((data) => {
@@ -189,10 +224,6 @@ const CourseDetail = (props) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    height: Size.HEIGHT,
-  },
-
   mainContainer: {
     flex: 2,
     flexDirection: 'column',
@@ -203,47 +234,11 @@ const styles = StyleSheet.create({
   separator: {
     height: 1,
   },
-  headerTouchable: {
-    height: 50,
-  },
+
   headerContainer: {
     height: 50,
     ...Styles.rowBetween,
     marginHorizontal: 20,
-  },
-  textHeader: {
-    fontSize: Typography.fontSize14,
-    ...Typography.fontBold,
-  },
-  maxHeightText: {
-    height: null,
-  },
-  minHeightText: {
-    height: 0,
-  },
-  textContent: {
-    marginHorizontal: 20,
-    ...Typography.fontRegular,
-  },
-  textContainer: {
-    height: Size.scaleSize(50),
-    ...Styles.rowBetween,
-  },
-  checkContainer: {
-    marginRight: 20,
-  },
-  image: {
-    resizeMode: 'cover',
-  },
-  previewContainer: {
-    borderWidth: 1,
-    ...BoxModel.tinyPadding,
-
-    ...BoxModel.marginHorizontal,
-  },
-  previewText: {
-    ...Typography.fontRegular,
-    fontSize: Typography.fontSize14,
   },
 });
 export default CourseDetail;
