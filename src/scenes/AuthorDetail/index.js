@@ -1,32 +1,36 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useReducer, useEffect} from 'react';
 import {StyleSheet, View, FlatList, SafeAreaView} from 'react-native';
-import {Size} from '../../styles';
+import {Size, Styles} from '../../styles';
 import {CourseVerticalItem} from '../../components/Course';
 import {Header} from '../../components/AuthorDetail';
-import {INSTRUCTOR_DETAIL} from '../../Constants/API';
-import {API} from '../../services';
-
+import {getAuthorDetailAction} from '../../Actions/AuthorDetail';
+import {authorDetailReducer} from '../../Reducers/AuthorDetail';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {
   CourseDetailScreenName,
   LessonCourseScreenStack,
 } from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
+const initialState = {
+  isLoading: true,
+  authorDetail: {},
+  message: '',
+};
 const AuthorDetail = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
-  const [data, setData] = useState({});
-  console.log(route);
+  const [authorDetailData, dispatch] = useReducer(
+    authorDetailReducer,
+    initialState,
+  );
+
   useEffect(() => {
-    const fetchInstructorDetail = async () => {
-      try {
-        let response = await API.get(`${INSTRUCTOR_DETAIL}${route.params.id}`);
-        setData(response.data.payload);
-      } catch ({response}) {
-        console.log(response);
-      }
-    };
-    fetchInstructorDetail();
-  }, [route.params.id]);
+    const unsubscribe = navigation.addListener('focus', async () => {
+      getAuthorDetailAction(dispatch)(route.params.id);
+    });
+
+    return unsubscribe;
+  }, [route.params.id, navigation]);
   const onPressItem = (item) => {
     navigation.navigate(CourseDetailScreenName, {id: item.id});
   };
@@ -39,9 +43,9 @@ const AuthorDetail = (props) => {
   };
   return (
     <SafeAreaView
-      style={{backgroundColor: theme.backgroundColor, height: '100%'}}>
+      style={[Styles.maxHeight, {backgroundColor: theme.backgroundColor}]}>
       <FlatList
-        data={data.courses}
+        data={authorDetailData.authorDetail.courses}
         ItemSeparatorComponent={flatListSeparator}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
@@ -49,13 +53,20 @@ const AuthorDetail = (props) => {
         )}
         keyExtractor={(item, index) => item + index}
         ListHeaderComponent={() => {
-          return <Header data={data} />;
+          return <Header data={authorDetailData.authorDetail} />;
         }}
         getItemLayout={(data, index) => ({
           length: Size.scaleSize(100),
           offset: Size.scaleSize(100) * index,
           index,
         })}
+      />
+      <Spinner
+        visible={authorDetailData.isLoading}
+        textContent={'Loading...'}
+        color={theme.whiteColor}
+        textStyle={{color: theme.whiteColor}}
+        overlayColor={theme.blackWith05OpacityColor}
       />
     </SafeAreaView>
   );

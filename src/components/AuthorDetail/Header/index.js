@@ -13,8 +13,10 @@ import {ThemeContext} from '../../../Provider/Theme';
 import FastImage from 'react-native-fast-image';
 import StarRating from 'react-native-star-rating';
 import p from 'pretty-format';
+import {LocalizeContext} from '../../../Provider/Localize';
 const Header = (props) => {
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   const {data} = props;
   const skillComponent = () => {
     if (data.skills) {
@@ -70,7 +72,7 @@ const Header = (props) => {
             {data.soldNumber}
           </Text>
           <Text style={[Styles.textCenter, {color: theme.primaryTextColor}]}>
-            Students
+            {localize.student}
           </Text>
         </View>
 
@@ -84,7 +86,7 @@ const Header = (props) => {
             {data.totalCourse}
           </Text>
           <Text style={[Styles.textCenter, {color: theme.primaryTextColor}]}>
-            Courses
+            {localize.searchCourse}
           </Text>
         </View>
         <View style={Styles.fillColumn}>
@@ -92,16 +94,25 @@ const Header = (props) => {
             {averagePointRating()}/5
           </Text>
           <Text style={[Styles.textCenter, {color: theme.primaryTextColor}]}>
-            Rating
+            {localize.rating}
           </Text>
         </View>
       </View>
+      <Text style={[styles.title, {color: theme.primaryTextColor}]}>
+        {localize.intro}
+      </Text>
       <View>
         <Text style={[styles.descriptionText, {color: theme.primaryTextColor}]}>
           {data.intro ? data.intro : 'Nothing to update'}
         </Text>
       </View>
+      <Text style={[styles.title, {color: theme.primaryTextColor}]}>
+        {localize.skill}
+      </Text>
       {skillComponent()}
+      <Text style={[styles.title, {color: theme.primaryTextColor}]}>
+        {localize.taughtBy} {data.name || data.email}
+      </Text>
     </View>
   );
 };
@@ -157,6 +168,12 @@ const styles = StyleSheet.create({
   },
   separator: {
     borderRightWidth: 1,
+  },
+  title: {
+    ...Typography.fontBold,
+    fontSize: Typography.fontSize20,
+    ...BoxModel.margin,
+    alignSelf: 'flex-start',
   },
 });
 export default Header;

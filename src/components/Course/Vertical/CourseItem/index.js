@@ -5,6 +5,7 @@ import {ThemeContext} from '../../../../Provider/Theme';
 import StarRating from 'react-native-star-rating';
 import FastImage from 'react-native-fast-image';
 import Moment from 'moment';
+import {LocalizeContext} from '../../../../Provider/Localize';
 const numberWithCommas = (x) => {
   if (x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -13,7 +14,7 @@ const numberWithCommas = (x) => {
 const Item = (props) => {
   const {onPressItem, item} = props;
   const {theme} = useContext(ThemeContext);
-
+  const {localize} = useContext(LocalizeContext);
   return (
     <View style={[styles.container, {backgroundColor: theme.itemColor}]}>
       <TouchableHighlight
@@ -52,7 +53,7 @@ const Item = (props) => {
                   Styles.subTitleInHorizontalList,
                   {color: theme.grayColor},
                 ]}>
-                {item.soldNumber || item.courseSoldNumber} students
+                {item.soldNumber || item.courseSoldNumber} {localize.student}
               </Text>
               <Text
                 style={[
@@ -68,7 +69,7 @@ const Item = (props) => {
                   Styles.textCenter,
                   {color: theme.grayColor},
                 ]}>
-                {item.totalHours} hours
+                {item.totalHours} {localize.hour}
               </Text>
             </View>
             <View style={styles.ratingContainer}>
@@ -94,7 +95,7 @@ const Item = (props) => {
             </View>
             {item.price === 0 || item.coursePrice === 0 ? (
               <Text style={[styles.price, {color: theme.primaryColor}]}>
-                Free
+                {localize.free}
               </Text>
             ) : (
               <Text style={[styles.price, {color: theme.primaryColor}]}>

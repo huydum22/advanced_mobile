@@ -10,6 +10,9 @@ const vn = {
   course: 'Khoá học',
   lesson: 'Bài học',
   free: 'Miễn phí',
+  intro: 'Giới thiệu',
+  skill: 'Kĩ năng',
+  taughtBy: 'Các khoá học được dạy bởi',
 
   homeTitle: 'Trang Chủ',
   homeRecommend: 'Gợi ý cho bạn',
@@ -125,7 +128,7 @@ const en = {
   settingAbout: 'About us',
   settingLogout: 'Logout',
 
-  student: 'student',
+  student: 'students',
   rating: 'Rating',
   name: 'Name',
   phoneNumber: 'Phone Number',
@@ -138,6 +141,9 @@ const en = {
   course: 'Course',
   lesson: 'Lesson',
   free: 'Free',
+  intro: 'Introduction',
+  skill: 'Skills',
+  taughtBy: 'Courses taught by',
 
   profileTitle: 'Profile',
   profileSetting: 'Account Settings',

@@ -1,47 +1,51 @@
-import React, {useContext, useState, useMemo} from 'react';
-import {useSafeArea} from 'react-native-safe-area-context';
-import {SectionList, StyleSheet, View, Text} from 'react-native';
+import React, {
+  useContext,
+  useState,
+  useMemo,
+  useReducer,
+  useEffect,
+} from 'react';
+import {
+  SectionList,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {ThemeContext} from '../../Provider/Theme';
 import {Styles, Typography, BoxModel, Size, Distance} from '../../styles';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {SearchResultScreenName} from '../../Constants/ScreenName';
-import {SearchBar} from 'react-native-elements';
-import {SEARCH_HISTORY, DELETE_SEARCH_HISTORY} from '../../Constants/API';
-import {API} from '../../services';
-import p from 'pretty-format';
-import {useEffect} from 'react';
+import SearchBar from '../../components/SearchBar';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {LocalizeContext} from '../../Provider/Localize';
+import {getSearchHistory, deleteItemSearch} from '../../Actions/Search';
+import {recentSearchReducer} from '../../Reducers/Search';
+const initialState = {
+  isLoading: true,
+  listItemSearch: [],
+};
 const Search = (props) => {
-  const insets = useSafeArea();
   const {navigation, route} = props;
+  const [recentSearchData, dispatch] = useReducer(
+    recentSearchReducer,
+    initialState,
+  );
+
   const {theme} = useContext(ThemeContext);
-  const [keyword, setKeyword] = useState([]);
-  const [isDeleted, setDeleted] = useState(false);
+  // const [keyword, setKeyword] = useState([]);
   const [searchText, setSearchText] = useState('');
   const {state} = useContext(AuthenticationContext);
   const {localize} = useContext(LocalizeContext);
   const {searchHear, searchRecent} = localize;
   useEffect(() => {
-    if (!isDeleted) {
-      const fetchKeyword = async () => {
-        try {
-          let response = await API.get(SEARCH_HISTORY, state.token);
-          if (response.isSuccess) {
-            setDeleted(true);
-            setKeyword(response.data.payload.data);
-          } else {
-            console.log(response.data);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchKeyword();
-    }
-  }, [state, isDeleted]);
+    const unsubscribe = navigation.addListener('focus', async () => {
+      getSearchHistory(dispatch)(state.token);
+    });
+
+    return unsubscribe;
+  }, [navigation, state.token]);
 
   const updateSearch = (text) => {
     setSearchText(text);
@@ -55,27 +59,14 @@ const Search = (props) => {
     });
   };
   const onPressDeleteSearch = async (item) => {
-    try {
-      let response = await API.delete(
-        `${DELETE_SEARCH_HISTORY}/${item.id}`,
-        undefined,
-        state.token,
-      );
-      if (response.isSuccess) {
-        setDeleted(false);
-      } else {
-        console.log(response.data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    deleteItemSearch(dispatch)(item.id, state.token);
   };
 
   const renderListItem = (item) => {
     if (item) {
       return (
         <View style={[Styles.fillRowBetween]}>
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={() => onPressItem(item)}
             underlayColor={theme.backgroundColor}
             style={styles.titleContainer}>
@@ -89,7 +80,7 @@ const Search = (props) => {
                 {item.content}
               </Text>
             </View>
-          </TouchableHighlight>
+          </TouchableOpacity>
           <MaterialIcons.Button
             name="cancel"
             backgroundColor={theme.backgroundColor}
@@ -127,7 +118,6 @@ const Search = (props) => {
   };
 
   const SearchBarHeader = useMemo(() => {
-    setDeleted(false);
     const onSubmitEditing = () => {
       navigation.navigate(SearchResultScreenName, {
         keyword: searchText,
@@ -135,41 +125,23 @@ const Search = (props) => {
     };
     return (
       <SearchBar
-        placeholder={searchHear}
-        onChangeText={(search) => updateSearch(search)}
-        value={searchText}
-        lightTheme={true}
-        containerStyle={{
-          width: Size.WIDTH,
-          backgroundColor: theme.themeColor,
-        }}
-        inputStyle={{color: theme.primaryTextColor}}
-        autoFocus={true}
+        searchHear={searchHear}
+        searchText={searchText}
+        updateSearch={updateSearch}
         onSubmitEditing={onSubmitEditing}
-        onClear={onClearText}
-        inputContainerStyle={{
-          height: Size.scaleSize(40),
-          backgroundColor: theme.searchBackgroundColor,
-          marginTop: insets.top + 20,
-        }}
-        cancelButtonProps={{
-          color: theme.primaryTextColor,
-          backgroundColor: theme.themeColor,
-          buttonStyle: {
-            marginTop: insets.top + 20,
-          },
-        }}
-        platform="ios"
-        round={true}
+        onClearText={onClearText}
+        autoFocus={true}
       />
     );
-  }, [searchText, insets, theme, navigation]);
+  }, [searchText, navigation, searchHear]);
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
       {SearchBarHeader}
       <SectionList
         style={[styles.container, {backgroundColor: theme.backgroundColor}]}
-        sections={[{title: searchRecent, data: keyword}]}
+        sections={[
+          {title: searchRecent, data: recentSearchData.listItemSearch},
+        ]}
         keyExtractor={(item, index) => item + index}
         showsVerticalScrollIndicator={false}
         renderSectionHeader={({section: {title}}) => renderHeader(title)}

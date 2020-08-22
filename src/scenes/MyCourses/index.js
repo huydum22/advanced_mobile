@@ -3,10 +3,9 @@ import React, {useContext, useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, FlatList} from 'react-native';
 import {MyCourseVerticalItem} from '../../components/Course';
 import {Styles, Distance, BoxModel, Typography, Size} from '../../styles';
-import p from 'pretty-format';
 import separator from '../../components/Separator';
 import Spinner from 'react-native-loading-spinner-overlay';
-
+import EmptyCourse from '../../components/EmptyCourse';
 import {
   LessonCourseScreenName,
   LessonCourseScreenStack,
@@ -41,21 +40,25 @@ const ListCourse = (props) => {
         textStyle={{color: theme.whiteColor}}
         overlayColor={theme.blackWith05OpacityColor}
       />
-      <FlatList
-        data={myCourses.listMyCourse}
-        image
-        ItemSeparatorComponent={separator}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item}) => (
-          <MyCourseVerticalItem onPressItem={onPressItem} item={item} />
-        )}
-        keyExtractor={(item, index) => item.id + index}
-        getItemLayout={(data, index) => ({
-          length: Size.scaleSize(100),
-          offset: Size.scaleSize(100) * index,
-          index,
-        })}
-      />
+      {myCourses.listMyCourse.length === 0 ? (
+        <EmptyCourse />
+      ) : (
+        <FlatList
+          data={myCourses.listMyCourse}
+          image
+          ItemSeparatorComponent={separator}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => (
+            <MyCourseVerticalItem onPressItem={onPressItem} item={item} />
+          )}
+          keyExtractor={(item, index) => item.id + index}
+          getItemLayout={(data, index) => ({
+            length: Size.scaleSize(100),
+            offset: Size.scaleSize(100) * index,
+            index,
+          })}
+        />
+      )}
     </SafeAreaView>
   );
 };

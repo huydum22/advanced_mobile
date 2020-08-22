@@ -29,11 +29,27 @@ const FavoriteList = (props) => {
   const onPressItem = (item) => {
     navigation.navigate(screenName.CourseDetailScreenName, {id: item.id});
   };
-  const renderItem = () => {
-    if (favorite.listFavorite.length === 0) {
-      return <EmptyCourse />;
-    } else {
-      return (
+  // const renderItem = () => {
+  //   if (favorite.listFavorite.length === 0) {
+  //     return ;
+  //   } else {
+  //     return (
+
+  //     );
+  //   }
+  // };
+  return (
+    <View style={[Styles.maxHeight, {backgroundColor: theme.backgroundColor}]}>
+      <Spinner
+        visible={favorite.isLoading}
+        textContent={'Loading...'}
+        color={theme.whiteColor}
+        textStyle={{color: theme.whiteColor}}
+        overlayColor={theme.blackWith05OpacityColor}
+      />
+      {favorite.listFavorite.length === 0 ? (
+        <EmptyCourse />
+      ) : (
         <FlatList
           data={favorite.listFavorite}
           ItemSeparatorComponent={flatListSeparator}
@@ -51,21 +67,6 @@ const FavoriteList = (props) => {
             index,
           })}
         />
-      );
-    }
-  };
-  return (
-    <View style={[Styles.maxHeight, {backgroundColor: theme.backgroundColor}]}>
-      {favorite.isLoading ? (
-        <Spinner
-          visible={favorite.isLoading}
-          textContent={'Loading...'}
-          color={theme.whiteColor}
-          textStyle={{color: theme.whiteColor}}
-          overlayColor={theme.blackWith05OpacityColor}
-        />
-      ) : (
-        renderItem()
       )}
     </View>
   );

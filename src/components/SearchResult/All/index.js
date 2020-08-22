@@ -12,12 +12,13 @@ import {
 } from '../../../Constants/ScreenName';
 import {CourseVerticalItem} from '../../Course';
 import {AuthorVerticalItem} from '../../Author';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import separator from '../../Separator';
 import {LocalizeContext} from '../../../Provider/Localize';
+import EmptyCourse from '../../EmptyCourse';
 const AllResultTopTab = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation} = props;
-  const {searchData} = useContext(SearchContext);
+  const {searchResultData} = useContext(SearchContext);
   const {localize} = useContext(LocalizeContext);
   const {
     searchTry,
@@ -26,11 +27,7 @@ const AllResultTopTab = (props) => {
     searchAuthor,
     searchResult,
   } = localize;
-  const flatListSeparator = () => {
-    return (
-      <View style={[Styles.separator, {backgroundColor: theme.DialogColor}]} />
-    );
-  };
+
   const onPressAuthor = (item) => {
     navigation.navigate(AuthorDetailScreenName, {
       id: item.id,
@@ -49,9 +46,9 @@ const AllResultTopTab = (props) => {
   };
   const renderResultNumber = (title) => {
     if (title === searchCourse) {
-      return `${searchData.courses.total} ${searchResult}`;
+      return `${searchResultData.totalCourse} ${searchResult}`;
     } else {
-      return `${searchData.instructors.total} ${searchResult}`;
+      return `${searchResultData.totalAuthor} ${searchResult}`;
     }
   };
   const renderHeader = (title) => {
@@ -80,49 +77,32 @@ const AllResultTopTab = (props) => {
     );
   };
   const renderListItem = (item) => {
-    // return <Text>1</Text>;
-    if (searchData.courses) {
-      if (searchData.courses.data.includes(item)) {
+    if (searchResultData.listCourse) {
+      if (searchResultData.listCourse.includes(item)) {
         return <CourseVerticalItem onPressItem={onPressItem} item={item} />;
       }
     }
-    if (searchData.instructors) {
-      if (searchData.instructors.data.includes(item)) {
+    if (searchResultData.listAuthor) {
+      if (searchResultData.listAuthor.includes(item)) {
         return <AuthorVerticalItem onPressItem={onPressAuthor} item={item} />;
       }
     }
   };
   const renderResult = () => {
-    if (searchData.instructors.total === 0 && searchData.courses.total === 0) {
-      return (
-        <View style={[Styles.columnCenter, Styles.maxHeight]}>
-          <FontAwesome5 name="link" size={70} color={theme.primaryColor} />
-          <Text
-            style={[
-              Typography.fontBold,
-              BoxModel.marginVertical,
-              {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
-            ]}>
-            {searchErr}
-          </Text>
-          <Text
-            style={[
-              Typography.fontRegular,
-              {fontSize: Typography.fontSize18, color: theme.grayColor},
-            ]}>
-            {searchTry}
-          </Text>
-        </View>
-      );
+    if (
+      searchResultData.listAuthor.length === 0 &&
+      searchResultData.listCourse.length === 0
+    ) {
+      return <EmptyCourse />;
     } else {
       return (
         <SectionList
-          ItemSeparatorComponent={flatListSeparator}
+          ItemSeparatorComponent={separator}
           sections={[
-            {title: searchCourse, data: searchData.courses.data},
+            {title: searchCourse, data: searchResultData.listCourse},
             {
               title: searchAuthor,
-              data: searchData.instructors.data,
+              data: searchResultData.listAuthor,
             },
           ]}
           keyExtractor={(item, index) => item + index}
@@ -136,10 +116,8 @@ const AllResultTopTab = (props) => {
     }
   };
   return (
-    <View>
-      {searchData.instructors && searchData.courses
-        ? renderResult()
-        : undefined}
+    <View style={{backgroundColor: theme.backgroundColor}}>
+      {renderResult()}
     </View>
   );
 };

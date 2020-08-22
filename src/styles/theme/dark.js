@@ -14,7 +14,7 @@ const darkTheme = {
   backgroundColor: '#181619',
   searchBackgroundColor: '#545863',
 
-  backgroundSeeAllButton: '#34353E',
+  backgroundSeeAllButton: '#2c3e50',
   whiteColor: '#FFFFFF',
   DialogColor: '#363741',
   itemColor: '#363741',

@@ -4,8 +4,10 @@ import FastImage from 'react-native-fast-image';
 import {Styles, BoxModel, Typography, Size} from '../../styles';
 import {ThemeContext} from '../../Provider/Theme';
 import empty from '../../assets/image/empty.png';
+import {LocalizeContext} from '../../Provider/Localize';
 const EmptyCourse = (props) => {
   const {theme} = useContext(ThemeContext);
+  const {localize} = useContext(LocalizeContext);
   return (
     <View style={[Styles.columnCenter, Styles.maxHeight]}>
       <FastImage
@@ -19,14 +21,14 @@ const EmptyCourse = (props) => {
           BoxModel.marginVertical,
           {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
         ]}>
-        No Matching Courses{' '}
+        {localize.searchErr}
       </Text>
       <Text
         style={[
           Typography.fontRegular,
           {fontSize: Typography.fontSize18, color: theme.grayColor},
         ]}>
-        Try another one
+        {localize.searchTry}
       </Text>
     </View>
   );

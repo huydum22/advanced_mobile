@@ -17,7 +17,6 @@ import {LocalizeContext} from '../../Provider/Localize';
 import {MyCourseContext} from '../../Provider/MyCourse';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {FavoriteContext} from '../../Provider/Favorite';
-
 const initialState = {
   isLoading: true,
   listTopNew: [],

@@ -8,17 +8,13 @@ const Item = (props) => {
   const {item, onPressItem} = props;
   const {theme} = useContext(ThemeContext);
   return (
-    <View
-      style={[
-        styles.container,
-        {backgroundColor: theme.primaryBackgroundColor},
-      ]}>
+    <View style={[styles.container, {backgroundColor: theme.itemColor}]}>
       <TouchableHighlight
         style={styles.main}
         onPress={() => {
           onPressItem(item);
         }}
-        underlayColor={theme.primaryBackgroundColor}>
+        underlayColor={theme.itemColor}>
         <View style={styles.main}>
           <View style={styles.imageContainer}>
             {/* <Image source={item.image} style={styles.image} /> */}
