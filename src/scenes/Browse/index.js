@@ -29,15 +29,7 @@ const FavoriteList = (props) => {
   const onPressItem = (item) => {
     navigation.navigate(screenName.CourseDetailScreenName, {id: item.id});
   };
-  // const renderItem = () => {
-  //   if (favorite.listFavorite.length === 0) {
-  //     return ;
-  //   } else {
-  //     return (
 
-  //     );
-  //   }
-  // };
   return (
     <View style={[Styles.maxHeight, {backgroundColor: theme.backgroundColor}]}>
       <Spinner
