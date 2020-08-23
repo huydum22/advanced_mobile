@@ -43,7 +43,7 @@ const WriteFeedBack = (props) => {
     }
   };
   return (
-    <ScrollView style={{backgroundColor: themeColor}}>
+    <ScrollView style={{backgroundColor: theme.backgroundColor}}>
       <Text style={[styles.title, {color: theme.primaryTextColor}]}>
         {localize.feedbackYour}
       </Text>
@@ -51,8 +51,10 @@ const WriteFeedBack = (props) => {
         <View style={[Styles.fillRowStart, Styles.center]}>
           <FontAwesome name="bookmark" size={20} color={theme.primaryColor} />
           <Text
-            style={[Typography.fontRegular, {fontSize: Typography.fontSize20}]}>
-            {' '}
+            style={[
+              Typography.fontRegular,
+              {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
+            ]}>
             {localize.feedbackContent}
           </Text>
         </View>
@@ -70,8 +72,10 @@ const WriteFeedBack = (props) => {
         <View style={[Styles.fillRow, Styles.center]}>
           <FontAwesome name="bookmark" size={20} color={theme.primaryColor} />
           <Text
-            style={[Typography.fontRegular, {fontSize: Typography.fontSize20}]}>
-            {' '}
+            style={[
+              Typography.fontRegular,
+              {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
+            ]}>
             {localize.feedbackPresent}
           </Text>
         </View>
@@ -89,8 +93,10 @@ const WriteFeedBack = (props) => {
         <View style={[Styles.fillRow, Styles.center]}>
           <FontAwesome name="bookmark" size={20} color={theme.primaryColor} />
           <Text
-            style={[Typography.fontRegular, {fontSize: Typography.fontSize20}]}>
-            {' '}
+            style={[
+              Typography.fontRegular,
+              {fontSize: Typography.fontSize20, color: theme.primaryTextColor},
+            ]}>
             {localize.feedbackFormal}
           </Text>
         </View>

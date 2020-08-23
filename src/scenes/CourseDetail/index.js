@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useReducer} from 'react';
 import {
   SafeAreaView,
   View,
@@ -8,42 +8,36 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Collapsible from 'react-native-collapsible';
-import {API} from '../../services';
-import {COURSE_DETAIL} from '../../Constants/API';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {useSafeArea} from 'react-native-safe-area-context';
-import {Size, Distance, Typography, Styles, BoxModel} from '../../styles';
+import {Size, Typography, Styles} from '../../styles';
 import * as screenName from '../../Constants/ScreenName';
 import Header from '../../components/CourseDetail/HeaderComponent';
 import {ThemeContext} from '../../Provider/Theme';
-import p from 'pretty-format';
-import Moment from 'moment';
+import Spinner from 'react-native-loading-spinner-overlay';
 import separator from '../../components/Separator';
-
+import ItemRow from '../../components/CourseDetail/RenderItem';
+import {getCourseDetailAction} from '../../Actions/CourseDetail';
+import {courseDetailReducer} from '../../Reducers/CourseDetail';
+const initialState = {
+  isLoading: true,
+  courseDetail: [],
+};
 const CourseDetail = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);
-  const [item, setItem] = useState({});
   const [collapsibleItems, setCollapsibleItems] = useState([]);
   const insets = useSafeArea();
+  const [dataCourse, dispatch] = useReducer(courseDetailReducer, initialState);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let response = await API.get(
-          `${COURSE_DETAIL}/${route.params.id}/null`,
-        );
-        if (response.isSuccess) {
-          setItem(response.data.payload);
-        }
-      } catch ({response}) {
-        console.log(p(response.data));
-      }
-    };
-    fetchData();
-  }, [route.params.id]);
+    const unsubscribe = navigation.addListener('focus', async () => {
+      getCourseDetailAction(dispatch)(route.params.id);
+    });
+
+    return unsubscribe;
+  }, [navigation, state.userInfo.id, route.params.id]);
   const onPressHeader = (section) => {
     const newIds = [...collapsibleItems];
     const index = newIds.indexOf(section.data[0].sectionId);
@@ -53,7 +47,6 @@ const CourseDetail = (props) => {
       newIds.push(section.data[0].sectionId);
     }
     setCollapsibleItems(newIds);
-    // setExpand(!isExpand);
   };
 
   const renderHeader = (section) => {
@@ -96,79 +89,11 @@ const CourseDetail = (props) => {
     );
   };
 
-  const renderListItem = (itemLesson) => {
-    return (
-      <Collapsible collapsed={collapsibleItems.includes(itemLesson.sectionId)}>
-        <TouchableHighlight
-          onPress={() => onPressPreviewLesson(itemLesson)}
-          underlayColor={theme.overlayColor}
-          style={[styles.fill, BoxModel.smallMarginVertical]}>
-          <View style={Styles.fillRowStart}>
-            <View style={[Styles.center, {width: Size.scaleSize(30)}]}>
-              <Text
-                style={[
-                  Typography.fontRegular,
-                  {color: theme.primaryTextColor},
-                ]}>
-                {itemLesson.numberOrder}
-              </Text>
-            </View>
-            <View
-              style={[
-                Styles.fillColumnStart,
-                BoxModel.smallMarginHorizontal,
-                {backgroundColor: theme.themeColor},
-              ]}>
-              <View style={[Styles.rowBetween, {marginRight: Distance.medium}]}>
-                <Text
-                  style={[
-                    Typography.fontRegular,
-                    {color: theme.primaryTextColor},
-                  ]}>
-                  {itemLesson.name}
-                </Text>
-                {itemLesson.isPreview ? (
-                  <View
-                    style={[
-                      BoxModel.marginHorizontal,
-                      BoxModel.tinyPadding,
-                      {
-                        borderColor: theme.primaryColor,
-                        borderWidth: Size.scaleSize(1),
-                      },
-                    ]}>
-                    <Text
-                      style={[
-                        Typography.fontRegular,
-                        {
-                          color: theme.primaryColor,
-                          fontSize: Typography.fontSize14,
-                        },
-                      ]}>
-                      Preview
-                    </Text>
-                  </View>
-                ) : undefined}
-              </View>
-              <Text style={[Typography.fontRegular, {color: theme.grayColor}]}>
-                {' '}
-                Video -{' '}
-                {Moment('1900-01-01 00:00:00')
-                  .add(itemLesson.hours * 3600, 'seconds')
-                  .format('mm:ss')}
-              </Text>
-            </View>
-          </View>
-        </TouchableHighlight>
-      </Collapsible>
-    );
-  };
-
   const onPressPreviewLesson = (itemLesson) => {
     if (itemLesson.videoUrl && itemLesson.isPreview) {
       navigation.navigate(screenName.PlayVideoScreenName, {
         urlVideo: itemLesson.videoUrl,
-        typeUploadVideoLesson: item.typeUploadVideoLesson,
+        typeUploadVideoLesson: dataCourse.courseDetail.typeUploadVideoLesson,
       });
     }
   };
@@ -181,8 +106,8 @@ const CourseDetail = (props) => {
           <SectionList
             ItemSeparatorComponent={separator}
             sections={
-              item.section
-                ? item.section.map((data) => {
+              dataCourse.courseDetail.section
+                ? dataCourse.courseDetail.section.map((data) => {
                     return {
                       title: data.name,
                       data: data.lesson,
@@ -191,7 +116,13 @@ const CourseDetail = (props) => {
                 : []
             }
             keyExtractor={(itemLesson, index) => itemLesson + index}
-            renderItem={({item}) => renderListItem(item)}
+            renderItem={({item}) => (
+              <ItemRow
+                itemLesson={item}
+                collapsibleItems={collapsibleItems}
+                onPressPreviewLesson={onPressPreviewLesson}
+              />
+            )}
             renderSectionHeader={({section}) => renderHeader(section)}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={() => {
@@ -199,7 +130,7 @@ const CourseDetail = (props) => {
                 <Header
                   navigation={navigation}
                   route={route}
-                  item={item}
+                  item={dataCourse.courseDetail}
                   showPreview={true}
                 />
               );
@@ -220,6 +151,13 @@ const CourseDetail = (props) => {
           />
         </View>
       </View>
+      <Spinner
+        visible={dataCourse.isLoading}
+        textContent={'Loading...'}
+        color={theme.whiteColor}
+        textStyle={{color: theme.whiteColor}}
+        overlayColor={theme.blackWith05OpacityColor}
+      />
     </SafeAreaView>
   );
 };

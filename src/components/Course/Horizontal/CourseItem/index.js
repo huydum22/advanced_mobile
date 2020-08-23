@@ -18,7 +18,6 @@ const Item = (props) => {
   const {theme} = useContext(ThemeContext);
   const {localize} = useContext(LocalizeContext);
   const {myCourses} = useContext(MyCourseContext);
-  console.log(myCourses.listMyCourse.length);
   const checkEnrolled = () => {
     const result = myCourses.listMyCourse.find(({id}) => id === item.id);
     if (result) {
