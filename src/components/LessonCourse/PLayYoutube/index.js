@@ -1,35 +1,39 @@
 import React, {useRef, useEffect, useState, useContext} from 'react';
-import {View, StyleSheet, TouchableHighlight, Text} from 'react-native';
-import {
-  Size,
-  Styles,
-  BoxModel,
-  Typography,
-  Distance,
-  Platform,
-} from '../../../styles';
-import {ThemeContext} from '../../../Provider/Theme';
+import {StyleSheet, Alert} from 'react-native';
+import {Size} from '../../../styles';
 import {LessonContext} from '../../../Provider/LessonCourse';
-import {Slider} from 'react-native-elements';
-import Moment from 'moment';
 import YoutubePlayer, {getYoutubeMeta} from 'react-native-youtube-iframe';
-
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {updateCurrentTime} from '../../../Actions/LessonCourse';
+import {AuthenticationContext} from '../../../Provider/Authentication';
 const getYouTubeID = (str) => {
   return str.substring(str.lastIndexOf('/') + 1, str.length);
 };
 const PLayYouTube = (props) => {
-  const {urlVideo} = props;
+  const {navigation, onCompleteVideo} = props;
   const playerRef = useRef();
-  const {theme} = useContext(ThemeContext);
-  const {itemLesson, time, setTime} = useContext(LessonContext);
+  const {itemCourse, setTime} = useContext(LessonContext);
   const [widthVid, setWidth] = useState(0);
   const [heightVid, setHeight] = useState(0);
-
+  const {state} = useContext(AuthenticationContext);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', async () => {
+      try {
+        let currentTime = await playerRef.current.getCurrentTime();
+        updateCurrentTime(state.token, itemCourse.itemVideo.id, currentTime);
+      } catch (err) {
+        Alert.alert(err);
+      }
+      // ;
+    });
+    return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation]);
   useEffect(() => {
     const fetchYoutubeMetadata = async () => {
       try {
-        let response = await getYoutubeMeta(getYouTubeID(urlVideo));
+        let response = await getYoutubeMeta(
+          getYouTubeID(itemCourse.itemVideo.videoUrl),
+        );
         setWidth(response.width);
         setHeight(response.height);
       } catch (err) {
@@ -37,7 +41,7 @@ const PLayYouTube = (props) => {
       }
     };
     fetchYoutubeMetadata();
-  }, [urlVideo]);
+  }, [itemCourse.itemVideo.videoUrl]);
   const getHeightVid = () => {
     if (heightVid && widthVid) {
       return (heightVid * Size.WIDTH) / widthVid;
@@ -46,22 +50,26 @@ const PLayYouTube = (props) => {
   };
 
   const readyPLayVideo = () => {
-    if (itemLesson.currentTime) {
-      playerRef.current.seekTo(itemLesson.currentTime);
-      setTime(itemLesson.currentTime);
+    if (itemCourse.itemVideo.currentTime) {
+      playerRef.current.seekTo(itemCourse.itemVideo.currentTime);
+      setTime(itemCourse.itemVideo.currentTime);
     }
   };
 
   return (
-    // <View style={styles.backgroundVideo}>
     <YoutubePlayer
       ref={playerRef}
       height={getHeightVid()}
       width={Size.WIDTH}
-      videoId={getYouTubeID(urlVideo)}
+      videoId={getYouTubeID(itemCourse.itemVideo.videoUrl)}
       play={true}
       volume={50}
       playbackRate={1}
+      onChangeState={(event) => {
+        if (event === 'ended') {
+          onCompleteVideo();
+        }
+      }}
       webViewStyle={styles.videoYoutube}
       onReady={readyPLayVideo}
       initialPlayerParams={{
@@ -70,7 +78,6 @@ const PLayYouTube = (props) => {
         showClosedCaptions: true,
       }}
     />
-    // </View>
   );
 };
 const styles = StyleSheet.create({
@@ -79,42 +86,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   videoYoutube: {
-    // alignSelf: 'stretch',
-    // position: 'absolute',
     backgroundColor: 'black',
     flex: 1,
-  },
-  container: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'black',
-  },
-  control: {
-    height: 100,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  controlContainer: {
-    position: 'absolute',
-    flexDirection: 'row',
-    alignItems: 'center',
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  timeContainer: {
-    ...Typography.fontRegular,
-    fontSize: Typography.fontSize16,
-    color: 'white',
-  },
-  sliderContainer: {
-    flex: 1,
-    marginRight: Distance.spacing_10,
   },
 });
 export default PLayYouTube;

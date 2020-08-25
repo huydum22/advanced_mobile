@@ -19,7 +19,7 @@ const MoreView = (props) => {
     const checkLikeStatus = async () => {
       try {
         let response = await API.get(
-          `${LIKE_STATUS}/${itemCourse.id}`,
+          `${LIKE_STATUS}/${itemCourse.course.id}`,
           state.token,
         );
         if (response.isSuccess) {
@@ -38,7 +38,7 @@ const MoreView = (props) => {
       const result = await Share.share({
         title: 'Share image',
         message: 'This image so beautiful ',
-        url: `https://itedu.me/course-detail/${itemCourse.id}`,
+        url: `https://itedu.me/course-detail/${itemCourse.course.id}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -57,7 +57,7 @@ const MoreView = (props) => {
     try {
       let response = await API.post(
         LIKE_COURSE,
-        {courseId: itemCourse.id},
+        {courseId: itemCourse.course.id},
         state.token,
       );
 

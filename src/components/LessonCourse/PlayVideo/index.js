@@ -1,44 +1,52 @@
-import React, {useEffect, useContext, useRef, useState} from 'react';
+import React, {useContext, useRef, useEffect, useState} from 'react';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import Video from 'react-native-video';
-import {Styles, Size, BoxModel, Typography, Distance} from '../../../styles';
-import {ThemeContext} from '../../../Provider/Theme';
+import {Styles} from '../../../styles';
 import {LessonContext} from '../../../Provider/LessonCourse';
+import {AuthenticationContext} from '../../../Provider/Authentication';
+import {updateCurrentTime} from '../../../Actions/LessonCourse';
 
 const PLayVideo = (props) => {
-  const {urlVideo, onCompleteVideo} = props;
-  const {theme} = useContext(ThemeContext);
-  const {itemLesson, time, setTime} = useContext(LessonContext);
+  const {navigation, onCompleteVideo} = props;
+  const {itemCourse} = useContext(LessonContext);
+  const [time, setTime] = useState(0);
+  const {state} = useContext(AuthenticationContext);
   var playerRef = useRef();
 
   const onProgress = (data) => {
     setTime(data.currentTime);
   };
   const readyPLayVideo = () => {
-    if (itemLesson.currentTime) {
-      playerRef.seek(itemLesson.currentTime);
-      setTime(itemLesson.currentTime);
+    if (itemCourse.itemVideo.currentTime) {
+      playerRef.seek(itemCourse.itemVideo.currentTime);
+      setTime(itemCourse.itemVideo.currentTime);
     }
   };
-
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', async () => {
+      console.log(time);
+      updateCurrentTime(state.token, itemCourse.itemVideo.id, time);
+    });
+    return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation]);
   return (
     <View style={styles.videoContainer}>
-      {urlVideo ? (
+      {itemCourse.itemVideo.videoUrl ? (
         <Video
           onProgress={onProgress}
           controls={true}
-          source={{uri: urlVideo}}
+          source={{uri: itemCourse.itemVideo.videoUrl}}
           ref={(ref) => {
             playerRef = ref;
           }}
           onEnd={onCompleteVideo}
           onReadyForDisplay={readyPLayVideo}
-          paused={false}
+          paused={true}
           style={styles.videoYoutube}
         />
       ) : (
         <View style={[styles.videoContainer, Styles.center]}>
-          {' '}
           <ActivityIndicator size="large" />
         </View>
       )}
@@ -49,43 +57,11 @@ const styles = StyleSheet.create({
   videoYoutube: {
     alignSelf: 'stretch',
     flex: 1,
-    resizeMode: 'contain',
   },
 
   videoContainer: {
     flex: 1,
     backgroundColor: 'black',
-  },
-  container: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-  },
-  control: {
-    height: 100,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  controlContainer: {
-    position: 'absolute',
-    flexDirection: 'row',
-    alignItems: 'center',
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  timeContainer: {
-    ...Typography.fontRegular,
-    fontSize: Typography.fontSize16,
-    color: 'white',
-  },
-  sliderContainer: {
-    flex: 1,
-    marginRight: Distance.spacing_10,
   },
 });
 export default PLayVideo;

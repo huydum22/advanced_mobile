@@ -1,21 +1,28 @@
-import React, {useState} from 'react';
-
+import React, {useState, useReducer} from 'react';
+import {lessonCourseReducer} from '../../Reducers/LessonCourse';
+import {
+  getCourseDetailWithLessonAction,
+  pressLessonAction,
+} from '../../Actions/LessonCourse';
 const LessonContext = React.createContext();
-
+const initialState = {
+  isLoading: true,
+  course: {},
+  itemVideo: {},
+  itemLesson: {},
+  question: {},
+  allNote: [],
+  message: '',
+};
 const LessonProvider = (props) => {
-  const [itemCourse, setItemCourse] = useState({});
-  const [itemLesson, setItemLesson] = useState({});
-  const [time, setTime] = useState(0);
-  const [videoUrl, setVideoUrl] = useState('');
+  const [itemCourse, dispatch] = useReducer(lessonCourseReducer, initialState);
+
   return (
     <LessonContext.Provider
       value={{
         itemCourse,
-        setItemCourse,
-        itemLesson,
-        setItemLesson,
-        time,
-        setTime,
+        courseDetailProvider: getCourseDetailWithLessonAction(dispatch),
+        pressLessonProvider: pressLessonAction(dispatch),
       }}>
       {props.children}
     </LessonContext.Provider>

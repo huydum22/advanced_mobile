@@ -13,8 +13,6 @@ import Title from '../../CourseDetail/HeaderComponent/TitleItem';
 import Collapsible from 'react-native-collapsible';
 import {useSafeArea} from 'react-native-safe-area-context';
 import {Size, Styles, Typography, BoxModel, Distance} from '../../../styles';
-import {API, DownloadLessonVideo} from '../../../services';
-import {LESSON_VIDEO} from '../../../Constants/API';
 import {AuthenticationContext} from '../../../Provider/Authentication';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Moment from 'moment';
@@ -23,7 +21,7 @@ import HeaderTitle from '../../CourseDetail/HeaderComponent';
 const LessonList = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
-  const {itemCourse, itemLesson, setItemLesson} = useContext(LessonContext);
+  const {itemCourse, pressLessonProvider} = useContext(LessonContext);
   const [collapsibleItems, setCollapsibleItems] = useState([]);
   const {state} = useContext(AuthenticationContext);
   const insets = useSafeArea();
@@ -33,8 +31,8 @@ const LessonList = (props) => {
     setPreview(!isPreview);
   };
   const changeColorItemLesson = (lesson) => {
-    if (itemLesson) {
-      if (lesson.id === itemLesson.id) {
+    if (itemCourse.itemLesson) {
+      if (lesson.id === itemCourse.itemLesson.id) {
         return theme.primaryColor;
       }
     }
@@ -42,18 +40,6 @@ const LessonList = (props) => {
     return theme.primaryTextColor;
   };
 
-  const DownloadLesson = async () => {
-    try {
-      return await DownloadLessonVideo(itemLesson.videoUrl, {
-        responseType: 'arraybuffer',
-        onDownloadProgress: (progressEvent) => {
-          console.log(progressEvent);
-        },
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const flatListSeparator = () => {
     return (
       <View
@@ -65,34 +51,10 @@ const LessonList = (props) => {
     );
   };
   const renderListItem = (ItemLesson) => {
-    const renderDownloadItem = () => {
-      if (ItemLesson.isFinish) {
-        return (
-          <MaterialIcons.Button
-            name="file-download"
-            size={20}
-            color={theme.successColor}
-            onPress={DownloadLesson}
-            backgroundColor={theme.themeColor}
-          />
-        );
-      } else {
-        return (
-          <MaterialIcons.Button
-            name="file-download"
-            size={20}
-            color={theme.grayColor}
-            onPress={DownloadLesson}
-            backgroundColor={theme.themeColor}
-          />
-        );
-      }
-    };
     return (
       <Collapsible collapsed={collapsibleItems.includes(ItemLesson.sectionId)}>
-        {/* <View style={Styles.fillRow}> */}
         <TouchableHighlight
-          onPress={() => onPressPreviewLesson(ItemLesson)}
+          onPress={() => onPressLesson(ItemLesson)}
           underlayColor={theme.overlayColor}
           style={[styles.fill, BoxModel.smallMarginVertical]}>
           <View style={Styles.fillRowStart}>
@@ -158,34 +120,8 @@ const LessonList = (props) => {
     }
     setCollapsibleItems(newIds);
   };
-  const onPressPreviewLesson = async (ItemLesson) => {
-    setItemLesson({
-      ...ItemLesson,
-      videoUrl: '',
-      currentTime: 0,
-    });
-    try {
-      let response1 = await API.get(
-        `${LESSON_VIDEO}/${itemCourse.id}/${ItemLesson.id}`,
-        state.token,
-      );
-
-      if (response1.isSuccess) {
-        const resultSection = itemCourse.section.find(({lesson}) => {
-          return lesson.find(({id}) => id === ItemLesson.id);
-        });
-        const result = resultSection.lesson.find(
-          ({id}) => id === ItemLesson.id,
-        );
-        setItemLesson({
-          ...result,
-          videoUrl: response1.data.payload.videoUrl,
-          currentTime: response1.data.payload.currentTime,
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  const onPressLesson = async (ItemLesson) => {
+    pressLessonProvider(state.token, itemCourse.course.id, ItemLesson.id);
   };
   const renderHeader = (section) => {
     const {title} = section;
@@ -227,8 +163,8 @@ const LessonList = (props) => {
     <SectionList
       ItemSeparatorComponent={flatListSeparator}
       sections={
-        itemCourse.section
-          ? itemCourse.section.map((data) => {
+        itemCourse.course.section
+          ? itemCourse.course.section.map((data) => {
               return {
                 title: data.name,
                 data: data.lesson,
@@ -247,10 +183,10 @@ const LessonList = (props) => {
               <HeaderTitle
                 navigation={navigation}
                 route={route}
-                item={itemCourse}
+                item={itemCourse.course}
                 showPreview={false}
                 showPreviewTitle={showPreviewTitle}
-                courseID={itemCourse.id}
+                courseID={itemCourse.course.id}
               />
             ) : (
               <MaterialIcons.Button
@@ -260,7 +196,7 @@ const LessonList = (props) => {
                 onPress={showPreviewTitle}
                 style={styles.previewButton}
                 color={theme.primaryTextColor}>
-                <Title name={itemCourse.title} />
+                <Title name={itemCourse.course.title} />
               </MaterialIcons.Button>
             )}
           </View>
@@ -310,16 +246,12 @@ const styles = StyleSheet.create({
     ...Typography.fontBold,
   },
   previewButton: {
-    // position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-
-    // width: 100,
-    // height: 500,
   },
 });
 export default LessonList;

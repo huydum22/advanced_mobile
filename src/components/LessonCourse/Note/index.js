@@ -8,44 +8,20 @@ import {
 } from 'react-native';
 import {ThemeContext} from '../../../Provider/Theme';
 import {LessonContext} from '../../../Provider/LessonCourse';
-import {AuthenticationContext} from '../../../Provider/Authentication';
 import {Styles, Typography, BoxModel, Size, Distance} from '../../../styles';
-import {API} from '../../../services';
-import {NOTE_ALL_LESSON} from '../../../Constants/API';
 import Moment from 'moment';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {LocalizeContext} from '../../../Provider/Localize';
 const NoteView = (props) => {
   const {theme} = useContext(ThemeContext);
-  const {state} = useContext(AuthenticationContext);
   const {itemCourse} = useContext(LessonContext);
-  const [allNote, setAllNote] = useState([]);
   const {localize} = useContext(LocalizeContext);
-  useEffect(() => {
-    const fetchNote = async () => {
-      try {
-        let response = await API.get(
-          `${NOTE_ALL_LESSON}/${itemCourse.id}`,
-          state.token,
-        );
-        if (response.isSuccess) {
-          setAllNote(response.data.payload);
-        } else {
-          console.log(response);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchNote();
-  }, [itemCourse, state]);
-  const moreAction = (item) => {
-    // console.log(item);
-  };
+
+  const moreAction = (item) => {};
   const renderNoteItem = () => {
-    if (allNote) {
-      return allNote.map((note) => (
+    if (itemCourse.allNote) {
+      return itemCourse.allNote.map((note) => (
         <View key={note.id} style={Styles.fillRowCenter}>
           <View
             style={[
@@ -142,7 +118,7 @@ const NoteView = (props) => {
 
   return (
     <ScrollView style={{backgroundColor: theme.themeColor}}>
-      {allNote.length === 0 ? (
+      {itemCourse.allNote.length === 0 ? (
         <View style={[Styles.columnCenter, BoxModel.marginVertical]}>
           <Text
             style={[

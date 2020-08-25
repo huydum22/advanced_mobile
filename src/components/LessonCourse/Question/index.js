@@ -3,11 +3,8 @@ import {View, StyleSheet, ScrollView} from 'react-native';
 import {PrimaryButton, SubPrimaryButton} from '../../Authentication';
 import {ThemeContext} from '../../../Provider/Theme';
 import {Size, Distance, Styles, BoxModel} from '../../../styles';
-import {FORUM_QUESTION} from '../../../Constants/API';
 import {LessonContext} from '../../../Provider/LessonCourse';
-import {API} from '../../../services';
 import * as screenName from '../../../Constants/ScreenName';
-import {AuthenticationContext} from '../../../Provider/Authentication';
 import QuestionComponent from '../QuestionComponent';
 import {LocalizeContext} from '../../../Provider/Localize';
 const onPressAddQuestion = () => {};
@@ -16,35 +13,15 @@ const onPressForumQuestion = () => {};
 const QuestionView = (props) => {
   const {theme} = useContext(ThemeContext);
   const {itemCourse} = useContext(LessonContext);
-  const {state} = useContext(AuthenticationContext);
-  const [question, setQuestion] = useState({});
   const {navigation} = props;
   const {localize} = useContext(LocalizeContext);
-  useEffect(() => {
-    const fetchQuestion = async () => {
-      try {
-        let page = 1;
-        let pageSize = 6;
-        let response = await API.get(
-          `${FORUM_QUESTION}/?page=${page}&pageSize=${pageSize}&courseId=${itemCourse.id}`,
-          state.token,
-        );
-        if (response.isSuccess) {
-          setQuestion(response.data.payload);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchQuestion();
-  }, [itemCourse, state]);
 
   const onPressResponse = (itemQuestion) => {
     navigation.navigate(screenName.ForumQuestion, {itemQuestion: itemQuestion});
   };
   const questionContent = () => {
-    if (question.questions) {
-      return question.questions.map((itemQuestion) => (
+    if (itemCourse.question.questions) {
+      return itemCourse.question.questions.map((itemQuestion) => (
         <QuestionComponent
           itemQuestion={itemQuestion}
           onPressResponse={onPressResponse}

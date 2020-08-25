@@ -1,183 +1,66 @@
 import React, {useState, useEffect, useContext, useMemo} from 'react';
-import {
-  SafeAreaView,
-  View,
-  StyleSheet,
-  TouchableHighlight,
-  Alert,
-} from 'react-native';
+import {SafeAreaView, View, StyleSheet, TouchableHighlight} from 'react-native';
 import {useSafeArea} from 'react-native-safe-area-context';
 import LessonTab from '../../components/LessonCourse/TopTabInfo';
 import {API} from '../../services';
-import {
-  PROCESS_COURSE,
-  COURSE_DETAIL_WITH_LESSON,
-  LESSON_VIDEO,
-  LESSON_UPDATE_CURRENT_TIME,
-  LAST_WATCHED_LESSON,
-  LESSON_DETAIL,
-  LESSON_UPDATE_STATUS,
-} from '../../Constants/API';
+import {LESSON_UPDATE_STATUS} from '../../Constants/API';
 import {AuthenticationContext} from '../../Provider/Authentication';
-import {Typography, BoxModel, Size} from '../../styles';
+import {Size} from '../../styles';
 import Video from '../../components/LessonCourse/PlayVideo';
 import YouTube from '../../components/LessonCourse/PLayYoutube';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {ThemeContext} from '../../Provider/Theme';
 import {LessonContext} from '../../Provider/LessonCourse';
-import p from 'pretty-format';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const LessonCourse = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);
-  const [nextLessonID, setNextLessonID] = useState('');
   const insets = useSafeArea();
 
-  const {setItemCourse, itemLesson, setItemLesson, time} = useContext(
-    LessonContext,
-  );
-
+  const {time, courseDetailProvider, itemCourse} = useContext(LessonContext);
   useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', async () => {
-      try {
-        let response = await API.put(
-          LESSON_UPDATE_CURRENT_TIME,
-          {
-            lessonId: itemLesson.id,
-            currentTime: time,
-          },
-          state.token,
-        );
-        if (response.isSuccess) {
-          // console.log(response.data.message);
-        } else {
-          console.log(response.data.message);
-        }
-      } catch (err) {
-        console.log(err);
-      }
+    const unsubscribe = navigation.addListener('focus', async () => {
+      courseDetailProvider(state.token, route.params.id);
     });
 
     return unsubscribe;
-  }, [navigation, time, state, itemLesson]);
+  }, [navigation, state.token, route.params.id, courseDetailProvider]);
 
-  const fetchProcessCourse = async () => {
-    try {
-      // let response = await getProcessCourseAPI(state.token, route.params.id);
-      let response = await API.get(
-        `${PROCESS_COURSE}/${route.params.id}`,
-        state.token,
-      );
-    } catch ({response}) {
-      console.log(response);
-    }
-  };
-  const fetchDetail = async () => {
-    try {
-      let response = await API.get(
-        `${LESSON_DETAIL}/${route.params.id}/${itemLesson.id}`,
-        state.token,
-      );
-      if (response.isSuccess) {
-        console.log(response.data.payload.nextLessonId);
-        setNextLessonID(response.data.payload.nextLessonId);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    fetchDetail();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [route, state, itemLesson]);
-  const fetchCourseDetailLesson = async () => {
-    try {
-      let response = await API.get(
-        `${COURSE_DETAIL_WITH_LESSON}/${route.params.id}`,
-        state.token,
-      );
-      if (response.isSuccess) {
-        setItemCourse(response.data.payload);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    const fetchCourseDetailWithLesson = async () => {
-      try {
-        let response = await API.get(
-          `${COURSE_DETAIL_WITH_LESSON}/${route.params.id}`,
-          state.token,
-        );
-        let response1 = await API.get(
-          `${LAST_WATCHED_LESSON}/${route.params.id}`,
-          state.token,
-        );
-        if (response.isSuccess) {
-          setItemCourse(response.data.payload);
-          if (response1.isSuccess) {
-            const resultSection = response.data.payload.section.find(
-              ({lesson}) => {
-                return lesson.find(
-                  ({id}) => id === response1.data.payload.lessonId,
-                );
-              },
-            );
-            const result = resultSection.lesson.find(
-              ({id}) => id === response1.data.payload.lessonId,
-            );
-            setItemLesson({
-              ...result,
-              videoUrl: response1.data.payload.videoUrl,
-              currentTime: response1.data.payload.currentTime,
-            });
-          }
-        }
-      } catch ({response}) {
-        console.log(response);
-      }
-    };
-    fetchCourseDetailWithLesson();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [route, state]);
   const dismiss = () => {
     navigation.goBack();
   };
-
-  const renderVideo = useMemo(() => {
-    const onCompleteVideo = async () => {
-      try {
-        let response = await API.post(
-          LESSON_UPDATE_STATUS,
-          {lessonId: itemLesson.id},
-          state.token,
-        );
-        if (response.isSuccess) {
-          console.log(response.data.message);
-        } else {
-          console.log(response.data.message);
-        }
-      } catch (err) {
-        console.log(err);
+  const onCompleteVideo = async () => {
+    try {
+      let response = await API.post(
+        LESSON_UPDATE_STATUS,
+        {lessonId: itemCourse.itemLesson.id},
+        state.token,
+      );
+      if (response.isSuccess) {
+        console.log(response.data.message);
+      } else {
+        console.log(response.data.message);
       }
-    };
-
-    return (
-      <Video
-        urlVideo={itemLesson.videoUrl || ''}
-        onCompleteVideo={onCompleteVideo}
-      />
-    );
-  }, [itemLesson, state]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const renderVideo = useMemo(() => {
+    return <Video onCompleteVideo={onCompleteVideo} navigation={navigation} />;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemCourse.itemVideo.videoUrl]);
   const renderYouTube = useMemo(() => {
-    return <YouTube urlVideo={itemLesson.videoUrl || ''} />;
-  }, [itemLesson]);
+    return (
+      <YouTube navigation={navigation} onCompleteVideo={onCompleteVideo} />
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemCourse.itemVideo.videoUrl]);
 
   const renderVideoComponent = () => {
-    if (itemLesson.videoUrl) {
-      if (itemLesson.videoUrl.includes('https://youtube.com/embed')) {
+    if (itemCourse.itemVideo.videoUrl) {
+      if (itemCourse.itemVideo.videoUrl.includes('https://youtube.com/embed')) {
         return renderYouTube;
       } else {
         return renderVideo;
@@ -185,8 +68,8 @@ const LessonCourse = (props) => {
     }
   };
   const renderDismiss = () => {
-    if (itemLesson.videoUrl) {
-      if (itemLesson.videoUrl.includes('https://youtube.com/embed')) {
+    if (itemCourse.itemVideo.videoUrl) {
+      if (itemCourse.itemVideo.videoUrl.includes('https://youtube.com/embed')) {
         return (
           <TouchableHighlight
             style={[
@@ -219,6 +102,13 @@ const LessonCourse = (props) => {
         </View>
       </View>
       {renderDismiss()}
+      <Spinner
+        visible={itemCourse.isLoading}
+        textContent={'Loading...'}
+        color={theme.whiteColor}
+        textStyle={{color: theme.whiteColor}}
+        overlayColor={theme.blackWith05OpacityColor}
+      />
     </SafeAreaView>
   );
 };
@@ -233,30 +123,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 
-  maxHeightText: {
-    height: null,
-  },
-  minHeightText: {
-    height: 0,
-  },
-
-  checkContainer: {
-    marginRight: 20,
-  },
-  image: {
-    resizeMode: 'cover',
-  },
-
-  previewContainer: {
-    borderWidth: 1,
-    ...BoxModel.tinyPadding,
-
-    ...BoxModel.marginHorizontal,
-  },
-  previewText: {
-    ...Typography.fontRegular,
-    fontSize: Typography.fontSize14,
-  },
   buttonDismiss: {
     position: 'absolute',
     height: Size.scaleSize(50),
