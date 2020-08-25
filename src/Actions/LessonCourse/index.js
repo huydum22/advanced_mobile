@@ -7,6 +7,7 @@ import {
   LESSON_VIDEO,
   FORUM_QUESTION,
   NOTE_ALL_LESSON,
+  LESSON_UPDATE_STATUS,
 } from '../../Constants/API';
 import axios from 'axios';
 export const actionTypes = {
@@ -21,6 +22,10 @@ export const actionTypes = {
   PRESS_LESSON_REQUEST: 'PRESS_LESSON_REQUEST',
   PRESS_LESSON_ERROR: 'PRESS_LESSON_ERROR',
   PRESS_LESSON_SUCCESS: 'PRESS_LESSON_SUCCESS',
+
+  UPDATE_STATUS_COURSE_REQUEST: 'UPDATE_STATUS_COURSE_REQUEST',
+  UPDATE_STATUS_COURSE_ERROR: 'UPDATE_STATUS_COURSE_ERROR',
+  UPDATE_STATUS_COURSE_SUCCESS: 'UPDATE_STATUS_COURSE_SUCCESS',
 };
 const courseDetailWithLessonRequest = () => ({
   type: actionTypes.LESSON_COURSE_REQUEST,
@@ -61,6 +66,20 @@ const pressLessonError = (error) => ({
 
 const pressLessonSuccess = (response) => ({
   type: actionTypes.PRESS_LESSON_SUCCESS,
+  response,
+});
+
+const updateStatusCourseRequest = () => ({
+  type: actionTypes.UPDATE_STATUS_COURSE_REQUEST,
+});
+
+const updateStatusCourseError = (error) => ({
+  type: actionTypes.UPDATE_STATUS_COURSE_ERROR,
+  error,
+});
+
+const updateStatusCourseSuccess = (response) => ({
+  type: actionTypes.UPDATE_STATUS_COURSE_SUCCESS,
   response,
 });
 export const getCourseDetailWithLessonAction = (dispatch) => async (
@@ -141,6 +160,37 @@ export const pressLessonAction = (dispatch) => async (
       dispatch(pressLessonError(err));
     });
 };
+
+export const updateStatusCourseAction = (dispatch) => async (
+  token,
+  courseId,
+  lessonId,
+  nextLessonId,
+) => {
+  dispatch(updateStatusCourseRequest());
+
+  const requestUpdateStatusCourse = API.post(
+    LESSON_UPDATE_STATUS,
+    {lessonId: lessonId},
+    token,
+  );
+  const requestCourseDetailWithLesson = API.get(
+    `${COURSE_DETAIL_WITH_LESSON}/${courseId}`,
+    token,
+  );
+
+  axios
+    .all([requestUpdateStatusCourse, requestCourseDetailWithLesson])
+    .then(
+      axios.spread((...responses) => {
+        dispatch(updateStatusCourseSuccess(responses));
+        pressLessonAction(dispatch)(token, courseId, nextLessonId);
+      }),
+    )
+    .catch((err) => {
+      dispatch(updateStatusCourseError(err));
+    });
+};
 export const updateCurrentTime = async (token, lessonId, time) => {
   try {
     try {
@@ -153,10 +203,9 @@ export const updateCurrentTime = async (token, lessonId, time) => {
         token,
       );
       if (response.isSuccess) {
-        console.log(response.data)
+        console.log(response.data);
       } else {
         console.log(response.data);
-
       }
     } catch (err) {
       console.log(err);

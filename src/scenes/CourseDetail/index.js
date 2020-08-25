@@ -37,7 +37,7 @@ const CourseDetail = (props) => {
     });
 
     return unsubscribe;
-  }, [navigation, state.userInfo.id, route.params.id]);
+  }, [navigation, route.params.id]);
   const onPressHeader = (section) => {
     const newIds = [...collapsibleItems];
     const index = newIds.indexOf(section.data[0].sectionId);
@@ -100,7 +100,7 @@ const CourseDetail = (props) => {
 
   return (
     <SafeAreaView>
-      <View style={{backgroundColor: theme.themeColor, height: Size.HEIGHT}}>
+      <View style={[Styles.height100, {backgroundColor: theme.themeColor}]}>
         <View
           style={[styles.mainContainer, {backgroundColor: theme.themeColor}]}>
           <SectionList

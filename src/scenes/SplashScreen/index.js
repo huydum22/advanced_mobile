@@ -21,38 +21,46 @@ const SplashScreen = (props) => {
   const {setLocalize} = useContext(LocalizeContext);
   const getDarkMode = useAsyncStorage('@setTheme');
   const setLanguage = useAsyncStorage('@setLanguage');
-  const getTheme = async () => {
-    const item = await getDarkMode.getItem();
-    const jsonValue = JSON.parse(item);
-    if (jsonValue) {
-      if (jsonValue.dark) {
-        setTheme(darkTheme);
-        setThemeSuccess(true);
+  useEffect(() => {
+    const getTheme = async () => {
+      const item = await getDarkMode.getItem();
+      const jsonValue = JSON.parse(item);
+      if (jsonValue) {
+        if (jsonValue.dark) {
+          setTheme(darkTheme);
+          setThemeSuccess(true);
+        } else {
+          setTheme(lightTheme);
+          setThemeSuccess(true);
+        }
       } else {
         setTheme(lightTheme);
         setThemeSuccess(true);
       }
-    } else {
-      setTheme(lightTheme);
-      setThemeSuccess(true);
-    }
-  };
-  const getEng = async () => {
-    const item = await setLanguage.getItem();
-    const jsonValue = JSON.parse(item);
-    if (jsonValue) {
-      if (jsonValue.en) {
-        setLocalize(en);
-        setLanguageSuccess(true);
+    };
+    const getEng = async () => {
+      const item = await setLanguage.getItem();
+      const jsonValue = JSON.parse(item);
+      if (jsonValue) {
+        if (jsonValue.en) {
+          setLocalize(en);
+          setLanguageSuccess(true);
+        } else {
+          setLocalize(vn);
+          setLanguageSuccess(true);
+        }
       } else {
         setLocalize(vn);
         setLanguageSuccess(true);
       }
-    } else {
-      setLocalize(vn);
-      setLanguageSuccess(true);
-    }
-  };
+    };
+    const unsubscribe = navigation.addListener('focus', async () => {});
+    categoryProvider();
+    getTheme();
+    getEng();
+    return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation]);
 
   useEffect(() => {
     const getData = async () => {
@@ -75,15 +83,14 @@ const SplashScreen = (props) => {
       }
     };
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getThemeSuccess, getLanguageSuccess, category.isLoading]);
-  useEffect(() => {
-    categoryProvider();
-    getTheme();
-    getEng();
+  }, [
+    getThemeSuccess,
+    getLanguageSuccess,
+    category.isLoading,
+    getItem,
+    navigation,
+  ]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return (
     <View style={[Styles.center, styles.container]}>
       <Image source={logo} style={styles.logoContainer} />

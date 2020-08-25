@@ -53,6 +53,21 @@ export const lessonCourseReducer = (prevState, action) => {
         itemVideo: {},
         isLoading: false,
       };
+
+    case actionTypes.UPDATE_STATUS_COURSE_REQUEST:
+      return {...prevState};
+    case actionTypes.UPDATE_STATUS_COURSE_SUCCESS:
+      return {
+        ...prevState,
+        course: action.response[1].data.payload,
+
+        isLoading: false,
+      };
+    case actionTypes.UPDATE_STATUS_COURSE_ERROR:
+      return {
+        ...prevState,
+        isLoading: false,
+      };
     default:
       return prevState;
   }

@@ -3,6 +3,7 @@ import {lessonCourseReducer} from '../../Reducers/LessonCourse';
 import {
   getCourseDetailWithLessonAction,
   pressLessonAction,
+  updateStatusCourseAction,
 } from '../../Actions/LessonCourse';
 const LessonContext = React.createContext();
 const initialState = {
@@ -23,6 +24,7 @@ const LessonProvider = (props) => {
         itemCourse,
         courseDetailProvider: getCourseDetailWithLessonAction(dispatch),
         pressLessonProvider: pressLessonAction(dispatch),
+        updateStatusCourseProvider: updateStatusCourseAction(dispatch),
       }}>
       {props.children}
     </LessonContext.Provider>

@@ -1,9 +1,7 @@
-import React, {useState, useEffect, useContext, useMemo} from 'react';
+import React, {useEffect, useContext, useMemo} from 'react';
 import {SafeAreaView, View, StyleSheet, TouchableHighlight} from 'react-native';
 import {useSafeArea} from 'react-native-safe-area-context';
 import LessonTab from '../../components/LessonCourse/TopTabInfo';
-import {API} from '../../services';
-import {LESSON_UPDATE_STATUS} from '../../Constants/API';
 import {AuthenticationContext} from '../../Provider/Authentication';
 import {Size} from '../../styles';
 import Video from '../../components/LessonCourse/PlayVideo';
@@ -19,7 +17,11 @@ const LessonCourse = (props) => {
   const {state} = useContext(AuthenticationContext);
   const insets = useSafeArea();
 
-  const {time, courseDetailProvider, itemCourse} = useContext(LessonContext);
+  const {
+    updateStatusCourseProvider,
+    courseDetailProvider,
+    itemCourse,
+  } = useContext(LessonContext);
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       courseDetailProvider(state.token, route.params.id);
@@ -32,20 +34,12 @@ const LessonCourse = (props) => {
     navigation.goBack();
   };
   const onCompleteVideo = async () => {
-    try {
-      let response = await API.post(
-        LESSON_UPDATE_STATUS,
-        {lessonId: itemCourse.itemLesson.id},
-        state.token,
-      );
-      if (response.isSuccess) {
-        console.log(response.data.message);
-      } else {
-        console.log(response.data.message);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    updateStatusCourseProvider(
+      state.token,
+      itemCourse.course.id,
+      itemCourse.itemLesson.id,
+      itemCourse.itemLesson.nextLessonId,
+    );
   };
   const renderVideo = useMemo(() => {
     return <Video onCompleteVideo={onCompleteVideo} navigation={navigation} />;
