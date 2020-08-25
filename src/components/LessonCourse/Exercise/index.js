@@ -19,7 +19,7 @@ import {LocalizeContext} from '../../../Provider/Localize';
 const ExerciseView = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
-  const {itemLesson} = useContext(LessonContext);
+  const {itemCourse} = useContext(LessonContext);
   const [allExercise, setAllExercise] = useState([]);
   const {localize} = useContext(LocalizeContext);
   useEffect(() => {
@@ -27,7 +27,7 @@ const ExerciseView = (props) => {
       try {
         let response = await API.post(
           LIST_EXERCISE,
-          {lessonId: itemLesson.id},
+          {lessonId: itemCourse.itemLesson.id},
           state.token,
         );
         if (response.isSuccess) {
@@ -40,7 +40,7 @@ const ExerciseView = (props) => {
       }
     };
     fetchNote();
-  }, [itemLesson, state]);
+  }, [itemCourse.itemLesson, state]);
   const moreAction = (item) => {
     // console.log(item);
   };

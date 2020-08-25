@@ -19,15 +19,14 @@ const PLayYouTube = (props) => {
     const unsubscribe = navigation.addListener('blur', async () => {
       try {
         let currentTime = await playerRef.current.getCurrentTime();
-        updateCurrentTime(state.token, itemCourse.itemVideo.id, currentTime);
+        updateCurrentTime(state.token, itemCourse.itemLesson.id, currentTime);
       } catch (err) {
         Alert.alert(err);
       }
       // ;
     });
     return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigation]);
+  }, [navigation, state.token, itemCourse.itemLesson.id]);
   useEffect(() => {
     const fetchYoutubeMetadata = async () => {
       try {

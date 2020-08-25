@@ -25,11 +25,10 @@ const PLayVideo = (props) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', async () => {
       console.log(time);
-      updateCurrentTime(state.token, itemCourse.itemVideo.id, time);
+      updateCurrentTime(state.token, itemCourse.itemLesson.id, time);
     });
     return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigation]);
+  }, [navigation, time, state.token, itemCourse.itemLesson.id]);
   return (
     <View style={styles.videoContainer}>
       {itemCourse.itemVideo.videoUrl ? (

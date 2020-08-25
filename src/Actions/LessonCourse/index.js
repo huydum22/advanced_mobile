@@ -91,6 +91,7 @@ export const getCourseDetailWithLessonAction = (dispatch) => async (
     ])
     .then(
       axios.spread(async (...responses) => {
+        dispatch(courseDetailWithLessonSuccess(responses));
         if (responses[1].data.payload.lessonId) {
           dispatch(lessonDetailRequest());
           try {
@@ -99,8 +100,6 @@ export const getCourseDetailWithLessonAction = (dispatch) => async (
               token,
             );
             if (lessonRequest.isSuccess) {
-              dispatch(courseDetailWithLessonSuccess(responses));
-
               dispatch(lessonDetailSuccess(lessonRequest.data));
             } else {
               dispatch(lessonDetailError(lessonRequest.data.message));
@@ -145,7 +144,7 @@ export const pressLessonAction = (dispatch) => async (
 export const updateCurrentTime = async (token, lessonId, time) => {
   try {
     try {
-      return await API.put(
+      let response = await API.put(
         LESSON_UPDATE_CURRENT_TIME,
         {
           lessonId: lessonId,
@@ -153,6 +152,12 @@ export const updateCurrentTime = async (token, lessonId, time) => {
         },
         token,
       );
+      if (response.isSuccess) {
+        console.log(response.data)
+      } else {
+        console.log(response.data);
+
+      }
     } catch (err) {
       console.log(err);
     }
