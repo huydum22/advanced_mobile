@@ -1,18 +1,19 @@
 import React from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, Button, FlatList} from 'react-native';
 import separator from '../../Separator';
 import * as screenName from '../../../Constants/ScreenName';
 import {useContext} from 'react';
 import {SearchContext} from '../../../Provider/Search';
 import {ThemeContext} from '../../../Provider/Theme';
-import {Styles, Size} from '../../../styles';
+import {Styles, Size, BoxModel} from '../../../styles';
 import {AuthorVerticalItem} from '../../Author';
 import {LocalizeContext} from '../../../Provider/Localize';
 import EmptyCourse from '../../EmptyCourse';
+import PaginationDot from 'react-native-animated-pagination-dot';
 
 const AuthorResultTopTab = (props) => {
   const {navigation} = props;
-  const {searchResultData} = useContext(SearchContext);
+  const {searchResultData, page, setPage} = useContext(SearchContext);
   const {theme} = useContext(ThemeContext);
   const {localize} = useContext(LocalizeContext);
   const onPressAuthor = (item) => {
@@ -42,6 +43,32 @@ const AuthorResultTopTab = (props) => {
             offset: Size.scaleSize(90) * index,
             index,
           })}
+          ListFooterComponent={() => {
+            return (
+              <View style={[Styles.fillRowBetween, BoxModel.marginVertical]}>
+                <Button
+                  title="Prev"
+                  onPress={() => {
+                    setPage(page - 1);
+                  }}
+                />
+
+                <PaginationDot
+                  activeDotColor={theme.primaryColor}
+                  containerWidth={90}
+                  curPage={page}
+                  maxPage={20}
+                />
+
+                <Button
+                  title="Next"
+                  onPress={() => {
+                    setPage(page + 1);
+                  }}
+                />
+              </View>
+            );
+          }}
         />
       );
     }

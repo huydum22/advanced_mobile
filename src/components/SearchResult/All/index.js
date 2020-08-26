@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {SectionList, View, Text} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {SectionList, View, Text, SafeAreaView, Button} from 'react-native';
 import {Styles, Size, Typography, BoxModel} from '../../../styles';
 import {ThemeContext} from '../../../Provider/Theme';
 import {SearchContext} from '../../../Provider/Search';
@@ -15,11 +15,14 @@ import {AuthorVerticalItem} from '../../Author';
 import separator from '../../Separator';
 import {LocalizeContext} from '../../../Provider/Localize';
 import EmptyCourse from '../../EmptyCourse';
+import PaginationDot from 'react-native-animated-pagination-dot';
+
 const AllResultTopTab = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation} = props;
-  const {searchResultData} = useContext(SearchContext);
+  const {searchResultData, page, setPage} = useContext(SearchContext);
   const {localize} = useContext(LocalizeContext);
+
   const {
     searchTry,
     searchErr,
@@ -96,22 +99,50 @@ const AllResultTopTab = (props) => {
       return <EmptyCourse />;
     } else {
       return (
-        <SectionList
-          ItemSeparatorComponent={separator}
-          sections={[
-            {title: searchCourse, data: searchResultData.listCourse},
-            {
-              title: searchAuthor,
-              data: searchResultData.listAuthor,
-            },
-          ]}
-          keyExtractor={(item, index) => item + index}
-          renderItem={({item}) => renderListItem(item)}
-          renderSectionHeader={({section: {title}}) => renderHeader(title)}
-          stickySectionHeadersEnabled
-          showsVerticalScrollIndicator={false}
-          style={[Styles.maxHeight, {backgroundColor: theme.backgroundColor}]}
-        />
+        <SafeAreaView>
+          <SectionList
+            ItemSeparatorComponent={separator}
+            sections={[
+              {title: searchCourse, data: searchResultData.listCourse},
+              {
+                title: searchAuthor,
+                data: searchResultData.listAuthor,
+              },
+            ]}
+            keyExtractor={(item, index) => item + index}
+            renderItem={({item}) => renderListItem(item)}
+            renderSectionHeader={({section: {title}}) => renderHeader(title)}
+            stickySectionHeadersEnabled
+            showsVerticalScrollIndicator={false}
+            style={[Styles.maxHeight, {backgroundColor: theme.backgroundColor}]}
+            ListFooterComponent={() => {
+              return (
+                <View style={[Styles.fillRowBetween, BoxModel.marginVertical]}>
+                  <Button
+                    title="Prev"
+                    onPress={() => {
+                      setPage(page - 1);
+                    }}
+                  />
+
+                  <PaginationDot
+                    activeDotColor={theme.primaryColor}
+                    containerWidth={90}
+                    curPage={page}
+                    maxPage={20}
+                  />
+
+                  <Button
+                    title="Next"
+                    onPress={() => {
+                      setPage(page + 1);
+                    }}
+                  />
+                </View>
+              );
+            }}
+          />
+        </SafeAreaView>
       );
     }
   };

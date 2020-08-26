@@ -15,12 +15,15 @@ const SearchProvider = (props) => {
     searchResultReducer,
     initialState,
   );
+  const [page, setPage] = useState(0);
 
   return (
     <SearchContext.Provider
       value={{
         searchResultData,
         searchResultProvider: getSearchResult(dispatch),
+        page,
+        setPage,
       }}>
       {props.children}
     </SearchContext.Provider>

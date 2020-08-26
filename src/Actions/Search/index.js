@@ -69,7 +69,7 @@ export const deleteItemSearch = (dispatch) => async (itemID, token) => {
   }
 };
 
-export const getSearchResult = (dispatch) => async (token, keyword) => {
+export const getSearchResult = (dispatch) => async (token, keyword, offset) => {
   dispatch(searchResultRequest());
   try {
     let response = await API.post(SEARCHV2, {
@@ -77,7 +77,7 @@ export const getSearchResult = (dispatch) => async (token, keyword) => {
       keyword: keyword,
       opt: {category: null},
       limit: 12,
-      offset: 0,
+      offset: offset,
     });
     if (response.isSuccess) {
       dispatch(searchResultSuccess(response.data));

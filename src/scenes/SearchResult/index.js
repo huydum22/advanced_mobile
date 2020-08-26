@@ -12,7 +12,9 @@ import {SearchContext} from '../../Provider/Search';
 import {LocalizeContext} from '../../Provider/Localize';
 const SearchNavigator = (props) => {
   const {navigation, route} = props;
-  const {searchResultData, searchResultProvider} = useContext(SearchContext);
+  const {searchResultData, searchResultProvider, page, setPage} = useContext(
+    SearchContext,
+  );
   const [keyword, setKeyword] = useState(route.params.keyword);
   const [searchText, setSearchText] = useState(route.params.keyword);
   const {theme} = useContext(ThemeContext);
@@ -21,11 +23,11 @@ const SearchNavigator = (props) => {
   const {localize} = useContext(LocalizeContext);
   const {searchHear} = localize;
   useEffect(() => {
-    searchResultProvider(state.token, keyword);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keyword, state]);
+    searchResultProvider(state.token, keyword, page);
+  }, [keyword, state, page]);
   const onSubmitEditing = () => {
     setKeyword(searchText);
+    setPage(0);
   };
   const updateSearch = (text) => {
     setSearchText(text);
