@@ -44,7 +44,7 @@ const CourseResultTopTab = (props) => {
             return (
               <View style={[Styles.fillRowBetween, BoxModel.marginVertical]}>
                 <Button
-                  title="Prev"
+                  title={localize.prev}
                   onPress={() => {
                     setPage(page - 1);
                   }}
@@ -58,7 +58,7 @@ const CourseResultTopTab = (props) => {
                 />
 
                 <Button
-                  title="Next"
+                  title={localize.next}
                   onPress={() => {
                     setPage(page + 1);
                   }}

@@ -13,6 +13,8 @@ const vn = {
   intro: 'Giới thiệu',
   skill: 'Kĩ năng',
   taughtBy: 'Các khoá học được dạy bởi',
+  next: 'Tiếp',
+  prev: 'Trước',
 
   homeTitle: 'Trang Chủ',
   homeRecommend: 'Gợi ý cho bạn',
@@ -144,6 +146,8 @@ const en = {
   intro: 'Introduction',
   skill: 'Skills',
   taughtBy: 'Courses taught by',
+  next: 'Next',
+  prev: 'Prev',
 
   profileTitle: 'Profile',
   profileSetting: 'Account Settings',

@@ -44,13 +44,13 @@ const LessonCourse = (props) => {
   const renderVideo = useMemo(() => {
     return <Video onCompleteVideo={onCompleteVideo} navigation={navigation} />;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemCourse.itemVideo.videoUrl]);
+  }, [itemCourse.itemVideo]);
   const renderYouTube = useMemo(() => {
     return (
       <YouTube navigation={navigation} onCompleteVideo={onCompleteVideo} />
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemCourse.itemVideo.videoUrl]);
+  }, [itemCourse.itemVideo]);
 
   const renderVideoComponent = () => {
     if (itemCourse.itemVideo.videoUrl) {

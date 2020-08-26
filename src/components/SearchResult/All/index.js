@@ -23,13 +23,7 @@ const AllResultTopTab = (props) => {
   const {searchResultData, page, setPage} = useContext(SearchContext);
   const {localize} = useContext(LocalizeContext);
 
-  const {
-    searchTry,
-    searchErr,
-    searchCourse,
-    searchAuthor,
-    searchResult,
-  } = localize;
+  const {prev, next, searchCourse, searchAuthor, searchResult} = localize;
 
   const onPressAuthor = (item) => {
     navigation.navigate(AuthorDetailScreenName, {
@@ -119,7 +113,7 @@ const AllResultTopTab = (props) => {
               return (
                 <View style={[Styles.fillRowBetween, BoxModel.marginVertical]}>
                   <Button
-                    title="Prev"
+                    title={prev}
                     onPress={() => {
                       setPage(page - 1);
                     }}
@@ -133,7 +127,7 @@ const AllResultTopTab = (props) => {
                   />
 
                   <Button
-                    title="Next"
+                    title={next}
                     onPress={() => {
                       setPage(page + 1);
                     }}
