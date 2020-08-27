@@ -26,6 +26,7 @@ const initialState = {
   listInstructor: [],
 };
 const Home = (props) => {
+  console.disableYellowBox = true;
   const {navigation, route} = props;
   const [homeData, dispatch] = useReducer(homeReducer, initialState);
   const {category} = useContext(CategoryContext);
@@ -48,7 +49,8 @@ const Home = (props) => {
     });
 
     return unsubscribe;
-  }, [navigation, state.userInfo.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation]);
 
   const onPressBanner = () => {};
   const onPressItem = (item) => {

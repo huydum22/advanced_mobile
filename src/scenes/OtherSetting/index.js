@@ -19,6 +19,7 @@ const OtherSetting = (props) => {
   const {getItem} = useAsyncStorage('@userToken');
   const [dark, setDark] = useState(false);
   const [eng, setEng] = useState(false);
+  console.disableYellowBox = true;
 
   const {
     settingDarkMode,

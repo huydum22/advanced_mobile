@@ -32,6 +32,7 @@ const Search = (props) => {
     recentSearchReducer,
     initialState,
   );
+  console.disableYellowBox = true;
 
   const {theme} = useContext(ThemeContext);
   // const [keyword, setKeyword] = useState([]);

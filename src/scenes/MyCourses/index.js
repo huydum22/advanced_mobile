@@ -14,6 +14,8 @@ import {AuthenticationContext} from '../../Provider/Authentication';
 import {ThemeContext} from '../../Provider/Theme';
 import {MyCourseContext} from '../../Provider/MyCourse';
 const ListCourse = (props) => {
+  console.disableYellowBox = true;
+
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);

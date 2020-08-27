@@ -30,6 +30,7 @@ const CourseDetail = (props) => {
   const [collapsibleItems, setCollapsibleItems] = useState([]);
   const insets = useSafeArea();
   const [dataCourse, dispatch] = useReducer(courseDetailReducer, initialState);
+  console.disableYellowBox = true;
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {

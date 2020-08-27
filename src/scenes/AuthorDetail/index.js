@@ -17,6 +17,8 @@ const initialState = {
   message: '',
 };
 const AuthorDetail = (props) => {
+  console.disableYellowBox = true;
+
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
   const [authorDetailData, dispatch] = useReducer(

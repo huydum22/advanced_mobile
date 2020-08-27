@@ -10,6 +10,7 @@ const ForgotPassword = (props) => {
   const {navigation} = props;
   const [email, setEmail] = useState('');
   const [activeBtn, setActiveBtn] = useState(false);
+  console.disableYellowBox = true;
 
   const onChangeEmail = (txtEmail) => {
     setEmail(txtEmail);

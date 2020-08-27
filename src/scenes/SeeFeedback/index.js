@@ -18,6 +18,8 @@ const SeeFeedBack = (props) => {
   const [formalityPoint] = useState(route.params.params.formalityPoint);
   const {theme} = useContext(ThemeContext);
   const {localize} = useContext(LocalizeContext);
+  console.disableYellowBox = true;
+
   const feedbackContent = () => {
     if (ratings.ratingList) {
       return ratings.ratingList.map((itemFeedBack) => (

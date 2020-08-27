@@ -15,6 +15,8 @@ const SearchNavigator = (props) => {
   const {searchResultData, searchResultProvider, page, setPage} = useContext(
     SearchContext,
   );
+  console.disableYellowBox = true;
+
   const [keyword, setKeyword] = useState(route.params.keyword);
   const [searchText, setSearchText] = useState(route.params.keyword);
   const {theme} = useContext(ThemeContext);
@@ -24,6 +26,7 @@ const SearchNavigator = (props) => {
   const {searchHear} = localize;
   useEffect(() => {
     searchResultProvider(state.token, keyword, page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyword, state, page]);
   const onSubmitEditing = () => {
     setKeyword(searchText);

@@ -15,6 +15,10 @@ export const actionTypes = {
   LESSON_COURSE_ERROR: 'LESSON_COURSE_ERROR',
   LESSON_COURSE_SUCCESS: 'LESSON_COURSE_SUCCESS',
 
+  LESSON_COURSE_YOUTUBE_REQUEST: 'LESSON_COURSE_YOUTUBE_REQUEST',
+  LESSON_COURSE_YOUTUBE_ERROR: 'LESSON_COURSE_YOUTUBE_ERROR',
+  LESSON_COURSE_YOUTUBE_SUCCESS: 'LESSON_COURSE_YOUTUBE_SUCCESS',
+
   LESSON_REQUEST: 'LESSON_REQUEST',
   LESSON_ERROR: 'LESSON_ERROR',
   LESSON_SUCCESS: 'LESSON_SUCCESS',
@@ -38,6 +42,19 @@ const courseDetailWithLessonError = (error) => ({
 
 const courseDetailWithLessonSuccess = (response) => ({
   type: actionTypes.LESSON_COURSE_SUCCESS,
+  response,
+});
+const courseDetailWithLessonYoutubeRequest = () => ({
+  type: actionTypes.LESSON_COURSE_YOUTUBE_REQUEST,
+});
+
+const courseDetailWithLessonYoutubeError = (error) => ({
+  type: actionTypes.LESSON_COURSE_YOUTUBE_ERROR,
+  error,
+});
+
+const courseDetailWithLessonYoutubeSuccess = (response) => ({
+  type: actionTypes.LESSON_COURSE_YOUTUBE_SUCCESS,
   response,
 });
 
@@ -86,8 +103,6 @@ export const getCourseDetailWithLessonAction = (dispatch) => async (
   token,
   courseId,
 ) => {
-  dispatch(courseDetailWithLessonRequest());
-
   const requestCourseDetailWithLesson = API.get(
     `${COURSE_DETAIL_WITH_LESSON}/${courseId}`,
     token,
@@ -101,37 +116,86 @@ export const getCourseDetailWithLessonAction = (dispatch) => async (
     token,
   );
   const requestNoteCourse = API.get(`${NOTE_ALL_LESSON}/${courseId}`, token);
-  axios
-    .all([
-      requestCourseDetailWithLesson,
-      requestLastWatchLesson,
-      requestQuestionCourse,
-      requestNoteCourse,
-    ])
-    .then(
-      axios.spread(async (...responses) => {
-        dispatch(courseDetailWithLessonSuccess(responses));
-        if (responses[1].data.payload.lessonId) {
-          dispatch(lessonDetailRequest());
-          try {
-            let lessonRequest = await API.get(
-              `${LESSON_DETAIL}/${courseId}/${responses[1].data.payload.lessonId}`,
-              token,
-            );
-            if (lessonRequest.isSuccess) {
-              dispatch(lessonDetailSuccess(lessonRequest.data));
-            } else {
-              dispatch(lessonDetailError(lessonRequest.data.message));
+  try {
+    let lastLesson = await API.get(`${LAST_WATCHED_LESSON}/${courseId}`, token);
+    if (lastLesson.isSuccess) {
+      dispatch(courseDetailWithLessonRequest());
+
+      axios
+        .all([
+          requestCourseDetailWithLesson,
+          requestLastWatchLesson,
+          requestQuestionCourse,
+          requestNoteCourse,
+        ])
+        .then(
+          axios.spread(async (...responses) => {
+            dispatch(courseDetailWithLessonSuccess(responses));
+
+            if (responses[1].data.payload.lessonId) {
+              dispatch(lessonDetailRequest());
+              try {
+                let lessonRequest = await API.get(
+                  `${LESSON_DETAIL}/${courseId}/${responses[1].data.payload.lessonId}`,
+                  token,
+                );
+                if (lessonRequest.isSuccess) {
+                  dispatch(lessonDetailSuccess(lessonRequest.data));
+                } else {
+                  dispatch(lessonDetailError(lessonRequest.data.message));
+                }
+              } catch (err) {
+                dispatch(lessonDetailError(err));
+              }
             }
-          } catch (err) {
-            dispatch(lessonDetailError(err));
-          }
-        }
-      }),
-    )
-    .catch((err) => {
-      dispatch(courseDetailWithLessonError(err));
-    });
+          }),
+        )
+        .catch((err) => {
+          dispatch(courseDetailWithLessonError(err));
+        });
+    } else {
+      dispatch(courseDetailWithLessonYoutubeRequest());
+
+      axios
+        .all([
+          requestCourseDetailWithLesson,
+          requestQuestionCourse,
+          requestNoteCourse,
+        ])
+        .then(
+          axios.spread(async (...responses) => {
+            dispatch(courseDetailWithLessonYoutubeSuccess(responses));
+            pressLessonAction(dispatch)(
+              token,
+              courseId,
+              responses[0].data.payload.section[0].lesson[0].id,
+            );
+
+            // if (responses[1].data.payload.lessonId) {
+            //   dispatch(lessonDetailRequest());
+            //   try {
+            //     let lessonRequest = await API.get(
+            //       `${LESSON_DETAIL}/${courseId}/${responses[1].data.payload.lessonId}`,
+            //       token,
+            //     );
+            //     if (lessonRequest.isSuccess) {
+            //       dispatch(lessonDetailSuccess(lessonRequest.data));
+            //     } else {
+            //       dispatch(lessonDetailError(lessonRequest.data.message));
+            //     }
+            //   } catch (err) {
+            //     dispatch(lessonDetailError(err));
+            //   }
+            // }
+          }),
+        )
+        .catch((err) => {
+          dispatch(courseDetailWithLessonYoutubeError(err));
+        });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
 export const pressLessonAction = (dispatch) => async (
   token,
@@ -165,7 +229,6 @@ export const updateStatusCourseAction = (dispatch) => async (
   token,
   courseId,
   lessonId,
-  nextLessonId,
 ) => {
   dispatch(updateStatusCourseRequest());
 
@@ -184,7 +247,6 @@ export const updateStatusCourseAction = (dispatch) => async (
     .then(
       axios.spread((...responses) => {
         dispatch(updateStatusCourseSuccess(responses));
-        pressLessonAction(dispatch)(token, courseId, nextLessonId);
       }),
     )
     .catch((err) => {
@@ -209,6 +271,19 @@ export const updateCurrentTime = async (token, lessonId, time) => {
       }
     } catch (err) {
       console.log(err);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getVideoUrlLesson = async (courseId, lessonId, token) => {
+  try {
+    let response = await API.get(
+      `${LESSON_VIDEO}/${courseId}/${lessonId}`,
+      token,
+    );
+    if (response.isSuccess) {
+      return response.data.payload;
     }
   } catch (err) {
     console.log(err);

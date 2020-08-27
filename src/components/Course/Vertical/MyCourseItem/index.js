@@ -3,7 +3,6 @@ import {StyleSheet, View, Text, TouchableHighlight} from 'react-native';
 import {Size, Styles, Distance, Typography, BoxModel} from '../../../../styles';
 import {ThemeContext} from '../../../../Provider/Theme';
 import FastImage from 'react-native-fast-image';
-import p from 'pretty-format';
 import {Bar} from 'react-native-progress';
 import {LocalizeContext} from '../../../../Provider/Localize';
 

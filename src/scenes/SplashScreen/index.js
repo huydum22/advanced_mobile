@@ -17,10 +17,13 @@ const SplashScreen = (props) => {
   const {setTheme} = useContext(ThemeContext);
   const [getThemeSuccess, setThemeSuccess] = useState(false);
   const [getLanguageSuccess, setLanguageSuccess] = useState(false);
+  console.disableYellowBox = true;
 
   const {setLocalize} = useContext(LocalizeContext);
   const getDarkMode = useAsyncStorage('@setTheme');
   const setLanguage = useAsyncStorage('@setLanguage');
+  console.disableYellowBox = true;
+
   useEffect(() => {
     const getTheme = async () => {
       const item = await getDarkMode.getItem();

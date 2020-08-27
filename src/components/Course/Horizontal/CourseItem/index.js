@@ -6,7 +6,6 @@ import {ThemeContext} from '../../../../Provider/Theme';
 import {MyCourseContext} from '../../../../Provider/MyCourse';
 import StarRating from 'react-native-star-rating';
 import Moment from 'moment';
-import p from 'pretty-format';
 import {LocalizeContext} from '../../../../Provider/Localize';
 const numberWithCommas = (x) => {
   if (x) {

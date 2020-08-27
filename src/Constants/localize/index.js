@@ -5,6 +5,7 @@ const vn = {
   newPass: 'Mật khẩu mới',
   showPass: 'Hiện mật khẩu',
   hour: 'giờ',
+  name: 'Tên của bạn',
   enrolled: 'Đã tham gia',
   updated: 'Cập nhật',
   course: 'Khoá học',
@@ -15,6 +16,7 @@ const vn = {
   taughtBy: 'Các khoá học được dạy bởi',
   next: 'Tiếp',
   prev: 'Trước',
+  phoneNumber: 'Số điện thoại',
 
   homeTitle: 'Trang Chủ',
   homeRecommend: 'Gợi ý cho bạn',

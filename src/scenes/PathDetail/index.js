@@ -16,6 +16,8 @@ import {
 } from '../../Constants/ScreenName';
 import {ThemeContext} from '../../Provider/Theme';
 const PathDetail = (props) => {
+  console.disableYellowBox = true;
+
   const {navigation, route, courseData} = props;
   const {theme} = useContext(ThemeContext);
   const onPressItem = (item) => {

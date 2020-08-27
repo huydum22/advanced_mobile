@@ -23,6 +23,27 @@ export const lessonCourseReducer = (prevState, action) => {
         message: action.response.message,
         isLoading: false,
       };
+
+    case actionTypes.LESSON_COURSE_YOUTUBE_REQUEST:
+      return {...prevState};
+    case actionTypes.LESSON_COURSE_YOUTUBE_SUCCESS:
+      return {
+        ...prevState,
+        course: action.response[0].data.payload,
+        question: action.response[1].data.payload,
+        allNote: action.response[2].data.payload,
+        message: action.response.message,
+        isLoading: false,
+      };
+    case actionTypes.LESSON_COURSE_YOUTUBE_ERROR:
+      return {
+        ...prevState,
+        course: {},
+        question: {},
+        allNote: [],
+        message: action.response.message,
+        isLoading: false,
+      };
     case actionTypes.LESSON_REQUEST:
       return {...prevState};
     case actionTypes.LESSON_SUCCESS:

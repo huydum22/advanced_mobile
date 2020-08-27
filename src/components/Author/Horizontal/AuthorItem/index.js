@@ -3,7 +3,6 @@ import {StyleSheet, View, Text, Image, TouchableHighlight} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Styles, Typography} from '../../../../styles';
 import {ThemeContext} from '../../../../Provider/Theme';
-import p from 'pretty-format';
 const Author = (props) => {
   const {onPress, item} = props;
   const {theme} = useContext(ThemeContext);

@@ -14,7 +14,6 @@ import {SEARCH} from '../../Constants/API';
 import {API} from '../../services';
 
 import SeeAllBtn from '../../components/common/see-all-button';
-import p from 'pretty-format';
 import {
   CourseDetailScreenName,
   LessonCourseScreenStack,
@@ -28,6 +27,8 @@ const PopularSkill = (props) => {
   const {theme} = useContext(ThemeContext);
   const {navigation, route} = props;
   const [data, setData] = useState([]);
+  console.disableYellowBox = true;
+
   const showListCourse = (index, title) => {
     if (index === 0) {
       navigation.navigate(ShowListPathScreenName);

@@ -16,6 +16,7 @@ const LessonCourse = (props) => {
   const {navigation, route} = props;
   const {state} = useContext(AuthenticationContext);
   const insets = useSafeArea();
+  console.disableYellowBox = true;
 
   const {
     updateStatusCourseProvider,
@@ -38,7 +39,6 @@ const LessonCourse = (props) => {
       state.token,
       itemCourse.course.id,
       itemCourse.itemLesson.id,
-      itemCourse.itemLesson.nextLessonId,
     );
   };
   const renderVideo = useMemo(() => {
@@ -51,7 +51,6 @@ const LessonCourse = (props) => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemCourse.itemVideo]);
-
   const renderVideoComponent = () => {
     if (itemCourse.itemVideo.videoUrl) {
       if (itemCourse.itemVideo.videoUrl.includes('https://youtube.com/embed')) {
@@ -89,7 +88,7 @@ const LessonCourse = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.container, {backgroundColor: theme.themeColor}]}>
-        {renderVideoComponent()}
+        <View style={{flex: 1}}>{renderVideoComponent()}</View>
         <View
           style={[styles.mainContainer, {backgroundColor: theme.themeColor}]}>
           <LessonTab />

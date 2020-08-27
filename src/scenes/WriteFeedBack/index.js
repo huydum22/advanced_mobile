@@ -22,6 +22,8 @@ const WriteFeedBack = (props) => {
   const onChangeFeedback = (text) => {
     setFeedback(text);
   };
+  console.disableYellowBox = true;
+
   const writeFeedBack = async () => {
     try {
       let body = {

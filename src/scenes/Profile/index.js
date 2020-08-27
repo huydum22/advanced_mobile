@@ -27,6 +27,8 @@ const Account = (props) => {
   const {state} = useContext(AuthenticationContext);
   const {navigation, route} = props;
   const {localize} = useContext(LocalizeContext);
+  console.disableYellowBox = true;
+
   const {
     profileTitle,
     profileSetting,

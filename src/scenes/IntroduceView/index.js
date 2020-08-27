@@ -13,6 +13,8 @@ import {
 } from '../../styles';
 import {color} from 'react-native-reanimated';
 const Introduce = (props) => {
+  console.disableYellowBox = true;
+
   const {navigation, route} = props;
   const onPressSignIn = () => {
     navigation.navigate(screenName.LoginScreenName);

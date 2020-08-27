@@ -26,6 +26,9 @@ const Theme = (props) => {
       <View style={[styles.separator, {backgroundColor: theme.DialogColor}]} />
     );
   };
+
+  console.disableYellowBox = true;
+
   const onPressChangeTheme = (value) => {
     if (value === 'Dark') {
       setTheme(darkTheme);

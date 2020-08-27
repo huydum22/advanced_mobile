@@ -23,6 +23,7 @@ const SignUp = (props) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  console.disableYellowBox = true;
 
   const [name, setName] = useState('');
   const [activeBtn, setActiveBtn] = useState(false);

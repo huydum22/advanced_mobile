@@ -1,22 +1,9 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  KeyboardAvoidingView,
-  Alert,
-  TouchableHighlight,
-} from 'react-native';
+import {StyleSheet, KeyboardAvoidingView} from 'react-native';
 import {FormInput, PrimaryButton} from '../../components/Authentication';
 
-import {
-  Styles,
-  Colors,
-  Typography,
-  Platform,
-  Size,
-  BoxModel,
-} from '../../styles';
+import {Styles, Platform} from '../../styles';
 import {useAsyncStorage} from '@react-native-community/async-storage';
-import FastImage from 'react-native-fast-image';
 import ImagePicker from 'react-native-image-picker';
 import {ThemeContext} from '../../Provider/Theme';
 import {AuthenticationContext} from '../../Provider/Authentication';
@@ -29,8 +16,7 @@ const UpdateProfile = (props) => {
   const [phoneNumber, setPhoneNumber] = useState(state.userInfo.phone);
   const [avatar, setAvatar] = useState(state.userInfo.avatar);
   const {localize} = useContext(LocalizeContext);
-  //   const [showPass, setShowPass] = useState(false);
-  const {getItem, setItem} = useAsyncStorage('@userToken');
+  console.disableYellowBox = true;
   useEffect(() => {
     if (name !== '' && phoneNumber !== '') {
       setActiveBtn(true);
@@ -45,16 +31,16 @@ const UpdateProfile = (props) => {
     setPhoneNumber(phone);
   };
 
-  const onPressAvatar = async () => {
-    const options = {
-      noData: true,
-    };
-    ImagePicker.launchImageLibrary(options, async (response) => {
-      if (response.uri) {
-        setAvatar(response.uri);
-      }
-    });
-  };
+  // const onPressAvatar = async () => {
+  //   const options = {
+  //     noData: true,
+  //   };
+  //   ImagePicker.launchImageLibrary(options, async (response) => {
+  //     if (response.uri) {
+  //       setAvatar(response.uri);
+  //     }
+  //   });
+  // };
   const handleUpdateProfile = async () => {
     // token,
     // name,

@@ -16,6 +16,8 @@ const initialState = {
   message: '',
 };
 const ListOfCourse = (props) => {
+  console.disableYellowBox = true;
+
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
   const {id, keyword} = route.params;
@@ -54,7 +56,8 @@ const ListOfCourse = (props) => {
     });
 
     return unsubscribe;
-  }, [id, keyword, navigation, state.userInfo.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, keyword, navigation]);
   ListOfCourse.navigationOptions = () => ({
     title: navigation.getParam('title'),
   });

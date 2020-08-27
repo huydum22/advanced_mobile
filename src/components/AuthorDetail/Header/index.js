@@ -12,7 +12,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {ThemeContext} from '../../../Provider/Theme';
 import FastImage from 'react-native-fast-image';
 import StarRating from 'react-native-star-rating';
-import p from 'pretty-format';
 import {LocalizeContext} from '../../../Provider/Localize';
 const Header = (props) => {
   const {theme} = useContext(ThemeContext);

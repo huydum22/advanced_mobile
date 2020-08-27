@@ -14,6 +14,8 @@ const FavoriteList = (props) => {
   const {state} = useContext(AuthenticationContext);
   const {theme} = useContext(ThemeContext);
   const {favorite, favoriteProvider} = useContext(FavoriteContext);
+  console.disableYellowBox = true;
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
       favoriteProvider(state.token);

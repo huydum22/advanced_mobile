@@ -20,6 +20,7 @@ const PLayVideo = (props) => {
   const {navigation, route} = props;
   const {theme} = useContext(ThemeContext);
   const [paused, setPaused] = useState(false);
+  console.disableYellowBox = true;
 
   const dismiss = () => {
     navigation.goBack();

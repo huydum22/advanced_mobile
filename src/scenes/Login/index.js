@@ -24,6 +24,8 @@ import {AuthenticationContext} from '../../Provider/Authentication';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {GoogleSignin, statusCodes} from 'react-native-google-signin';
 const Login = (props) => {
+  console.disableYellowBox = true;
+
   const {navigation, route} = props;
   const {state, loginProvider, loginGGProvider} = useContext(
     AuthenticationContext,

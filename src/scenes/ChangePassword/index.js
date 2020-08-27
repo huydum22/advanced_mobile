@@ -14,8 +14,8 @@ const ChangePassword = (props) => {
   const {theme} = useContext(ThemeContext);
   const {state} = useContext(AuthenticationContext);
   const [activeBtn, setActiveBtn] = useState(false);
-  const [oldPass, setOldPass] = useState('12345678');
-  const [newPass, setNewPass] = useState('123456789');
+  const [oldPass, setOldPass] = useState('');
+  const [newPass, setNewPass] = useState('');
   const [showPass, setShowPass] = useState(false);
   const {getItem, setItem} = useAsyncStorage('@userToken');
   const {localize} = useContext(LocalizeContext);
@@ -26,6 +26,8 @@ const ChangePassword = (props) => {
       setActiveBtn(false);
     }
   }, [newPass, oldPass]);
+  console.disableYellowBox = true;
+
   const onChangePassword = (pass) => {
     setOldPass(pass);
   };

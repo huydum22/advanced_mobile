@@ -8,7 +8,7 @@ const FormTextInput = (props) => {
     <View style={styles.container}>
       <TextInput
         selectionColor={Colors.primaryColor}
-        style={[styles.input, props.style]}
+        style={[styles.input, props.style, {color: Colors.grayColor}]}
         placeholderTextColor={Colors.grayMediumColor}
         {...props}
       />

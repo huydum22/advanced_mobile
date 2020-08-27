@@ -41,6 +41,8 @@ const RelateSkill = (props) => {
     dataAuthor,
     dataPath,
   } = props;
+  console.disableYellowBox = true;
+
   const {theme} = useContext(ThemeContext);
   const showListCourse = (index, title) => {
     if (index === 1) {

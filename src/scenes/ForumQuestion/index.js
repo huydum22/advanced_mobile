@@ -8,6 +8,8 @@ import FastImage from 'react-native-fast-image';
 import {LocalizeContext} from '../../Provider/Localize';
 const onPressResponse = () => {};
 const ForumQuestion = (props) => {
+  console.disableYellowBox = true;
+
   const {route} = props;
   const [itemQuestion] = useState(route.params.itemQuestion);
   const {theme} = useContext(ThemeContext);
